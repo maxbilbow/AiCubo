@@ -15,7 +15,7 @@ class RMSWorld : RMSParticle {
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
 
-    private lazy var _action: RMSActionProcessor = RMSActionProcessor(world: self)
+    private lazy var _actions: RMSActionProcessor = RMSActionProcessor(world: self)
     var sun: RMSParticle?
     private let GRAVITY: Float = 9.8
     var sprites: Array<RMSParticle>
@@ -164,6 +164,7 @@ class RMSWorld : RMSParticle {
             sprite.animate()
            
         }
+        _actions.animate()
         self.debug()
         
     }
@@ -205,7 +206,7 @@ class RMSWorld : RMSParticle {
 
     
     func action(action: String = "reset",speed: Float = 0, point: [Float] = []) {
-        self._action.movement( action,speed: speed, point: point)
+        _actions.movement( action,speed: speed, point: point)
     }
     
     

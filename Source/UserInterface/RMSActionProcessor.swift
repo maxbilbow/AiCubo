@@ -99,12 +99,8 @@ class RMSActionProcessor {
                 self.activeSprite.actions?.prepareToJump()
             }
         }
-        if action == "toggleGravity" && speed == 0{
-            self.activeSprite.toggleGravity()
-        }
-        if action == "toggleAllGravity" && speed == 0 {
-            self.world.toggleGravity()
-        }
+        
+        
         if action == "grab" {
             self.activeSprite.actions?.grabItem()
         }
@@ -123,23 +119,40 @@ class RMSActionProcessor {
         if self.activeSprite.hasItem {
             if action == "enlargeItem"   {
                 let size = (self.activeSprite.actions?.item?.body.radius)! * speed
-                if size > 0.5 {
+                if size > 0.5 && size < 15 {
                     self.activeSprite.actions?.item?.body.radius = size
                     self.activeSprite.actions?.item?.body.mass *= size
                 }
 
             }
             
-            if action == "extendArm" {
-                self.activeSprite.actions?.extendArmLength(speed)
+            if action == "extendArm" {// && (self.extendArm != speed && self.extendArm != 0) {
+                if self.extendArm != speed {
+                    self.extendArm = speed * 5
+                }
+            }
+        } else {
+            if action == "toggleAllGravity" {
+                self.world.toggleGravity()
             }
         }
         
+        if action == "toggleGravity" && speed == 0 {
+            self.activeSprite.toggleGravity()
+        }
         
         
 //        else {
 //            [RMXGLProxy.activeSprite.mouse setMousePos:x y:y];
         RMXLog("\(self.activeSprite.camera!.viewDescription)\n\(action!) \(speed), \(self.world.activeSprite!.body.position.z)\n")
     }
+    
+    func animate(){
+        if self.extendArm != 0 {
+            self.activeSprite.actions?.extendArmLength(self.extendArm)
+        }
+    }
+        
+    var extendArm: Float = 0
 
 }

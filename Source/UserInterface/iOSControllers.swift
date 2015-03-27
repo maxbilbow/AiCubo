@@ -18,6 +18,7 @@ extension RMXController {
     private func _handleRelease(state: UIGestureRecognizerState) {
         if state == UIGestureRecognizerState.Ended {
             self.world.action(action: "stop")
+            self.world.action(action: "extendArm", speed: 0)
             self.log()
         }
     }
@@ -68,11 +69,11 @@ extension RMXController {
     //The event Le method
     func handlePanLeftSide(recognizer: UIPanGestureRecognizer) {
         if recognizer.numberOfTouches() == 1 {
-            let point = recognizer.velocityInView(gvc.view); let speed:Float = -0.005
             if recognizer.state == UIGestureRecognizerState.Ended {
                 self.world.action(action: "stop")
                 self.log("stop")
             } else {
+                let point = recognizer.velocityInView(gvc.view); let speed:Float = -0.0025
                 self.world.action(action: "move", speed: speed, point: [Float(point.x),0, Float(point.y)])
                 self.log("start")
             }
@@ -85,7 +86,7 @@ extension RMXController {
     func handlePanRightSide(recognizer: UIPanGestureRecognizer) {
         if recognizer.numberOfTouches() == 1 {
             let point = recognizer.velocityInView(gvc.view);
-            let speed:Float = 1
+            let speed:Float = 0.01
             self.world.action(action: "look", speed: speed, point: [Float(point.x), Float(point.y)])
         } else if recognizer.numberOfTouches() == 2 {
             if recognizer.state == UIGestureRecognizerState.Ended {
@@ -124,17 +125,33 @@ extension RMXController {
         self.world.action(action: "right", speed: 1)
         _handleRelease(recognizer.state)
     }
-    func handlePinchLeft(recognizer: UIPinchGestureRecognizer) {
-        let x: Float = Float(recognizer.scale) * 0.01
+    func handlePinch(recognizer: UIPinchGestureRecognizer) {
+        let x: Float = Float(recognizer.scale) * 0.05
         self.log()
         self.world.action(action: "enlargeItem", speed: x)
         _handleRelease(recognizer.state)
     }
     
-    func handlePinchRight(recognizer: UIPinchGestureRecognizer) {
-        let x: Float = Float(recognizer.scale) * 0.01
+    
+    func longPressLeft(recognizer: UILongPressGestureRecognizer) {
         self.log()
-        self.world.action(action: "extendArm", speed: x)
+        if recognizer.state == UIGestureRecognizerState.Began {
+            self.world.action(action: "extendArm", speed: -1)
+                    self.world.action(action: "toggleAllGravity")
+        } else if recognizer.state == UIGestureRecognizerState.Ended {
+            self.world.action(action: "extendArm", speed: 0)
+        }
+        _handleRelease(recognizer.state)
+    }
+    
+    func longPressRight(recognizer: UILongPressGestureRecognizer) {
+        self.log()
+        if recognizer.state == UIGestureRecognizerState.Began {
+            self.world.action(action: "extendArm", speed: 1)
+            self.world.action(action: "toggleAllGravity")
+        } else if recognizer.state == UIGestureRecognizerState.Ended {
+            self.world.action(action: "extendArm", speed: 0)
+        }
         _handleRelease(recognizer.state)
     }
     

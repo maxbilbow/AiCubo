@@ -37,7 +37,7 @@ class RMSPhysicsBody {
     }
     
     init(parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1,
-        accRate: Float = 1, rotSpeed:Float = 0.01){
+        accRate: Float = 1, rotSpeed:Float = 1){
         self.theta = 0
         self.phi = 0
         self.mass = mass

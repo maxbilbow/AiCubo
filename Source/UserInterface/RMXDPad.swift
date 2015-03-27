@@ -59,6 +59,8 @@ class RMXDPad : RMXInterface {
             
             view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinchLeft:"))
             
+            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressLeft:"))
+            
             view.userInteractionEnabled = true
             
             self.gvc.view.addSubview(leftView)
@@ -73,7 +75,9 @@ class RMXDPad : RMXInterface {
             let tapRight: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapRight:")
             view.addGestureRecognizer(tapRight)
             
-            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinchRight:"))
+            
+            
+            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressRight:"))
             
             view.userInteractionEnabled = true
             self.gvc.view.addSubview(rightView)
@@ -87,15 +91,16 @@ class RMXDPad : RMXInterface {
             
             let view = self.gvc.view
             
+            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
             
             let twoFingerTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleDoubleTouchTap:")
             twoFingerTap.numberOfTouchesRequired = 2
             twoFingerTap.numberOfTapsRequired = 1
             view.addGestureRecognizer(twoFingerTap)
             
-            let lp: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self,  action: "longPressGestureRecognizer:")
+
             //        lp.minimumPressDuration =
-            view.addGestureRecognizer(lp)
+            
             
         }
         

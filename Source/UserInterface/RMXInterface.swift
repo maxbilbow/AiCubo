@@ -18,6 +18,7 @@ class RMXInterface : NSObject {
     var debugData: String = "No Data"
     var gvc: GameViewController
     var world: RMSWorld
+    
     var activeSprite: RMSParticle {
         return self.world.activeSprite!
     }
@@ -33,6 +34,7 @@ class RMXInterface : NSObject {
     init(gvc: GameViewController, world: RMSWorld){
         self.gvc = gvc
         self.world = world
+//        self.actions = self.world.actions
         self.controllers = [ "debug" : ( isActive: _isDebugging,
             process: {
               
