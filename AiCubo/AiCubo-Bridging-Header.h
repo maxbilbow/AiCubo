@@ -43,6 +43,6 @@ const void * RMIndicesPtr(int type);
 
 #import "RMOShapes.h"
 #import "cStuff.h"
-#import "run.h"
+#import "RMOpenGL.h"
 
 #endif

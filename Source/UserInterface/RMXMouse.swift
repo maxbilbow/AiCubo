@@ -7,6 +7,12 @@
 //
 
 import Foundation
+import GLKit
+#if OPENGL_ES
+    
+    #elseif OPENGL_OSX
+    
+#endif
 
 protocol RMXMouse {
     var x: Int32 {get}
@@ -63,7 +69,7 @@ protocol RMXMouse {
     
         var DeltaX: Int32 = 0; var DeltaY: Int32 = 0
     #if OPENGL_OSX
-    RMXCGGetLastMouseDelta(&DeltaX, &DeltaY)
+    RMXGLProxy.GetLastMouseDelta(&DeltaX, &DeltaY)
     #endif
 
         var dir:Int32 = self.hasFocus ? 1 : -1

@@ -7,6 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		506332151AC5D59500BB4477 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332141AC5D59500BB4477 /* AppDelegate.swift */; };
+		506332171AC5D59500BB4477 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332161AC5D59500BB4477 /* GameView.swift */; };
+		5063321B1AC5D59600BB4477 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5063321A1AC5D59600BB4477 /* art.scnassets */; };
+		5063321D1AC5D59600BB4477 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5063321C1AC5D59600BB4477 /* Images.xcassets */; };
+		506332201AC5D59600BB4477 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5063321E1AC5D59600BB4477 /* MainMenu.xib */; };
+		5063322C1AC5D59600BB4477 /* OSXViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5063322B1AC5D59600BB4477 /* OSXViewTests.swift */; };
+		506332331AC5D5FA00BB4477 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5001AC4AA2100AAACF7 /* GameViewController.swift */; };
+		506332341AC5D60900BB4477 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
+		506332351AC5D60900BB4477 /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
+		506332361AC5D60900BB4477 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
+		506332371AC5D60900BB4477 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
+		506332381AC5D60900BB4477 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
+		506332391AC5D60900BB4477 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
+		5063323A1AC5D60900BB4477 /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
+		5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
+		5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		5063323E1AC5D60D00BB4477 /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
+		5063323F1AC5D61B00BB4477 /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
+		506332401AC5D61B00BB4477 /* RMSGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */; };
+		506332411AC5D61B00BB4477 /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
+		506332421AC5D61B00BB4477 /* RMX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5361AC4ACC100AAACF7 /* RMX.swift */; };
+		506332431AC5D61B00BB4477 /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
+		506332441AC5D61B00BB4477 /* RMXValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */; };
+		506332461AC5D62800BB4477 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
+		5063324A1AC5D6E600BB4477 /* RMOpenGL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506332491AC5D6E600BB4477 /* RMOpenGL.mm */; };
+		5063324C1AC5D98500BB4477 /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
+		5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
+		5063324E1AC5D9B100BB4477 /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
+		5063324F1AC5D9BE00BB4477 /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
+		506332501AC5D9D100BB4477 /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
+		506332511AC5D9D400BB4477 /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
+		506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332521AC5DB1300BB4477 /* RMXGLProxy.swift */; };
 		50C2B4FB1AC4AA2100AAACF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */; };
 		50C2B4FD1AC4AA2100AAACF7 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FC1AC4AA2100AAACF7 /* Shader.fsh */; };
 		50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */; };
@@ -45,6 +78,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		506332261AC5D59600BB4477 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5063320F1AC5D59500BB4477;
+			remoteInfo = OSXView;
+		};
 		50C2B50F1AC4AA2100AAACF7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
@@ -54,7 +94,34 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		506332031AC5D54C00BB4477 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		506332051AC5D54C00BB4477 /* AiCuboOSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AiCuboOSX; sourceTree = BUILT_PRODUCTS_DIR; };
+		506332101AC5D59500BB4477 /* OSXView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		506332131AC5D59500BB4477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		506332141AC5D59500BB4477 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		506332161AC5D59500BB4477 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		506332181AC5D59500BB4477 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		5063321A1AC5D59600BB4477 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		5063321C1AC5D59600BB4477 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5063321F1AC5D59600BB4477 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		506332251AC5D59600BB4477 /* OSXViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSXViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5063322A1AC5D59600BB4477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5063322B1AC5D59600BB4477 /* OSXViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXViewTests.swift; sourceTree = "<group>"; };
+		506332491AC5D6E600BB4477 /* RMOpenGL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RMOpenGL.mm; sourceTree = "<group>"; };
+		5063324B1AC5D6F900BB4477 /* RMOpenGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RMOpenGL.h; path = ../RMOpenGL.h; sourceTree = "<group>"; };
+		506332521AC5DB1300BB4477 /* RMXGLProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXGLProxy.swift; path = Source/Depreciated/RMXGLProxy.swift; sourceTree = SOURCE_ROOT; };
 		50C2B4F51AC4AA2100AAACF7 /* AiCubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AiCubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C2B4F91AC4AA2100AAACF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +167,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		506332021AC5D54C00BB4477 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5063320D1AC5D59500BB4477 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506332221AC5D59600BB4477 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C2B4F21AC4AA2100AAACF7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -117,11 +205,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		506332111AC5D59500BB4477 /* OSXView */ = {
+			isa = PBXGroup;
+			children = (
+				506332521AC5DB1300BB4477 /* RMXGLProxy.swift */,
+				5063324B1AC5D6F900BB4477 /* RMOpenGL.h */,
+				506332491AC5D6E600BB4477 /* RMOpenGL.mm */,
+				506332141AC5D59500BB4477 /* AppDelegate.swift */,
+				506332161AC5D59500BB4477 /* GameView.swift */,
+				506332181AC5D59500BB4477 /* GameViewController.swift */,
+				5063321A1AC5D59600BB4477 /* art.scnassets */,
+				5063321C1AC5D59600BB4477 /* Images.xcassets */,
+				5063321E1AC5D59600BB4477 /* MainMenu.xib */,
+				506332121AC5D59500BB4477 /* Supporting Files */,
+			);
+			path = OSXView;
+			sourceTree = "<group>";
+		};
+		506332121AC5D59500BB4477 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				506332131AC5D59500BB4477 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		506332281AC5D59600BB4477 /* OSXViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				5063322B1AC5D59600BB4477 /* OSXViewTests.swift */,
+				506332291AC5D59600BB4477 /* Supporting Files */,
+			);
+			path = OSXViewTests;
+			sourceTree = "<group>";
+		};
+		506332291AC5D59600BB4477 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5063322A1AC5D59600BB4477 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		50C2B4EC1AC4AA2100AAACF7 = {
 			isa = PBXGroup;
 			children = (
 				50C2B4F71AC4AA2100AAACF7 /* AiCubo */,
 				50C2B5111AC4AA2100AAACF7 /* AiCuboTests */,
+				506332111AC5D59500BB4477 /* OSXView */,
+				506332281AC5D59600BB4477 /* OSXViewTests */,
 				50C2B4F61AC4AA2100AAACF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,6 +263,9 @@
 			children = (
 				50C2B4F51AC4AA2100AAACF7 /* AiCubo.app */,
 				50C2B50E1AC4AA2100AAACF7 /* AiCuboTests.xctest */,
+				506332051AC5D54C00BB4477 /* AiCuboOSX */,
+				506332101AC5D59500BB4477 /* OSXView.app */,
+				506332251AC5D59600BB4477 /* OSXViewTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,6 +397,58 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		506332041AC5D54C00BB4477 /* AiCuboOSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5063320B1AC5D54D00BB4477 /* Build configuration list for PBXNativeTarget "AiCuboOSX" */;
+			buildPhases = (
+				506332011AC5D54C00BB4477 /* Sources */,
+				506332021AC5D54C00BB4477 /* Frameworks */,
+				506332031AC5D54C00BB4477 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AiCuboOSX;
+			productName = AiCuboOSX;
+			productReference = 506332051AC5D54C00BB4477 /* AiCuboOSX */;
+			productType = "com.apple.product-type.tool";
+		};
+		5063320F1AC5D59500BB4477 /* OSXView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5063322D1AC5D59600BB4477 /* Build configuration list for PBXNativeTarget "OSXView" */;
+			buildPhases = (
+				5063320C1AC5D59500BB4477 /* Sources */,
+				5063320D1AC5D59500BB4477 /* Frameworks */,
+				5063320E1AC5D59500BB4477 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OSXView;
+			productName = OSXView;
+			productReference = 506332101AC5D59500BB4477 /* OSXView.app */;
+			productType = "com.apple.product-type.application";
+		};
+		506332241AC5D59600BB4477 /* OSXViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 506332301AC5D59600BB4477 /* Build configuration list for PBXNativeTarget "OSXViewTests" */;
+			buildPhases = (
+				506332211AC5D59600BB4477 /* Sources */,
+				506332221AC5D59600BB4477 /* Frameworks */,
+				506332231AC5D59600BB4477 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				506332271AC5D59600BB4477 /* PBXTargetDependency */,
+			);
+			name = OSXViewTests;
+			productName = OSXViewTests;
+			productReference = 506332251AC5D59600BB4477 /* OSXViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		50C2B4F41AC4AA2100AAACF7 /* AiCubo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C2B5181AC4AA2100AAACF7 /* Build configuration list for PBXNativeTarget "AiCubo" */;
@@ -306,6 +493,16 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Rattle Media Ltd";
 				TargetAttributes = {
+					506332041AC5D54C00BB4477 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					5063320F1AC5D59500BB4477 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					506332241AC5D59600BB4477 = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 5063320F1AC5D59500BB4477;
+					};
 					50C2B4F41AC4AA2100AAACF7 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = 668T39KN4E;
@@ -331,11 +528,31 @@
 			targets = (
 				50C2B4F41AC4AA2100AAACF7 /* AiCubo */,
 				50C2B50D1AC4AA2100AAACF7 /* AiCuboTests */,
+				506332041AC5D54C00BB4477 /* AiCuboOSX */,
+				5063320F1AC5D59500BB4477 /* OSXView */,
+				506332241AC5D59600BB4477 /* OSXViewTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5063320E1AC5D59500BB4477 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5063321B1AC5D59600BB4477 /* art.scnassets in Resources */,
+				5063321D1AC5D59600BB4477 /* Images.xcassets in Resources */,
+				506332201AC5D59600BB4477 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506332231AC5D59600BB4477 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C2B4F31AC4AA2100AAACF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -359,6 +576,57 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		506332011AC5D54C00BB4477 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5063320C1AC5D59500BB4477 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506332361AC5D60900BB4477 /* RMSPhysicsBody.swift in Sources */,
+				5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */,
+				506332371AC5D60900BB4477 /* RMSWorld.swift in Sources */,
+				506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */,
+				5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */,
+				506332411AC5D61B00BB4477 /* RMSMaths.swift in Sources */,
+				5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */,
+				5063324A1AC5D6E600BB4477 /* RMOpenGL.mm in Sources */,
+				5063323F1AC5D61B00BB4477 /* RMSEquations.swift in Sources */,
+				506332381AC5D60900BB4477 /* RMXCamera.swift in Sources */,
+				506332341AC5D60900BB4477 /* RMSArt.swift in Sources */,
+				506332391AC5D60900BB4477 /* RMXClock.swift in Sources */,
+				506332461AC5D62800BB4477 /* RMXInitialize.swift in Sources */,
+				506332351AC5D60900BB4477 /* RMSParticle.swift in Sources */,
+				506332171AC5D59500BB4477 /* GameView.swift in Sources */,
+				506332401AC5D61B00BB4477 /* RMSGeometry.swift in Sources */,
+				5063324C1AC5D98500BB4477 /* RMXMouse.swift in Sources */,
+				506332331AC5D5FA00BB4477 /* GameViewController.swift in Sources */,
+				506332501AC5D9D100BB4477 /* RMXViewController.swift in Sources */,
+				5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */,
+				5063323E1AC5D60D00BB4477 /* CWrappers.c in Sources */,
+				5063323A1AC5D60900BB4477 /* RMXObject.swift in Sources */,
+				506332151AC5D59500BB4477 /* AppDelegate.swift in Sources */,
+				506332441AC5D61B00BB4477 /* RMXValue.swift in Sources */,
+				5063324F1AC5D9BE00BB4477 /* RMSKeys.swift in Sources */,
+				5063324E1AC5D9B100BB4477 /* RMXInterface.swift in Sources */,
+				506332511AC5D9D400BB4477 /* RMXController.swift in Sources */,
+				506332431AC5D61B00BB4477 /* RMXDebugger.swift in Sources */,
+				506332421AC5D61B00BB4477 /* RMX.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506332211AC5D59600BB4477 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5063322C1AC5D59600BB4477 /* OSXViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C2B4F11AC4AA2100AAACF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -405,6 +673,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		506332271AC5D59600BB4477 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5063320F1AC5D59500BB4477 /* OSXView */;
+			targetProxy = 506332261AC5D59600BB4477 /* PBXContainerItemProxy */;
+		};
 		50C2B5101AC4AA2100AAACF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 50C2B4F41AC4AA2100AAACF7 /* AiCubo */;
@@ -413,6 +686,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5063321E1AC5D59600BB4477 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5063321F1AC5D59600BB4477 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		50C2B5021AC4AA2100AAACF7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -432,6 +713,106 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		506332091AC5D54D00BB4477 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5063320A1AC5D54D00BB4477 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5063322E1AC5D59600BB4477 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = OSXView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = OPENGL_OSX;
+				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		5063322F1AC5D59600BB4477 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = OSXView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = OPENGL_OSX;
+				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		506332311AC5D59600BB4477 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = OSXViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXView.app/Contents/MacOS/OSXView";
+			};
+			name = Debug;
+		};
+		506332321AC5D59600BB4477 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = OSXViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXView.app/Contents/MacOS/OSXView";
+			};
+			name = Release;
+		};
 		50C2B5161AC4AA2100AAACF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -583,6 +964,30 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5063320B1AC5D54D00BB4477 /* Build configuration list for PBXNativeTarget "AiCuboOSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506332091AC5D54D00BB4477 /* Debug */,
+				5063320A1AC5D54D00BB4477 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5063322D1AC5D59600BB4477 /* Build configuration list for PBXNativeTarget "OSXView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5063322E1AC5D59600BB4477 /* Debug */,
+				5063322F1AC5D59600BB4477 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		506332301AC5D59600BB4477 /* Build configuration list for PBXNativeTarget "OSXViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506332311AC5D59600BB4477 /* Debug */,
+				506332321AC5D59600BB4477 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		50C2B4F01AC4AA2100AAACF7 /* Build configuration list for PBXProject "AiCubo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -599,6 +1004,7 @@
 				50C2B51A1AC4AA2100AAACF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		50C2B51B1AC4AA2100AAACF7 /* Build configuration list for PBXNativeTarget "AiCuboTests" */ = {
 			isa = XCConfigurationList;
@@ -607,6 +1013,7 @@
 				50C2B51D1AC4AA2100AAACF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

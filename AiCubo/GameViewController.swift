@@ -44,7 +44,7 @@ class GameViewController : GLKViewController {
     
     lazy var interface: RMXController = RMXController(gvc: self, world: RMX.buildScene())
     var world: RMSWorld {
-        return interface.world
+        return self.interface.world
     }
     
     var objects: Array<RMSParticle> {
@@ -59,32 +59,31 @@ class GameViewController : GLKViewController {
         //        self.viewMatrix = self.interface.activeCamera.modelViewMatrix
         #if OPENGL_ES
             self.context = EAGLContext(API: EAGLRenderingAPI.OpenGLES3)
-            #elseif OPENGL_OSX
-            self.context = CGLGetCurrentContext()
-        #endif
+//            #elseif OPENGL_OSX
+//            self.context = CGLGetCurrentContext()
+       
         
-        #if OPENGL_ES
-            
-            #elseif OPENGL_OSX
-            
-        #endif
+        
         if (self.context == nil) {
             NSLog("Failed to create ES context")
         }
         
-        #if OPENGL_ES
-            let view = self.view as! RMXView
-            view.context = self.context
-            view.drawableMultisample = GLKViewDrawableMultisample.Multisample4X
-            view.drawableDepthFormat = GLKViewDrawableDepthFormat.Format24
-            #elseif OPENGL_OSX
+       
+        let view = self.view as! RMXView
+        view.context = self.context
+        view.drawableMultisample = GLKViewDrawableMultisample.Multisample4X
+        view.drawableDepthFormat = GLKViewDrawableDepthFormat.Format24
+//            #elseif OPENGL_OSX
             //TODO
-        #endif
         
         
         self.initEffect()
         self.setupGL()
         
+            #elseif OPENGL_OSX
+            
+            RMXGLProxy.setUpGL()
+        #endif
         super.viewDidLoad()
         
     }
@@ -115,8 +114,8 @@ class GameViewController : GLKViewController {
             #elseif OPENGL_OSX
             //TODO
             // CGLGetCurrentContext(self.context)
-        #endif
-        #if OPENGL_ES
+//        #endif
+//        #if OPENGL_ES
             glEnable(GLenum(GL_DEPTH_TEST))
             glDepthFunc(GLenum(GL_LEQUAL))
             
