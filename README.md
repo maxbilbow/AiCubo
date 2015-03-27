@@ -1,7 +1,7 @@
 # AiCubo
 
 v0.6.x now works for iOS. 
-v0.4.2 (stable) is available for download.
+v0.4.2 (stable) is available for download: https://github.com/maxbilbow/RMSGameEngine/releases/tag/v0.4.2
 
 TODO:
 • Port OpenGLES back to OpenGL using preprocessing flags and moden OpenGL calls
