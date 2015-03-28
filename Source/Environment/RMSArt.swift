@@ -24,26 +24,23 @@ class RMXArt : RMXObject {
     
 
         let world: RMSWorld = RMSWorld()
-        
-        //if (world.observer == nil ){ fatalError(__FUNCTION__) }
     
     
         let sun = RMSParticle(world: world)
         //[sun setRAxis:GLKVector3Make(0, 0, 1)];
         sun.body.radius = 100
         sun.shape.color = GLKVector4Make(1, 1, 1, 1.0)
-        sun.shape.makeAsSun(rDist: world.body.radius * 2, isRotating: true)
-        sun.body.position = GLKVector3Make(0,0,10)
+        sun.shape.makeAsSun(rDist: world.body.radius + sun.body.radius, isRotating: true)
         sun.shape.type = .SPHERE
         world.sun = sun
         world.insertSprite(sun)
 
-        let axisColors = [colorBlue , colorRed , colorGreen]
+
         
         let ZX = RMSParticle(world: world)
         ZX.body.radius = world.body.radius
         ZX.shape.type = .PLANE
-//        ZX.body.orientation = GLKMatrix3Rotate(ZX.body.orientation, GLKMathDegreesToRadians(90) , 1, 0, 1)
+        ZX.body.plusAngle(0, y: 0, z: 90)
         ZX.shape.color = GLKVector4Make(0.8,1.2,0.8,0.5)
         ZX.isAnimated = false
         #if OPENGL_ES
@@ -61,7 +58,7 @@ class RMXArt : RMXObject {
     
     class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
     
-    //BOOL gravity = false;
+        
         let shapeRadius: Float = 5
         let axisLenght = world.body.radius * 2
         let shapesPerAxis: Float = axisLenght / (shapeRadius * 3)

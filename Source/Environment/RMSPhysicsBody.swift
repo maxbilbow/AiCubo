@@ -20,7 +20,7 @@ class RMSPhysicsBody {
     var vMatrix: GLKMatrix4
     var parent: RMSParticle
     var accelerationRate:Float = 0
-    var rotationSpeed:Float = 0
+    var rotationSpeed:Float
     var hasFriction = true
     var hasGravity = false
     var coushin: Float = 2

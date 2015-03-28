@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/art.scnassets/ship.dae</key>
 		<data>
-		mo3lUCNxWuS/lqqJlh2zwNvbGxk=
+		V0mv6mOX9U3laAMiWeF6lYfL1no=
 		</data>
 		<key>Resources/art.scnassets/texture.png</key>
 		<data>
@@ -23,91 +23,91 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			33X7/cGUmp4i+kSfRKWCvKUK3bI=
+			VLJQWLbSq2J5EgqhjsGzzN6eRcs=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftAppKit" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftAppKit" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftCore.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			cuADORaRLPR56tuev5uDcm4rsik=
+			xcoL/sBCaz5JfC6QNq95f2/IzSk=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftCore" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftCore" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftCoreGraphics.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			AJo42TKHEkw/bY25Rxdmg7giWAU=
+			8CucPuCifEoJ5FgfAIRKG4lwRHM=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftCoreGraphics" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftCoreGraphics" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftDarwin.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			TBxZ5L4Kdx97YCpHdfRhZIze5cg=
+			G7bjLXR4ArhRd4XDqefBIJlXFi4=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftDarwin" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftDarwin" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftDispatch.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			h289WfcgO+/iYlLHet8adG4BHjk=
+			tVAe9A9yjxDml0Q/uW1FiA1rdc0=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftDispatch" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftDispatch" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftFoundation.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			LXdr1RU+yXOcimuVpK+pxK1D1eE=
+			MGQd8EW6D4iNCzUr++e59gHuNO4=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftFoundation" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftFoundation" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftGLKit.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			cv1AblzWPDVlpVzmsfIriDlbp7A=
+			kcZyrltgDi+DufpS3m+TuOApLX0=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftGLKit" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftGLKit" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftObjectiveC.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			pZOkGi3iG5ryaQew/M/usI6sqDI=
+			gadW/rOF/VdOOTzK087gvhmYrWs=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftObjectiveC" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftObjectiveC" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftQuartzCore.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			2vx8iBbOVk4qhb6NWguPsj5arik=
+			IHbqLRzZMkgdZK6uD6gFI+yswqw=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftQuartzCore" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftQuartzCore" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libswiftSecurity.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			gCV6jtzOFG7OA7Oa2r5ATiA+oK8=
+			ajhdqXBjl5/cD2HJaaESHPV9bK8=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftSecurity" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "668T39KN4E"</string>
+			<string>identifier "com.apple.dt.runtime.swiftSecurity" and anchor apple generic and certificate leaf[subject.CN] = "3rd Party Mac Developer Application: maxwell bilbow (668T39KN4E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Resources/MainMenu.nib</key>
 		<data>
@@ -115,11 +115,15 @@
 		</data>
 		<key>Resources/art.scnassets/ship.dae</key>
 		<data>
-		mo3lUCNxWuS/lqqJlh2zwNvbGxk=
+		V0mv6mOX9U3laAMiWeF6lYfL1no=
 		</data>
 		<key>Resources/art.scnassets/texture.png</key>
 		<data>
 		gaGB/KjN1LsGxtwW2h32ZmuHfis=
+		</data>
+		<key>embedded.provisionprofile</key>
+		<data>
+		yb51XW45tPuV304enwTo6PoDOEc=
 		</data>
 	</dict>
 	<key>rules</key>

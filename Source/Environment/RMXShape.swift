@@ -60,12 +60,13 @@ class RMXShape {
 //        return s
 //    }
     
-    func makeAsSun(rDist: Float = 1000, isRotating: Bool = true){
+    func makeAsSun(rDist: Float = 1000, isRotating: Bool = true, rAxis: GLKVector3 = GLKVector3Make(1,0,1)){
         self.parent.rotationCenterDistance = rDist
         self.parent.isRotating = isRotating
         self.parent.setRotationSpeed(speed: 1)
         self.parent.setHasGravity(false)
         self.isLight = true
+        self.parent.rAxis = rAxis
         
     }
     

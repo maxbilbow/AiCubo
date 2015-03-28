@@ -39,6 +39,9 @@ class RMSParticle : RMXObject {
     var rotationCenterDistance:Float = 0
     var isRotating = false
     //static var COUNT: Int = 0
+    var isInWorld: Bool {
+        return self.body.distanceTo(self.world!) < self.world?.body.radius
+    }
     
     init(world:RMSWorld?,  parent:RMXObject! = nil, name: String = "RMSParticle")
     {

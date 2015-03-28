@@ -83,10 +83,7 @@ class RMSWorld : RMSParticle {
         let p = sender.body.position.y
         let bounceY: Float = -v
         let g = sender.ground
-        if p <= g && v < 0 {
-//            if sender.hasGravity != true {
-//                RMXVector3SetY(&sender.body.velocity, v)// / sender.body.coushin)
-//                return true
+        if p <= g && v < 0 && sender.isInWorld {
             if p < g / sender.body.coushin {
                 RMXVector3SetY(&sender.body.velocity, bounceY * sender.body.coushin)
                 RMXVector3SetY(&sender.body.position, g)

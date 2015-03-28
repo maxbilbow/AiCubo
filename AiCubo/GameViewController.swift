@@ -16,7 +16,7 @@ import GLKit
 
 class GameViewController : GLKViewController, RMXViewController {
     
-    var shapes: [RMSGeometry] = [ RMSGeometry(type: .CUBE), RMSGeometry(type: .PLANE) ]
+    var shapes: [RMSGeometry] = [ RMSGeometry.CUBE, RMSGeometry.PLANE, RMSGeometry.SPHERE ]
     var modelMatrix: GLKMatrix4!
     var viewMatrix: GLKMatrix4 {
         return self.camera.modelViewMatrix
@@ -142,8 +142,8 @@ class GameViewController : GLKViewController, RMXViewController {
 
         
         
-        for shape in self.shapes {
-            let shape = shape.type.rawValue
+//        for shape in self.shapes {
+            let shape = shapes[0].type.rawValue
             
             // All of the following configuration for per vertex data is stored into the VAO
             
@@ -186,7 +186,7 @@ class GameViewController : GLKViewController, RMXViewController {
                 glBindVertexArrayOES(0);
             
             
-        }
+//        }
         #endif
     }
     
@@ -205,7 +205,7 @@ class GameViewController : GLKViewController, RMXViewController {
         self.effect.material.diffuseColor = GLKVector4Make(0.3,0.3,0.3,1.0)
         self.effect.material.emissiveColor = GLKVector4Make(0.0,0.0,0.0,1.0)
         self.effect.material.specularColor = GLKVector4Make(0.0,0.0,0.0,1.0)
-        self.effect.material.shininess = 0
+        self.effect.material.shininess = 0.2
     }
     
     func configureDefaultTexture() {
@@ -247,12 +247,12 @@ class GameViewController : GLKViewController, RMXViewController {
     #endif
     func updateView(view: RMXView!, drawInRect rect: CGRect) {
         #if OPENGL_ES
-        autoreleasepool({
+//        autoreleasepool({
             glClearColor(1.0, 1.0, 1.0, 1.0);
             glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT));
             
             for o in self.objects {
-                if o.geometry != .NULL {
+                if o.isDrawable {
                     let sprite = o.shape
                     let scaleMatrix = sprite.scaleMatrix
                     let translateMatrix = sprite.translationMatrix
@@ -271,7 +271,7 @@ class GameViewController : GLKViewController, RMXViewController {
                     glBindVertexArrayOES(self.vertexArray.memory)
                 
                     self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
-                    let shape = RMSGeometry.CUBE()
+                    let shape = RMSGeometry.CUBE
                     glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
                    
                     glBindVertexArrayOES(0)
@@ -279,14 +279,14 @@ class GameViewController : GLKViewController, RMXViewController {
                     
                 }
             }
-        })
+//        })
             #elseif OPENGL_OSX
             
         #endif
     }
     
     func prepareEffectWithModelMatrix(modelMatrix: GLKMatrix4, viewMatrix:GLKMatrix4, projectionMatrix: GLKMatrix4) {
-        self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(viewMatrix, modelMatrix)
+        self.effect.transform.modelviewMatrix =  GLKMatrix4Multiply(viewMatrix, modelMatrix)
         self.effect.transform.projectionMatrix = projectionMatrix;
         self.effect.prepareToDraw()
     }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -110,6 +110,7 @@
 		50C2B55F1AC4ACC100AAACF7 /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
 		50C2B5601AC4ACC100AAACF7 /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
+		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +215,7 @@
 		50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXInterface.swift; sourceTree = "<group>"; };
 		50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXMouse.swift; sourceTree = "<group>"; };
 		50F215961AC751BA00ED6FA6 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		50F215981AC758CF00ED6FA6 /* Accelorometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accelorometer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				50C2B53F1AC4ACC100AAACF7 /* iOSControllers.swift */,
+				50F215981AC758CF00ED6FA6 /* Accelorometer.swift */,
 				50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */,
 				50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */,
 				50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */,
@@ -606,7 +609,7 @@
 				};
 			};
 			buildConfigurationList = 50C2B4F01AC4AA2100AAACF7 /* Build configuration list for PBXProject "AiCubo" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -781,6 +784,7 @@
 				50C2B5561AC4ACC100AAACF7 /* RMXValue.swift in Sources */,
 				50C2B5531AC4ACC100AAACF7 /* RMSMaths.swift in Sources */,
 				50C2B5481AC4ACC100AAACF7 /* RMSParticle.swift in Sources */,
+				50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */,
 				50C2B55C1AC4ACC100AAACF7 /* RMSActionProcessor.swift in Sources */,
 				50C2B5011AC4AA2100AAACF7 /* GameViewController.swift in Sources */,
 				50C2B55F1AC4ACC100AAACF7 /* RMXInterface.swift in Sources */,
@@ -902,7 +906,7 @@
 				);
 				INFOPLIST_FILE = OSXView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -919,7 +923,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = OSXView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
