@@ -10,7 +10,14 @@ import Foundation
 
 
 import GLKit
-
+extension RMX {
+    static func toggleFog(){
+        RMX.willDrawFog = !RMX.willDrawFog
+        #if OPENGL_OSX
+        DrawFog(RMX.willDrawFog)
+        #endif
+    }
+}
 @objc public class RMXGLProxy {
     //let world: RMXWorld? = RMXArt.initializeTestingEnvironment()
     static var callbacks: [()->Void] = Array<()->Void>()
@@ -60,12 +67,9 @@ import GLKit
 //    var reshapePtr: CFunctionPointer<(Int32, Int32)->Void>?
     
     class func animateScene() {
-           self.world.animate()
-        if RMX.usingDepreciated {
-            DrawFog()
-            RMXGLPostRedisplay()
-        }
+        self.world.animate()
     }
+    
     class func performAction(action: String){
         self.actions.movement(action, speed: 0, point: [])
     }
@@ -109,7 +113,6 @@ import GLKit
         
         
     }
-
     
     class func display () -> Void {
         glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
@@ -128,6 +131,7 @@ import GLKit
         self.animateScene()
         self.drawScene()
         // Make sure changes appear onscreen
+        RMXGLPostRedisplay()
         RMXGlutSwapBuffers()
         glFlush()
         //tester.checks[1] = observer->toString();

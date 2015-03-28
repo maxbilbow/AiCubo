@@ -142,8 +142,8 @@ void DrawPlane(float x)
   
 }
 
-void DrawFog(){
-GLfloat density = 0.0008;
+void DrawFog(bool draw){
+GLfloat density = 0.0008 * draw;
 
 GLfloat fogColor[4] = {0.9, 0.5, 0.5, 1.0};
     

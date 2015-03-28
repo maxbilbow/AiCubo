@@ -8,7 +8,9 @@
 
 import Foundation
 
-
+extension RMX {
+    static var willDrawFog: Bool = false
+}
 class RMSActionProcessor {
     //let keys: RMXController = RMXController()
     var activeSprite: RMSParticle {
@@ -146,6 +148,10 @@ class RMSActionProcessor {
             #if OPENGL_OSX
             self.activeSprite.mouse.toggleFocus()
             #endif
+        }
+
+        if action == "toggleFog" {
+            RMX.toggleFog()
         }
         
 //        else {

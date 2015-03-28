@@ -43,6 +43,7 @@ void InitGraphics(void)
     glTexParameterf (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                      GL_LINEAR_MIPMAP_LINEAR);
     glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    DrawFog(true);
 }
 
 

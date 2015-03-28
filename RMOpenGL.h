@@ -63,7 +63,7 @@ void RMXDrawSphere(float size);//Particle pCube = Particle();
 //void RenderObjects(void);
 //void DrawTeapot(float f);
 void DrawPlane(float x);
-void DrawFog();
+void DrawFog(bool draw);
 
 
 ///Keys

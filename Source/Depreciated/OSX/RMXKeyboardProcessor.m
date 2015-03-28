@@ -132,6 +132,9 @@ void keyUpOperations(int key){
         case 'm':
             [RMXGLProxy performAction:@"toggleMouseLock"];
             break;
+        case 'f':
+            [RMXGLProxy performAction:@"toggleFog"];
+            break;
         case 32:
     // [observer stop();
 //            if (DEBUG) NSLog(@"%i: Space Bar",key);
