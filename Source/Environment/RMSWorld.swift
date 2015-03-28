@@ -15,14 +15,14 @@ class RMSWorld : RMSParticle {
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
 
-    private lazy var _actions: RMSActionProcessor = RMSActionProcessor(world: self)
+    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     var sun: RMSParticle?
     private let GRAVITY: Float = 9.8
     var sprites: Array<RMSParticle>
     
     var drawables: Array<RMSParticle>{
         return self.sprites.filter { (sprite: RMSParticle) -> Bool in
-            return sprite.shape?.type != .NULL && sprite.shape!.visible
+            return sprite.shape.type != .NULL && sprite.shape.isVisible
         }
     }
     
@@ -81,17 +81,17 @@ class RMSWorld : RMSParticle {
     //Have I gone through a barrier?
         let v = sender.body.velocity.y
         let p = sender.body.position.y
+        let bounceY: Float = -v
         let g = sender.ground
         if p <= g && v < 0 {
-            if sender.hasGravity != true {
-                RMXVector3SetY(&sender.body.velocity, v / sender.body.coushin)
-                return true
-            } else if p < g / sender.body.coushin {
-                let bounceY: Float = -v
-                RMXVector3SetY(&sender.body.velocity, v * sender.body.coushin)
+//            if sender.hasGravity != true {
+//                RMXVector3SetY(&sender.body.velocity, v)// / sender.body.coushin)
+//                return true
+            if p < g / sender.body.coushin {
+                RMXVector3SetY(&sender.body.velocity, bounceY * sender.body.coushin)
                 RMXVector3SetY(&sender.body.position, g)
             } else {
-                RMXVector3SetY(&sender.body.velocity, 0)
+                RMXVector3SetY(&sender.body.velocity, sender.hasGravity ? 0 : bounceY * sender.body.coushin)
                 RMXVector3SetY(&sender.body.position, g)
             }
             return true
@@ -164,7 +164,7 @@ class RMSWorld : RMSParticle {
             sprite.animate()
            
         }
-        _actions.animate()
+        self.actionProcessor.animate()
         self.debug()
         
     }
@@ -197,7 +197,7 @@ class RMSWorld : RMSParticle {
     //private var _hasGravity = false
     override func toggleGravity() {
         for sprite in sprites {
-            if !(sprite.isLightSource) {
+            if (sprite !== self.observer) && !(sprite.isLightSource) {
                 sprite.setHasGravity(self.hasGravity)
             }
         }
@@ -206,7 +206,7 @@ class RMSWorld : RMSParticle {
 
     
     func action(action: String = "reset",speed: Float = 0, point: [Float] = []) {
-        _actions.movement( action,speed: speed, point: point)
+        self.actionProcessor.movement( action,speed: speed, point: point)
     }
     
     

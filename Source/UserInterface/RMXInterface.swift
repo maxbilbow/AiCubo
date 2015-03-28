@@ -16,22 +16,30 @@ import Foundation
 class RMXInterface : NSObject {
     private let _isDebugging = false
     var debugData: String = "No Data"
-    var gvc: GameViewController
+//    #if OPENGL_ES
+    var gvc: RMXViewController
+//    #endif
     var world: RMSWorld
     
     var activeSprite: RMSParticle {
         return self.world.activeSprite!
     }
-    var view: NSObject {
-        return self.gvc.view as! RMXView
+    #if OPENGL_ES
+    var view: UIView {
+        return self.gvc.view as UIView
     }
+    #elseif OPENGL_OSX
+    var view: NSObject {
+        return self.gvc.view //as GLKView
+    }
+    #endif
     var controllers: [ String : ( isActive: Bool, process: ()->() ) ]
     
     var activeCamera: RMXCamera {
         return self.world.activeCamera!
     }
     
-    init(gvc: GameViewController, world: RMSWorld){
+    init(gvc: RMXViewController, world: RMSWorld){
         self.gvc = gvc
         self.world = world
 //        self.actions = self.world.actions

@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-@objc public class RMXCamera {
+public class RMXCamera {
     
     var world: RMSWorld?
     var pov: RMSParticle?
@@ -70,14 +70,6 @@ import GLKit
     }
     
     
-    func updateView(){
-        if RMX.usingDepreciated {
-            //RMXGLMakeLookAt(self)
-        } else {
-            fatalError("Camera Error in \(__FILE__)")
-        }
-
-    }
     var viewDescription: String {
         let eye = self.eye; let center = self.center; let up = self.up
         return "\n      EYE \(eye.print)\n   CENTRE \(center.print)\n      UP: \(up.print)\n"
@@ -87,7 +79,9 @@ import GLKit
     
     func makePerspective(width: Int32, height:Int32, inout effect: GLKBaseEffect?){
         if RMX.usingDepreciated {
-            //RMXGLMakePerspective(self.fieldOfView, Float(width) / Float(height), self.near, self.far)
+            #if OPENGL_OSX
+            RMXGLMakePerspective(self.fieldOfView, Float(width) / Float(height), self.near, self.far)
+            #endif
         } else {
             effect?.transform.projectionMatrix = GLKMatrix4MakePerspective(self.fieldOfView, Float(width) / Float(height), self.near, self.far)
         }

@@ -17,6 +17,10 @@ var RMXVector3Zero: GLKVector3 {
     return GLKVector3Make(0,0,0)
 }
 
+var RMXVector4Zero: GLKVector4 {
+    return GLKVector4Make(0,0,0,0)
+}
+
 func RMXVector3SetX(inout v: GLKVector3, x: Float){
     v = GLKVector3Make(x, v.y, v.z)
 }

@@ -9,10 +9,9 @@
 
 
 
-
-
-#import "RattleGLS-Bridging-Header.h"
-#import <RattleGL-Swift.h>
+@import GLUT;
+#import "RMOpenGL.h"
+#import <OSXView-Swift.h>
 
 @class Main, RMX, RMXGLProxy, RMXSpriteActions, RMXParticle;
 //static BOOL g_bLightingEnabled = TRUE;
@@ -28,13 +27,13 @@ int g_Width = 600;                          // Initial window width
 int g_Height = 600;
 
 static int g_yClick = 0;
-void center(){
+void RMGLMouseCenter(){
 //
-    bool center = false;//observer->hasFocus();
-    int x = center ? glutGet(GLUT_WINDOW_X)/2 :RMXGLProxy.activeSprite.mouse.x;
-    int y = center ? glutGet(GLUT_WINDOW_Y)/2 :RMXGLProxy.activeSprite.mouse.y;
+    bool center = true;//observer->hasFocus();
+    int x = center ? (glutGet(GLUT_WINDOW_WIDTH) + glutGet(GLUT_WINDOW_X))/2 : RMXGLProxy.mouseX;
+    int y = center ? (glutGet(GLUT_WINDOW_HEIGHT) + glutGet(GLUT_WINDOW_Y))/2 :RMXGLProxy.mouseY;
 
-    CGWarpMouseCursorPosition(CGPointMake(x + glutGet(GLUT_WINDOW_X), y + glutGet(GLUT_WINDOW_Y) ));
+    CGWarpMouseCursorPosition(CGPointMake(x , y ));
   //  pos.x = glutGet(GLUT_WINDOW_X)/2;
   //  pos.y = glutGet(GLUT_WINDOW_Y)/2;
     
@@ -47,9 +46,9 @@ void MouseButton(int button, int state, int x, int y)
     // If button1 pressed, mark this state so we know in motion function.
 
     if ((button == GLUT_LEFT_BUTTON)&&(state==GLUT_UP))
-        [RMXGLProxy.activeSprite.actions grabItem];//&art.sh);
+        [RMXGLProxy performAction:@"grab"];//&art.sh);
     if ((button == GLUT_LEFT_BUTTON)&&(state==GLUT_DOWN))
-        [RMXGLProxy.activeSprite.mouse calibrateView:x y:y];
+        [RMXGLProxy calibrateView:x y:y];
     if (button == GLUT_LEFT_BUTTON)
     {
 
@@ -58,7 +57,7 @@ void MouseButton(int button, int state, int x, int y)
         //art.sh.setAnchor(&observer);
     }
     if ((button == GLUT_RIGHT_BUTTON)&&(state==GLUT_UP)){
-        [RMXGLProxy.activeSprite.actions throwItem:15];
+        [RMXGLProxy performActionWithSpeed:10 action:@"throw"];
     }
 }
 
@@ -67,35 +66,22 @@ void MouseButton(int button, int state, int x, int y)
 
 void MouseMotion(int x, int y)
 {
-    if (!RMXGLProxy.activeSprite.mouse.hasFocus) {
-        [RMXGLProxy.activeSprite.mouse mouse2view:x y:y];
-    }
-    else {
-        [RMXGLProxy.activeSprite.mouse setMousePos:x y:y];
-        //world.observer->calibrateMouse(x,y);
-    }
-//    if (g_bButton1Down)
-//    {
-//        window.fViewDistance = (y - g_yClick) / 3.0 ;
-//        if (window.fViewDistance < VIEWING_DISTANCE_MIN)
-//            window.fViewDistance = VIEWING_DISTANCE_MIN;
-//        glutPostRedisplay();
-//    }
     
+    [RMXGLProxy mouseMotion:x y:y];    
     
 }
 
 
 void MouseFree(int x, int y){
-    if (RMXGLProxy.activeSprite.mouse.hasFocus) {
-        [RMXGLProxy.activeSprite.mouse mouse2view:x y:y];// mouse.setView(world.observer,x,y);
-        //world.observer->center();
-        center();
-
-    }
-    else
-        [RMXGLProxy.activeSprite.mouse setMousePos:x y:y];
+    [RMXGLProxy mouseMotion:x y:y];
+//    
+//    if (RMXGLProxy.activeSprite.mouse.hasFocus) {
+//        [RMXGLProxy.activeSprite.mouse mouse2view:x y:y];// mouse.setView(world.observer,x,y);
+//        //world.observer->center();
+//        center();
+//
+//    }
+//    else
+//        [RMXGLProxy.activeSprite.mouse setMousePos:x y:y];
     
-    //glutWarpPointer(window.getWidth()/2, window.getHeight()/2);
-   
 }

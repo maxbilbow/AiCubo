@@ -14,18 +14,22 @@ import GLKit
 enum RMXParticleType { case OBSERVER, SHAPE, SIMPLE_PARTICLE, WORLD }
 class RMSParticle : RMXObject {
  
-    
-    var mouse: RMXMouse?
+    #if OPENGL_OSX
+    lazy var mouse: RMXMouse = RMSMouse(parent: self)
+    #endif
     var actions: RMXSpriteActions?
     var type: RMXParticleType = .SIMPLE_PARTICLE
     
     var camera: RMXCamera?
     
+    var isDrawable: Bool {
+        return self.shape.isVisible
+    }
     var geometry: ShapeType {
-        return self.shape != nil ? self.shape!.type : .NULL
+        return self.shape.type
     }
     
-    var shape: RMXShape?
+    lazy var shape: RMXShape = RMXShape(parent: self, world: self.world)
     var anchor = RMXVector3Zero
     
     //Set automated rotation (used mainly for the sun)
@@ -71,10 +75,10 @@ class RMSParticle : RMXObject {
     
     func setAsShape(shape render: ((Float)->Void)?) -> RMSParticle? {//, mass: Float? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMSParticle {
         if _asShape { return self }
-        if render != nil { self.shape!.setRenderer(render!) }
+        if render != nil { self.shape.setRenderer(render!) }
         self.resets.append({
             //if body != nil { self.body = body! }
-            self.shape?.visible = true
+            self.shape.isVisible = true
         })
         _asShape = true
         self.resets.last?()
@@ -85,9 +89,9 @@ class RMSParticle : RMXObject {
         if _asObserver { return self }
         self.resets.append({
             self.actions!.armLength = self.body.radius * 2
-            self.actions!.reach = 2 * self.actions!.armLength;
+            self.actions!.setReach(2 * self.actions!.armLength);
             self.body.mass = 9
-            self.body.radius = 10
+            self.body.radius = 20
             self.body.position = GLKVector3Make(0,self.body.radius,-20)
             self.setHasGravity(true)
             self.isAlwaysActive = true
@@ -132,7 +136,7 @@ class RMSParticle : RMXObject {
             var temp = RMX.circle(count: Float(self.rotation), radius: Float(self.rotationCenterDistance) * 2)
             self.body.position = GLKVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
         }
-        self.shape?.draw()
+
     }
     
     
@@ -189,7 +193,7 @@ class RMSParticle : RMXObject {
     
     
     var isLightSource: Bool {
-        return (self.shape != nil && self.shape!.isLight)
+        return self.shape.isLight
     }
     
 

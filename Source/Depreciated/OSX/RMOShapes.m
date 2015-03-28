@@ -10,7 +10,9 @@
 @import GLKit;
 @import GLUT;
 
-#import "RMXShapes.h"
+#import "RMOpenGL.h"
+#import <OSXView-Swift.h>
+
 static GLfloat g_fTeapotAngle2 = 0.0;
 //static GLfloat g_fViewDistance = 3 * VIEWING_DISTANCE_MIN;
 //static GLfloat g_nearPlane = 1;

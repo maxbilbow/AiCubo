@@ -30,11 +30,11 @@ class RMXArt : RMXObject {
     
         let sun = RMSParticle(world: world)
         //[sun setRAxis:GLKVector3Make(0, 0, 1)];
-        sun.body.radius = 10
-        sun.shape!.color = GLKVector4Make(1, 1, 1, 1.0)
-        sun.shape!.makeAsSun(rDist: world.body.radius * 2, isRotating: true)
+        sun.body.radius = 80
+        sun.shape.color = GLKVector4Make(1, 1, 1, 1.0)
+        sun.shape.makeAsSun(rDist: world.body.radius * 2, isRotating: true)
         sun.body.position = GLKVector3Make(0,0,10)
-        sun.shape!.type = .CUBE
+        sun.shape.type = .CUBE
         world.sun = sun
         world.insertSprite(sun)
 
@@ -42,11 +42,13 @@ class RMXArt : RMXObject {
         
         let ZX = RMSParticle(world: world)
         ZX.body.radius = world.body.radius
-        ZX.shape?.type = .PLANE
-        ZX.body.orientation = GLKMatrix3Rotate(ZX.body.orientation, GLKMathDegreesToRadians(90) , 1, 0, 1)
-        ZX.shape!.color = GLKVector4Make(0.8,1.2,0.8,0.5)
+        ZX.shape.type = .PLANE
+//        ZX.body.orientation = GLKMatrix3Rotate(ZX.body.orientation, GLKMathDegreesToRadians(90) , 1, 0, 1)
+        ZX.shape.color = GLKVector4Make(0.8,1.2,0.8,0.5)
         ZX.isAnimated = false
+        #if OPENGL_ES
         ZX.body.position = GLKVector3Make(ZX.body.position.x, -world.body.radius, ZX.body.position.z)
+        #endif
         world.insertSprite(ZX)
         
         RMXArt.drawAxis(world)
@@ -82,17 +84,17 @@ class RMXArt : RMXObject {
                 fatalError(__FUNCTION__)
             }
             for (var i: Float = 0; i < shapesPerAxis; ++i){
-                let position = GLKVector3Make(axis == "x" ? point : 0, axis == "y" ? point : 0, axis == "z" ? point : 0)
+                let position = GLKVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                 point += step
                 let object:RMSParticle = RMSParticle(world: world)
                 object.addInitCall( {
                     object.setHasGravity(false)
                     object.body.radius = shapeRadius
                     object.body.position = position
-                    object.shape!.visible = true
-                    object.shape!.type = .CUBE
+                    object.shape.isVisible = true
+                    object.shape.type = .CUBE
             
-                    object.shape!.color = GLKVector4Make(color[0], color[1], color[2], color[3])
+                    object.shape.color = GLKVector4Make(color[0], color[1], color[2], color[3])
                     object.isAnimated = false
                 })
                 world.insertSprite(object)
@@ -133,17 +135,17 @@ class RMXArt : RMXObject {
 //            }
         
         if(random() % 50 == 1) {
-//            object.shape!.geometry = RMOGeometry.SPHERE(object) ///TODO
+            object.shape.type = .SPHERE
         } else {
-            object.shape!.type = .CUBE
+            object.shape.type = .CUBE
         }
         
         object.setHasGravity(false) //(rand()% 100) == 1
-        object.body.radius = Float(random() % 3 + 2)
+        object.body.radius = Float(random() % 9 + 2)
         object.body.position = GLKVector3Make(randPos[0], randPos[1], randPos[2])
         object.body.mass = Float(random()%15+2)/10;
         object.body.dragC = Float(random() % 99+1)/100;
-        object.shape!.color = RMXRandomColor()
+        object.shape.color = RMXRandomColor()
         world.insertSprite(object)
         
         

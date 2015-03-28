@@ -13,7 +13,7 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
  
     var keys: [ RMKey ]?
 //    var specialKeys: [ RMKey ] = [ RMKey ]()
-    override init(gvc: GameViewController, world: RMSWorld){
+    override init(gvc: RMXViewController, world: RMSWorld){
         super.init(gvc: gvc, world: world)
         //self.set(action: "forward", key: "w")
         self.keys = [
@@ -57,11 +57,11 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         return nil
     }
     
-    func match(char: String) -> NSMutableArray {
-        let keys: NSMutableArray = NSMutableArray(capacity: char.pathComponents.count)
+    func match(chr: String) -> NSMutableArray {
+        let keys: NSMutableArray = NSMutableArray(capacity: chr.pathComponents.count)
         for key in self.keys! {
             //RMXLog(key.description)
-            for str in char.pathComponents {
+            for str in chr.pathComponents {
                 if key.key == str {
                     keys.addObject(key)
                 }
@@ -70,6 +70,7 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         }
         return keys
     }
+    
     func match(value: UInt16) -> RMKey? {
         for key in keys! {
             //RMXLog(key.description)

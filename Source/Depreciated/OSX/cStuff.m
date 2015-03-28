@@ -14,28 +14,24 @@
 //#import <OpenGL/OpenGL.h>
 //#import <SceneKit/SceneKit.h>
 //#import <GLUT/glut.h>
-#import "RMXMaths.h"
-#import <RattleOSX-Swift.h>
+
+//#import <OSX-Swift.h>
 #import "cStuff.h"
+#import "RMOpenGL.h"
 
 //class RMXGL {
 //public:
-     void RMXMakeLookAtGL(void (* lookAt)(double eyeX, double eyeY, double eyez,
-                                         double centerX, double centerY, double centerZ,
-                                         double upX, double upY, double upZ),double eyeX, double eyeY, double eyez,
-                         double centerX, double centerY, double centerZ,
-                         double upX, double upY, double upZ) { 
-        lookAt(eyeX,eyeY,eyez,
-               centerX,centerY,centerZ,
-               upX,upY,upZ);
-        
-    }
+//     void RMXMakeLookAtGL(void (* lookAt)(double eyeX, double eyeY, double eyez,
+//                                         double centerX, double centerY, double centerZ,
+//                                         double upX, double upY, double upZ),double eyeX, double eyeY, double eyez,
+//                         double centerX, double centerY, double centerZ,
+//                         double upX, double upY, double upZ) { 
+//        lookAt(eyeX,eyeY,eyez,
+//               centerX,centerY,centerZ,
+//               upX,upY,upZ);
+//        
+//    }
 
-     void RMXGLKMakeLookAt(GLKBaseEffect * effect,RMXCamera * view) {
-        effect.transform.modelviewMatrix = GLKMatrix4MakeLookAt(view.eye.x, view.eye.y, view.eye.z,
-                                     view.center.x, view.center.y, view.center.z,
-                                     view.up.x, view.up.y, view.up.z );
-    }
 
 
 /**
@@ -50,20 +46,14 @@
  */
 
 
-int RMXGLMakeLookAt(RMXCamera * view) {
-    gluLookAt(view.eye.x, view.eye.y, view.eye.z,
-              view.center.x, view.center.y, view.center.z,
-              view.up.x, view.up.y, view.up.z );
-     return 0;
 
-}
 
 
 void RMXGLMaterialfv(int32_t a,int32_t b, GLKVector4 color){
     glMaterialfv(a,b,color.v);
 }
 
-void RMXGLTranslate(RMXVector3 v){
+void RMXGLTranslate(GLKVector3 v){
     glTranslatef(v.x, v.y, v.z);
 }
 
@@ -83,6 +73,9 @@ void RMXGLShine(int32_t a, int32_t b, GLKVector4 color) {
     CGGetLastMouseDelta(x,y);
 }
 
+void RMGLutWarpPointer(int x, int y){
+    RMGLMouseCenter();
+}
  GLKVector4 RMXRandomColor() {
     //float rCol[4];
     GLKVector4 rCol = GLKVector4Make(0,0,0,0);

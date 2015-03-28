@@ -41,7 +41,7 @@ class RMXShape {
     var render: ((Float) -> Void)?//UnsafeMutablePointer<(Float) -> Void> = UnsafeMutablePointer<(Float) -> Void>()//.alloc(sizeof(<(Float) -> Void>))
     var parent: RMSParticle!
     var world: RMSWorld?
-    var visible: Bool = true;
+    var isVisible: Bool = true;
     //var shine: CFunctionPointer<(Int32, Int32, [Float])->Void>
     var brigtness: Float = 1
     
@@ -69,50 +69,7 @@ class RMXShape {
         
     }
     
-    func draw() {
-        if !self.visible { return }
-        if self.type != .NULL {
-            let v = self.parent.body.position
-            
-            let r: CGFloat = CGFloat(self.parent.body.radius)
-            //self.node!.scale = SCNVector3(x: r,y: r,z: r)
-            
-        } else if RMX.usingDepreciated {
-//            if self.isLight {
-//                RMXGLShine(self.gl_light, self.type, GLKVector4MakeWithVector3(self.parent.body.position, 1))
-//            }
-//            if self.render != nil {
-//                glPushMatrix();
-//                RMXGLTranslate(parent.anchor)
-//                RMXGLTranslate(parent.body.position)
-//                self.setMaterial()
-//    //            RMXGLRender(self.render, Float(self.parent.body.radius))
-//                self.render!(Float(self.parent.body.radius))
-//                self.unsetMaterial()
-//                glPopMatrix();
-//            }
-        }
     
-    }
-/*
-    private func setMaterial()
-    {
-        if self.isLight {
-            RMXGLMaterialfv(GL_FRONT, GL_EMISSION, self.color)
-        }
-        
-            RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, self.color)
-            RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, self.color)
-        
-    }
-    
-    private func unsetMaterial()    {
-        let nill = GLKVector4Make( 0,0,0,0);
-        RMXGLMaterialfv(GL_FRONT, GL_EMISSION, nill);
-        RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, nill);
-        RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, nill);
-    }
-*/
     
     func getColorfv() -> GLKVector4 {
         return self.color

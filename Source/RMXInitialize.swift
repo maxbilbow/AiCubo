@@ -20,7 +20,7 @@ extension RMX {
                     // animate the 3d object
                     
                     //ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1000)))
-                    if sprite.isAnimated {
+                    
                         sprite.isAlwaysActive = true
                         //                        sprite.shape!.node = self.rootNode.childNodeWithName("ship1", recursively: true)!
                         //                        sprite.body.position = RMXVector3Zero()
@@ -28,13 +28,13 @@ extension RMX {
                         sprite.addBehaviour({
                             let dist = sprite.body.distanceTo(world.observer)
                             let distTest = sprite.body.radius + world.observer.body.radius + world.observer.actions!.reach
-                            if dist <= distTest / 2 {
+                            if dist <= distTest  {
                                 sprite.body.velocity = GLKVector3Add(sprite.body.velocity, world.observer.body.velocity)
-                            } else if dist < distTest * 10 {
+                            } else if dist < distTest * 0.8 {
                                 sprite.actions?.prepareToJump()
                             }
                         })
-                        
+                        if sprite.isAnimated {
                         sprite.addBehaviour({
                             if !sprite.hasGravity && world.observer.actions!.item != nil {
                                 if sprite.body.distanceTo((world.observer.actions?.item)!) < 50 {
@@ -48,16 +48,15 @@ extension RMX {
                 
             }
         }
+        
         //self.world = world
         return world
     }
     
     #if OPENGL_OSX
     static func SetUpGLProxy() -> RMSWorld {
-        let world = self.buildScene()
-        RMXGLProxy.actions = RMSActionProcessor(world: world)
-//        RMXGLProxy.world = world
-        return world
+        RMXGLProxy.run()
+        return RMXGLProxy.world
     }
     #endif
 }

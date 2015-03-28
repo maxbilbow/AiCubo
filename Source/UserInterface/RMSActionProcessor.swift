@@ -22,9 +22,9 @@ class RMSActionProcessor {
     }
     
     
-    func movement(action: String!, speed: Float = 0,  point: [Float]){
+    func movement(action: String!, speed: Float = 0,  point: [Float]) -> Bool{
         //if (keys.keyStates[keys.forward])  [observer accelerateForward:speed];
-        if action == nil { return }
+        if action == nil { return false }
         
         if action == "move" && point.count == 3 {
 //            self.activeSprite.body.setVelocity(point, speed: speed)
@@ -142,9 +142,17 @@ class RMSActionProcessor {
         }
         
         
+        if action == "toggleMouseLock" {
+            #if OPENGL_OSX
+            self.activeSprite.mouse.toggleFocus()
+            #endif
+        }
+        
 //        else {
 //            [RMXGLProxy.activeSprite.mouse setMousePos:x y:y];
         RMXLog("\(self.activeSprite.camera!.viewDescription)\n\(action!) \(speed), \(self.world.activeSprite!.body.position.z)\n")
+        
+        return true
     }
     
     func animate(){
@@ -154,5 +162,5 @@ class RMSActionProcessor {
     }
         
     var extendArm: Float = 0
-
+   
 }

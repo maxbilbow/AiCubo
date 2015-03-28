@@ -10,8 +10,11 @@ import Foundation
 import GLKit
 
 public class RMXSpriteActions {
-    var armLength:Float = 0
-    var reach:Float = 0
+    var armLength: Float = 0
+    private var _reach: Float?
+    var reach:Float {
+        return _reach ?? self.body.radius * 10
+    }
     var jumpStrength: Float = 1
     var squatLevel:Float = 0
     private var _prepairingToJump: Bool = false
@@ -28,7 +31,7 @@ public class RMXSpriteActions {
         return self.parent// as! RMSParticle
     }
     
-    var body: RMSPhysicsBody? {
+    var body: RMSPhysicsBody {
         return self.sprite.body
     }
     
@@ -42,9 +45,9 @@ public class RMXSpriteActions {
         if self.item != nil {
             self.item!.isAnimated = true
             self.item!.setHasGravity(_itemHadGravity)
-            let fwd4 = self.body!.forwardVector
+            let fwd4 = self.body.forwardVector
             let fwd3 = GLKVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item!.body.velocity = self.body!.velocity + GLKVector3MultiplyScalar(fwd3,strength)
+            self.item!.body.velocity = self.body.velocity + GLKVector3MultiplyScalar(fwd3,strength)
             self.item = nil
         } else {
             return
@@ -54,9 +57,9 @@ public class RMXSpriteActions {
     func manipulate() {
         if self.item != nil {
             self.item?.wasJustWoken = true
-            let fwd4 = self.body!.forwardVector
+            let fwd4 = self.body.forwardVector
             let fwd3 = GLKVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item?.body.position = self.sprite.viewPoint + GLKVector3MultiplyScalar(fwd3, self.armLength + self.item!.body.radius + self.body!.radius)
+            self.item?.body.position = self.sprite.viewPoint + GLKVector3MultiplyScalar(fwd3, self.armLength + self.item!.body.radius + self.body.radius)
         }
     }
     
@@ -69,7 +72,7 @@ public class RMXSpriteActions {
             _itemHadGravity = item!.hasGravity
             self.item!.setHasGravity(false)
             self.item!.isAnimated = true
-            self.armLength = self.body!.distanceTo(self.item!)
+            self.armLength = self.body.distanceTo(self.item!)
             if RMX.isDebugging { NSLog(item!.name) }
         }
     }
@@ -101,12 +104,12 @@ public class RMXSpriteActions {
     }
     
     func applyForce(force: RMXVector3) {
-        self.body!.acceleration += force
+        self.body.acceleration += force
     }
     
     func jumpTest() {
         if (_prepairingToJump || _goingUp || self.squatLevel != 0){// || self.squatLevel > 0){
-            var i: Float = self.body!.radius / 200
+            var i: Float = self.body.radius / 200
             if (_prepairingToJump){
                 self.squatLevel += i
                 if (self.squatLevel >= self.sprite.ground/4-i) {
@@ -115,11 +118,11 @@ public class RMXSpriteActions {
                 }
             } else if (self.squatLevel != 0 ) || ( _goingUp ){
                 //if (self.goingUp) {
-                self.squatLevel -= i * 4;
+                self.squatLevel -= i * 4
                 if (self.squatLevel <= 0) {
-                    self.squatLevel = 0;
+                    self.squatLevel = 0
                     _goingUp = false;
-                    self.body!.upStop()
+                    self.body.upStop()
                 }
             }
         }
@@ -139,14 +142,16 @@ public class RMXSpriteActions {
             return
         }
         else if (self.sprite.hasGravity && _prepairingToJump && !_goingUp) {
-            let y = self.body!.weight * self.jumpStrength * self.body!.radius / self.squatLevel
-            RMXVector3PlusY(&self.body!.acceleration, y)
+            let y = self.body.weight * self.jumpStrength * self.body.radius / self.squatLevel
+            RMXVector3PlusY(&self.body.acceleration, y)
             _goingUp = true;
             _prepairingToJump = false;
         }
         
     }
 
-
+    func setReach(reach: Float) {
+        _reach = reach
+    }
     
 }

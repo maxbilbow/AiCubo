@@ -10,7 +10,17 @@ import Foundation
 import GLKit
 
     
-
+extension RMX {
+#if OPENGL_ES
+    static func Controller(gvc: RMXViewController, world: RMSWorld) -> RMXDPad {
+        return RMXDPad(gvc: gvc, world: world)
+    }
+    #elseif OPENGL_OSX
+    static func Controller(gvc: RMXViewController, world: RMSWorld) -> RMSKeys {
+        return RMSKeys(gvc: gvc, world: world)
+    }
+#endif
+}
 
 protocol RMXViewController  {
     var shapes: [RMSGeometry] { get set }
@@ -28,13 +38,20 @@ protocol RMXViewController  {
     
 
     var context: RMXContext! { get set }
-    var view: RMXView! { get set }
-    
+    #if OPENGL_ES
+        var view: RMXView! { get set }
+        #elseif OPENGL_OSX
+        var view: RMXView! { get set }
+    #endif
     var lightPosition: GLKVector4 { get }
     
     var lightColor: GLKVector4 { get }
-    
-    var interface: RMXController { get }
+   
+//    #if OPENGL_ES
+    var interface: RMXInterface! { get }
+//    #elseif OPENGL_OSX
+//    var interface: RMSKeys! { get }
+//    #endif
     var world: RMSWorld { get }
     var objects: Array<RMSParticle> { get }
     
@@ -56,7 +73,8 @@ protocol RMXViewController  {
     
     func prepareEffectWithModelMatrix(modelMatrix: GLKMatrix4, viewMatrix:GLKMatrix4, projectionMatrix: GLKMatrix4)
     
+    #if OPENGL_ES
     func didReceiveMemoryWarning()
-    
+    #endif
     func tearDownGL()
 }

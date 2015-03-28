@@ -14,39 +14,76 @@ import GLKit
 @objc public class RMXGLProxy {
     //let world: RMXWorld? = RMXArt.initializeTestingEnvironment()
     static var callbacks: [()->Void] = Array<()->Void>()
-    static var world: RMSWorld?
+    static var world: RMSWorld = RMX.buildScene()
     static var effect: GLKBaseEffect? = GLKBaseEffect()
-    static var actions: RMSActionProcessor?
-    static var activeCamera: RMXCamera? {
-        return self.world?.activeCamera
+    static var actions: RMSActionProcessor {
+        return self.world.actionProcessor
     }
+    
+    static var activeCamera: RMXCamera {
+        return self.world.activeCamera!
+    }
+    
+    static var mouse: RMXMouse {
+        return self.activeSprite.mouse
+    }
+    
+    static var mouseX: Int32 {
+        return self.mouse.x
+    }
+    
+    static var mouseY: Int32 {
+        return self.mouse.y
+    }
+    
     static var itemBody: RMSPhysicsBody? {
-        return self.activeSprite?.actions?.item?.body
+        return self.activeSprite.actions?.item?.body
     }
-    static var activeSprite: RMSParticle? {
-        return self.world?.activeSprite
+    
+    static var activeSprite: RMSParticle {
+        return self.world.activeSprite!
     }
-    var displayPtr: CFunctionPointer<(Void)->Void>?
-    var reshapePtr: CFunctionPointer<(Int32, Int32)->Void>?
+    
+    class func calibrateView(x: Int32, y: Int32) {
+        self.mouse.calibrateView(x, y: y)
+    }
+    
+    class func mouseMotion(x: Int32, y:Int32) {
+        if self.mouse.hasFocus {
+            self.mouse.mouse2view(x, y:y)
+        }
+        else {
+            self.mouse.setMousePos(x, y:y)
+        }
+    }
+//    var displayPtr: CFunctionPointer<(Void)->Void>?
+//    var reshapePtr: CFunctionPointer<(Int32, Int32)->Void>?
     
     class func animateScene() {
-        if self.world != nil {
-            world?.animate()
-        } else {
-            fatalError("RMXWorld is nots set")
-        }
+           self.world.animate()
         if RMX.usingDepreciated {
             DrawFog()
             RMXGLPostRedisplay()
         }
     }
-    class func performAction(action: String!, speed: Float, point: [Float]){
-        self.actions?.movement(action, speed: speed, point: point)
+    class func performAction(action: String){
+        self.actions.movement(action, speed: 0, point: [])
     }
+    
+    class func performActionWithSpeed(speed: Float, action: String){
+        self.actions.movement(action, speed: speed, point: [])
+    }
+
+
+    class func performActionWith(point: [Float], action: String!, speed: Float){
+        self.actions.movement(action, speed: speed, point: point)
+    }
+
+    
     class func initialize(world: RMSWorld, callbacks: ()->Void ...){
         self.world = world
-        self.activeCamera?.effect = self.effect
-        for function in callbacks {
+        self.activeCamera.effect = self.effect
+        for function in self.callbacks {
             self.callbacks.append(function)
         }
     }
@@ -63,11 +100,11 @@ import GLKit
             glViewport(0, 0, width, height)
             glMatrixMode(GLenum(GL_PROJECTION))
             glLoadIdentity()
-            self.world?.activeCamera?.makePerspective(width, height: height,effect: &self.effect)
+            self.activeCamera.makePerspective(width, height: height,effect: &self.effect)
             glMatrixMode(GLenum(GL_MODELVIEW))
         } else {
-            self.world?.activeCamera!.viewHeight = Float(height)
-            self.world?.activeCamera!.viewWidth = Float(width)
+            self.activeCamera.viewHeight = Float(height)
+            self.activeCamera.viewWidth = Float(width)
         }
         
         
@@ -76,20 +113,20 @@ import GLKit
     
     class func display () -> Void {
         glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
-        //glClearColor(art.r,art.g,art.b,art.k);
         glClearColor(0.8, 0.85, 1.8, 0.0)
-        //[rmxDebugger add:RMX_DISPLAY_PROCESSOR n:@"DisplayProcessor" t:[NSString stringWithFormat:@"r%f, g%f, b%f, k%f",art.r,art.g,art.b,art.k]];
+
         glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
-        if self.world?.activeCamera != nil {
-            self.world?.activeCamera?.updateView()
+        if RMX.usingDepreciated {
+            RMXGLMakeLookAt(self.activeCamera.eye, self.activeCamera.center, self.activeCamera.up)
         } else {
-            fatalError("World Camera not initialised")
+            fatalError("Camera Error in \(__FILE__)")
         }
-        self.animateScene()
+
         for function in self.callbacks {
             function()
         }
-
+        self.animateScene()
+        self.drawScene()
         // Make sure changes appear onscreen
         RMXGlutSwapBuffers()
         glFlush()
@@ -104,13 +141,61 @@ import GLKit
 
 extension RMXGLProxy {
     class func run(){
-        RMXRun(Process.argc, Process.unsafeArgv)
+        self.world = RMX.buildScene()
+        RMXGLRun(Process.argc, Process.unsafeArgv)
     }
     
-    class func setUpGL(){}
     
     class func GetLastMouseDelta(inout dx:Int32 , inout dy:Int32 ) {
-        //RMXCLGetLastMouseDelta(dx,dy)
+        RMXCGGetLastMouseDelta(&dx,&dy)
+    }
+    
+    class func drawScene(){
+
+        func shape(type: ShapeType, radius: Float){
+            switch (type) {
+            case .CUBE:
+                DrawCubeWithTextureCoords(radius)
+            case .SPHERE:
+                RMXDrawSphere(radius)
+            case .PLANE:
+                DrawPlane(radius)
+            default:
+                return
+            }
+        }
+        
+        for object in self.world.sprites  {
+            let position = object.body.position
+            let radius = object.body.radius
+
+            if object.isLightSource {
+                RMXGLShine(object.shape.gl_light, object.shape.gl_light_type, GLKVector4MakeWithVector3(position, 1))
+            }
+            
+            if object.isDrawable {
+                glPushMatrix()
+                RMXGLTranslate(object.anchor)
+                RMXGLTranslate(position)
+                if object.isLightSource {
+                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.shape.color)
+                } else {
+                    RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, object.shape.color)
+                    RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, object.shape.color)
+                }
+                
+                shape(object.shape.type, radius)
+
+                RMXGLMaterialfv(GL_FRONT, GL_EMISSION, RMXVector4Zero);
+                RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, RMXVector4Zero);
+                RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, RMXVector4Zero);
+                
+                glPopMatrix();
+            
+            }
+        }
+        
+    
     }
     
 }

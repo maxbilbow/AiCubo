@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 Rattle Media. All rights reserved.
 //
 
-//#import "RattleGLS-Bridging-Header.h"
-#import <RattleOSX-Swift.h>
-#import "RMXMouseProcessor.h"
-#import "RMXKeyboardProcessor.h"
+
+
+
 @import GLUT;
-#define TEXTURE_ID_CUBE 1
+#import "RMOpenGL.h"
+#import <OSXView-Swift.h>
+
 @class RMXGLProxy, RMX;
 void InitGraphics(void)
 {
@@ -80,9 +81,9 @@ void idle(){
 }
 
 
-#ifdef RMX_USE_DEPRECIATED
+//#ifdef RMX_USE_DEPRECIATED
 
-int RMXRun(int argc, char * argv[])
+int RMXGLRun(int argc, char * argv[])
 {
     NSLog(@"Hello");
     
@@ -93,7 +94,7 @@ int RMXRun(int argc, char * argv[])
     RMXGlutInitDisplayMode ( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
     
     
-    if (RMX.isFullscreen){//&&glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)){
+    if (FULL_SCREEN){//&&glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)){
         RMXGlutEnterGameMode();
     }else {
         NSLog(@"Game Mode Not Possibe");
@@ -119,19 +120,19 @@ int RMXRun(int argc, char * argv[])
     InitGraphics();
     
     
-    if (RMX.isFullscreen) {
-        [RMXGLProxy.activeSprite.mouse toggleFocus];
-        glutSetCursor(GLUT_CURSOR_NONE);
-        [RMXGLProxy.activeSprite.mouse calibrateView:0 y:0];
-        [RMXGLProxy.activeSprite.mouse mouse2view:0 y:0];
+    if (FULL_SCREEN) {
+        [RMXGLProxy performAction:@"toggleMouseLock"];
+//        glutSetCursor(GLUT_CURSOR_NONE);
+//        [RMXGLProxy calibrateView:0 y:0];
+//        [RMXGLProxy mouse2view:0 y:0];
     }
     glutMainLoop();
     return 0;
 }
-#else
-int RMXRun(int argc, char * argv[]){
-    NSLog(@"RUN should not be called, bitches!");
-    return 0;
-}
-
-#endif
+//#else
+//int RMXRun(int argc, char * argv[]){
+//    NSLog(@"RUN should not be called, bitches!");
+//    return 0;
+//}
+//
+//#endif

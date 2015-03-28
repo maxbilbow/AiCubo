@@ -9,12 +9,13 @@
 import Foundation
 import GLKit
 
-#if OPENGL_ES
+//#if OPENGL_ES
 import UIKit
-#endif
+//#endif
 
-extension RMXController {
-#if OPENGL_ES
+extension RMXDPad {
+//#if OPENGL_ES 
+    /*
     private func _handleRelease(state: UIGestureRecognizerState) {
         if state == UIGestureRecognizerState.Ended {
             self.world.action(action: "stop")
@@ -154,7 +155,7 @@ extension RMXController {
         }
         _handleRelease(recognizer.state)
     }
-    
+    */
     
     func accelerometer() {
         if true { return }
@@ -215,5 +216,5 @@ extension RMXController {
         // println()
     }
     
-    #endif
+//    #endif
 }
