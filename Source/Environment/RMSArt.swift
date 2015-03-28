@@ -30,11 +30,11 @@ class RMXArt : RMXObject {
     
         let sun = RMSParticle(world: world)
         //[sun setRAxis:GLKVector3Make(0, 0, 1)];
-        sun.body.radius = 80
+        sun.body.radius = 100
         sun.shape.color = GLKVector4Make(1, 1, 1, 1.0)
         sun.shape.makeAsSun(rDist: world.body.radius * 2, isRotating: true)
         sun.body.position = GLKVector3Make(0,0,10)
-        sun.shape.type = .CUBE
+        sun.shape.type = .SPHERE
         world.sun = sun
         world.insertSprite(sun)
 

@@ -11,7 +11,7 @@
 
 
 #endif
-
+#define FULL_SCREEN 1
 //#import <Foundation/Foundation.h>
 @import GLKit;
 
@@ -24,7 +24,7 @@
 //    void SetUpGL(void);
 //};
 
-#define FULL_SCREEN 0
+
 void RMXGLMakeLookAt(GLKVector3 eye, GLKVector3 center, GLKVector3 up);
 void RMXGLPostRedisplay();
 void RMXGLMaterialfv(int32_t a,int32_t b, GLKVector4 color);

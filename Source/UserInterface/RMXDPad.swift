@@ -209,7 +209,7 @@ extension RMXDPad {
                 self.world.action(action: "stop")
                 self.log("stop")
             } else {
-                let point = recognizer.velocityInView(gvc.view); let speed:Float = -0.0025
+                let point = recognizer.velocityInView(gvc.view); let speed:Float = -0.01
                 self.world.action(action: "move", speed: speed, point: [Float(point.x),0, Float(point.y)])
                 self.log("start")
             }
@@ -222,7 +222,7 @@ extension RMXDPad {
     func handlePanRightSide(recognizer: UIPanGestureRecognizer) {
         if recognizer.numberOfTouches() == 1 {
             let point = recognizer.velocityInView(gvc.view);
-            let speed:Float = 0.01
+            let speed:Float = 0.02
             self.world.action(action: "look", speed: speed, point: [Float(point.x), Float(point.y)])
         } else if recognizer.numberOfTouches() == 2 {
             if recognizer.state == UIGestureRecognizerState.Ended {
@@ -262,7 +262,7 @@ extension RMXDPad {
         _handleRelease(recognizer.state)
     }
     func handlePinch(recognizer: UIPinchGestureRecognizer) {
-        let x: Float = Float(recognizer.scale) * 0.05
+        let x: Float = Float(recognizer.scale) * 0.2
         self.log()
         self.world.action(action: "enlargeItem", speed: x)
         _handleRelease(recognizer.state)

@@ -98,7 +98,7 @@ int RMXGLRun(int argc, char * argv[])
         RMXGlutEnterGameMode();
     }else {
         NSLog(@"Game Mode Not Possibe");
-        RMXGlutMakeWindow(100,100,1280,720,"Window");
+        RMXGlutMakeWindow(100,100,1280,720,"AiCubo");
     }
     //Setup Display:
     glutDisplayFunc(display);
