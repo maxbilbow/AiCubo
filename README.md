@@ -19,4 +19,31 @@ Slowly building physics fromt the ground up.
 
 • Translated into Swift for better performance alround (Version 4.1)
 
-
+Controls:
+```Swift
+class RMSKeys {
+    
+    var keys: [ RMKey ]?
+    init(){
+        self.keys = [
+            RMKey(action: "forward", key: "w"),
+            RMKey(action: "back", key: "s"),
+            RMKey(action: "left", key: "a"),
+            RMKey(action: "right", key: "d"),
+            RMKey(action: "up", key: "e"),
+            RMKey(action: "down", key: "q"),
+            RMKey(action: "jump", key: " "),
+            RMKey(action: "toggleGravity", key: "g"),
+            RMKey(action: "toggleAllGravity", key: "G")
+            RMKey(action: "toggleMouseLock", key: "m")//,
+            RMKey(action: "grab", key: "Mouse 1"),
+            RMKey(action: "throw", key: "Mouse 2"),
+            RMKey(action: "extendArm", key: "Arrow-Up"),
+            RMKey(action: "retractArm", key: "Arrow-Down"),
+            RMKey(action: "shrinkItem", key: "-"),
+            RMKey(action: "enlargeItem", key: "="),
+            RMKey(action: "toggleFog", key: "f")
+        ]
+    }
+    
+  ```
