@@ -106,33 +106,39 @@ import GLKit
         
         
     }
-    
+    static var drawNextFrame = 1
+    static let framerate = 0
     class func display () -> Void {
-        glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
-        glClearColor(0.8, 0.85, 1.8, 0.0)
-
-        glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
-        if RMX.usingDepreciated {
-            RMXGLMakeLookAt(self.activeCamera.eye, self.activeCamera.center, self.activeCamera.up)
-        } else {
-            fatalError("Camera Error in \(__FILE__)")
-        }
-
+        
         for function in self.callbacks {
             function()
         }
         self.animateScene()
+        
+        
+        glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
+        glClearColor(0.8, 0.85, 1.8, 0.0)
+
+        glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
+        RMXGLMakeLookAt(self.activeCamera.eye, self.activeCamera.center, self.activeCamera.up)
+
+        if self.drawNextFrame >= self.framerate {
         self.drawScene()
         // Make sure changes appear onscreen
+       
+       
+            self.drawNextFrame = 0
+        } else {
+            self.drawNextFrame++
+        }
         RMXGLPostRedisplay()
+        
         RMXGlutSwapBuffers()
-        glFlush()
+         glFlush()
         //tester.checks[1] = observer->toString();
         //NSLog([world.observer viewDescription]);
     }
     
-        
-
 }
 
 

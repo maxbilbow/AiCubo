@@ -19,6 +19,7 @@ class RMSParticle : RMXObject {
     #endif
     var actions: RMXSpriteActions?
     var type: RMXParticleType = .SIMPLE_PARTICLE
+    var wasJustThrown:Bool = false
     
     var camera: RMXCamera?
     
@@ -76,11 +77,11 @@ class RMSParticle : RMXObject {
     private var _asObserver = false
     private var _asShape = false
     
-    func setAsShape(shape render: ((Float)->Void)?) -> RMSParticle? {//, mass: Float? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMSParticle {
+    func setAsShape(type: ShapeType = .CUBE) -> RMSParticle? {//, mass: Float? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMSParticle {
         if _asShape { return self }
-        if render != nil { self.shape.setRenderer(render!) }
+        
         self.resets.append({
-            //if body != nil { self.body = body! }
+            self.shape.type = type
             self.shape.isVisible = true
         })
         _asShape = true
@@ -92,7 +93,7 @@ class RMSParticle : RMXObject {
         if _asObserver { return self }
         self.resets.append({
             self.actions!.armLength = self.body.radius * 2
-            self.actions!.setReach(2 * self.actions!.armLength);
+//            self.actions!.setReach(2 * self.actions!.armLength);
             self.body.mass = 9
             self.body.radius = 20
             self.body.position = GLKVector3Make(0,self.body.radius,-20)

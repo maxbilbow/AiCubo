@@ -11,7 +11,7 @@
 
 
 #endif
-#define FULL_SCREEN 1
+#define FULL_SCREEN 0
 //#import <Foundation/Foundation.h>
 @import GLKit;
 

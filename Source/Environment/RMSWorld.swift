@@ -79,8 +79,10 @@ class RMSWorld : RMSParticle {
     }
     func collisionTest(sender: RMSParticle) -> Bool{
     //Have I gone through a barrier?
-        let v = sender.body.velocity.y
+        let velocity = sender.body.velocity
+        let v = velocity.y
         let p = sender.body.position.y
+        let next = sender.body.velocity + sender.body.position
         let bounceY: Float = -v
         let g = sender.ground
         if p <= g && v < 0 && sender.isInWorld {
@@ -93,6 +95,9 @@ class RMSWorld : RMSParticle {
             }
             return true
         }
+        if GLKVector3Length(next) >= self.body.radius && sender.type != .OBSERVER {
+            sender.body.velocity = GLKVector3Negate(velocity)
+        }
         
         return false
     }
@@ -101,64 +106,14 @@ class RMSWorld : RMSParticle {
         return self.physics.gravityFor(sender)
     }
     
-    private func normalForceAt(sender: RMSParticle) -> RMXVector3 {
-        var result: Float = 0
-        var bounce: Float = 0
-        let normal = self.physics.normalFor(sender)
-        let altitude = sender.body.position.y
-        let ground = sender.ground
-        if altitude < 0 {
-            RMXVector3SetY(&sender.body.position, 0)
-        }
-        if altitude < ground { //* 9 / 10 {
-            if let bouncing = sender.variables["isBouncing"] {
-                if bouncing.isActive {
-                    bouncing.i *= 0.8
-                    if bouncing.i <= 0.1 {
-                        bounce = 0
-                        bouncing.isActive = false
-                        bouncing.i = 0
-                        RMXVector3SetY(&sender.body.position, ground)
-//                        print(__LINE__)
-                    } else {
-                        bounce = bouncing.i
-//                        print(__LINE__)
-                    }
-                    
-                } else {
-                    
-                    bouncing.i += 0.01
-                    if bouncing.i >= 1 {
-                        bouncing.isActive = true
-//                        print(__LINE__)
-                    } else {
-                        bounce = 0
-//                        print(__LINE__)
-                    }
-                }
-            }
-//            print(__LINE__)
-            result = normal.y + (1 + fabs(altitude / ground + altitude)) * bounce
-        } else if altitude  <= ground  {
-            result = normal.y
-            RMXVector3SetY(&sender.body.position, ground)
-//            print(__LINE__)
-        } else if altitude > ground {
-            result = 0//someBody.weight// * self.physics.gravity; //air;
-//            print(__LINE__)
-        } else {
-            result = normal.y
-//            print(__LINE__)
-        }
-//        println(": \(bounce) \(result) \(self.physics.gravity.print)\n")
-        return GLKVector3Make(0, result, 0)
-    }
     
    
     override func animate() {
         super.animate()
         for sprite in sprites {
-            sprite.animate()
+            if sprite !== self {
+                sprite.animate()
+            }
            
         }
         self.actionProcessor.animate()
@@ -209,3 +164,60 @@ class RMSWorld : RMSParticle {
     
     
 }
+
+
+/* 
+private func normalForceAt(sender: RMSParticle) -> RMXVector3 {
+var result: Float = 0
+var bounce: Float = 0
+let normal = self.physics.normalFor(sender)
+let altitude = sender.body.position.y
+let ground = sender.ground
+if altitude < 0 {
+RMXVector3SetY(&sender.body.position, 0)
+}
+if altitude < ground { //* 9 / 10 {
+if let bouncing = sender.variables["isBouncing"] {
+if bouncing.isActive {
+bouncing.i *= 0.8
+if bouncing.i <= 0.1 {
+bounce = 0
+bouncing.isActive = false
+bouncing.i = 0
+RMXVector3SetY(&sender.body.position, ground)
+//                        print(__LINE__)
+} else {
+bounce = bouncing.i
+//                        print(__LINE__)
+}
+
+} else {
+
+bouncing.i += 0.01
+if bouncing.i >= 1 {
+bouncing.isActive = true
+//                        print(__LINE__)
+} else {
+bounce = 0
+//                        print(__LINE__)
+}
+}
+}
+//            print(__LINE__)
+result = normal.y + (1 + fabs(altitude / ground + altitude)) * bounce
+} else if altitude  <= ground  {
+result = normal.y
+RMXVector3SetY(&sender.body.position, ground)
+//            print(__LINE__)
+} else if altitude > ground {
+result = 0//someBody.weight// * self.physics.gravity; //air;
+//            print(__LINE__)
+} else {
+result = normal.y
+//            print(__LINE__)
+}
+//        println(": \(bounce) \(result) \(self.physics.gravity.print)\n")
+return GLKVector3Make(0, result, 0)
+}
+*/
+*/

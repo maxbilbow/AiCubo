@@ -13,7 +13,7 @@ public class RMXSpriteActions {
     var armLength: Float = 0
     private var _reach: Float?
     var reach:Float {
-        return _reach ?? self.body.radius * 10
+        return _reach ?? self.body.radius * 2
     }
     var jumpStrength: Float = 1
     var squatLevel:Float = 0
@@ -40,7 +40,7 @@ public class RMXSpriteActions {
         self.world = parent.world ?? parent as! RMSWorld
     }
     
-    func throwItem(strength: Float)
+    func throwItem(strength: Float) -> Bool
     {
         if self.item != nil {
             self.item!.isAnimated = true
@@ -48,9 +48,11 @@ public class RMXSpriteActions {
             let fwd4 = self.body.forwardVector
             let fwd3 = GLKVector3Make(fwd4.x, fwd4.y, fwd4.z)
             self.item!.body.velocity = self.body.velocity + GLKVector3MultiplyScalar(fwd3,strength)
+            self.item!.wasJustThrown = true
             self.item = nil
+            return true
         } else {
-            return
+            return false
         }
     }
     
@@ -77,12 +79,13 @@ public class RMXSpriteActions {
         }
     }
     
-    public func grabItem() {
+    func grabItem(item: RMSParticle? = nil) {
         if self.item != nil {
             self.releaseItem()
         } else {
-            let item: RMSParticle? = self.parent.world?.closestObjectTo(self.sprite)
+            let item: RMSParticle? = item ?? self.parent.world?.closestObjectTo(self.sprite)
             self.setItem(item)
+            self.item!.wasJustThrown = false
         }
         if item != nil { RMXLog("HOLDING: \(item!.name)") }
     }

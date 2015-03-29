@@ -82,5 +82,13 @@ extension GLKVector3 {
     var print: String {
         return "\(x.toData()) \(y.toData()) \(z.toData())"
     }
+    
+    func negate() -> GLKVector3{
+        return GLKVector3Negate(self)
+    }
+    
+    func distanceTo(v: GLKVector3) -> Float{
+        return GLKVector3Distance(self, v)
+    }
 }
     

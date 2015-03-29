@@ -44,7 +44,7 @@ class RMXArt : RMXObject {
         ZX.shape.color = GLKVector4Make(0.8,1.2,0.8,0.5)
         ZX.isAnimated = false
         #if OPENGL_ES
-        ZX.body.position = GLKVector3Make(ZX.body.position.x, -world.body.radius, ZX.body.position.z)
+        ZX.body.position = GLKVector3Make(ZX.body.position.x, world.body.radius, ZX.body.position.z)
         #endif
         world.insertSprite(ZX)
         
