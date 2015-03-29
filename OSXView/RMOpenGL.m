@@ -13,7 +13,7 @@
 #import "RMOpenGL.h"
 
 void RMGlutSetCursor(bool hasFocus) {
-    glutSetCursor(hasFocus ? GLUT_CURSOR_CROSSHAIR : GLUT_CURSOR_INHERIT);
+    glutSetCursor(hasFocus ? GLUT_CURSOR_NONE : GLUT_CURSOR_INHERIT);
 }
 
 void RMXGLMakeLookAt(GLKVector3 eye, GLKVector3 center, GLKVector3 up){

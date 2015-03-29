@@ -102,35 +102,35 @@ class RMSActionProcessor {
         }
         if (action == "jump") {
             if speed == 0 {
-                self.activeSprite.actions?.jump()
+                self.activeSprite.actions.jump()
             }
             else {
-                self.activeSprite.actions?.prepareToJump()
+                self.activeSprite.actions.prepareToJump()
             }
         }
         
         
         if action == "grab" {
-            self.activeSprite.actions?.grabItem()
+            self.activeSprite.actions.grabItem()
         }
         if action == "throw" {
             
             if self.activeSprite.hasItem {
-                RMXLog("Throw: \(self.activeSprite.actions?.item?.name) with speed: \(speed)")
-                self.activeSprite.actions?.throwItem(speed)
+                RMXLog("Throw: \(self.activeSprite.actions.item?.name) with speed: \(speed)")
+                self.activeSprite.actions.throwItem(speed)
             } else {
-                 self.activeSprite.actions?.grabItem()
-                 RMXLog("Grab: \(self.activeSprite.actions?.item?.name) with speed: \(speed)")
+                 self.activeSprite.actions.grabItem()
+                 RMXLog("Grab: \(self.activeSprite.actions.item?.name) with speed: \(speed)")
             }
             
             
         }
         if self.activeSprite.hasItem {
             if action == "enlargeItem"   {
-                let size = (self.activeSprite.actions?.item?.body.radius)! * speed
+                let size = (self.activeSprite.actions.item?.body.radius)! * speed
                 if size > 0.5 && size < 15 {
-                    self.activeSprite.actions?.item?.body.radius = size
-                    self.activeSprite.actions?.item?.body.mass *= size
+                    self.activeSprite.actions.item?.body.radius = size
+                    self.activeSprite.actions.item?.body.mass *= size
                 }
 
             }
@@ -170,7 +170,7 @@ class RMSActionProcessor {
     
     func animate(){
         if self.extendArm != 0 {
-            self.activeSprite.actions?.extendArmLength(self.extendArm)
+            self.activeSprite.actions.extendArmLength(self.extendArm)
         }
     }
         

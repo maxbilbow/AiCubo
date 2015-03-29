@@ -11,9 +11,9 @@ import GLKit
 
 public class RMXSpriteActions {
     var armLength: Float = 0
-    private var _reach: Float?
+    lazy private var _reach: Float = self.body.radius
     var reach:Float {
-        return _reach ?? self.body.radius * 2
+        return self.body.radius + _reach
     }
     var jumpStrength: Float = 1
     var squatLevel:Float = 0
@@ -74,7 +74,7 @@ public class RMXSpriteActions {
             _itemHadGravity = item!.hasGravity
             self.item!.setHasGravity(false)
             self.item!.isAnimated = true
-            self.armLength = self.body.distanceTo(self.item!)
+            self.armLength = self.reach// self.body.distanceTo(self.item!)
             if RMX.isDebugging { NSLog(item!.name) }
         }
     }
@@ -85,7 +85,6 @@ public class RMXSpriteActions {
         } else {
             let item: RMSParticle? = item ?? self.parent.world?.closestObjectTo(self.sprite)
             self.setItem(item)
-            self.item!.wasJustThrown = false
         }
         if item != nil { RMXLog("HOLDING: \(item!.name)") }
     }
@@ -131,9 +130,12 @@ public class RMXSpriteActions {
         }
     }
     
-    func prepareToJump() {
-        if !_goingUp || _ignoreNextJump {
+    func prepareToJump() -> Bool{
+        if !_goingUp || _ignoreNextJump && !_prepairingToJump{
             _prepairingToJump = true
+            return true
+        } else {
+            return false
         }
     }
     

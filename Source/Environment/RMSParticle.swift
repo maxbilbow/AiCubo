@@ -17,7 +17,7 @@ class RMSParticle : RMXObject {
     #if OPENGL_OSX
     lazy var mouse: RMXMouse = RMSMouse(parent: self)
     #endif
-    var actions: RMXSpriteActions?
+    lazy var actions: RMXSpriteActions = RMXSpriteActions(parent: self)
     var type: RMXParticleType = .SIMPLE_PARTICLE
     var wasJustThrown:Bool = false
     
@@ -50,7 +50,7 @@ class RMSParticle : RMXObject {
         self.actions = RMXSpriteActions(parent: self)
         self.body = RMSPhysicsBody(parent: self)
         //RMSParticle.COUNT++
-        self.actions!.parent = self
+//        self.actions.parent = self
         //self.mouse = RMXMouse(parent:self, world:self.world)
         
         self.camera = RMXCamera(world: world, pov: self)
@@ -92,8 +92,8 @@ class RMSParticle : RMXObject {
     func setAsObserver() -> RMSParticle {
         if _asObserver { return self }
         self.resets.append({
-            self.actions!.armLength = self.body.radius * 2
-//            self.actions!.setReach(2 * self.actions!.armLength);
+            self.actions.armLength = self.body.radius * 2
+
             self.body.mass = 9
             self.body.radius = 20
             self.body.position = GLKVector3Make(0,self.body.radius,-20)
@@ -121,14 +121,14 @@ class RMSParticle : RMXObject {
     }
     
     var ground: Float {
-        return self.body.radius - ( self.actions?.squatLevel ?? 0 )
+        return self.body.radius - ( self.actions.squatLevel ?? 0 )
     }
     
     func animate() {
         if self.isAnimated && self.shouldAnimate {
-            self.actions?.jumpTest()
+            self.actions.jumpTest()
             self.body.animate()
-            self.actions?.manipulate()
+            self.actions.manipulate()
             for behaviour in self.behaviours {
                 behaviour()
             }
@@ -226,6 +226,6 @@ extension RMSParticle {
     }
     
     var hasItem: Bool {
-        return self.actions?.item != nil
+        return self.actions.item != nil
     }
 }

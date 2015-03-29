@@ -36,21 +36,22 @@ void initKeys(){
 
 
 void RepeatedKeys(){
-    
+    if (keys.keyStates['+']) {
+        [RMXGLProxy performActionWithSpeed:1.1 action:@"enlargeItem"];
+    }
+    if (keys.keyStates['_']) {
+        [RMXGLProxy performActionWithSpeed:-0.9 action:@"enlargeItem"];
+    }
     if (keys.keySpecialStates[GLUT_KEY_UP]) {
         if (keys.keyStates[9])
             return;//[sun lightUp:1];
-        else
-            [RMXGLProxy performActionWithSpeed:5 action:@"extendArm"];
+        
 
     } else if(keys.keySpecialStates[GLUT_KEY_DOWN]) {
         if (keys.keyStates[9]) {
             return;//[sun lightUp:-1];
-        } else {
-            [RMXGLProxy performActionWithSpeed:-5 action:@"extendArm"];
         }
     }
-
 }
 
 void movement(float speed, char key){
@@ -88,25 +89,15 @@ void movement(float speed, char key){
 }
 
 void keyDownOperations (int key) {
-   
+    keys.keyStates[key] = true;
     movement((float)1.0, key);
-    
-    
-    if (keys.keyStates['+']) {
-        [RMXGLProxy performActionWithSpeed:1 action:@"enlargeItem"];
-    }
-    if (keys.keyStates['_']) {
-        [RMXGLProxy performActionWithSpeed:-1 action:@"enlargeItem"];
-    }
-    
 }
 
 //template <typename Particle>
 void keyUpOperations(int key){
+
     movement((bool)false, key); //Change to Zero if maintaining velocity
-    if (key == 'i'){
-//        NSLog(@"%@",RMXGLProxy.activeSprite.camera.viewDescription);//me.toString();
-    }
+    
     
     switch (key)
     {
@@ -168,16 +159,16 @@ void keyUpOperations(int key){
             NSLog(@"ERROR: Toggle Full Screen not working");//[window toggleFullScreen];
             break;
     }
-   // keys.keyStates[key] = false;
+    keys.keyStates[key] = false;
     
 }
 void keySpecialDownOperations(int key) {
     if (key == GLUT_KEY_UP) { // If the left arrow key has been pressed
-        [RMXGLProxy performActionWithSpeed:1.1 action:@"extendArm"];
+        [RMXGLProxy performActionWithSpeed:1 action:@"extendArm"];
     }
     
     if (key == GLUT_KEY_DOWN) {
-        [RMXGLProxy performActionWithSpeed:0.9 action:@"extendArm"];
+        [RMXGLProxy performActionWithSpeed:-1 action:@"extendArm"];
     }
     
     if (key == GLUT_KEY_LEFT) {
@@ -201,13 +192,13 @@ void keySpecialUpOperations(char key) {
            // [rmxDebugger cycle:-1];
             break;
         case GLUT_KEY_RIGHT:
-            [RMXGLProxy performAction:@"extendArm"];
+            
             break;
         case GLUT_KEY_UP:
-            [RMXGLProxy performAction:@"extendArm"];
+            [RMXGLProxy performActionWithSpeed:0 action:@"extendArm"];
             break;
         case GLUT_KEY_DOWN:
-            //[[observer item]lightUp:-10];
+            [RMXGLProxy performActionWithSpeed:0 action:@"extendArm"];
             break;
         case 32:
             // [observer stop();

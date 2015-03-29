@@ -139,7 +139,7 @@ class RMSWorld : RMSParticle {
                 }
             }
         }
-        if dista < sender.actions!.reach + closest.body.radius + sender.body.radius {
+        if dista < sender.actions.reach + closest.body.radius  {
             return closest
         }
         return nil

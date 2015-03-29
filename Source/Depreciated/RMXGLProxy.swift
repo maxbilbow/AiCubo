@@ -37,7 +37,7 @@ import GLKit
     }
     
     static var itemBody: RMSPhysicsBody? {
-        return self.activeSprite.actions?.item?.body
+        return self.activeSprite.actions.item?.body
     }
     
     static var activeSprite: RMSParticle {
@@ -60,6 +60,7 @@ import GLKit
 //    var reshapePtr: CFunctionPointer<(Int32, Int32)->Void>?
     
     class func animateScene() {
+        RepeatedKeys()
         self.world.animate()
     }
     
