@@ -10,6 +10,13 @@ import Foundation
 
 extension RMX {
     static var willDrawFog: Bool = false
+    
+    static func toggleFog(){
+        RMX.willDrawFog = !RMX.willDrawFog
+        #if OPENGL_OSX
+            DrawFog(RMX.willDrawFog)
+        #endif
+    }
 }
 class RMSActionProcessor {
     //let keys: RMXController = RMXController()

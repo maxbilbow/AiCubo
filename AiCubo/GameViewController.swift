@@ -212,7 +212,7 @@ class GameViewController : GLKViewController, RMXViewController {
         #if OPENGL_ES
         self.effect.texture2d0.enabled = GLboolean(1)
         
-        var path = NSBundle.mainBundle().URLForResource("texture_numbers", withExtension:"png")?.path
+        var path = NSBundle.mainBundle().URLForResource("texture_poppy", withExtension:"png")?.path
         
         var error: NSErrorPointer = NSErrorPointer()
         let options: [NSObject : AnyObject] = NSDictionary(object: NSNumber(bool:true),forKey:GLKTextureLoaderOriginBottomLeft) as [NSObject : AnyObject]

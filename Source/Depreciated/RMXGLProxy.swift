@@ -10,14 +10,7 @@ import Foundation
 
 
 import GLKit
-extension RMX {
-    static func toggleFog(){
-        RMX.willDrawFog = !RMX.willDrawFog
-        #if OPENGL_OSX
-        DrawFog(RMX.willDrawFog)
-        #endif
-    }
-}
+
 @objc public class RMXGLProxy {
     //let world: RMXWorld? = RMXArt.initializeTestingEnvironment()
     static var callbacks: [()->Void] = Array<()->Void>()

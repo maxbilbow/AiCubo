@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		501A93971AC77EC800924AAF /* texture_poppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 501A93961AC77EC800924AAF /* texture_poppy.png */; };
+		501A93981AC77EC800924AAF /* texture_poppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 501A93961AC77EC800924AAF /* texture_poppy.png */; };
 		503927371AC710C100A59744 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332141AC5D59500BB4477 /* main.swift */; };
 		503927451AC71B6600A59744 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503927441AC71B6600A59744 /* main.swift */; };
 		503927491AC71BCF00A59744 /* run.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC061AC6CEB4004E240C /* run.m */; };
@@ -152,6 +154,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		501A93961AC77EC800924AAF /* texture_poppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_poppy.png; sourceTree = "<group>"; };
 		503927421AC71B6600A59744 /* load */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = load; sourceTree = BUILT_PRODUCTS_DIR; };
 		503927441AC71B6600A59744 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		503927681AC746D100A59744 /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
@@ -393,6 +396,7 @@
 		50C2B5221AC4ACC100AAACF7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				501A93961AC77EC800924AAF /* texture_poppy.png */,
 				50C2B5231AC4ACC100AAACF7 /* texture_numbers.png */,
 			);
 			name = Assets;
@@ -636,6 +640,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				501A93981AC77EC800924AAF /* texture_poppy.png in Resources */,
 				5063321B1AC5D59600BB4477 /* art.scnassets in Resources */,
 				5063321D1AC5D59600BB4477 /* Images.xcassets in Resources */,
 				50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */,
@@ -659,6 +664,7 @@
 				50C2B5061AC4AA2100AAACF7 /* Images.xcassets in Resources */,
 				50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */,
 				50C2B4FD1AC4AA2100AAACF7 /* Shader.fsh in Resources */,
+				501A93971AC77EC800924AAF /* texture_poppy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

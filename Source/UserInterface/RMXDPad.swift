@@ -57,7 +57,7 @@ class RMXDPad : RMXInterface {
             view.addGestureRecognizer(tapLeft)
             
             
-            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinchLeft:"))
+            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
             
             view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressLeft:"))
             
@@ -78,7 +78,7 @@ class RMXDPad : RMXInterface {
             
             
             view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressRight:"))
-            
+            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
             view.userInteractionEnabled = true
             self.gvc.view.addSubview(rightView)
             
@@ -91,7 +91,7 @@ class RMXDPad : RMXInterface {
             
             let view = self.gvc.view
             
-            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
+
             
             let twoFingerTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleDoubleTouchTap:")
             twoFingerTap.numberOfTouchesRequired = 2
