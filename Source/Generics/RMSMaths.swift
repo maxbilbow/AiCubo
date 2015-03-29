@@ -49,6 +49,9 @@ func + (lhs: GLKVector3, rhs: GLKVector3)->GLKVector3{
     return GLKVector3Add(lhs, rhs)
 }
 
+func - (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
+    return GLKVector3Subtract(lhs, rhs)
+}
 func += (inout lhs: GLKVector3, rhs: GLKVector3) {
     lhs = GLKVector3Add(lhs, rhs)
 }
@@ -57,6 +60,18 @@ func * (lhs: GLKVector3, rhs: Float) -> GLKVector3 {
     return GLKVector3MultiplyScalar(lhs, rhs)
 }
 
+func * (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
+    return GLKVector3Multiply(lhs, rhs)
+}
+///Dot Product
+func o (lhs: GLKVector3, rhs: GLKVector3) -> Float {
+    return GLKVector3DotProduct(lhs, rhs)
+}
+
+
+func x (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
+    return GLKVector3CrossProduct(lhs, rhs)
+}
 
 extension GLKMatrix4 {
     /*

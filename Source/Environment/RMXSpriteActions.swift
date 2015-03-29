@@ -15,6 +15,10 @@ public class RMXSpriteActions {
     var reach:Float {
         return self.body.radius + _reach
     }
+    
+    var position: GLKVector3 {
+        return self.parent.position
+    }
     var jumpStrength: Float = 1
     var squatLevel:Float = 0
     private var _prepairingToJump: Bool = false
@@ -157,6 +161,16 @@ public class RMXSpriteActions {
 
     func setReach(reach: Float) {
         _reach = reach
+    }
+    
+    func turnAndFace(object: RMSParticle?, towardsNotAway isTowards: Bool = true){
+        if object != nil {
+            let U: GLKVector3 = object!.position ; let V: GLKVector3 = self.position
+            let lenghtU: Float = GLKVector3Length(U); let lenghtV: Float = GLKVector3Length(V)
+            let direction: GLKVector3 = U - V
+            let dotProduct: Float = GLKVector3DotProduct(U,  V)
+        }
+        
     }
     
 }

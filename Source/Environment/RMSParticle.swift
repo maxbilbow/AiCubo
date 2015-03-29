@@ -178,7 +178,7 @@ class RMSParticle : RMXObject {
         self.body.hasFriction = !self.body.hasFriction
     }
     
-
+   
     
     func describePosition() -> String? {
 /*    RMXVector3 drag = [self.physics dragFor:self];
