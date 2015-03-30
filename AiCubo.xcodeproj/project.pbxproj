@@ -175,6 +175,7 @@
 		5071AC041AC6CEB4004E240C /* RMXKeyboardProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RMXKeyboardProcessor.m; path = Source/Depreciated/OSX/RMXKeyboardProcessor.m; sourceTree = SOURCE_ROOT; };
 		5071AC051AC6CEB4004E240C /* RMXMouseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RMXMouseProcessor.m; path = Source/Depreciated/OSX/RMXMouseProcessor.m; sourceTree = SOURCE_ROOT; };
 		5071AC061AC6CEB4004E240C /* run.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = run.m; path = Source/Depreciated/OSX/run.m; sourceTree = SOURCE_ROOT; };
+		508D68F41AC97F0100BF10FF /* RMXQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXQuestions.swift; sourceTree = "<group>"; };
 		50C2B4F51AC4AA2100AAACF7 /* AiCubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AiCubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C2B4F91AC4AA2100AAACF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -444,6 +445,7 @@
 				50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */,
 				50C2B5391AC4ACC100AAACF7 /* RMXVertex.swift */,
 				506332521AC5DB1300BB4477 /* RMXGLProxy.swift */,
+				508D68F41AC97F0100BF10FF /* RMXQuestions.swift */,
 			);
 			name = Generics;
 			path = Source/Generics;

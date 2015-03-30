@@ -78,6 +78,9 @@ class RMSPhysicsBody {
         return GLKMatrix3GetRow(self._orientation, 2)
     }
     
+    func distanceTo(vector: GLKVector3) -> Float{
+        return GLKVector3Distance(self.position, vector)
+    }
     func distanceTo(object:RMXObject) -> Float{
         return GLKVector3Distance(self.position,object.position)
     }
@@ -107,6 +110,11 @@ class RMSPhysicsBody {
         RMXVector3SetX(&self.acceleration,0)
     }
     
+    func completeStop(){
+        self.stop()
+        self.velocity = RMXVector3Zero
+    }
+    ///Stops all acceleration foces, not velocity
     func stop(){
         self.forwardStop()
         self.leftStop()
@@ -128,13 +136,13 @@ class RMSPhysicsBody {
         self.orientation = GLKMatrix3RotateWithVector3(self.orientation, phi, self.leftVector)
     }
     
-    func setTheta(var leftRightRadians theta: Float){
-        theta -= self.theta
+    func setTheta(leftRightRadians theta: Float){
+        self.addTheta(leftRightRadians: -self.theta)
         self.addTheta(leftRightRadians: theta)
     }
     
-    func setPhi(var upDownRadians phi: Float){
-        phi -= self.phi
+    func setPhi(upDownRadians phi: Float){
+        self.addPhi(upDownRadians: -self.phi)
         self.addPhi(upDownRadians: phi)
     }
     

@@ -11,14 +11,14 @@ import GLKit
 
 
 
-enum RMXParticleType { case OBSERVER, SHAPE, SIMPLE_PARTICLE, WORLD }
+enum RMXParticleType { case DEFAULT, POPPY, OBSERVER, SHAPE, SIMPLE_PARTICLE, WORLD }
 class RMSParticle : RMXObject {
  
     #if OPENGL_OSX
     lazy var mouse: RMXMouse = RMSMouse(parent: self)
     #endif
     lazy var actions: RMXSpriteActions = RMXSpriteActions(parent: self)
-    var type: RMXParticleType = .SIMPLE_PARTICLE
+    var type: RMXParticleType = .DEFAULT
     var wasJustThrown:Bool = false
     
     var camera: RMXCamera?
@@ -28,6 +28,10 @@ class RMSParticle : RMXObject {
     }
     var geometry: ShapeType {
         return self.shape.type
+    }
+    
+    var centerOfView: GLKVector3 {
+        return self.position + (self.body.forwardVector + self.actions.reach)
     }
     
     lazy var shape: RMXShape = RMXShape(parent: self, world: self.world)
@@ -44,11 +48,12 @@ class RMSParticle : RMXObject {
         return self.body.distanceTo(self.world!) < self.world?.body.radius
     }
     
-    init(world:RMSWorld?,  parent:RMXObject! = nil, name: String = "RMSParticle")
+    init(world:RMSWorld?, type: RMXParticleType = .DEFAULT, parent:RMXObject! = nil, name: String = "RMSParticle")
     {
         super.init(parent:parent, world:world, name: name)
         self.actions = RMXSpriteActions(parent: self)
         self.body = RMSPhysicsBody(parent: self)
+        self.type = type
         //RMSParticle.COUNT++
 //        self.actions.parent = self
         //self.mouse = RMXMouse(parent:self, world:self.world)
@@ -90,6 +95,7 @@ class RMSParticle : RMXObject {
     }
     
     func setAsObserver() -> RMSParticle {
+        self.type = .OBSERVER
         if _asObserver { return self }
         self.resets.append({
             self.actions.armLength = self.body.radius * 2

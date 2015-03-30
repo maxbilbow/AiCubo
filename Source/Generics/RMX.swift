@@ -8,6 +8,7 @@
 
 import Foundation
 
+enum PoppyState: Int32 { case IDLE = 1, READY_TO_CHASE , CHASING, FETCHING }
 
 public struct RMX {
     static let isDebugging: Bool = false

@@ -49,6 +49,11 @@ func + (lhs: GLKVector3, rhs: GLKVector3)->GLKVector3{
     return GLKVector3Add(lhs, rhs)
 }
 
+func + (lhs: GLKVector3, rhs: Float)->GLKVector3{
+    return GLKVector3AddScalar(lhs, rhs)
+}
+
+
 func - (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
     return GLKVector3Subtract(lhs, rhs)
 }
@@ -70,19 +75,22 @@ func o (lhs: GLKVector3, rhs: GLKVector3) -> Float {
 
 func RMXGetThetaAndPhi(vectorA A: GLKVector3, vectorB B: GLKVector3) -> (theta:Float, phi:Float){
     let thetaA = GLKVector2Make(A.x, A.z); let thetaB = GLKVector2Make(B.x, B.z)
-    let phiA = GLKVector2Make(A.z, A.y); let phiB = GLKVector2Make(B.z, B.y)
+    let phiA = GLKVector2Make(A.y, A.z); let phiB = GLKVector2Make(B.y, B.z)
     let theta = RMXGetTheta(vectorA: thetaA, vectorB: thetaB)
     let phi = RMXGetTheta(vectorA: phiA, vectorB: phiB)
-    return (theta:theta, phi:phi)
+   // NSLog("theta: \(GLKMathRadiansToDegrees(theta)), phi: \(GLKMathRadiansToDegrees(phi)) ")
+    return (theta:-theta, phi:phi)
 }
 
 func RMXGetTheta(vectorA A: GLKVector2, vectorB B: GLKVector2) -> Float{
-    
     let delta = GLKVector2Subtract(B, A)
     let r: Float = GLKVector2Length(delta)
-    //    let alpha: Float = asinf(delta.y/r)
-    //    let beta: Float = acosf(delta.x/r)
-    return asinf(delta.x/r)
+    let alpha: Float = GLKMathRadiansToDegrees(asinf(delta.x/r))
+    let beta: Float = GLKMathRadiansToDegrees(acosf(delta.y/r))
+//    let theta: Float = GLKMathRadiansToDegrees(atanf(delta.x/delta.y))
+    let result = alpha * beta >= 0 ? beta : 360 - beta
+    
+    return alpha.isNaN ? 0 : result
 }
 
 func x (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
