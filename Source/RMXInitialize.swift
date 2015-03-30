@@ -128,7 +128,7 @@ extension RMX {
             
 //                NSLog("State: \(state.rawValue), theta: \(GLKMathRadiansToDegrees(poppy.body.theta)), phi: \(GLKMathRadiansToDegrees(poppy.body.phi)) ")
             
-            if timePassed < updateInterval {
+            if false { //timePassed < updateInterval {
                 if state == .IDLE {
                     idle(poppy)
                 }
@@ -148,7 +148,7 @@ extension RMX {
                 case .READY_TO_CHASE:
                     if !observer.hasItem {
                         state = .CHASING
-                        poppy.body.hasGravity = itemToWatch.hasGravity
+                        //poppy.body.hasGravity = itemToWatch.hasGravity
                     } else {
                         poppy.actions.headTo(itemToWatch,doOnArrival: getReady)
                     }
