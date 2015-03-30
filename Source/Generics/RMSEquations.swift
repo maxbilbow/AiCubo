@@ -11,6 +11,7 @@ import GLKit
 
 extension RMX {
     static func doASum(radius: Float, count i: Float, noOfShapes limit: Float ) -> GLKVector4{
+//        return thing(radius: radius, count: i, noOfShapes: limit )
         let option: Int = random() % 5
         switch option {
         case 0:
@@ -19,6 +20,8 @@ extension RMX {
             return randomSpurt(count: Int(radius))
         case 2:
             return point_on_circle(radius,angle_in_degrees: tan(i),centre: 0)
+        case 3:
+            return thing(radius: radius, count: i, noOfShapes: limit )
         default:
             let radius = ceil(radius)
             return GLKVector4Make(randomFloat(radius*2)-radius,randomFloat(2*radius),randomFloat(radius*2)-radius, randomFloat(radius))
@@ -29,6 +32,16 @@ extension RMX {
 
     static func randomFloat(radius: Float) -> Float{
         return Float(random() % Int(radius))
+    }
+    static var last1:Float = 1
+    static var last2:Float = 0
+    static func thing(radius maxR: Float, count i: Float, noOfShapes limit: Float) -> GLKVector4 {
+        let thisOne = self.last1 + self.last2
+        last1 = thisOne
+        last2 = last1
+        let r = limit * limit / thisOne
+        let theta = i
+        return GLKVector4Make(r * i * sinf(theta),i,r * i * cosf(theta),1)
     }
 
     static func circle ( count i: Float, radius r: Float) -> GLKVector4 {

@@ -31,7 +31,7 @@ class RMXDPad : RMXInterface {
         }
 
         self.controllers["accelorometer"] = ( _hasMotion , self.accelerometer )
-        self.moveSpeed *= -0.01
+        self.moveSpeed *= -0.05
         self.lookSpeed *= -0.02
 
     }

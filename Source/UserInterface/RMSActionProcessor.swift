@@ -40,7 +40,7 @@ class RMSActionProcessor {
 //            self.activeSprite.body.accelerateLeft(point[0] * speed)
             self.activeSprite.body.accelerateForward(point[2] * speed)
             self.activeSprite.body.accelerateLeft(point[0] * speed)
-            self.activeSprite.body.accelerateUp(point[2] * speed)
+            self.activeSprite.body.accelerateUp(point[1] * speed)
         }
         if action == "stop" {
             self.activeSprite.body.stop()

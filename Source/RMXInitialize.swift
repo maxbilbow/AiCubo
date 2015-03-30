@@ -25,20 +25,21 @@ extension RMX {
             for sprite in world.sprites {
                 sprite.isAlwaysActive = true
                 if sprite.type == .DEFAULT {
-                    for actor in actors {
-                        if actor.rmxID != sprite.rmxID {
-                        let distTest = actor.actions.reach
+                    
                             sprite.addBehaviour({
+                                for actor in actors {
+                                    if actor.rmxID != sprite.rmxID {
+                                        let distTest = actor.body.radius + sprite.body.radius
                                 let dist = sprite.body.distanceTo(actor)
-                                if dist <= distTest * 0.5 {
+                                if dist <= distTest {
                                     sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
-                                } else if dist < distTest * 4 && actor.type == .OBSERVER{
+                                } else if dist < distTest && actor.type == .OBSERVER{
                                     sprite.actions.prepareToJump()
                                 }
-                            
+                                    }
+                                }
                             })
-                        }
-                    }
+                        
                     if sprite.isAnimated {
                         sprite.addBehaviour({
                             if !sprite.hasGravity && world.observer.actions.item != nil {
