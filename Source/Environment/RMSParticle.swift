@@ -23,6 +23,10 @@ class RMSParticle : RMXObject {
     
     var camera: RMXCamera?
     
+    var altitude: Float {
+        return self.position.y
+    }
+    
     var isDrawable: Bool {
         return self.shape.isVisible
     }

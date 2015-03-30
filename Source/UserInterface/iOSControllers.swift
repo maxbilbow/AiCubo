@@ -29,7 +29,7 @@ extension RMXDPad {
         
         func handleTapRight(recognizer: UITapGestureRecognizer) {
             self.log("Right Tap")
-            self.world.action(action: "throw", speed: 10)
+            self.world.action(action: "throw", speed: 20)
             _handleRelease(recognizer.state)
         }
         

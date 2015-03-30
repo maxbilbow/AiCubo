@@ -57,7 +57,7 @@ void MouseButton(int button, int state, int x, int y)
         //art.sh.setAnchor(&observer);
     }
     if ((button == GLUT_RIGHT_BUTTON)&&(state==GLUT_UP)){
-        [RMXGLProxy performActionWithSpeed:10 action:@"throw"];
+        [RMXGLProxy performActionWithSpeed:20 action:@"throw"];
     }
 }
 

@@ -173,8 +173,25 @@ public class RMXSpriteActions {
     
     func headTo(object: RMSParticle, doOnArrival: (sender: RMSParticle, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
         let dist = self.turnToFace(object)
-        if  dist >= object.body.radius + self.reach {
-            self.body.accelerateForward(0.5)
+        if  dist >= object.actions.reach + self.reach {
+            #if OPENGL_OSX
+                let speed: Float = 0.5
+                #else
+                let speed: Float = 1
+            #endif
+            self.body.accelerateForward(speed)
+            if !self.parent.hasGravity {
+                let climb = speed * 0.1
+                if self.parent.altitude < object.altitude {
+                    self.body.accelerateUp(climb)
+                } else if self.parent.altitude > object.altitude {
+                    self.body.accelerateUp(-climb / 2)
+                } else {
+                    self.body.upStop()
+                    RMXVector3SetY(&self.body.velocity, 0)
+                }
+            }
+            
         } else {
             let result: AnyObject? = doOnArrival(sender: self.parent, objects: objects)
             return result ?? dist
@@ -184,16 +201,21 @@ public class RMXSpriteActions {
     }
     func turnToFace(object:RMSParticle) -> Float {
         var goto =  object.centerOfView
+        
+        
+        let theta = -RMXGetTheta(vectorA: self.position, vectorB: goto)
+        self.body.setTheta(leftRightRadians: theta)
+        
         if self.parent.hasGravity { //TODO delete and fix below
             RMXVector3SetY(&goto,self.parent.position.y)
         }
-        let angles = RMXGetThetaAndPhi(vectorA: self.position, vectorB: goto)
-        self.body.setTheta(leftRightRadians: angles.theta)
-       // NSLog("theta: \(GLKMathRadiansToDegrees(self.body.theta)), phi: \(GLKMathRadiansToDegrees(self.body.phi)) ")
-        self.body.setPhi(upDownRadians: angles.phi)
-//        if self.parent.hasGravity {
-//            RMXVector3SetY(&goto,self.body.radius)
-//        }
+
+        
+        /*else {
+            let phi = -RMXGetPhi(vectorA: self.position, vectorB: goto) //+ PI_OVER_2
+            self.body.setPhi(upDownRadians: phi)
+        }*/
+
         return self.body.distanceTo(goto)
     }
     

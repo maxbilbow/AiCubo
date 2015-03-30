@@ -73,24 +73,47 @@ func o (lhs: GLKVector3, rhs: GLKVector3) -> Float {
     return GLKVector3DotProduct(lhs, rhs)
 }
 
+/*
 func RMXGetThetaAndPhi(vectorA A: GLKVector3, vectorB B: GLKVector3) -> (theta:Float, phi:Float){
     let thetaA = GLKVector2Make(A.x, A.z); let thetaB = GLKVector2Make(B.x, B.z)
-    let phiA = GLKVector2Make(A.y, A.z); let phiB = GLKVector2Make(B.y, B.z)
+    let phiA = GLKVector2Make(A.z, A.y); let phiB = GLKVector2Make(B.z, B.y)
     let theta = RMXGetTheta(vectorA: thetaA, vectorB: thetaB)
     let phi = RMXGetTheta(vectorA: phiA, vectorB: phiB)
    // NSLog("theta: \(GLKMathRadiansToDegrees(theta)), phi: \(GLKMathRadiansToDegrees(phi)) ")
-    return (theta:-theta, phi:phi)
+    return (theta:-theta, phi:-phi)
 }
-
+*/
 func RMXGetTheta(vectorA A: GLKVector2, vectorB B: GLKVector2) -> Float{
     let delta = GLKVector2Subtract(B, A)
     let r: Float = GLKVector2Length(delta)
-    let alpha: Float = GLKMathRadiansToDegrees(asinf(delta.x/r))
-    let beta: Float = GLKMathRadiansToDegrees(acosf(delta.y/r))
+    let alpha: Float = asinf(delta.x/r)
+    let beta: Float = acosf(delta.y/r)
 //    let theta: Float = GLKMathRadiansToDegrees(atanf(delta.x/delta.y))
-    let result = alpha * beta >= 0 ? beta : 360 - beta
-    
+    let result = alpha * beta >= 0 ? beta : TWO_PI - beta
     return alpha.isNaN ? 0 : result
+}
+
+func RMXGetPhi(vectorA A: GLKVector2, vectorB B: GLKVector2) -> Float{
+    let delta = GLKVector2Subtract(B, A)
+    let r: Float = GLKVector2Length(delta)
+    let alpha: Float = asinf(delta.x/r)
+    let beta: Float = acosf(delta.y/r)
+    //    let theta: Float = GLKMathRadiansToDegrees(atanf(delta.x/delta.y))
+    let result = alpha //alpha * beta >= 0 ? beta : TWO_PI - beta
+    NSLog("PHI: \(GLKMathRadiansToDegrees(alpha))")
+    return alpha.isNaN ? 0 : result
+}
+
+func RMXGetTheta(vectorA U: GLKVector3, vectorB V: GLKVector3) -> Float{
+    let A = GLKVector2Make(U.x, U.z); let B = GLKVector2Make(V.x, V.z)
+    return RMXGetTheta(vectorA: A,vectorB: B)
+}
+
+
+
+func RMXGetPhi(vectorA U: GLKVector3, vectorB V: GLKVector3) -> Float{
+    let A = GLKVector2Make(U.z, U.y); let B = GLKVector2Make(V.z, V.y)
+    return RMXGetPhi(vectorA: A,vectorB: B)
 }
 
 func x (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
@@ -137,6 +160,8 @@ extension GLKVector3 {
 }
 
 let PI: Float = 3.14159265358979323846
+let TWO_PI: Float = 2 * PI
+let PI_OVER_2: Float = PI / 2
 let PI_OVER_180: Float = PI / 180
 
 /*

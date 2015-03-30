@@ -17,24 +17,26 @@ extension RMX {
         RMXLog("BUILDING")
         
         let poppy = self.addPoppy(toWorld: world)
+        poppy.type = .POPPY
         let observer = world.activeSprite!
-        let objects = [ (rmxID: observer.rmxID , reach: observer.actions.reach), (rmxID: poppy.rmxID, reach: poppy.actions.reach) ]
+        let actors = [ observer, poppy ]
+        
         autoreleasepool {
             for sprite in world.sprites {
                 sprite.isAlwaysActive = true
                 if sprite.type == .DEFAULT {
-                    for object in objects {
-                        if object.rmxID != sprite.rmxID {
-                        let distTest = object.reach
-                        sprite.addBehaviour({
-                            let dist = sprite.body.distanceTo(world.observer)
+                    for actor in actors {
+                        if actor.rmxID != sprite.rmxID {
+                        let distTest = actor.actions.reach
+                            sprite.addBehaviour({
+                                let dist = sprite.body.distanceTo(actor)
+                                if dist <= distTest * 0.5 {
+                                    sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
+                                } else if dist < distTest * 4 && actor.type == .OBSERVER{
+                                    sprite.actions.prepareToJump()
+                                }
                             
-                            if dist <= distTest  {
-                                sprite.body.velocity = GLKVector3Add(sprite.body.velocity, world.observer.body.velocity)
-                            } else if dist < distTest * 0.5 {
-                                sprite.actions.prepareToJump()
-                            }
-                        })
+                            })
                         }
                     }
                     if sprite.isAnimated {
@@ -67,11 +69,11 @@ extension RMX {
                                     accelerating = false
                                     timeLimit = 600
                                 } else {
-                                    let theta = GLKMathDegreesToRadians(Float(random() % 360))
-                                    let phi = GLKMathDegreesToRadians(Float(random() % 360))
+                                    let theta = Float(random() % 30) / 10
+                                    let phi = Float(random() % 30) / 10
                                     sprite.rotate(radiansTheta: theta,radiansPhi: phi)
                                     accelerating = true
-                                    sprite.body.accelerateForward(10)
+                                    sprite.body.accelerateForward(3)
                                 }
                             } else {
                                 if accelerating && timePassed < 100 {
@@ -89,6 +91,8 @@ extension RMX {
 
         return world
     }
+    
+    
     static func addPoppy(toWorld world: RMSWorld) -> RMSParticle {
         let poppy: RMSParticle = RMSParticle(world: world, parent: world, name: "Poppy").setAsObserver().setAsShape()!
         poppy.body.radius = 8
@@ -123,65 +127,53 @@ extension RMX {
                 return nil
             }
             
-            timePassed += 1
-           
-            
-//                NSLog("State: \(state.rawValue), theta: \(GLKMathRadiansToDegrees(poppy.body.theta)), phi: \(GLKMathRadiansToDegrees(poppy.body.phi)) ")
-            
-            if false { //timePassed < updateInterval {
-                if state == .IDLE {
+            let observer = world.observer
+            switch (state) {
+            case .IDLE:
+                if observer.hasItem {
+                    itemToWatch = observer.actions.item
+                    state = .READY_TO_CHASE
+                    poppy.body.hasGravity = observer.hasGravity
+                } else {
                     idle(poppy)
                 }
-            } else {
-                timePassed = 0
-                let observer = world.observer
-                switch (state) {
-                case .IDLE:
-                    if observer.hasItem {
-                        itemToWatch = observer.actions.item
-                        state = .READY_TO_CHASE
-                        poppy.body.hasGravity = observer.hasGravity
-                    } else {
-                        idle(poppy)
-                    }
-                    break
-                case .READY_TO_CHASE:
-                    if !observer.hasItem {
-                        state = .CHASING
-                        //poppy.body.hasGravity = itemToWatch.hasGravity
-                    } else {
-                        poppy.actions.headTo(itemToWatch,doOnArrival: getReady)
-                    }
-                    break
-                case .CHASING:
-                    if  observer.hasItem {
-                        itemToWatch = observer.actions.item
-                        poppy.body.hasGravity = observer.hasGravity
-                        state = .READY_TO_CHASE
-                    } else if poppy.hasItem {
-                        itemToWatch = nil
-                        state = .FETCHING
-                        poppy.body.hasGravity = observer.hasGravity
-                    } else {
-                        poppy.actions.headTo(itemToWatch,doOnArrival: fetch, objects: observer)
-                    }
-                    break
-                case .FETCHING:
-                    if !poppy.hasItem  {
-                        state = .IDLE
-                        poppy.body.hasGravity = observer.hasGravity
-                    } else {
-                        poppy.actions.headTo(observer,doOnArrival: drop)
-                    }
-                    break
-                default:
+                break
+            case .READY_TO_CHASE:
+                if !observer.hasItem {
+                    state = .CHASING
+                    poppy.body.hasGravity = itemToWatch.hasGravity
+                } else {
+                    poppy.actions.headTo(itemToWatch,doOnArrival: getReady)
+                }
+                break
+            case .CHASING:
+                if  observer.hasItem {
+                    itemToWatch = observer.actions.item
                     poppy.body.hasGravity = observer.hasGravity
-                    if observer.hasItem {
-                        state = .READY_TO_CHASE
-                    } else {
-                        state = .IDLE
-                        
-                    }
+                    state = .READY_TO_CHASE
+                } else if poppy.hasItem {
+                    itemToWatch = nil
+                    state = .FETCHING
+                    poppy.body.hasGravity = observer.hasGravity
+                } else {
+                    poppy.actions.headTo(itemToWatch,doOnArrival: fetch, objects: observer)
+                }
+                break
+            case .FETCHING:
+                if !poppy.hasItem  {
+                    state = .IDLE
+                    poppy.body.hasGravity = observer.hasGravity
+                } else {
+                    poppy.actions.headTo(observer,doOnArrival: drop)
+                }
+                break
+            default:
+                poppy.body.hasGravity = observer.hasGravity
+                if observer.hasItem {
+                    state = .READY_TO_CHASE
+                } else {
+                    state = .IDLE
+                    
                 }
             }
         }

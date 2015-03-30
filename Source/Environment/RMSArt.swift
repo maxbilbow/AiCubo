@@ -140,7 +140,7 @@ class RMXArt : RMXObject {
         object.setHasGravity(false) //(rand()% 100) == 1
         object.body.radius = Float(random() % 9 + 2)
         object.body.position = GLKVector3Make(randPos[0], randPos[1], randPos[2])
-        object.body.mass = Float(random()%15+2)/10;
+        object.body.mass = Float(random()%15+1)/10;
         object.body.dragC = Float(random() % 99+1)/100;
         object.shape.color = RMXRandomColor()
         world.insertSprite(object)
