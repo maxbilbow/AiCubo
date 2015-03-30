@@ -68,6 +68,22 @@ func o (lhs: GLKVector3, rhs: GLKVector3) -> Float {
     return GLKVector3DotProduct(lhs, rhs)
 }
 
+func RMXGetThetaAndPhi(vectorA A: GLKVector3, vectorB B: GLKVector3) -> (theta:Float, phi:Float){
+    let thetaA = GLKVector2Make(A.x, A.z); let thetaB = GLKVector2Make(B.x, B.z)
+    let phiA = GLKVector2Make(A.z, A.y); let phiB = GLKVector2Make(B.z, B.y)
+    let theta = RMXGetTheta(vectorA: thetaA, vectorB: thetaB)
+    let phi = RMXGetTheta(vectorA: phiA, vectorB: phiB)
+    return (theta:theta, phi:phi)
+}
+
+func RMXGetTheta(vectorA A: GLKVector2, vectorB B: GLKVector2) -> Float{
+    
+    let delta = GLKVector2Subtract(B, A)
+    let r: Float = GLKVector2Length(delta)
+    //    let alpha: Float = asinf(delta.y/r)
+    //    let beta: Float = acosf(delta.x/r)
+    return asinf(delta.x/r)
+}
 
 func x (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
     return GLKVector3CrossProduct(lhs, rhs)

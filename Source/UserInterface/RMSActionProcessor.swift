@@ -47,7 +47,8 @@ class RMSActionProcessor {
         }
         
         if action == "look" && point.count == 2 {
-            self.activeSprite.plusAngle(point[0]*speed, y: point[1]*speed)
+            self.activeSprite.body.addTheta(leftRightRadians: point[0] * -speed)
+            self.activeSprite.body.addPhi(upDownRadians: point[1] * speed)
         }
         
         if (action == "forward") {

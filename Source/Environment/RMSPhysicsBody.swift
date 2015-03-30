@@ -114,25 +114,46 @@ class RMSPhysicsBody {
     }
     
     private let _phiLimit = Float(2)
-    func plusAngle(x:Float, y:Float, z: Float = 0) {
+    
+    ///input as radians
+    func addTheta(leftRightRadians theta: Float){
+        //let theta: Float = GLKMathDegreesToRadians(x)
+        self.theta += theta
+        self.orientation = GLKMatrix3Rotate(self.orientation, theta, 0, 1, 0);
+    }
+    
+    
+    func addPhi(upDownRadians phi: Float) {
+        self.phi += phi
+        self.orientation = GLKMatrix3RotateWithVector3(self.orientation, phi, self.leftVector)
+    }
+    
+    func setTheta(var leftRightRadians theta: Float){
+        theta -= self.theta
+        self.addTheta(leftRightRadians: theta)
+    }
+    
+    func setPhi(var upDownRadians phi: Float){
+        phi -= self.phi
+        self.addPhi(upDownRadians: phi)
+    }
+    
+
+    
+    func addRoll(sideRollRadians roll: Float){
+        //TODO
+    }
+    
+    @availability(*, deprecated=1.0, obsoleted=2.0, message="Because now calculated seperately!")
+    func addAngle(x:Float, y:Float, z: Float = 0) {
         //body.position.z += theta; return;
         
-        let theta = x * self.rotationSpeed * PI_OVER_180
-        var phi = y * -self.rotationSpeed * PI_OVER_180
+        let theta: Float = GLKMathDegreesToRadians(x)
+        var phi: Float = GLKMathDegreesToRadians(y)
+        var roll: Float = GLKMathDegreesToRadians(z)
         
-        var newPhi = self.phi + phi
         
-        /** May be causing a problem with rotation
-        if newPhi > _phiLimit {
-            newPhi = _phiLimit
-            phi = 0
-        } else if newPhi < -_phiLimit{
-            newPhi = -_phiLimit
-            phi = 0
-        }
-        */
-        
-        self.phi = newPhi
+        self.phi += phi //= newPhi
         self.theta += theta
         
 //        self.groundOrientation = GLKMatrix3Rotate(self.orientation, theta, 0, 1, 0);

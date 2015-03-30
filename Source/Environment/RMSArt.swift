@@ -40,7 +40,7 @@ class RMXArt : RMXObject {
         let ZX = RMSParticle(world: world)
         ZX.body.radius = world.body.radius
         ZX.shape.type = .PLANE
-        ZX.body.plusAngle(0, y: 0, z: 90)
+        ZX.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(90))
         ZX.shape.color = GLKVector4Make(0.8,1.2,0.8,0.5)
         ZX.isAnimated = false
         #if OPENGL_ES

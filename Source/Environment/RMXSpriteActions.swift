@@ -83,14 +83,17 @@ public class RMXSpriteActions {
         }
     }
     
-    func grabItem(item: RMSParticle? = nil) {
+    func grabItem(item: RMSParticle? = nil) -> Bool {
         if self.item != nil {
             self.releaseItem()
         } else {
             let item: RMSParticle? = item ?? self.parent.world?.closestObjectTo(self.sprite)
-            self.setItem(item)
+            if item != nil && self.body.distanceTo(item!) <= self.reach {
+                self.setItem(item)
+            }
         }
-        if item != nil { RMXLog("HOLDING: \(item!.name)") }
+        if item != nil { return true }
+        else { return false }
     }
     
     func releaseItem() {
@@ -163,14 +166,50 @@ public class RMXSpriteActions {
         _reach = reach
     }
     
-    func turnAndFace(object: RMSParticle?, towardsNotAway isTowards: Bool = true){
-        if object != nil {
-            let U: GLKVector3 = object!.position ; let V: GLKVector3 = self.position
-            let lenghtU: Float = GLKVector3Length(U); let lenghtV: Float = GLKVector3Length(V)
-            let direction: GLKVector3 = U - V
-            let dotProduct: Float = GLKVector3DotProduct(U,  V)
+    
+    
+    func headTo(object: RMSParticle) -> Float {
+        let dist = self.turnToFace(object)
+        if  dist > self.reach {
+            self.body.accelerateForward(1)
+        } else {
+            self.body.stop()
         }
-        
+        return dist
+
+    }
+    func turnToFace(object:RMSParticle) -> Float {
+        let angles = RMXGetThetaAndPhi(vectorA: self.position, vectorB: object.position)
+        self.body.setTheta(leftRightRadians: angles.theta)
+        if !self.parent.hasGravity {
+            self.body.setPhi(upDownRadians: angles.phi)
+        }
+        NSLog("theta: \(angles.theta), phi: \(angles.phi) ")
+        return self.body.distanceTo(object)
+    }
+    
+    ///Not working
+    func wiggle(){
+        if GLKVector3Length(self.body.velocity) < 0.4 {
+            let option = random() % 2
+            let dir = Float((random() % 10)) / 10 - 0.5
+            switch (option){
+            case 0:
+                self.body.accelerateForward(dir)
+                break
+            case 1:
+                self.body.accelerateLeft(dir)
+                break
+            case 2:
+                if !self.parent.hasGravity {
+                    self.body.accelerateUp(dir)
+                }
+                break
+            default:
+                self.body.accelerateForward(dir)
+                break
+            }
+        }
     }
     
 }

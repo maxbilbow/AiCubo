@@ -67,11 +67,7 @@ public class RMXObject {
         }
     }
    
-    func plusAngle(x: Float,y:Float,z:Float = 0) {
-        if self.body != nil {
-            self.body.plusAngle(x, y: y, z: z)
-        }
-    }
+   
     
     func debug() {}
     

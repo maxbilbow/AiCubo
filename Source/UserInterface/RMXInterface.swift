@@ -21,6 +21,9 @@ class RMXInterface : NSObject {
 //    #endif
     var world: RMSWorld
     
+    var lookSpeed: Float = PI_OVER_180
+    var moveSpeed: Float = 1
+    
     var activeSprite: RMSParticle {
         return self.world.activeSprite!
     }

@@ -217,6 +217,7 @@
 		50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXDPad.swift; sourceTree = "<group>"; };
 		50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXInterface.swift; sourceTree = "<group>"; };
 		50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXMouse.swift; sourceTree = "<group>"; };
+		50D5EC2B1AC9364C0028759F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		50F215961AC751BA00ED6FA6 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		50F215981AC758CF00ED6FA6 /* Accelorometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accelorometer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -323,6 +324,7 @@
 		50C2B4EC1AC4AA2100AAACF7 = {
 			isa = PBXGroup;
 			children = (
+				50D5EC2B1AC9364C0028759F /* MyPlayground.playground */,
 				50C2B4F71AC4AA2100AAACF7 /* AiCubo */,
 				50C2B5111AC4AA2100AAACF7 /* AiCuboTests */,
 				506332111AC5D59500BB4477 /* OSXView */,

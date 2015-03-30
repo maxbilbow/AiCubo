@@ -70,7 +70,9 @@ extension RMX {
                                             accelerating = false
                                             timeLimit = 600
                                         } else {
-                                            sprite.plusAngle(Float(random() % 360) , y: Float(random() % 360), z: Float(random() % 360))
+                                            let theta = GLKMathDegreesToRadians(Float(random() % 360))
+                                            let phi = GLKMathDegreesToRadians(Float(random() % 360))
+                                            sprite.rotate(radiansTheta: theta,radiansPhi: phi)
                                             accelerating = true
                                             sprite.body.accelerateForward(10)
                                         }
@@ -103,71 +105,63 @@ extension RMX {
             var itemToWatch: RMSParticle! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0
+        var isIdle = true
         var isReadyToChase = false
         var isChasing = false
         var isFetching = false
         var pacingSpeed: Float = 3
         poppy.behaviours.append { () -> () in
+            
             timePassed += 1
-            if timePassed > 30 {
-                println("time > 600")
-                if world.observer.hasItem && !isReadyToChase {
-                    poppy.actions.releaseItem()
-                    poppy.stop()
-                    poppy.body.position = world.observer.position + world.observer.body.forwardVector + world.observer.body.forwardVector
-                    isReadyToChase = true
-                    itemToWatch = world.observer.actions.item
-                    println("poppy.stop()")
-                } else { //if !world.observer.hasItem || itemToWatch != nil {
-                     println("observer has no item")
-//                     if !poppy.hasItem {
-                        if !isChasing {
-                            poppy.plusAngle(Float(random() % 360), y:0)
-                            poppy.body.accelerateForward(3)
-                            isChasing = true
-                            isReadyToChase = false
-                            println("isChasing")
-                        } else if itemToWatch != nil {
-                            if !world.observer.hasItem {
-                                poppy.actions.grabItem(item: itemToWatch)
-                                println("poppy.actions!.grabItem(item: itemToWatch")
-                                itemToWatch = nil
-                                isChasing = false
-                                isFetching = true
-                            }
-                        } else if poppy.hasItem {
-                            if isFetching {
-                                poppy.plusAngle(Float(random() % 360), y:0)
-                                poppy.body.accelerateForward(3)
-                                isFetching = false
-                                println("isFetching")
-                            } else {
-                                println("Throw or pace")
-                                poppy.actions.throwItem(10)
-                                poppy.body.accelerateForward(pacingSpeed)
-                                pacingSpeed = -pacingSpeed
-                            }
-                        } else {
-                            if !poppy.actions.prepareToJump() {
-                                poppy.body.accelerateForward(pacingSpeed)
-                                pacingSpeed = -pacingSpeed
-                            }
-                            println("poppy.actions?.prepareToJump() or pace")
+            if timePassed < 30 {
+                if isIdle {
+                    poppy.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(10))
+                    poppy.body.accelerateForward(0.1)
+                }
+            } else {
+                timePassed = 0
+                let observer = world.observer
+                if isIdle {
+                    if observer.hasItem {
+                        let dist = poppy.actions.headTo(observer)
+                        isIdle = false
+                        isReadyToChase = true
+                        itemToWatch = observer.actions.item
+                    } else {
+                        NSLog("TODO: IDLE ACTION")
+                    }
+                } else if isReadyToChase {
+                    if itemToWatch.wasJustThrown {
+                        isReadyToChase = false
+                        isChasing = true
+                        poppy.stop()
+                    } else {
+                        NSLog("TODO: Ready to chase behaviour")
+                    }
+                } else if isChasing {
+                    if  poppy.actions.headTo(itemToWatch) > poppy.actions.reach {
+                        poppy.body.accelerateForward(1)
+                    } else {
+                        if poppy.actions.grabItem(item: itemToWatch) {
+                            itemToWatch = nil
+                            isChasing = false
+                            isFetching = true
+                            poppy.body.stop()
                         }
                     }
-//                else if poppy.body.distanceTo(world.observer) < 50 {
-//                        poppy.plusAngle(Float(random() % 360), y:0)
-//                        poppy.body.accelerateForward(3)
-//                        println("poppy.body.accelerateForward(3)")
-//                    } else {
-//                        poppy.actions.prepareToJump()
-//                        println("poppy.actions?.prepareToJump()")
-//                    }
-                    timePassed = 0
-            } else {
-                println("time = \(timePassed)")
+                } else if isFetching {
+                    if  poppy.actions.headTo(observer) > observer.actions.reach {
+                        poppy.body.accelerateForward(1)
+                    } else {
+                        poppy.body.stop()
+                        poppy.body.velocity = RMXVector3Zero
+                        poppy.actions.item?.body.velocity = RMXVector3Zero
+                        poppy.actions.releaseItem()
+                        isFetching = false
+                        isIdle = true
+                    }
+                }
             }
-            
         }
         world.insertSprite(poppy)
         return poppy

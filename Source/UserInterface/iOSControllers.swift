@@ -72,8 +72,10 @@ extension RMXDPad {
                     self.world.action(action: "stop")
                     self.log("stop")
                 } else {
-                    let point = recognizer.velocityInView(gvc.view); let speed:Float = -0.01
-                    self.world.action(action: "move", speed: speed, point: [Float(point.x),0, Float(point.y)])
+                    let point = recognizer.velocityInView(self.gvc.view)
+                    let forward = Float(point.y)
+                    let sideward = Float(point.x)
+                    self.world.action(action: "move", speed: self.moveSpeed, point: [sideward,0, forward])
                     self.log("start")
                 }
             }
@@ -84,9 +86,8 @@ extension RMXDPad {
         //The event handling method
         func handlePanRightSide(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
-                let point = recognizer.velocityInView(gvc.view);
-                let speed:Float = 0.02
-                self.world.action(action: "look", speed: speed, point: [Float(point.x), Float(point.y)])
+                let point = recognizer.velocityInView(self.gvc.view);
+                self.world.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), Float(point.y)])
             } else if recognizer.numberOfTouches() == 2 {
                 if recognizer.state == UIGestureRecognizerState.Ended {
                     self.world.action(action: "jump")

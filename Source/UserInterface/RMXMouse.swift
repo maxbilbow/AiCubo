@@ -20,7 +20,7 @@ protocol RMXMouse {
     var hasFocus: Bool { get set }
     var speed: Float { get set }
     func setMousePos(x: Int32, y:Int32)
-    func mouse2view(x:Int32, y:Int32)
+    func mouse2view(x:Int32, y:Int32, speed: Float)
     func toggleFocus()
 //    func centerView(center: CFunctionPointer<(Int32, Int32)->Void>)
     func calibrateView(x: Int32, y:Int32)
@@ -80,7 +80,7 @@ class RMSMouse : RMXMouse{
         self.pos.y = y//;
     }
     
-    func mouse2view(x:Int32, y:Int32) {
+    func mouse2view(x:Int32, y:Int32, speed: Float = PI_OVER_180) {
     //dx = dy = 0;
     
     
@@ -94,8 +94,9 @@ class RMSMouse : RMXMouse{
     
         var theta: Float = Float(DeltaX) * dir
         var phi: Float =   Float(DeltaY) * dir// / 20.0f;
-    
-        self.parent.plusAngle(theta, y:phi)
+        
+        self.parent.body.addTheta(leftRightRadians: theta * speed)
+        self.parent.body.addPhi(upDownRadians:phi * -speed)
     
     }
     

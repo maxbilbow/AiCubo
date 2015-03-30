@@ -50,7 +50,7 @@ import GLKit
     
     class func mouseMotion(x: Int32, y:Int32) {
         if self.mouse.hasFocus {
-            self.mouse.mouse2view(x, y:y)
+            self.mouse.mouse2view(x, y:y, speed: PI_OVER_180)
         }
         else {
             self.mouse.setMousePos(x, y:y)

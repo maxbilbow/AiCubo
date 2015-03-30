@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/RMXInitialize.swift"
-            timestampString = "449311065.526903"
+            timestampString = "449397105.279566"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "buildScene()"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/RMXInitialize.swift"
-            timestampString = "449311065.526903"
+            timestampString = "449397105.279566"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "addPoppy(toWorld:)"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "buildScene()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

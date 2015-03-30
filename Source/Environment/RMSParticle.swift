@@ -148,9 +148,10 @@ class RMSParticle : RMXObject {
         self.body.velocity = RMXVector3Zero
     }
     
-    func plusAngle(point: [Float], speed: Float){
-        RMXLog(point[0])
-        self.plusAngle(point[0] * -speed, y: point[1] * speed)
+    func rotate(radiansTheta theta: Float,radiansPhi phi: Float = 0,radiansRoll roll: Float = 0,  speed: Float = 1){
+        self.body.addTheta(leftRightRadians: theta * -speed)
+        self.body.addPhi(upDownRadians: phi * speed)
+        self.body.addRoll(sideRollRadians: roll * speed)
     }
     
     
