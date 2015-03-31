@@ -49,6 +49,7 @@ class RMSWorld : RMSParticle {
         //fatalError("Grav: \(self.physics.gravity)")
          self.isAnimated = false
         self.shape.isVisible = false
+        
     }
     
   
