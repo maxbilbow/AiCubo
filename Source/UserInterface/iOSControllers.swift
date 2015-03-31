@@ -66,21 +66,20 @@ extension RMXDPad {
         }
     
     
-    func handleMovement(recogniser: UIGestureRecognizer){
+    func handleMovement(recogniser: UILongPressGestureRecognizer){
         //var point: CGPoint
+        let point = recogniser.locationInView(recogniser.view)
         if recogniser.state == .Began {
-            let point = recogniser.locationInView(self.view)
             self._origin = point
-//            recogniser.setValue([point.x,point.y], forKey: "origin")
         } else if recogniser.state == .Ended {
-//            recogniser.setValue([point.x,point.y], forKey: "origin")
+            _handleRelease(recogniser.state)
         } else {
-//            let origin: [Float] = recogniser.valueForKey("origin") as! [Float]
-            let point = recogniser.locationInView(self.view)
             let forward = Float(point.y - self._origin.y)// - origin[1]
             let sideward = Float(point.x - self._origin.x)// - origin[0]
             self.world.action(action: "move", speed: self.moveSpeed, point: [sideward,0, forward])
+            //println("Forward: \(forward), side: \(sideward)")
         }
+        //println("Action: \(point.x.toData()) \(point.x.toData())")
         
     }
     

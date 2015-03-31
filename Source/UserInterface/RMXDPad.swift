@@ -53,19 +53,20 @@ class RMXDPad : RMXInterface {
             let view = leftView
             let lPan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self,action: "panVelocityLeft:")
 //            lPan.numberOfTouchesRequired = 1
-            view.addGestureRecognizer(lPan)
+//            view.addGestureRecognizer(lPan)
             
-//            let movement:UIGestureRecognizer = UIGestureRecognizer(target: self,action: "handleMovement:")
+            let movement:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self,action: "handleMovement:")
 //            movement.numberOfTouchesRequired = 1
-//            view.addGestureRecognizer(lmovementPan)
+            movement.minimumPressDuration = 0
+            view.addGestureRecognizer(movement)
             
-            let tapLeft: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapLeft:")
+            //let tapLeft: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapLeft:")
             //view.addGestureRecognizer(tapLeft)
             
             
-            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
-            
-            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressLeft:"))
+//            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
+//            
+//            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressLeft:"))
             
             view.userInteractionEnabled = true
             

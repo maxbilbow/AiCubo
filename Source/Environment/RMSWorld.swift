@@ -48,6 +48,7 @@ class RMSWorld : RMSParticle {
         self.children[self.activeSprite.rmxID] = self.activeSprite
         //fatalError("Grav: \(self.physics.gravity)")
          self.isAnimated = false
+        self.shape.isVisible = false
     }
     
   

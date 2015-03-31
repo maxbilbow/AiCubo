@@ -34,13 +34,16 @@ class RMXArt : RMXObject {
 
         
         let ZX = RMSParticle(parent: world)
-        ZX.body.radius = world.body.radius * 1.2
-        ZX.shape.type = .PLANE
-//        ZX.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(90))
+        ZX.body.radius = world.body.radius 
+        ZX.shape.type = .CUBE
+        ZX.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(90))
+//        ZX.body.addPhi(upDownRadians: GLKMathDegreesToRadians(90))
+        ZX.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(90))
+        ZX.body.addPhi(upDownRadians: GLKMathDegreesToRadians(270))
         ZX.shape.color = GLKVector4Make(1.0,1.0,1.0,1.0)
         ZX.isAnimated = false
         #if OPENGL_ES
-        ZX.position = GLKVector3Make(ZX.body.position.x, -world.body.radius, ZX.body.position.z)
+        ZX.position = GLKVector3Make(ZX.body.position.x, -ZX.body.radius, ZX.body.position.z)
         #endif
         world.insertChildNode(ZX)
         
