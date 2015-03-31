@@ -50,17 +50,17 @@ class RMXPhysics {
     
     func dragFor(sender: RMSParticle) -> RMXVector3{
         let dragC: Float = sender.body.dragC
-        let rho: Float = 0.005 * sender.world!.massDensityAt(sender)
+        let rho: Float = 0.005 * sender.world.massDensityAt(sender)
         let u: Float = GLKVector3Length(sender.body.velocity)
         let area: Float = sender.body.dragArea
         var v: RMXVector3 = RMXVector3Zero
-        RMXVector3SetX(&v, 0.5 * rho * u * u * dragC * area)
-        return v
+        let drag = (0.5 * rho * u * u * dragC * area)/3
+        return GLKVector3Make(drag, drag, drag)
     }
     
     func frictionFor(sender: RMSParticle) -> RMXVector3{
-        let µ = sender.world!.µAt(sender)
-        return GLKVector3Make(µ, µ, µ);//TODO
+        let µ = sender.world.µAt(sender)
+        return GLKVector3Make(µ/3, 0, µ/3);//TODO
     }
     
    

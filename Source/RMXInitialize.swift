@@ -22,7 +22,8 @@ extension RMX {
         let actors = [ observer, poppy ]
         
         autoreleasepool {
-            for sprite in world.sprites {
+            for child in world.children {
+                let sprite = child.1
                 sprite.isAlwaysActive = true
                 if sprite.type == .DEFAULT {
                     
@@ -95,7 +96,7 @@ extension RMX {
     
     
     static func addPoppy(toWorld world: RMSWorld) -> RMSParticle {
-        let poppy: RMSParticle = RMSParticle(world: world, parent: world, name: "Poppy").setAsObserver().setAsShape()!
+        let poppy: RMSParticle = RMSParticle(parent: world, name: "Poppy").setAsObserver().setAsShape()!
         poppy.body.radius = 8
         poppy.position = GLKVector3Make(100,poppy.body.radius,-50)
             var itemToWatch: RMSParticle! = nil
@@ -178,7 +179,11 @@ extension RMX {
                 }
             }
         }
-        world.insertSprite(poppy)
+        world.insertChildNode(poppy)
+        let head = RMSParticle(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)!
+        head.body.radius = poppy.body.radius / 2
+        head.position = GLKVector3Make(0,poppy.body.radius + head.body.radius / 4, poppy.body.radius + head.body.radius / 4)
+        poppy.insertChildNode(head)
         return poppy
     }
     

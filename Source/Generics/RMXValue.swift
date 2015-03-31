@@ -65,6 +65,10 @@ extension Float {
     func toData(dp:String="05.2") -> String {
         return RMXValue.toData(self, dp: dp)///NSString(format: "%.\(dp)f", self)
     }
+    
+    var size: Float {
+        return fabs(self)
+    }
 }
 extension Double {
     func toData(dp:String="05.2") -> String {

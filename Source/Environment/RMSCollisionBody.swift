@@ -9,7 +9,7 @@
 import Foundation
 
 enum RMXCollisionBodyType { case DEFAULT, SPHERE, CUBE }
-class RMSCollisionBody : RMSChildNode {
+class RMSCollisionBody : RMSNodeProperty {
     
     var type: RMXCollisionBodyType
     

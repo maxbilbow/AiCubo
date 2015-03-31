@@ -53,7 +53,7 @@ protocol RMXViewController  {
 //    var interface: RMSKeys! { get }
 //    #endif
     var world: RMSWorld { get }
-    var objects: Array<RMSParticle> { get }
+//    var objects: Array<RMSParticle> { get }
     
     var camera: RMXCamera { get }
     

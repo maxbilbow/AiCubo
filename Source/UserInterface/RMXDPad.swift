@@ -51,11 +51,16 @@ class RMXDPad : RMXInterface {
         func setLeftView() {
             
             let view = leftView
-            let lPan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self,action: "handlePanLeftSide:")
+            let lPan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self,action: "panVelocityLeft:")
+//            lPan.numberOfTouchesRequired = 1
             view.addGestureRecognizer(lPan)
             
+//            let movement:UIGestureRecognizer = UIGestureRecognizer(target: self,action: "handleMovement:")
+//            movement.numberOfTouchesRequired = 1
+//            view.addGestureRecognizer(lmovementPan)
+            
             let tapLeft: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapLeft:")
-            view.addGestureRecognizer(tapLeft)
+            //view.addGestureRecognizer(tapLeft)
             
             
             view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
@@ -147,7 +152,7 @@ class RMXDPad : RMXInterface {
     }
     
     var i = 0
-    
+    var _origin: CGPoint = CGPoint(x: 0,y: 0)
 }
 
 

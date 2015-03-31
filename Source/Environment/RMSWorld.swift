@@ -18,18 +18,14 @@ class RMSWorld : RMSParticle {
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    
     var sun: RMSParticle?
     private let GRAVITY: Float = 9.8
-    var sprites: Array<RMSParticle>
     
-    var drawables: Array<RMSParticle>{
-        return self.sprites.filter { (sprite: RMSParticle) -> Bool in
-            return sprite.shape.type != .NULL && sprite.shape.isVisible
-        }
-    }
     
-    lazy var activeSprite: RMSParticle = RMSParticle(world: self, parent: self).setAsObserver()
+    
+    
+    
+    lazy var activeSprite: RMSParticle = RMSParticle(parent: self).setAsObserver()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
     lazy var observer: RMSParticle = self.activeSprite
@@ -39,10 +35,9 @@ class RMSWorld : RMSParticle {
 
     
     init(parent: RMXObject! = nil, name: String = "The World", capacity: Int = 15000) {
-        self.sprites = Array<RMSParticle>()
-        self.sprites.reserveCapacity(capacity)
-        
-        super.init(world: nil, parent: parent, name: name)
+        super.init(parent: nil, type: .WORLD, name: name)
+//        self.children.c.reserveCapacity(capacity)
+        self.world = self
         self.body.radius = 2000
         self.activeSprite.addInitCall { () -> () in
             self.observer.position = GLKVector3Make(20, 20, 20)
@@ -50,17 +45,13 @@ class RMSWorld : RMSParticle {
         
         self.activeCamera = RMXCamera(self.activeSprite)
         
-        self.sprites.append(self.activeSprite)
+        self.children[self.activeSprite.rmxID] = self.activeSprite
         //fatalError("Grav: \(self.physics.gravity)")
          self.isAnimated = false
     }
     
   
-    func insertSprite(sprite: RMSParticle){
-        if sprite.body.distanceTo(self) <= self.body.radius {
-            self.sprites.append(sprite)
-        }
-    }
+   
             
     func µAt(someBody: RMSParticle) -> Float {
         if (someBody.position.y <= someBody.ground   ) {
@@ -108,16 +99,9 @@ class RMSWorld : RMSParticle {
     
    
     override func animate() {
-        super.animate()
-        for sprite in sprites {
-            if sprite !== self {
-                sprite.animate()
-            }
-           
-        }
         self.actionProcessor.animate()
         self.debug()
-        
+        super.animate()
     }
     
     override func reset() {
@@ -126,20 +110,22 @@ class RMSWorld : RMSParticle {
     }
     
     func closestObjectTo(sender: RMSParticle)->RMSParticle? {
-        var closest: RMSParticle = sprites[1]
-        var dista: Float = sender.body.distanceTo(closest)
-        for sprite in sprites {
-            let distb: Float = sender.body.distanceTo(sprite)
-            //NSString *lt = @" < ";
-            if sprite.rmxID != sender.rmxID {
+        var closest: Int = -1
+        var dista: Float = Float.infinity// = sender.body.distanceTo(closest)
+        for object in children {
+            let child = object.1
+            if child != sender {
+                let distb: Float = sender.body.distanceTo(child)
                 if distb < dista {
-                    closest = sprite
+                    closest = child.rmxID
                     dista = distb
                 }
             }
         }
-        if dista < sender.actions.reach + closest.body.radius  {
-            return closest
+        if let result = children[closest] {
+            if dista < sender.actions.reach + result.body.radius  {
+                return result
+            }
         }
         return nil
     }
@@ -147,9 +133,10 @@ class RMSWorld : RMSParticle {
   
     //private var _hasGravity = false
     override func toggleGravity() {
-        for sprite in sprites {
-            if (sprite !== self.observer) && !(sprite.isLightSource) {
-                sprite.setHasGravity(self.hasGravity)
+        for object in children {
+            let child = object.1
+            if (child != self.observer) && !(child.isLightSource) {
+                child.setHasGravity(self.hasGravity)
             }
         }
         super.toggleGravity()

@@ -73,6 +73,15 @@ func o (lhs: GLKVector3, rhs: GLKVector3) -> Float {
     return GLKVector3DotProduct(lhs, rhs)
 }
 
+///Returns a vector in the direction of a matrix
+func * (lhs:GLKMatrix4, rhs: GLKVector3) -> GLKVector3 {
+    let result: GLKVector3 = GLKVector3Make(
+        GLKVector3Make(lhs.m00,lhs.m10,lhs.m20).length * rhs.x,
+        GLKVector3Make(lhs.m01,lhs.m11,lhs.m21).length * rhs.y,
+        GLKVector3Make(lhs.m02,lhs.m12,lhs.m22).length * rhs.z
+    )
+    return result
+}
 /*
 func RMXGetThetaAndPhi(vectorA A: GLKVector3, vectorB B: GLKVector3) -> (theta:Float, phi:Float){
     let thetaA = GLKVector2Make(A.x, A.z); let thetaB = GLKVector2Make(B.x, B.z)
@@ -143,6 +152,10 @@ extension GLKMatrix4 {
 extension GLKVector3 {
     var isZero: Bool {
         return (x == 0) && (y == 0) && (z == 0)
+    }
+    
+    var length: Float {
+        return GLKVector3Length(self)
     }
     
 //    func setX(n: Float){

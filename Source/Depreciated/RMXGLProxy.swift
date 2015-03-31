@@ -125,7 +125,7 @@ import GLKit
         RMXGLMakeLookAt(self.activeCamera.eye, self.activeCamera.center, self.activeCamera.up)
       
         if self.drawNextFrame >= self.framerate {
-        self.drawScene()
+        self.drawScene(self.world)
         // Make sure changes appear onscreen
        
        
@@ -155,8 +155,7 @@ extension RMXGLProxy {
         RMXCGGetLastMouseDelta(&dx,&dy)
     }
     
-    class func drawScene(){
-
+    class func drawScene(parent: RMSParticle){
         func shape(type: ShapeType, radius: Float){
             switch (type) {
             case .CUBE:
@@ -170,32 +169,33 @@ extension RMXGLProxy {
             }
         }
         
-        for object in self.world.sprites  {
-            let position = object.body.position
-            let radius = object.body.radius
+        for object in parent.children  {
+            let position = object.1.body.position
+            let radius = object.1.body.radius
 
-            if object.isLightSource {
-                RMXGLShine(object.shape.gl_light, object.shape.gl_light_type, GLKVector4MakeWithVector3(position, 1))
+            if object.1.isLightSource {
+                RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type, GLKVector4MakeWithVector3(position, 1))
                 
             }
             
-            if object.isDrawable {
+            if object.1.isDrawable {
                 glPushMatrix()
-                RMXGLTranslate(object.anchor)
+                RMXGLTranslate(object.1.anchor)
                 RMXGLTranslate(position)
-                if object.isLightSource {
-                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.shape.color)
+                if object.1.isLightSource {
+                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape.color)
                 } else {
-                    RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, object.shape.color)
-                    RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, object.shape.color)
+                    RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, object.1.shape.color)
+                    RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, object.1.shape.color)
                 }
-               
-                shape(object.shape.type, radius)
+                
+                shape(object.1.shape.type, radius)
 
                 RMXGLMaterialfv(GL_FRONT, GL_EMISSION, RMXVector4Zero);
                 RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, RMXVector4Zero);
                 RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, RMXVector4Zero);
                 
+                self.drawScene(object.1)
                 glPopMatrix();
             
             }

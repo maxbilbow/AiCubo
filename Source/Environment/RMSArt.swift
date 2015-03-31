@@ -26,14 +26,14 @@ class RMXArt : RMXObject {
         let world: RMSWorld = RMSWorld()
     
     
-        let sun = RMSParticle(world: world).shape.makeAsSun(rDist: world.body.radius + 200)
+        let sun = RMSParticle(parent: world).shape.makeAsSun(rDist: world.body.radius + 200)
         sun.body.radius = 100
         world.sun = sun
-        world.insertSprite(sun)
+        world.insertChildNode(sun)
 
 
         
-        let ZX = RMSParticle(world: world)
+        let ZX = RMSParticle(parent: world)
         ZX.body.radius = world.body.radius
         ZX.shape.type = .PLANE
         ZX.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(90))
@@ -42,7 +42,7 @@ class RMXArt : RMXObject {
         #if OPENGL_ES
         ZX.position = GLKVector3Make(ZX.body.position.x, -world.body.radius, ZX.body.position.z)
         #endif
-        world.insertSprite(ZX)
+        world.insertChildNode(ZX)
         
         RMXArt.drawAxis(world)
         RMXArt.randomObjects(world)
@@ -79,7 +79,7 @@ class RMXArt : RMXObject {
             for (var i: Float = 0; i < shapesPerAxis; ++i){
                 let position = GLKVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                 point += step
-                let object:RMSParticle = RMSParticle(world: world)
+                let object:RMSParticle = RMSParticle(parent: world)
                 object.addInitCall( {
                     object.setHasGravity(false)
                     object.body.radius = shapeRadius
@@ -90,7 +90,7 @@ class RMXArt : RMXObject {
                     object.shape.color = GLKVector4Make(color[0], color[1], color[2], color[3])
                     object.isAnimated = false
                 })
-                world.insertSprite(object)
+                world.insertChildNode(object)
             }
             
             
@@ -122,7 +122,7 @@ class RMXArt : RMXObject {
         randPos[1] = randPos[1] + 50
         
         //gravity = !gravity;
-            let object: RMSParticle = RMSParticle(world: world)
+            let object: RMSParticle = RMSParticle(parent: world)
 //            if(false){//(rand() % 10000) == 1) {
 //                object.shape.makeAsSun(rDist: 0, isRotating:false)
 //            }
@@ -139,7 +139,7 @@ class RMXArt : RMXObject {
         object.body.mass = Float(random()%15+1)/10;
         object.body.dragC = Float(random() % 99+1)/100;
         object.shape.color = RMXRandomColor()
-        world.insertSprite(object)
+        world.insertChildNode(object)
         
         
         }

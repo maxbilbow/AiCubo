@@ -13,7 +13,7 @@ import OpenGL
 import GLUT
     #endif
 
-class RMXShape : RMSChildNode {
+class RMXShape : RMSNodeProperty {
 
     var type: ShapeType = .NULL
     
@@ -21,11 +21,11 @@ class RMXShape : RMSChildNode {
         return GLKMatrix4MakeScale(self.radius,self.radius,self.radius)
     }
     var rotationMatrix: GLKMatrix4 {
-        return GLKMatrix4MakeRotation(self.rotation, self.parent.rAxis.x,self.parent.rAxis.y,self.parent.rAxis.z)
+        return self.parent.body.orientation //GLKMatrix4MakeRotation(self.rotation, self.parent.rAxis.x,self.parent.rAxis.y,self.parent.rAxis.z)
     }
 //    var geometry: RMSGeometry!
     var translationMatrix: GLKMatrix4 {
-        let p = self.parent.position
+        let p = self.parent.position + self.parent.parent!.position
         return GLKMatrix4MakeTranslation(p.x, p.y, p.z)
     }
     

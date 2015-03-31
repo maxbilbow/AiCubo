@@ -9,12 +9,12 @@
 
 import GLKit
 
-class RMSPhysicsBody: RMSChildNode {
+class RMSPhysicsBody: RMSNodeProperty {
     
     private let PI: Float = 3.14159265358979323846
     var velocity, acceleration, forces: GLKVector3
-    var orientation: GLKMatrix3//, groundOrientation: GLKMatrix3
-    private var _orientation: GLKMatrix3 {
+    var orientation: GLKMatrix4//, groundOrientation: GLKMatrix3
+    private var _orientation: GLKMatrix4 {
         return self.orientation// false ? self.groundOrientation : self.orientation
     }
     var vMatrix: GLKMatrix4
@@ -41,7 +41,7 @@ class RMSPhysicsBody: RMSChildNode {
         self.velocity = GLKVector3Make(0,0,0)
         self.acceleration = GLKVector3Make(0,0,0)
         self.forces = GLKVector3Make(0,0,0)
-        self.orientation = GLKMatrix3Identity
+        self.orientation = GLKMatrix4Identity
 //        self.groundOrientation = GLKMatrix3Identity
         self.vMatrix = GLKMatrix4MakeScale(0,0,0)
         self.accelerationRate = accRate
@@ -61,15 +61,15 @@ class RMSPhysicsBody: RMSChildNode {
     }
     
     var upVector: GLKVector3 {
-        return GLKMatrix3GetRow(self._orientation, 1)
+        return GLKVector3Make(self.orientation.m01, self.orientation.m11, self.orientation.m21)//GLKVector3Make(0,1,0)
     }
     
     var leftVector: GLKVector3 {
-        return GLKMatrix3GetRow(self.orientation, 0)
+        return GLKVector3Make(self.orientation.m00, self.orientation.m10, self.orientation.m20)
     }
     
     var forwardVector: GLKVector3 {
-        return GLKMatrix3GetRow(self._orientation, 2)
+        return GLKVector3Make(self.orientation.m02, self.orientation.m12, self.orientation.m22)
     }
     
     func distanceTo(vector: GLKVector3) -> Float{
@@ -121,13 +121,13 @@ class RMSPhysicsBody: RMSChildNode {
     func addTheta(leftRightRadians theta: Float){
         //let theta: Float = GLKMathDegreesToRadians(x)
         self.theta += theta
-        self.orientation = GLKMatrix3Rotate(self.orientation, theta, 0, 1, 0);
+        self.orientation = GLKMatrix4RotateY(self.orientation, theta)
     }
     
     
     func addPhi(upDownRadians phi: Float) {
         self.phi += phi
-        self.orientation = GLKMatrix3RotateWithVector3(self.orientation, phi, self.leftVector)
+        self.orientation = GLKMatrix4RotateWithVector3(self.orientation, phi, self.leftVector)
     }
     
     func setTheta(leftRightRadians theta: Float){
@@ -146,19 +146,24 @@ class RMSPhysicsBody: RMSChildNode {
         //TODO
     }
     
-    func setVelocity(v: [Float], speed: Float = 1){
-        let matrix = GLKMatrix3Transpose(self._orientation)
-        self.velocity += GLKMatrix3MultiplyVector3(matrix, GLKVector3Make(v[0] * speed,v[1] * speed,v[2] * speed))
-    }
+//    func setVelocity(v: [Float], speed: Float = 1){
+////        let matrix = GLKMatrix4Transpose(self.orientation)
+//        self.velocity += GLKMatrix4MultiplyVector3(self.orientation, GLKVector3Make(v[0] * speed,v[1] * speed,v[2] * speed))
+//    }
     
-    func animate()    {
-
+    override func animate()    {
+        super.animate()
         let g = self.hasGravity ? self.world.gravityAt(self.parent) : RMXVector3Zero
         let n = self.hasGravity ? self.physics.normalFor(self.parent) : RMXVector3Zero
         let f = self.physics.frictionFor(self.parent)// : GLKVector3Make(1,1,1);
         let d = self.physics.dragFor(self.parent)// : GLKVector3Make(1,1,1);
         
-        self.velocity = GLKVector3DivideScalar(self.velocity, Float(1 + self.world.µAt(self.parent) + d.x))
+        let frictionAndDrag = GLKVector3Make(
+            Float(1 + f.x + d.x),
+            Float(1 + f.y + d.y),
+            Float(1 + f.z + d.z)
+            )
+        self.velocity = GLKVector3Divide(self.velocity, frictionAndDrag)
         
         let forces = GLKVector3Make(
             (g.x + /* d.x + f.x +*/ n.x),
@@ -170,7 +175,7 @@ class RMSPhysicsBody: RMSChildNode {
         //    self.body.forces.y += g.y + n.y;
         //    self.body.forces.z += g.z + n.z;
         
-        self.forces = GLKVector3Add(forces,GLKMatrix3MultiplyVector3(GLKMatrix3Transpose(self._orientation),self.acceleration));
+        self.forces = forces + GLKMatrix4MultiplyVector3(GLKMatrix4Transpose(self.orientation), self.acceleration)
         self.velocity = GLKVector3Add(self.velocity,self.forces);//transpos or?
         
         self.world.collisionTest(self.parent)

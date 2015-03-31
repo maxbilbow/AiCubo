@@ -115,6 +115,8 @@
 		50C2B55E1AC4ACC100AAACF7 /* RMXDPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */; };
 		50C2B55F1AC4ACC100AAACF7 /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
 		50C2B5601AC4ACC100AAACF7 /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
+		50D0AF8D1ACAD9DF0008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
+		50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
 		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
 /* End PBXBuildFile section */
@@ -224,6 +226,7 @@
 		50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXDPad.swift; sourceTree = "<group>"; };
 		50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXInterface.swift; sourceTree = "<group>"; };
 		50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXMouse.swift; sourceTree = "<group>"; };
+		50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXNodeProperty.swift; sourceTree = "<group>"; };
 		50D5EC2B1AC9364C0028759F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		50F215961AC751BA00ED6FA6 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		50F215981AC758CF00ED6FA6 /* Accelorometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accelorometer.swift; sourceTree = "<group>"; };
@@ -430,6 +433,7 @@
 				50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */,
 				50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */,
 				50BA279B1ACAA554007347A9 /* RMSChildNode.swift */,
+				50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */,
 				50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */,
 				50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */,
 				50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */,
@@ -762,6 +766,7 @@
 				5063324C1AC5D98500BB4477 /* RMXMouse.swift in Sources */,
 				5071AC0B1AC6CEB4004E240C /* run.m in Sources */,
 				506332501AC5D9D100BB4477 /* RMXViewController.swift in Sources */,
+				50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */,
 				5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */,
 				5063323E1AC5D60D00BB4477 /* CWrappers.c in Sources */,
 				5071AC081AC6CEB4004E240C /* RMOShapes.m in Sources */,
@@ -807,6 +812,7 @@
 				50C2B5481AC4ACC100AAACF7 /* RMSParticle.swift in Sources */,
 				50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */,
 				50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */,
+				50D0AF8D1ACAD9DF0008A2B8 /* RMXNodeProperty.swift in Sources */,
 				50C2B55C1AC4ACC100AAACF7 /* RMSActionProcessor.swift in Sources */,
 				50C2B5011AC4AA2100AAACF7 /* GameViewController.swift in Sources */,
 				50C2B55F1AC4ACC100AAACF7 /* RMXInterface.swift in Sources */,

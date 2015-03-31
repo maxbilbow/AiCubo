@@ -49,7 +49,7 @@ class RMXClock :RMXObject {
     
     init(world: RMSWorld, interface: RMXInterface){
         self.interface = interface
-        super.init(parent: nil, world: world, name: "Clock")
+        super.init(parent: world, name: "Clock")
     }
     
     ///Probably not necessary to call, given its use... getCounter does the same.

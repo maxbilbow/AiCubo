@@ -53,6 +53,15 @@ class RMSGeometry  {
 //        }
         
     }
+    
+    static func get(type: ShapeType) -> RMSGeometry{
+        switch (type) {
+        case .CUBE:
+            return self.CUBE
+        default:
+            return self.CUBE
+        }
+    }
 }
 
 

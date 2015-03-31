@@ -7,28 +7,33 @@
 //
 
 
-public class RMXObject {
+class RMXObject  {
     private static var COUNT: Int = 0
     var rmxID: Int
     var position: GLKVector3
     var isAnimated: Bool = true
     private var _name: String
-    var parent: RMXObject?
-    var world: RMSWorld! = nil
+    var parent: RMSParticle?
+    lazy var world: RMSWorld = self as! RMSWorld
     var body: RMSPhysicsBody! = nil
     var collisionBody: RMSCollisionBody! = nil
     var resets: [() -> () ]
     var behaviours: [() -> ()]
-    
+    var children: [Int : RMSParticle]
+    var hasChildren: Bool {
+        return !children.isEmpty
+    }
     var isAlwaysActive = true
     var isActive = true
     var variables: [ String: Variable] = [ "isBouncing" : Variable(i: 1) ]
     var name: String {
         return "\(_name): \(self.rmxID)"
     }
-    init(parent: RMXObject? = nil, world: RMSWorld? = nil, name: String = "RMXObject"){
+    init(parent: RMSParticle? = nil, name: String = "RMXObject"){
+        
+        self.children = Dictionary<Int,RMSParticle>()
         self.parent = parent
-        self.world = world
+        
         self.rmxID = RMXObject.COUNT
         self.position = GLKVector3Make(0,0,0)
         _name = name
@@ -46,10 +51,16 @@ public class RMXObject {
             }
         }
         self.prepareToRest = restIf
-        self.resets.append({ println("INIT: \(name), \(self.rmxID)")})
         
+        self.resets.append({ println("INIT: \(name), \(RMXObject.COUNT)")})
+        self.objectDidInitialize()
         
-        
+    }
+    
+    func objectDidInitialize(){
+        if self.parent != nil {
+            self.world = self.parent!.world
+        }
     }
     func getName() -> String {
         return _name
@@ -123,5 +134,24 @@ public class RMXObject {
             self.isActive = bool
         }
     }
-
+    
+    func animate(){
+        for child in children {
+            child.1.animate()
+        }
+    }
+    
+    func insertChildNode(child: RMSParticle){
+        self.children[child.rmxID] = child
+    }
+    
+    
+    func expellChild(rmxID: Int){
+        self.children.removeValueForKey(rmxID)
+    }
+    
+    func expellChild(child: RMSParticle){
+        self.children.removeValueForKey(child.rmxID)
+    }
+    
 }

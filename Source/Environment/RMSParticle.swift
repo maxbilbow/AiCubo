@@ -12,8 +12,15 @@ import GLKit
 
 
 enum RMXParticleType { case DEFAULT, POPPY, OBSERVER, SHAPE, SIMPLE_PARTICLE, WORLD }
-class RMSParticle : RMXObject {
+class RMSParticle : RMXObject , RMXChildNode {
  
+    var isObserver: Bool {
+        return self == self.world.observer
+    }
+    
+    var isActiveSprite: Bool {
+        return self == self.world.activeSprite
+    }
     #if OPENGL_OSX
     lazy var mouse: RMXMouse = RMSMouse(parent: self)
     #endif
@@ -27,8 +34,14 @@ class RMSParticle : RMXObject {
         return self.position.y
     }
     
+    private var _isDrawable: Bool?
     var isDrawable: Bool {
-        return self.shape.isVisible
+        if _isDrawable != nil {
+            return _isDrawable!
+        } else {
+            _isDrawable = self.shape.isVisible && self.shape.type != .NULL
+        }
+        return _isDrawable!
     }
     var geometry: ShapeType {
         return self.shape.type
@@ -49,12 +62,12 @@ class RMSParticle : RMXObject {
     var isRotating = false
     //static var COUNT: Int = 0
     var isInWorld: Bool {
-        return self.body.distanceTo(self.world!) < self.world?.body.radius
+        return self.body.distanceTo(self.world) < self.world.body.radius
     }
     
-    init(world:RMSWorld?, type: RMXParticleType = .DEFAULT, parent:RMXObject! = nil, name: String = "RMSParticle")
+    init(parent:RMSParticle?, type: RMXParticleType = .DEFAULT, name: String = "RMSParticle")
     {
-        super.init(parent:parent, world:world, name: name)
+        super.init(parent:parent, name: name)
 //        self.camera = RMXCamera(world: world, pov: self)
         //Set up for basic particle
         self.resets.append({
@@ -110,10 +123,7 @@ class RMSParticle : RMXObject {
         return self
     }
     
-    class func New(world: RMSWorld! = nil, parent: RMXObject! = nil) -> RMSParticle {
-        return RMSParticle(world: world, parent: parent)
-        
-    }
+    
     
     func addBehaviour(behaviour: () -> ()) {
         self.behaviours.append(behaviour)
@@ -126,12 +136,13 @@ class RMSParticle : RMXObject {
     }
     
     var ground: Float {
-        return self.body.radius - ( self.actions.squatLevel ?? 0 )
+        return self.body.radius - self.actions.squatLevel
     }
     
-    func animate() {
+    override func animate() {
+        super.animate()
         if self.isAnimated && self.shouldAnimate {
-            self.actions.jumpTest()
+            self.actions.animate()
             self.body.animate()
             self.actions.manipulate()
             for behaviour in self.behaviours {
@@ -206,7 +217,13 @@ class RMSParticle : RMXObject {
         return self.shape.isLight
     }
     
+    override func insertChildNode(child: RMSParticle) {
+        child.parent = self
+        child.world = self.world
+        super.insertChildNode(child)
+    }
 
+    
 
 }
 
@@ -233,5 +250,13 @@ extension RMSParticle {
     
     var hasItem: Bool {
         return self.actions.item != nil
+    }
+    
+
+}
+
+extension RMSParticle {
+    func resetDrawable(){
+        self._isDrawable = nil
     }
 }

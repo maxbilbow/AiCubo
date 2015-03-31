@@ -38,25 +38,28 @@ class RMSActionProcessor {
     var moveType: RMXMoveType = .PUSH
     #endif
     
-    private var _movement: (x:Float, y:Float, z:Float) = (x:0, y:0, z:0)
     
+    private var _movement: (x:Float, y:Float, z:Float) = (x:0, y:0, z:0)
+    private var _panThreshold: Float = 70
     func movement(action: String!, speed: Float = 0,  point: [Float]) -> Bool{
         //if (keys.keyStates[keys.forward])  [observer accelerateForward:speed];
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
-            switch(self.moveType) {
-            case .DRAG:
-                if point[0] * _movement.x <= 0 { _movement.x = point[0] * speed }
-                if point[1] * _movement.y <= 0 { _movement.y = point[1] * speed }
-                if point[2] * _movement.z <= 0 { _movement.z = point[2] * speed }
-                break
-            default:
+            NSLog("\(point[0])  \(point[2])")
+//            switch(self.moveType) {
+//            case .DRAG:
+//                if point[0].size > _panThreshold { _movement.x = point[0] * speed }
+//                if point[1].size > _panThreshold { _movement.y = point[1] * speed }
+//                if point[2].size > _panThreshold { _movement.z = point[2] * speed }
+//                
+//                break
+//            default:
                 self.activeSprite.body.accelerateForward(point[2] * speed)
                 self.activeSprite.body.accelerateLeft(point[0] * speed)
                 self.activeSprite.body.accelerateUp(point[1] * speed)
-                break
-            }
+//                break
+//            }
         }
         if action == "stop" {
             self.activeSprite.body.stop()
@@ -191,9 +194,9 @@ class RMSActionProcessor {
             self.activeSprite.actions.extendArmLength(self.extendArm)
         }
         if moveType == .DRAG {
-            self.activeSprite.body.accelerateForward(_movement.z)
-            self.activeSprite.body.accelerateLeft(_movement.x)
-            self.activeSprite.body.accelerateUp(_movement.y)
+//            self.activeSprite.body.accelerateForward(_movement.z)
+//            self.activeSprite.body.accelerateLeft(_movement.x)
+//            self.activeSprite.body.accelerateUp(_movement.y)
         }
     }
         

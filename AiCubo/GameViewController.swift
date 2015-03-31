@@ -49,9 +49,9 @@ class GameViewController : GLKViewController, RMXViewController {
         return self.interface.world
     }
     
-    var objects: Array<RMSParticle> {
-        return self.interface.world.drawables
-    }
+//    var objects: Array<RMSParticle> {
+//        return self.interface.world.drawables
+//    }
     
     var camera: RMXCamera {
         return self.interface.activeCamera
@@ -251,38 +251,40 @@ class GameViewController : GLKViewController, RMXViewController {
             glClearColor(1.0, 1.0, 1.0, 1.0);
             glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT));
             
-            for o in self.objects {
-                if o.isDrawable {
-                    let sprite = o.shape
-                    let scaleMatrix = sprite.scaleMatrix
-                    let translateMatrix = sprite.translationMatrix
-                    let rotationMatrix = sprite.rotationMatrix
-                    
-                    
-                    var matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
-                    
-                    GLKMatrixStackMultiplyMatrix4(matrixStack, translateMatrix)
-                    GLKMatrixStackMultiplyMatrix4(matrixStack, rotationMatrix)
-                    GLKMatrixStackMultiplyMatrix4(matrixStack, scaleMatrix)
-                    
-                    GLKMatrixStackPush(matrixStack)
-                    self.modelMatrix = GLKMatrixStackGetMatrix4(matrixStack);
-        
-                    glBindVertexArrayOES(self.vertexArray.memory)
-                
-                    self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
-                    let shape = RMSGeometry.CUBE
-                    glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
-                   
-                    glBindVertexArrayOES(0)
-                    
-                    
-                }
-            }
-//        })
+            self.drawChildren(self.world.children)
+            glBindVertexArrayOES(0)
             #elseif OPENGL_OSX
             
         #endif
+    }
+    
+    func drawChildren(children: Dictionary<Int,RMSParticle>) {
+        for child in children {
+            let o = child.1
+            if o.isDrawable {
+                let sprite = o.shape
+                let scaleMatrix = sprite.scaleMatrix
+                let translateMatrix = sprite.translationMatrix
+                let rotationMatrix = sprite.rotationMatrix
+                
+                
+                var matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
+                
+                GLKMatrixStackMultiplyMatrix4(matrixStack, translateMatrix)
+                GLKMatrixStackMultiplyMatrix4(matrixStack, rotationMatrix)
+                GLKMatrixStackMultiplyMatrix4(matrixStack, scaleMatrix)
+                
+                GLKMatrixStackPush(matrixStack)
+                self.modelMatrix = GLKMatrixStackGetMatrix4(matrixStack);
+                
+                glBindVertexArrayOES(self.vertexArray.memory)
+                
+                self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
+                let shape = RMSGeometry.get(o.shape.type)
+                glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
+            }
+            self.drawChildren(o.children)
+        }
     }
     
     func prepareEffectWithModelMatrix(modelMatrix: GLKMatrix4, viewMatrix:GLKMatrix4, projectionMatrix: GLKMatrix4) {

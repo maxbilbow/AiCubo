@@ -33,3 +33,14 @@ import GLKit
     typealias RMXView = NSView
     typealias RMXContext = UnsafeMutablePointer<_CGLContextObject>
 #endif
+
+
+func == (lhs: RMXObject, rhs: RMXObject) -> Bool {
+    return lhs.rmxID == rhs.rmxID
+}
+
+
+func != (lhs: RMXObject, rhs: RMXObject) -> Bool {
+    return lhs.rmxID != rhs.rmxID
+}
+

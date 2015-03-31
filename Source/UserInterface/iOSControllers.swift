@@ -65,11 +65,28 @@ extension RMXDPad {
             _handleRelease(recognizer.state)
         }
     
-   
+    
+    func handleMovement(recogniser: UIGestureRecognizer){
+        //var point: CGPoint
+        if recogniser.state == .Began {
+            let point = recogniser.locationInView(self.view)
+            self._origin = point
+//            recogniser.setValue([point.x,point.y], forKey: "origin")
+        } else if recogniser.state == .Ended {
+//            recogniser.setValue([point.x,point.y], forKey: "origin")
+        } else {
+//            let origin: [Float] = recogniser.valueForKey("origin") as! [Float]
+            let point = recogniser.locationInView(self.view)
+            let forward = Float(point.y - self._origin.y)// - origin[1]
+            let sideward = Float(point.x - self._origin.x)// - origin[0]
+            self.world.action(action: "move", speed: self.moveSpeed, point: [sideward,0, forward])
+        }
         
+    }
+    
         //The event Le method
 
-        func handlePanLeftSide(recognizer: UIPanGestureRecognizer) {
+        func panVelocityLeft(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
                 if recognizer.state == UIGestureRecognizerState.Ended {
                     self.world.action(action: "stop")

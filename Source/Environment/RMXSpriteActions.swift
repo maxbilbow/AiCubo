@@ -9,14 +9,14 @@
 import Foundation
 import GLKit
 
-class RMXSpriteActions : RMSChildNode {
+class RMXSpriteActions : RMSNodeProperty {
     var armLength: Float = 0
     lazy private var _reach: Float = self.body.radius
     var reach:Float {
         return self.body.radius + _reach
     }
     
-    var jumpStrength: Float = 1
+    var jumpStrength: Float = 10
     var squatLevel:Float = 0
     private var _prepairingToJump: Bool = false
     private var _goingUp:Bool = false
@@ -24,6 +24,9 @@ class RMXSpriteActions : RMSChildNode {
     private var _itemWasAnimated:Bool = false
     private var _itemHadGravity:Bool = false
     
+    var altitude: Float {
+        return self.body.position.y
+    }
     var item: RMSParticle?
     var itemPosition: RMXVector3 = RMXVector3Zero
     
@@ -74,7 +77,7 @@ class RMXSpriteActions : RMSChildNode {
         if self.item != nil {
             self.releaseItem()
         } else {
-            let item: RMSParticle? = item ?? self.parent.world?.closestObjectTo(self.sprite)
+            let item: RMSParticle? = item ?? self.parent.world.closestObjectTo(self.sprite)
             if item != nil && self.body.distanceTo(item!) <= self.reach {
                 self.setItem(item)
             }
@@ -103,50 +106,65 @@ class RMXSpriteActions : RMSChildNode {
         self.body.acceleration += force
     }
     
-    func jumpTest() {
-        if (_prepairingToJump || _goingUp || self.squatLevel != 0){// || self.squatLevel > 0){
-            var i: Float = self.body.radius / 200
-            if (_prepairingToJump){
-                self.squatLevel += i
-                if (self.squatLevel >= self.sprite.ground/4-i) {
-                    self.jump()
-                    _ignoreNextJump = true
-                }
-            } else if (self.squatLevel != 0 ) || ( _goingUp ){
-                //if (self.goingUp) {
-                self.squatLevel -= i * 4
-                if (self.squatLevel <= 0) {
-                    self.squatLevel = 0
-                    _goingUp = false;
-                    self.body.upStop()
-                }
+    enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
+    private var _jumpState: JumpState = .NOT_JUMPING
+    private var _maxSquat: Float = 0
+    
+    func jumpTest() -> JumpState {
+        switch (_jumpState) {
+        case .NOT_JUMPING:
+            return _jumpState
+        case .PREPARING_TO_JUMP:
+            if self.squatLevel > _maxSquat{
+                _jumpState = .JUMPING
+            } else {
+                let increment: Float = _maxSquat / 50
+                self.squatLevel += increment
             }
+            break
+        case .JUMPING:
+            if self.altitude > self.body.radius * 2 || _jumpStrength < self.body.weight {//|| self.body.velocity.y <= 0 {
+                _jumpState = .GOING_UP
+                self.squatLevel = 0
+            } else {
+                RMXVector3PlusY(&self.body.velocity, _jumpStrength)
+            }
+            break
+        case .GOING_UP:
+            if self.body.velocity.y <= 0 {
+                _jumpState = .COMING_DOWN
+            } else {
+                //Anything to do?
+            }
+            break
+        case .COMING_DOWN:
+            if self.altitude <= self.parent.body.radius {
+                _jumpState = .NOT_JUMPING
+            }
+            break
+        default:
+            fatalError("Shouldn't get here")
         }
+        return _jumpState
     }
     
     func prepareToJump() -> Bool{
-        if !_goingUp || _ignoreNextJump && !_prepairingToJump{
-            _prepairingToJump = true
+        if _jumpState == .NOT_JUMPING && self.parent.isGrounded {
+            _jumpState = .PREPARING_TO_JUMP
+            _maxSquat = self.body.radius / 4
             return true
         } else {
             return false
         }
     }
     
+    private var _jumpStrength: Float {
+        return fabs(self.body.weight * self.jumpStrength * self.squatLevel/_maxSquat)
+    }
     func jump() {
-        if _ignoreNextJump {
-            _ignoreNextJump = false
-            _goingUp = false
-            _prepairingToJump = false
-            return
+        if _jumpState == .PREPARING_TO_JUMP {
+            _jumpState = .JUMPING
         }
-        else if (self.sprite.hasGravity && _prepairingToJump && !_goingUp) {
-            let y = self.body.weight * self.jumpStrength * self.body.radius / self.squatLevel
-            RMXVector3PlusY(&self.body.acceleration, y)
-            _goingUp = true;
-            _prepairingToJump = false;
-        }
-        
     }
 
     func setReach(reach: Float) {
@@ -207,5 +225,12 @@ class RMXSpriteActions : RMSChildNode {
     }
     
    
-    
+    override func animate() {
+        super.animate()
+        if self.parent.parent! == self.world {
+//            if self.parent.isObserver {
+//                println("\(self.jumpTest().hashValue) V:\(self.parent.body.velocity.y) G:\(self.body.acceleration.y)")
+//            }
+        }
+    }
 }

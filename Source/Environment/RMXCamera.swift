@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-class RMXCamera : RMSChildNode {
+class RMXCamera : RMSNodeProperty {
     
     var pov: RMSParticle {
         return self.parent
@@ -57,7 +57,7 @@ class RMXCamera : RMSChildNode {
     }
     
     var center: GLKVector3{
-        return GLKVector3Add(self.body.forwardVector,self.position)
+        return self.body.forwardVector + self.position
     }
     
     private let simple = false
@@ -90,10 +90,10 @@ class RMXCamera : RMSChildNode {
         
     
     var quatarnion: GLKQuaternion {
-        return GLKQuaternionMakeWithMatrix3(self.body.orientation)
+        return GLKQuaternionMakeWithMatrix4(self.body.orientation)
     }
     
-    var orientation: GLKMatrix3 {
+    var orientation: GLKMatrix4 {
         return self.body.orientation
     }
 
