@@ -21,7 +21,7 @@ import GLKit
     }
     
     static var activeCamera: RMXCamera {
-        return self.world.activeCamera!
+        return self.world.activeCamera
     }
     
     static var mouse: RMXMouse {
@@ -41,7 +41,7 @@ import GLKit
     }
     
     static var activeSprite: RMSParticle {
-        return self.world.activeSprite!
+        return self.world.activeSprite
     }
     
     class func calibrateView(x: Int32, y: Int32) {
@@ -121,8 +121,9 @@ import GLKit
         glClearColor(0.8, 0.85, 1.8, 0.0)
 
         glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
+        
         RMXGLMakeLookAt(self.activeCamera.eye, self.activeCamera.center, self.activeCamera.up)
-
+      
         if self.drawNextFrame >= self.framerate {
         self.drawScene()
         // Make sure changes appear onscreen
@@ -175,6 +176,7 @@ extension RMXGLProxy {
 
             if object.isLightSource {
                 RMXGLShine(object.shape.gl_light, object.shape.gl_light_type, GLKVector4MakeWithVector3(position, 1))
+                
             }
             
             if object.isDrawable {
@@ -187,7 +189,7 @@ extension RMXGLProxy {
                     RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, object.shape.color)
                     RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, object.shape.color)
                 }
-                
+               
                 shape(object.shape.type, radius)
 
                 RMXGLMaterialfv(GL_FRONT, GL_EMISSION, RMXVector4Zero);

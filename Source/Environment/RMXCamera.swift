@@ -9,10 +9,12 @@
 import Foundation
 import GLKit
 
-public class RMXCamera {
+class RMXCamera : RMSChildNode {
     
-    var world: RMSWorld?
-    var pov: RMSParticle?
+    var pov: RMSParticle {
+        return self.parent
+    }
+    
     var near, far, fieldOfView: Float
     var facingVector: GLKVector3 = RMXVector3Zero
     var effect: GLKBaseEffect! = nil
@@ -40,27 +42,26 @@ public class RMXCamera {
             center.x,   center.y,   center.z,
             up.x,       up.y,       up.z)
     }
-    init(world: RMSWorld?, pov: RMSParticle! = nil, viewSize: (Float,Float) = (1280, 750), farPane far: Float = 10000 ){
-        self.world = world ?? pov as! RMSWorld
+    init(_ parent: RMSParticle, viewSize: (Float,Float) = (1280, 750), farPane far: Float = 10000 ){
         self.far = far
         self.near = 1
         self.fieldOfView = 65.0
-        self.pov = pov ?? world?.activeSprite
         self.viewHeight = viewSize.1
         self.viewWidth = viewSize.0
+        super.init(parent)
     }
     
-    public var eye: GLKVector3 {
+    var eye: GLKVector3 {
         return self.position
     
     }
     
-    public var center: GLKVector3{
+    var center: GLKVector3{
         return GLKVector3Add(self.body.forwardVector,self.position)
     }
     
     private let simple = false
-    public var up: GLKVector3 {
+    var up: GLKVector3 {
         
         if simple {
             return GLKVector3Make(0,1,0)
@@ -86,14 +87,7 @@ public class RMXCamera {
             effect?.transform.projectionMatrix = GLKMatrix4MakePerspective(self.fieldOfView, Float(width) / Float(height), self.near, self.far)
         }
     }
-    
-    var position: GLKVector3 {
-        return self.pov!.position
-    }
-    
-    var body: RMSPhysicsBody {
-        return self.pov!.body
-    }
+        
     
     var quatarnion: GLKQuaternion {
         return GLKQuaternionMakeWithMatrix3(self.body.orientation)

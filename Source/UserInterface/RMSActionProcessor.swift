@@ -8,6 +8,8 @@
 
 import Foundation
 
+enum RMXMoveType { case PUSH, DRAG }
+
 extension RMX {
     static var willDrawFog: Bool = false
     
@@ -29,21 +31,33 @@ class RMSActionProcessor {
         self.world = world
         RMXLog()
     }
+
+    #if OPENGL_ES
+    var moveType: RMXMoveType = .DRAG
+    #else
+    var moveType: RMXMoveType = .PUSH
+    #endif
     
+    private var _movement: (x:Float, y:Float, z:Float) = (x:0, y:0, z:0)
     
     func movement(action: String!, speed: Float = 0,  point: [Float]) -> Bool{
         //if (keys.keyStates[keys.forward])  [observer accelerateForward:speed];
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
-//            self.activeSprite.body.setVelocity(point, speed: speed)
-//            self.activeSprite.body.accelerateLeft(point[0] * speed)
-            self.activeSprite.body.accelerateForward(point[2] * speed)
-            self.activeSprite.body.accelerateLeft(point[0] * speed)
-            self.activeSprite.body.accelerateUp(point[1] * speed)
+            if self.moveType == .PUSH {
+                self.activeSprite.body.accelerateForward(point[2] * speed)
+                self.activeSprite.body.accelerateLeft(point[0] * speed)
+                self.activeSprite.body.accelerateUp(point[1] * speed)
+            } else if self.moveType == .DRAG {
+                if point[0] != 0{ _movement.x = point[0] * speed }
+                if point[1] != 0{ _movement.y = point[1] * speed }
+                if point[2] != 0{ _movement.z = point[2] * speed }
+            }
         }
         if action == "stop" {
             self.activeSprite.body.stop()
+            _movement = (0,0,0)
         }
         
         if action == "look" && point.count == 2 {
@@ -164,7 +178,7 @@ class RMSActionProcessor {
         
 //        else {
 //            [RMXGLProxy.activeSprite.mouse setMousePos:x y:y];
-        RMXLog("\(self.activeSprite.camera!.viewDescription)\n\(action!) \(speed), \(self.world.activeSprite!.body.position.z)\n")
+        RMXLog("\(self.world.activeCamera.viewDescription)\n\(action!) \(speed), \(self.world.activeSprite.position.z)\n")
         
         return true
     }
@@ -172,6 +186,11 @@ class RMSActionProcessor {
     func animate(){
         if self.extendArm != 0 {
             self.activeSprite.actions.extendArmLength(self.extendArm)
+        }
+        if moveType == .DRAG {
+            self.activeSprite.body.accelerateForward(_movement.z)
+            self.activeSprite.body.accelerateLeft(_movement.x)
+            self.activeSprite.body.accelerateUp(_movement.y)
         }
     }
         

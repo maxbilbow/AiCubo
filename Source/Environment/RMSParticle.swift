@@ -17,11 +17,11 @@ class RMSParticle : RMXObject {
     #if OPENGL_OSX
     lazy var mouse: RMXMouse = RMSMouse(parent: self)
     #endif
-    lazy var actions: RMXSpriteActions = RMXSpriteActions(parent: self)
+    lazy var actions: RMXSpriteActions = RMXSpriteActions(self)
     var type: RMXParticleType = .DEFAULT
     var wasJustThrown:Bool = false
     
-    var camera: RMXCamera?
+//    var camera: RMXCamera?
     
     var altitude: Float {
         return self.position.y
@@ -38,7 +38,7 @@ class RMSParticle : RMXObject {
         return self.position + (self.body.forwardVector + self.actions.reach)
     }
     
-    lazy var shape: RMXShape = RMXShape(parent: self, world: self.world)
+    lazy var shape: RMXShape = RMXShape(self)
     var anchor = RMXVector3Zero
     
     //Set automated rotation (used mainly for the sun)
@@ -55,22 +55,17 @@ class RMSParticle : RMXObject {
     init(world:RMSWorld?, type: RMXParticleType = .DEFAULT, parent:RMXObject! = nil, name: String = "RMSParticle")
     {
         super.init(parent:parent, world:world, name: name)
-        self.actions = RMXSpriteActions(parent: self)
-        self.body = RMSPhysicsBody(parent: self)
-        self.type = type
-        //RMSParticle.COUNT++
-//        self.actions.parent = self
-        //self.mouse = RMXMouse(parent:self, world:self.world)
-        
-        self.camera = RMXCamera(world: world, pov: self)
+//        self.camera = RMXCamera(world: world, pov: self)
         //Set up for basic particle
         self.resets.append({
-            self.body = RMSPhysicsBody(parent: self)
-            self.shape = RMXShape(parent: self, world:self.world)
-            self.actions = RMXSpriteActions(parent: self)
+            self.actions = RMXSpriteActions(self)
+            self.body = RMSPhysicsBody(self)
+            self.shape = RMXShape(self)
+            self.collisionBody = RMSCollisionBody(self)
             self.anchor = GLKVector3Make(0,0,0)
             self.isAnimated = true
             self.rAxis = GLKVector3Make(0,0,1)
+            self.type = type
             self.rotation = 0
             self.isRotating = false
             self.rotationCenterDistance = 0
@@ -106,7 +101,7 @@ class RMSParticle : RMXObject {
 
             self.body.mass = 9
             self.body.radius = 20
-            self.body.position = GLKVector3Make(0,self.body.radius,-20)
+            self.position = GLKVector3Make(0,self.body.radius,-20)
             self.setHasGravity(true)
             self.isAlwaysActive = true
         })
@@ -147,8 +142,8 @@ class RMSParticle : RMXObject {
     ///add this as a behaviour (create the variables outside of function before adding)
         if self.isRotating {
             self.rotation += self.body.rotationSpeed/self.rotationCenterDistance
-            var temp = RMX.circle(count: Float(self.rotation), radius: Float(self.rotationCenterDistance) * 2)
-            self.body.position = GLKVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
+            var temp = RMX.circle(count: Float(self.rotation), radius: Float(self.rotationCenterDistance) * 2, limit:  self.rotationCenterDistance)
+            self.position = GLKVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
         }
 
     }

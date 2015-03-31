@@ -16,6 +16,9 @@ class RMSWorld : RMSParticle {
     var clock: RMXClock?
 
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
+    
+    
+    
     var sun: RMSParticle?
     private let GRAVITY: Float = 9.8
     var sprites: Array<RMSParticle>
@@ -26,16 +29,12 @@ class RMSWorld : RMSParticle {
         }
     }
     
-    lazy var observer: RMSParticle = RMSParticle(world: self, parent: self).setAsObserver()
+    lazy var activeSprite: RMSParticle = RMSParticle(world: self, parent: self).setAsObserver()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
-    var activeSprite: RMSParticle? {
-        return self.observer
-    }
+    lazy var observer: RMSParticle = self.activeSprite
     
-    var activeCamera: RMXCamera? {
-        return observer.camera
-    }
+    lazy var activeCamera: RMXCamera = RMXCamera(self.observer)
     
 
     
@@ -45,13 +44,13 @@ class RMSWorld : RMSParticle {
         
         super.init(world: nil, parent: parent, name: name)
         self.body.radius = 2000
-        self.observer.addInitCall { () -> () in
-            self.observer.body.position = GLKVector3Make(20, 20, 20)
+        self.activeSprite.addInitCall { () -> () in
+            self.observer.position = GLKVector3Make(20, 20, 20)
         }
         
-        self.camera = RMXCamera(world: self, pov: observer)
+        self.activeCamera = RMXCamera(self.activeSprite)
         
-        self.sprites.append(self.observer)
+        self.sprites.append(self.activeSprite)
         //fatalError("Grav: \(self.physics.gravity)")
          self.isAnimated = false
     }
@@ -64,14 +63,14 @@ class RMSWorld : RMSParticle {
     }
             
     func µAt(someBody: RMSParticle) -> Float {
-        if (someBody.body.position.y <= someBody.ground   ) {
+        if (someBody.position.y <= someBody.ground   ) {
             return 0.2// * RMXGetSpeed(someBody->body.velocity);//Rolling wheel resistance
         } else {
             return 0.01// * RMXGetSpeed(someBody->body.velocity); //air;
         }
     }
     func massDensityAt(someBody: RMSParticle) -> Float {
-        if someBody.body.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
+        if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
             return 99.1 //water or other
         } else {
             return 0.01 //air;
@@ -81,17 +80,17 @@ class RMSWorld : RMSParticle {
     //Have I gone through a barrier?
         let velocity = sender.body.velocity
         let v = velocity.y
-        let p = sender.body.position.y
-        let next = sender.body.velocity + sender.body.position
+        let p = sender.position.y
+        let next = sender.body.velocity + sender.position
         let bounceY: Float = -v
         let g = sender.ground
         if p <= g && v < 0 && sender.isInWorld {
             if p < g / sender.body.coushin {
                 RMXVector3SetY(&sender.body.velocity, bounceY * sender.body.coushin)
-                RMXVector3SetY(&sender.body.position, g)
+                RMXVector3SetY(&sender.position, g)
             } else {
                 RMXVector3SetY(&sender.body.velocity, sender.hasGravity ? 0 : bounceY * sender.body.coushin)
-                RMXVector3SetY(&sender.body.position, g)
+                RMXVector3SetY(&sender.position, g)
             }
             return true
         }

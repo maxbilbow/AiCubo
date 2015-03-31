@@ -21,6 +21,7 @@ extension RMXDPad {
                 self.log()
             }
         }
+    
         func handleTapLeft(recognizer: UITapGestureRecognizer) {
             self.log("Left Tap")
             self.world.action(action: "grab")
@@ -63,14 +64,17 @@ extension RMXDPad {
             self.world.action(action: "toggleAllGravity")
             _handleRelease(recognizer.state)
         }
-        
+    
+   
         
         //The event Le method
+
         func handlePanLeftSide(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
                 if recognizer.state == UIGestureRecognizerState.Ended {
                     self.world.action(action: "stop")
                     self.log("stop")
+                    
                 } else {
                     let point = recognizer.velocityInView(self.gvc.view)
                     let forward = Float(point.y)
@@ -80,10 +84,9 @@ extension RMXDPad {
                 }
             }
             _handleRelease(recognizer.state)
-            
         }
         
-        //The event handling method
+        ///The event handling method
         func handlePanRightSide(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
                 let point = recognizer.velocityInView(self.gvc.view);

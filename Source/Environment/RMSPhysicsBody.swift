@@ -9,41 +9,35 @@
 
 import GLKit
 
-class RMSPhysicsBody {
+class RMSPhysicsBody: RMSChildNode {
     
     private let PI: Float = 3.14159265358979323846
-    var position, velocity, acceleration, forces: GLKVector3
+    var velocity, acceleration, forces: GLKVector3
     var orientation: GLKMatrix3//, groundOrientation: GLKMatrix3
     private var _orientation: GLKMatrix3 {
         return self.orientation// false ? self.groundOrientation : self.orientation
     }
     var vMatrix: GLKMatrix4
-    var parent: RMSParticle
+
     var accelerationRate:Float = 0
     var rotationSpeed:Float
     var hasFriction = true
     var hasGravity = false
     var coushin: Float = 2
     
-    var world: RMSWorld {
-        return self.parent.world!
-    }
-    var physics: RMXPhysics {
-        return self.world.physics
-    }
     var theta, phi, radius, mass, dragC: Float
     var dragArea: Float {
         return ( self.radius * self.radius * self.PI )
     }
     
-    init(parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1,
+    init(_ parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1,
         accRate: Float = 1, rotSpeed:Float = 1){
         self.theta = 0
         self.phi = 0
         self.mass = mass
         self.radius = radius
         self.dragC = dragC
-        self.position = GLKVector3Make(0,0,0)
+        
         self.velocity = GLKVector3Make(0,0,0)
         self.acceleration = GLKVector3Make(0,0,0)
         self.forces = GLKVector3Make(0,0,0)
@@ -52,16 +46,16 @@ class RMSPhysicsBody {
         self.vMatrix = GLKMatrix4MakeScale(0,0,0)
         self.accelerationRate = accRate
         self.rotationSpeed = rotSpeed
-        self.parent = parent
+        super.init(parent)
     }
     
-    class func New(parent: RMSParticle) -> RMSPhysicsBody{
-        return RMSPhysicsBody(parent: parent)
-    }
-    class func New(parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1) -> RMSPhysicsBody {
-        return RMSPhysicsBody(parent: parent, mass: mass, radius: radius, dragC: dragC)
-    }
-    
+//    class func New(parent: RMSParticle) -> RMSPhysicsBody{
+//        return RMSPhysicsBody(parent)
+//    }
+//    class func New(parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1) -> RMSPhysicsBody {
+//        return RMSPhysicsBody(parent, mass: mass, radius: radius, dragC: dragC)
+//    }
+//    
     var weight: Float{
         return self.mass * self.physics.worldGravity
     }
@@ -152,29 +146,11 @@ class RMSPhysicsBody {
         //TODO
     }
     
-    @availability(*, deprecated=1.0, obsoleted=2.0, message="Because now calculated seperately!")
-    func addAngle(x:Float, y:Float, z: Float = 0) {
-        //body.position.z += theta; return;
-        
-        let theta: Float = GLKMathDegreesToRadians(x)
-        var phi: Float = GLKMathDegreesToRadians(y)
-        var roll: Float = GLKMathDegreesToRadians(z)
-        
-        
-        self.phi += phi //= newPhi
-        self.theta += theta
-        
-//        self.groundOrientation = GLKMatrix3Rotate(self.orientation, theta, 0, 1, 0);
-        self.orientation = GLKMatrix3Rotate(self.orientation, theta, 0, 1, 0);
-        self.orientation = GLKMatrix3RotateWithVector3(self.orientation, phi, self.leftVector)
-        RMXLog("\n   Left: \(self.leftVector.print)\n     Up: \(self.upVector.print)\n    FWD: \(self.forwardVector.print)")
-        
-    }
-    
     func setVelocity(v: [Float], speed: Float = 1){
         let matrix = GLKMatrix3Transpose(self._orientation)
         self.velocity += GLKMatrix3MultiplyVector3(matrix, GLKVector3Make(v[0] * speed,v[1] * speed,v[2] * speed))
     }
+    
     func animate()    {
 
         let g = self.hasGravity ? self.world.gravityAt(self.parent) : RMXVector3Zero
@@ -201,7 +177,7 @@ class RMSPhysicsBody {
 
         
         //self.applyLimits()
-        self.position = GLKVector3Add(self.position,self.velocity);
+        self.parent.position = GLKVector3Add(self.position,self.velocity);
         
         
     }

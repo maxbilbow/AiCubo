@@ -25,7 +25,7 @@ class RMXInterface : NSObject {
     var moveSpeed: Float = 1
     
     var activeSprite: RMSParticle {
-        return self.world.activeSprite!
+        return self.world.activeSprite
     }
     #if OPENGL_ES
     var view: UIView {
@@ -39,7 +39,7 @@ class RMXInterface : NSObject {
     var controllers: [ String : ( isActive: Bool, process: ()->() ) ]
     
     var activeCamera: RMXCamera {
-        return self.world.activeCamera!
+        return self.world.activeCamera
     }
     
     init(gvc: RMXViewController, world: RMSWorld){

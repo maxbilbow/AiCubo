@@ -10,11 +10,13 @@
 public class RMXObject {
     private static var COUNT: Int = 0
     var rmxID: Int
+    var position: GLKVector3
     var isAnimated: Bool = true
     private var _name: String
     var parent: RMXObject?
-    var world: RMSWorld?
+    var world: RMSWorld! = nil
     var body: RMSPhysicsBody! = nil
+    var collisionBody: RMSCollisionBody! = nil
     var resets: [() -> () ]
     var behaviours: [() -> ()]
     
@@ -28,6 +30,7 @@ public class RMXObject {
         self.parent = parent
         self.world = world
         self.rmxID = RMXObject.COUNT
+        self.position = GLKVector3Make(0,0,0)
         _name = name
         RMXObject.COUNT++
         self.resets = Array<() -> ()>()
@@ -71,9 +74,8 @@ public class RMXObject {
     
     func debug() {}
     
-    var position: RMXVector3 {
-        return self.body.position ?? RMXVector3Zero
-    }
+
+
     var isAlert = true
     var wasJustWoken = false
     var wantsToSleep = false

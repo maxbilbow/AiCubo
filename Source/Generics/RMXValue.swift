@@ -91,4 +91,18 @@ extension GLKVector3 {
         return GLKVector3Distance(self, v)
     }
 }
+
+extension GLKVector4 {
+    var print: String {
+        return "\(x.toData()) \(y.toData()) \(z.toData()) \(w.toData())"
+    }
+    
+    func negate() -> GLKVector4{
+        return GLKVector4Negate(self)
+    }
+    
+    func distanceTo(v: GLKVector4) -> Float{
+        return GLKVector4Distance(self, v)
+    }
+}
     

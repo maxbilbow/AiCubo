@@ -9,16 +9,13 @@
 import Foundation
 import GLKit
 
-public class RMXSpriteActions {
+class RMXSpriteActions : RMSChildNode {
     var armLength: Float = 0
     lazy private var _reach: Float = self.body.radius
     var reach:Float {
         return self.body.radius + _reach
     }
     
-    var position: GLKVector3 {
-        return self.parent.position
-    }
     var jumpStrength: Float = 1
     var squatLevel:Float = 0
     private var _prepairingToJump: Bool = false
@@ -26,24 +23,14 @@ public class RMXSpriteActions {
     private var _ignoreNextJump:Bool = false
     private var _itemWasAnimated:Bool = false
     private var _itemHadGravity:Bool = false
-    var parent: RMSParticle
-    var world: RMSWorld
+    
     var item: RMSParticle?
     var itemPosition: RMXVector3 = RMXVector3Zero
     
     var sprite: RMSParticle {
         return self.parent// as! RMSParticle
     }
-    
-    var body: RMSPhysicsBody {
-        return self.sprite.body
-    }
-    
-    init(parent: RMSParticle) {
-        self.parent = parent
-        self.world = parent.world ?? parent as! RMSWorld
-    }
-    
+
     func throwItem(strength: Float) -> Bool
     {
         if self.item != nil {
@@ -65,7 +52,7 @@ public class RMXSpriteActions {
             self.item?.wasJustWoken = true
             let fwd4 = self.body.forwardVector
             let fwd3 = GLKVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item?.body.position = self.sprite.viewPoint + GLKVector3MultiplyScalar(fwd3, self.armLength + self.item!.body.radius + self.body.radius)
+            self.item?.position = self.sprite.viewPoint + GLKVector3MultiplyScalar(fwd3, self.armLength + self.item!.body.radius + self.body.radius)
         }
     }
     

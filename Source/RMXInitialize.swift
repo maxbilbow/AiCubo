@@ -18,7 +18,7 @@ extension RMX {
         
         let poppy = self.addPoppy(toWorld: world)
         poppy.type = .POPPY
-        let observer = world.activeSprite!
+        let observer = world.activeSprite
         let actors = [ observer, poppy ]
         
         autoreleasepool {
@@ -97,7 +97,7 @@ extension RMX {
     static func addPoppy(toWorld world: RMSWorld) -> RMSParticle {
         let poppy: RMSParticle = RMSParticle(world: world, parent: world, name: "Poppy").setAsObserver().setAsShape()!
         poppy.body.radius = 8
-        poppy.body.position = GLKVector3Make(100,poppy.body.radius,-50)
+        poppy.position = GLKVector3Make(100,poppy.body.radius,-50)
             var itemToWatch: RMSParticle! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0

@@ -15,13 +15,13 @@ extension RMX {
         let option: Int = random() % 5
         switch option {
         case 0:
-            return circle ( count: i,  radius: radius)
-        case 1:
-            return randomSpurt(count: Int(radius))
+            return circle ( count: i,  radius: radius, limit: limit)
+//        case 1:
+//            return randomSpurt(count: Int(radius))
         case 2:
             return point_on_circle(radius,angle_in_degrees: tan(i),centre: 0)
-        case 3:
-            return thing(radius: radius, count: i, noOfShapes: limit )
+//        case 3:
+//            return thing(radius: radius, count: i, noOfShapes: limit )
         default:
             let radius = ceil(radius)
             return GLKVector4Make(randomFloat(radius*2)-radius,randomFloat(2*radius),randomFloat(radius*2)-radius, randomFloat(radius))
@@ -44,9 +44,9 @@ extension RMX {
         return GLKVector4Make(r * i * sinf(theta),i,r * i * cosf(theta),1)
     }
 
-    static func circle ( count i: Float, radius r: Float) -> GLKVector4 {
+    static func circle ( count i: Float, radius r: Float, limit: Float) -> GLKVector4 {
         
-        return  GLKVector4Make(sin(i)*sin(i)*r, sin(i)*cos(i)*r, cos(i)*cos(i)*r,1)
+        return  GLKVector4Make(sin(i)*sin(i)*r, sin(i)*cos(i)*r, cos(i)*cos(i)*r,limit)
         
     }
     static func randomSpurt (count i: Int) -> GLKVector4 {

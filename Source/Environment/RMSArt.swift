@@ -26,12 +26,8 @@ class RMXArt : RMXObject {
         let world: RMSWorld = RMSWorld()
     
     
-        let sun = RMSParticle(world: world)
-        //[sun setRAxis:GLKVector3Make(0, 0, 1)];
+        let sun = RMSParticle(world: world).shape.makeAsSun(rDist: world.body.radius + 200)
         sun.body.radius = 100
-        sun.shape.color = GLKVector4Make(1, 1, 1, 1.0)
-        sun.shape.makeAsSun(rDist: world.body.radius + sun.body.radius, isRotating: true)
-        sun.shape.type = .SPHERE
         world.sun = sun
         world.insertSprite(sun)
 
@@ -44,7 +40,7 @@ class RMXArt : RMXObject {
         ZX.shape.color = GLKVector4Make(0.8,1.2,0.8,0.5)
         ZX.isAnimated = false
         #if OPENGL_ES
-        ZX.body.position = GLKVector3Make(ZX.body.position.x, -world.body.radius, ZX.body.position.z)
+        ZX.position = GLKVector3Make(ZX.body.position.x, -world.body.radius, ZX.body.position.z)
         #endif
         world.insertSprite(ZX)
         
@@ -87,7 +83,7 @@ class RMXArt : RMXObject {
                 object.addInitCall( {
                     object.setHasGravity(false)
                     object.body.radius = shapeRadius
-                    object.body.position = position
+                    object.position = position
                     object.shape.isVisible = true
                     object.shape.type = .CUBE
             
@@ -139,7 +135,7 @@ class RMXArt : RMXObject {
         
         object.setHasGravity(false) //(rand()% 100) == 1
         object.body.radius = Float(random() % 9 + 2)
-        object.body.position = GLKVector3Make(randPos[0], randPos[1], randPos[2])
+        object.position = GLKVector3Make(randPos[0], randPos[1], randPos[2])
         object.body.mass = Float(random()%15+1)/10;
         object.body.dragC = Float(random() % 99+1)/100;
         object.shape.color = RMXRandomColor()

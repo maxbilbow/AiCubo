@@ -76,6 +76,10 @@
 		5071AC091AC6CEB4004E240C /* RMXKeyboardProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC041AC6CEB4004E240C /* RMXKeyboardProcessor.m */; };
 		5071AC0A1AC6CEB4004E240C /* RMXMouseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC051AC6CEB4004E240C /* RMXMouseProcessor.m */; };
 		5071AC0B1AC6CEB4004E240C /* run.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC061AC6CEB4004E240C /* run.m */; };
+		50BA27991ACAA3AD007347A9 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
+		50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
+		50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
+		50BA279D1ACAA616007347A9 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
 		50C2B4FB1AC4AA2100AAACF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */; };
 		50C2B4FD1AC4AA2100AAACF7 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FC1AC4AA2100AAACF7 /* Shader.fsh */; };
 		50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */; };
@@ -176,6 +180,8 @@
 		5071AC051AC6CEB4004E240C /* RMXMouseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RMXMouseProcessor.m; path = Source/Depreciated/OSX/RMXMouseProcessor.m; sourceTree = SOURCE_ROOT; };
 		5071AC061AC6CEB4004E240C /* run.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = run.m; path = Source/Depreciated/OSX/run.m; sourceTree = SOURCE_ROOT; };
 		508D68F41AC97F0100BF10FF /* RMXQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXQuestions.swift; sourceTree = "<group>"; };
+		50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSCollisionBody.swift; sourceTree = "<group>"; };
+		50BA279B1ACAA554007347A9 /* RMSChildNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSChildNode.swift; sourceTree = "<group>"; };
 		50C2B4F51AC4AA2100AAACF7 /* AiCubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AiCubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C2B4F91AC4AA2100AAACF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -422,6 +428,8 @@
 				50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */,
 				50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */,
 				50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */,
+				50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */,
+				50BA279B1ACAA554007347A9 /* RMSChildNode.swift */,
 				50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */,
 				50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */,
 				50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */,
@@ -739,6 +747,8 @@
 				506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */,
 				5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */,
 				506332411AC5D61B00BB4477 /* RMSMaths.swift in Sources */,
+				50BA279D1ACAA616007347A9 /* RMSChildNode.swift in Sources */,
+				50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */,
 				5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */,
 				5063324A1AC5D6E600BB4477 /* RMOpenGL.m in Sources */,
 				5063323F1AC5D61B00BB4477 /* RMSEquations.swift in Sources */,
@@ -792,8 +802,10 @@
 				50C2B5521AC4ACC100AAACF7 /* RMSGeometry.swift in Sources */,
 				50C2B5601AC4ACC100AAACF7 /* RMXMouse.swift in Sources */,
 				50C2B5561AC4ACC100AAACF7 /* RMXValue.swift in Sources */,
+				50BA27991ACAA3AD007347A9 /* RMSCollisionBody.swift in Sources */,
 				50C2B5531AC4ACC100AAACF7 /* RMSMaths.swift in Sources */,
 				50C2B5481AC4ACC100AAACF7 /* RMSParticle.swift in Sources */,
+				50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */,
 				50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */,
 				50C2B55C1AC4ACC100AAACF7 /* RMSActionProcessor.swift in Sources */,
 				50C2B5011AC4AA2100AAACF7 /* GameViewController.swift in Sources */,
@@ -908,7 +920,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -929,7 +940,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = OSXView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -1072,7 +1082,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = AiCubo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DOPENGL_ES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1088,7 +1098,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = AiCubo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DOPENGL_ES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
