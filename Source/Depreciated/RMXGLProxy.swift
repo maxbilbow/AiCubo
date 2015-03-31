@@ -185,15 +185,17 @@ extension RMXGLProxy {
                 if object.1.isLightSource {
                     RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape.color)
                 } else {
-                    RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, object.1.shape.color)
-                    RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, object.1.shape.color)
+//                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.1.shape.color)
+                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, object.1.shape.color)
+//                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, object.1.shape.color)
                 }
                 
                 shape(object.1.shape.type, radius)
 
-                RMXGLMaterialfv(GL_FRONT, GL_EMISSION, RMXVector4Zero);
-                RMXGLMaterialfv(GL_FRONT, GL_SPECULAR, RMXVector4Zero);
-                RMXGLMaterialfv(GL_FRONT, GL_DIFFUSE, RMXVector4Zero);
+                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, RMXVector4Zero);
+//                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, RMXVector4Zero);
+                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, RMXVector4Zero);
+//                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, RMXVector4Zero);
                 
                 self.drawScene(object.1)
                 glPopMatrix();

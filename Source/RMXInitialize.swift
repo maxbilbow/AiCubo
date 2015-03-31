@@ -190,9 +190,11 @@ extension RMX {
                 }
             }
         }
+        poppy.shape.color = GLKVector4Make(0.1,0.1,0.1,1.0)
         world.insertChildNode(poppy)
         let head = RMSParticle(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)!
         head.body.radius = poppy.body.radius / 2
+        head.shape.color = GLKVector4Make(0.1,0.1,0.1,0.1)
         head.position = GLKVector3Make(0,poppy.body.radius + head.body.radius / 4, poppy.body.radius + head.body.radius / 4)
         poppy.insertChildNode(head)
         return poppy
