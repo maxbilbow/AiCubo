@@ -54,17 +54,22 @@ class RMSWorld : RMSParticle {
    
             
     func µAt(someBody: RMSParticle) -> Float {
-        if (someBody.position.y <= someBody.ground   ) {
+        if !someBody.isInWorld && someBody.isObserver {
+            return 0.0000001
+        } else if (someBody.position.y <= someBody.ground   ) {
             return 0.2// * RMXGetSpeed(someBody->body.velocity);//Rolling wheel resistance
         } else {
-            return 0.01// * RMXGetSpeed(someBody->body.velocity); //air;
+            return 0.01 //air;
         }
+
     }
     func massDensityAt(someBody: RMSParticle) -> Float {
-        if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
+        if !someBody.isInWorld && someBody.isObserver {
+            return 0.0000001
+        } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
             return 99.1 //water or other
         } else {
-            return 0.01 //air;
+            return 0.01
         }
     }
     func collisionTest(sender: RMSParticle) -> Bool{
@@ -86,6 +91,7 @@ class RMSWorld : RMSParticle {
             return true
         }
         if GLKVector3Length(next) >= self.body.radius && sender.type != .OBSERVER {
+            sender.actions.headTo(self)
             sender.body.velocity = GLKVector3Negate(velocity)
         }
         
@@ -128,6 +134,24 @@ class RMSWorld : RMSParticle {
             }
         }
         return nil
+    }
+    
+    func furthestObjectFrom(sender: RMSParticle)->RMSParticle? {
+        var furthest: Int = -1
+        var dista: Float = 0// = sender.body.distanceTo(closest)
+        for object in children {
+            let child = object.1
+            if child != sender {
+                let distb: Float = sender.body.distanceTo(child)
+                if distb > dista {
+                    furthest = child.rmxID
+                    dista = distb
+                }
+            }
+        }
+        if let result = children[furthest] {
+                return result
+        }   else { return nil }
     }
     
   

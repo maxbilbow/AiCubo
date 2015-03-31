@@ -8,7 +8,7 @@
 
 
 class RMXObject  {
-    private static var COUNT: Int = 0
+    static var COUNT: Int = 0
     var rmxID: Int
     var position: GLKVector3
     var isAnimated: Bool = true

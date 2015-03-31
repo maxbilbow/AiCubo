@@ -14,12 +14,12 @@ extension RMX {
 //        return thing(radius: radius, count: i, noOfShapes: limit )
         let option: Int = random() % 5
         switch option {
-        case 0:
-            return circle ( count: i,  radius: radius, limit: limit)
+//        case 0:
+//            return circle ( count: i,  radius: radius, limit: limit)
 //        case 1:
 //            return randomSpurt(count: Int(radius))
-        case 2:
-            return point_on_circle(radius,angle_in_degrees: tan(i),centre: 0)
+//        case 2:
+//            return point_on_circle(radius,angle_in_degrees: tan(i),centre: 0)
 //        case 3:
 //            return thing(radius: radius, count: i, noOfShapes: limit )
         default:

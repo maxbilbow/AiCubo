@@ -176,13 +176,11 @@ class RMXSpriteActions : RMSNodeProperty {
         return nil
     }
     
-    func headTo(object: RMSParticle, doOnArrival: (sender: RMSParticle, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
+    func headTo(object: RMSParticle, var speed: Float = 1, doOnArrival: (sender: RMSParticle, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
         let dist = self.turnToFace(object)
-        if  dist >= object.actions.reach + self.reach {
+        if  dist >= fabs(object.actions.reach + self.reach) {
             #if OPENGL_OSX
-                let speed: Float = 0.5
-                #else
-                let speed: Float = 1
+                speed *= 0.5
             #endif
             self.body.accelerateForward(speed)
             if !self.parent.hasGravity {

@@ -26,21 +26,20 @@ extension RMX {
                 let sprite = child.1
                 sprite.isAlwaysActive = true
                 if sprite.type == .DEFAULT {
+                    sprite.addBehaviour({
+                        for actor in actors {
+                            if actor.rmxID != sprite.rmxID {
+                                let distTest = actor.body.radius + sprite.body.radius
+                        let dist = sprite.body.distanceTo(actor)
+                        if dist <= distTest {
+                            sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
+                        } else if dist < distTest && actor.type == .OBSERVER{
+                            sprite.actions.prepareToJump()
+                        }
+                            }
+                        }
+                    })
                     
-                            sprite.addBehaviour({
-                                for actor in actors {
-                                    if actor.rmxID != sprite.rmxID {
-                                        let distTest = actor.body.radius + sprite.body.radius
-                                let dist = sprite.body.distanceTo(actor)
-                                if dist <= distTest {
-                                    sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
-                                } else if dist < distTest && actor.type == .OBSERVER{
-                                    sprite.actions.prepareToJump()
-                                }
-                                    }
-                                }
-                            })
-                        
                     if sprite.isAnimated {
                         sprite.addBehaviour({
                             if !sprite.hasGravity && world.observer.actions.item != nil {
@@ -51,9 +50,10 @@ extension RMX {
                         })
                     var timePassed = 0
                     var timeLimit = random() % 600
-                    let speed:Float = Float(random() % 15)
-                    let theta = Float(random() % 100)/100
-                    let phi = Float(random() % 100)/100
+                    let speed:Float = Float(random() % 15)/3
+//                    let theta = Float(random() % 100)/100
+//                    let phi = Float(random() % 100)/100
+//                    var target = world.furthestObjectFrom(sprite)
                     var randomMovement = false
                     var accelerating = false
                     sprite.addBehaviour({ () -> () in
@@ -64,21 +64,32 @@ extension RMX {
                     
                         if randomMovement && !sprite.hasGravity {
                             if timePassed >= timeLimit {
+                                if sprite.hasItem {
+                                    sprite.actions.turnToFace(observer)
+                                    sprite.actions.throwItem(500)
+                                }
                                 timePassed = 0
-                                timeLimit = random() % 600
+                                timeLimit = random() % 1600 + 10
                                 
                                 if sprite.body.distanceTo(world) > world.body.radius - 50 {
                                     accelerating = false
                                     timeLimit = 600
                                 } else {
-                                    let theta = Float(random() % 30) / 10
-                                    let phi = Float(random() % 30) / 10
-                                    sprite.rotate(radiansTheta: theta,radiansPhi: phi)
+                                  let rmxID = random() % RMXObject.COUNT
+                                    if let target = world.children[rmxID] {
+                                    sprite.actions.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
+//                                        if let target = world.furthestObjectFrom(sprite) {
+//                                            
+//                                        }
+                                        sprite.actions.grabItem(item: target)
+                                        return nil
+                                    })
+                                    
                                     accelerating = true
-                                    sprite.body.accelerateForward(3)
+                                    }
                                 }
                             } else {
-                                if accelerating && timePassed < 100 {
+                                if accelerating {
                                     sprite.body.accelerateForward(speed)
                                 }
                                 timePassed++
@@ -145,7 +156,7 @@ extension RMX {
                     state = .CHASING
                     poppy.body.hasGravity = itemToWatch.hasGravity
                 } else {
-                    poppy.actions.headTo(itemToWatch,doOnArrival: getReady)
+                    poppy.actions.headTo(itemToWatch, speed: 1, doOnArrival: getReady)
                 }
                 break
             case .CHASING:
@@ -158,7 +169,7 @@ extension RMX {
                     state = .FETCHING
                     poppy.body.hasGravity = observer.hasGravity
                 } else {
-                    poppy.actions.headTo(itemToWatch,doOnArrival: fetch, objects: observer)
+                    poppy.actions.headTo(itemToWatch, speed: 1, doOnArrival: fetch, objects: observer)
                 }
                 break
             case .FETCHING:
@@ -166,7 +177,7 @@ extension RMX {
                     state = .IDLE
                     poppy.body.hasGravity = observer.hasGravity
                 } else {
-                    poppy.actions.headTo(observer,doOnArrival: drop)
+                    poppy.actions.headTo(observer, speed: 1, doOnArrival: drop)
                 }
                 break
             default:

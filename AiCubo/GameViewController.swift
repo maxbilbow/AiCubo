@@ -250,42 +250,40 @@ class GameViewController : GLKViewController, RMXViewController {
 //        autoreleasepool({
             glClearColor(1.0, 1.0, 1.0, 1.0);
             glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT));
-            
-            self.drawChildren(self.world.children)
+            var matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
+            self.drawChildren(self.world, matrixStack: matrixStack)
             glBindVertexArrayOES(0)
             #elseif OPENGL_OSX
             
         #endif
     }
     
-    func drawChildren(children: Dictionary<Int,RMSParticle>) {
-        for child in children {
-            let o = child.1
-            if o.isDrawable {
-                let sprite = o.shape
-                let scaleMatrix = sprite.scaleMatrix
-                let translateMatrix = sprite.translationMatrix
-                let rotationMatrix = sprite.rotationMatrix
-                
-                
-                var matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
-                
-                GLKMatrixStackMultiplyMatrix4(matrixStack, translateMatrix)
-                GLKMatrixStackMultiplyMatrix4(matrixStack, rotationMatrix)
-                GLKMatrixStackMultiplyMatrix4(matrixStack, scaleMatrix)
-                
-                GLKMatrixStackPush(matrixStack)
-                self.modelMatrix = GLKMatrixStackGetMatrix4(matrixStack);
-                
-                glBindVertexArrayOES(self.vertexArray.memory)
-                
-                self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
-                let shape = RMSGeometry.get(o.shape.type)
-                glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
+    func drawChildren(object: RMSParticle, var matrixStack: GLKMatrixStackRef) {
+        let sprite = object.shape
+        let scaleMatrix = sprite.scaleMatrix
+        let translateMatrix = sprite.translationMatrix
+        let rotationMatrix = sprite.rotationMatrix
+        matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
+        GLKMatrixStackMultiplyMatrix4(matrixStack, translateMatrix)
+        GLKMatrixStackMultiplyMatrix4(matrixStack, rotationMatrix)
+        GLKMatrixStackMultiplyMatrix4(matrixStack, scaleMatrix)
+        
+        GLKMatrixStackPush(matrixStack)
+        self.modelMatrix = GLKMatrixStackGetMatrix4(matrixStack);
+        
+        glBindVertexArrayOES(self.vertexArray.memory)
+        
+        self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
+        let shape = RMSGeometry.get(sprite.type)
+        glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
+
+        for child in object.children {
+            if child.1.isDrawable {
+                self.drawChildren(child.1, matrixStack: matrixStack)
             }
-            self.drawChildren(o.children)
         }
     }
+    
     
     func prepareEffectWithModelMatrix(modelMatrix: GLKMatrix4, viewMatrix:GLKMatrix4, projectionMatrix: GLKMatrix4) {
         self.effect.transform.modelviewMatrix =  GLKMatrix4Multiply(viewMatrix, modelMatrix)
