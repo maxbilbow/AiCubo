@@ -32,7 +32,7 @@ class RMSActionProcessor {
         RMXLog()
     }
 
-    #if OPENGL_ES
+    #if iOS
     var moveType: RMXMoveType = .DRAG
     #else
     var moveType: RMXMoveType = .PUSH
@@ -45,14 +45,17 @@ class RMSActionProcessor {
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
-            if self.moveType == .PUSH {
+            switch(self.moveType) {
+            case .DRAG:
+                if point[0] * _movement.x <= 0 { _movement.x = point[0] * speed }
+                if point[1] * _movement.y <= 0 { _movement.y = point[1] * speed }
+                if point[2] * _movement.z <= 0 { _movement.z = point[2] * speed }
+                break
+            default:
                 self.activeSprite.body.accelerateForward(point[2] * speed)
                 self.activeSprite.body.accelerateLeft(point[0] * speed)
                 self.activeSprite.body.accelerateUp(point[1] * speed)
-            } else if self.moveType == .DRAG {
-                if point[0] != 0{ _movement.x = point[0] * speed }
-                if point[1] != 0{ _movement.y = point[1] * speed }
-                if point[2] != 0{ _movement.z = point[2] * speed }
+                break
             }
         }
         if action == "stop" {

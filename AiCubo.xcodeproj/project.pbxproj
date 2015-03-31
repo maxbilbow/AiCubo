@@ -1084,7 +1084,7 @@
 				INFOPLIST_FILE = AiCubo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DOPENGL_ES";
+				OTHER_SWIFT_FLAGS = "-DOPENGL_ES -DiOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1100,7 +1100,7 @@
 				INFOPLIST_FILE = AiCubo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DOPENGL_ES";
+				OTHER_SWIFT_FLAGS = "-DOPENGL_ES -DiOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
 			};
