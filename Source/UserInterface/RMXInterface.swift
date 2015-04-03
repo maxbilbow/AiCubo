@@ -9,7 +9,7 @@
 import Foundation
 #if iOS
     import UIKit
-    #elseif OPENGL_OSX
+    #elseif OSX
     import GLKit
 #endif
 
@@ -36,7 +36,7 @@ class RMXInterface : NSObject {
     }
     #else
     var view: NSObject {
-        return self.gvc.gameView as! NSObject
+        return self.gvc.gameView as NSObject
     }
     #endif
 

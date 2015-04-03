@@ -15,8 +15,8 @@ public struct RMX {
     static let isFullscreen: Bool = false
     static let usingDepreciated: Bool = true
     static let usingSceneKit: Bool = false
-
 }
+
 import GLKit
 
 #if OPENGL_ES
@@ -24,7 +24,7 @@ import GLKit
 //    typealias RMXView = UIView
     typealias RMXContext = EAGLContext
 //    typealias RMXController = RMXDPad
-    #elseif OPENGL_OSX
+    #elseif OSX
     import Cocoa
     import OpenGL
     import GLUT

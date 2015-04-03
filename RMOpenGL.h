@@ -12,6 +12,7 @@
 
 #endif
 #define FULL_SCREEN 0
+#define OPENGL_OSX
 //#import <Foundation/Foundation.h>
 @import GLKit;
 
@@ -65,7 +66,7 @@ void RMXDrawSphere(float size);//Particle pCube = Particle();
 void DrawPlane(float x);
 void DrawFog(bool draw);
 
-
+#ifdef OPENGL_OSX
 ///Keys
 
 void initKeys();
@@ -97,3 +98,4 @@ void MouseFree(int x, int y);
 
 
 int RMXGLRun(int argc, char * argv[]);
+#endif

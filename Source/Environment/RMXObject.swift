@@ -10,6 +10,7 @@ import GLKit
 class RMXObject  {
     static var COUNT: Int = 0
     var rmxID: Int
+    var isUnique: Bool = false
     var position: GLKVector3
     var isAnimated: Bool = true
     private var _name: String
@@ -29,6 +30,8 @@ class RMXObject  {
     var name: String {
         return "\(_name): \(self.rmxID)"
     }
+    
+    
     init(parent: RMSParticle? = nil, name: String = "RMXObject"){
         
         self.children = Dictionary<Int,RMSParticle>()

@@ -8,7 +8,7 @@
 
 import Foundation
 import GLKit
-#if OPENGL_OSX
+#if OSX
 import OpenGL
 import GLUT
     #endif

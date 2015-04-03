@@ -111,6 +111,7 @@ class RMXSpriteActions : RMSNodeProperty {
     private var _maxSquat: Float = 0
     
     func jumpTest() -> JumpState {
+        
         switch (_jumpState) {
         case .NOT_JUMPING:
             return _jumpState
@@ -225,9 +226,10 @@ class RMXSpriteActions : RMSNodeProperty {
    
     override func animate() {
         super.animate()
+        self.jumpTest()
         if self.parent.parent! == self.world {
 //            if self.parent.isObserver {
-//                println("\(self.jumpTest().hashValue) V:\(self.parent.body.velocity.y) G:\(self.body.acceleration.y)")
+//                println("State: \(self._jumpState.hashValue), Grounded? \(self.parent.isGrounded), SqLevel: \(self.squatLevel), MaxSq: \(_maxSquat) V:\(self.parent.body.velocity.y) G:\(self.body.acceleration.y)")
 //            }
         }
     }

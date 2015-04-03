@@ -21,7 +21,7 @@ class RMSParticle : RMXObject , RMXChildNode {
     var isActiveSprite: Bool {
         return self == self.world.activeSprite
     }
-    #if OPENGL_OSX
+    #if OSX
     lazy var mouse: RMXMouse = RMSMouse(parent: self)
     #endif
     lazy var actions: RMXSpriteActions = RMXSpriteActions(self)
@@ -63,6 +63,11 @@ class RMSParticle : RMXObject , RMXChildNode {
     //static var COUNT: Int = 0
     var isInWorld: Bool {
         return self.body.distanceTo(self.world) < self.world.body.radius
+    }
+    class func Unique(parent:RMSParticle?, type: RMXParticleType = .DEFAULT, name: String = "RMSParticle") -> RMSParticle {
+        let result = RMSParticle(parent: parent, type: type, name: name)
+        result.isUnique = true
+        return result
     }
     
     init(parent:RMSParticle?, type: RMXParticleType = .DEFAULT, name: String = "RMSParticle")

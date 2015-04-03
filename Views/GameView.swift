@@ -51,7 +51,7 @@ class GameView : GLKView, RMXView {
         return self.world.activeCamera
     }
 
-    override init(frame: CGRect) {
+    override required init(frame: CGRect) {
         super.init(frame: frame)//, context: EAGLContext(API:EAGLRenderingAPI.OpenGLES3))
         self.viewDidLoad()
     }

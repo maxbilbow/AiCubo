@@ -7,6 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		500205CF1ACEA2980085283C /* RFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 500205CE1ACEA2980085283C /* RFOpenGLView.m */; };
+		500205D11ACEA37E0085283C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D01ACEA37E0085283C /* GameView.swift */; };
+		500205D41ACEA53C0085283C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500205D31ACEA53C0085283C /* Storyboard.storyboard */; };
+		500205D61ACEA5860085283C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D51ACEA5860085283C /* GameViewController.swift */; };
+		500205E01ACEA7610085283C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205DF1ACEA7610085283C /* AppDelegate.swift */; };
+		500205E61ACEA7620085283C /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 500205E51ACEA7620085283C /* art.scnassets */; };
+		500205E81ACEA7620085283C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 500205E71ACEA7620085283C /* Images.xcassets */; };
+		500205EB1ACEA7620085283C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500205E91ACEA7620085283C /* MainMenu.xib */; };
+		500205F71ACEA7620085283C /* NSOpenGLViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205F61ACEA7620085283C /* NSOpenGLViewTests.swift */; };
+		500205FF1ACEA8260085283C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D01ACEA37E0085283C /* GameView.swift */; };
+		500206001ACEA85C0085283C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D51ACEA5860085283C /* GameViewController.swift */; };
+		500206011ACEA8690085283C /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
+		500206021ACEA86D0085283C /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
+		500206031ACEA8760085283C /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
+		500206041ACEA87F0085283C /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
+		500206051ACEA87F0085283C /* RMSGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */; };
+		500206061ACEA87F0085283C /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
+		500206071ACEA87F0085283C /* RMX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5361AC4ACC100AAACF7 /* RMX.swift */; };
+		500206081ACEA87F0085283C /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
+		500206091ACEA87F0085283C /* RMXValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */; };
+		5002060D1ACEA88A0085283C /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
+		5002060E1ACEA88A0085283C /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
+		5002060F1ACEA88A0085283C /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
+		500206101ACEA88A0085283C /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
+		500206111ACEA88A0085283C /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
+		500206121ACEA88A0085283C /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
+		500206131ACEA88A0085283C /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
+		500206141ACEA88A0085283C /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
+		500206151ACEA88A0085283C /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
+		500206161ACEA88A0085283C /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		500206171ACEA88A0085283C /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
+		500206181ACEA88A0085283C /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
+		500206191ACEA88A0085283C /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		5002061A1ACEA8B20085283C /* RFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 500205CE1ACEA2980085283C /* RFOpenGLView.m */; };
+		5002061D1ACEA8C90085283C /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
+		5002061E1ACEA8C90085283C /* RMXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5003E7131ACCA3FF00F40E46 /* RMXView.swift */; };
+		5002061F1ACEA8C90085283C /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
+		500206211ACEA8C90085283C /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
+		500206221ACEA8C90085283C /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
+		500206231ACEA9AE0085283C /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
+		500206291ACEA9BB0085283C /* RMOpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 506332491AC5D6E600BB4477 /* RMOpenGL.m */; };
 		5003E7141ACCA3FF00F40E46 /* RMXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5003E7131ACCA3FF00F40E46 /* RMXView.swift */; };
 		501A93971AC77EC800924AAF /* texture_poppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 501A93961AC77EC800924AAF /* texture_poppy.png */; };
 		501A93981AC77EC800924AAF /* texture_poppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 501A93961AC77EC800924AAF /* texture_poppy.png */; };
@@ -159,9 +200,19 @@
 		50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
 		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
+		6C94806E1ACEB9F100C71C70 /* RMXGLProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332521AC5DB1300BB4477 /* RMXGLProxy.swift */; };
+		6C94806F1ACEBA2300C71C70 /* cStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC021AC6CEB4004E240C /* cStuff.m */; };
+		6C9480701ACEBA2600C71C70 /* RMOShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC031AC6CEB4004E240C /* RMOShapes.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		500205F11ACEA7620085283C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 500205DA1ACEA7610085283C;
+			remoteInfo = NSOpenGLView;
+		};
 		506332261AC5D59600BB4477 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
@@ -207,6 +258,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		500205CD1ACEA2980085283C /* RFOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFOpenGLView.h; path = ../OSXView/RFOpenGLView.h; sourceTree = "<group>"; };
+		500205CE1ACEA2980085283C /* RFOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFOpenGLView.m; path = ../OSXView/RFOpenGLView.m; sourceTree = "<group>"; };
+		500205D01ACEA37E0085283C /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = ../OSXView/GameView.swift; sourceTree = "<group>"; };
+		500205D31ACEA53C0085283C /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = ../OSXView/Storyboard.storyboard; sourceTree = "<group>"; };
+		500205D51ACEA5860085283C /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = ../OSXView/GameViewController.swift; sourceTree = "<group>"; };
+		500205DB1ACEA7610085283C /* NSOpenGLView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NSOpenGLView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		500205DE1ACEA7610085283C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		500205DF1ACEA7610085283C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		500205E51ACEA7620085283C /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		500205E71ACEA7620085283C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		500205EA1ACEA7620085283C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		500205F01ACEA7620085283C /* NSOpenGLViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NSOpenGLViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		500205F51ACEA7620085283C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		500205F61ACEA7620085283C /* NSOpenGLViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSOpenGLViewTests.swift; sourceTree = "<group>"; };
 		5003E7131ACCA3FF00F40E46 /* RMXView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXView.swift; sourceTree = "<group>"; };
 		500C186C1ACBE1A000FE85D7 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Views/GameView.swift; sourceTree = SOURCE_ROOT; };
 		501A93961AC77EC800924AAF /* texture_poppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_poppy.png; sourceTree = "<group>"; };
@@ -293,6 +358,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		500205D81ACEA7610085283C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500205ED1ACEA7620085283C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5039273F1AC71B6600A59744 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -352,9 +431,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		500205DC1ACEA7610085283C /* NSOpenGLView */ = {
+			isa = PBXGroup;
+			children = (
+				500205CD1ACEA2980085283C /* RFOpenGLView.h */,
+				500205CE1ACEA2980085283C /* RFOpenGLView.m */,
+				500205D01ACEA37E0085283C /* GameView.swift */,
+				500205DF1ACEA7610085283C /* AppDelegate.swift */,
+				500205D51ACEA5860085283C /* GameViewController.swift */,
+				500205E51ACEA7620085283C /* art.scnassets */,
+				500205E71ACEA7620085283C /* Images.xcassets */,
+				500205D31ACEA53C0085283C /* Storyboard.storyboard */,
+				500205E91ACEA7620085283C /* MainMenu.xib */,
+				500205DD1ACEA7610085283C /* Supporting Files */,
+			);
+			name = NSOpenGLView;
+			path = ../NSOpenGLView;
+			sourceTree = "<group>";
+		};
+		500205DD1ACEA7610085283C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				500205DE1ACEA7610085283C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		500205F31ACEA7620085283C /* NSOpenGLViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				500205F61ACEA7620085283C /* NSOpenGLViewTests.swift */,
+				500205F41ACEA7620085283C /* Supporting Files */,
+			);
+			path = NSOpenGLViewTests;
+			sourceTree = "<group>";
+		};
+		500205F41ACEA7620085283C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				500205F51ACEA7620085283C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		506332111AC5D59500BB4477 /* OSXView */ = {
 			isa = PBXGroup;
 			children = (
+				500205DC1ACEA7610085283C /* NSOpenGLView */,
 				5063324B1AC5D6F900BB4477 /* RMOpenGL.h */,
 				506332491AC5D6E600BB4477 /* RMOpenGL.m */,
 				5071AC021AC6CEB4004E240C /* cStuff.m */,
@@ -446,6 +569,7 @@
 				506332281AC5D59600BB4477 /* OSXViewTests */,
 				50A9D62A1ACD4DC900F209E5 /* MetalView */,
 				50A9D6421ACD4DC900F209E5 /* MetalViewTests */,
+				500205F31ACEA7620085283C /* NSOpenGLViewTests */,
 				50C2B4F61AC4AA2100AAACF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -461,6 +585,8 @@
 				503927421AC71B6600A59744 /* load */,
 				50A9D6291ACD4DC900F209E5 /* MetalView.app */,
 				50A9D63F1ACD4DC900F209E5 /* MetalViewTests.xctest */,
+				500205DB1ACEA7610085283C /* NSOpenGLView.app */,
+				500205F01ACEA7620085283C /* NSOpenGLViewTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -602,6 +728,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		500205DA1ACEA7610085283C /* NSOpenGLView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 500205F81ACEA7620085283C /* Build configuration list for PBXNativeTarget "NSOpenGLView" */;
+			buildPhases = (
+				500205D71ACEA7610085283C /* Sources */,
+				500205D81ACEA7610085283C /* Frameworks */,
+				500205D91ACEA7610085283C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NSOpenGLView;
+			productName = NSOpenGLView;
+			productReference = 500205DB1ACEA7610085283C /* NSOpenGLView.app */;
+			productType = "com.apple.product-type.application";
+		};
+		500205EF1ACEA7620085283C /* NSOpenGLViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 500205FB1ACEA7620085283C /* Build configuration list for PBXNativeTarget "NSOpenGLViewTests" */;
+			buildPhases = (
+				500205EC1ACEA7620085283C /* Sources */,
+				500205ED1ACEA7620085283C /* Frameworks */,
+				500205EE1ACEA7620085283C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				500205F21ACEA7620085283C /* PBXTargetDependency */,
+			);
+			name = NSOpenGLViewTests;
+			productName = NSOpenGLViewTests;
+			productReference = 500205F01ACEA7620085283C /* NSOpenGLViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		503927411AC71B6600A59744 /* load */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 503927461AC71B6600A59744 /* Build configuration list for PBXNativeTarget "load" */;
@@ -750,6 +911,13 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Rattle Media Ltd";
 				TargetAttributes = {
+					500205DA1ACEA7610085283C = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					500205EF1ACEA7620085283C = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 500205DA1ACEA7610085283C;
+					};
 					503927411AC71B6600A59744 = {
 						CreatedOnToolsVersion = 6.3;
 					};
@@ -802,11 +970,30 @@
 				503927411AC71B6600A59744 /* load */,
 				50A9D6281ACD4DC900F209E5 /* MetalView */,
 				50A9D63E1ACD4DC900F209E5 /* MetalViewTests */,
+				500205DA1ACEA7610085283C /* NSOpenGLView */,
+				500205EF1ACEA7620085283C /* NSOpenGLViewTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		500205D91ACEA7610085283C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500205E61ACEA7620085283C /* art.scnassets in Resources */,
+				500205E81ACEA7620085283C /* Images.xcassets in Resources */,
+				500205EB1ACEA7620085283C /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500205EE1ACEA7620085283C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5063320E1AC5D59500BB4477 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -815,6 +1002,7 @@
 				5063321B1AC5D59600BB4477 /* art.scnassets in Resources */,
 				5063321D1AC5D59600BB4477 /* Images.xcassets in Resources */,
 				50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */,
+				500205D41ACEA53C0085283C /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,6 +1055,57 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		500205D71ACEA7610085283C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5002060F1ACEA88A0085283C /* RMSPhysicsBody.swift in Sources */,
+				500206081ACEA87F0085283C /* RMXDebugger.swift in Sources */,
+				500206061ACEA87F0085283C /* RMSMaths.swift in Sources */,
+				6C94806F1ACEBA2300C71C70 /* cStuff.m in Sources */,
+				500206111ACEA88A0085283C /* RMSChildNode.swift in Sources */,
+				500206231ACEA9AE0085283C /* CWrappers.c in Sources */,
+				500206091ACEA87F0085283C /* RMXValue.swift in Sources */,
+				5002061A1ACEA8B20085283C /* RFOpenGLView.m in Sources */,
+				6C9480701ACEBA2600C71C70 /* RMOShapes.m in Sources */,
+				500206041ACEA87F0085283C /* RMSEquations.swift in Sources */,
+				500206121ACEA88A0085283C /* RMXNodeProperty.swift in Sources */,
+				500206131ACEA88A0085283C /* RMSWorld.swift in Sources */,
+				500206161ACEA88A0085283C /* RMXObject.swift in Sources */,
+				5002061D1ACEA8C90085283C /* RMSActionProcessor.swift in Sources */,
+				500206141ACEA88A0085283C /* RMXCamera.swift in Sources */,
+				6C94806E1ACEB9F100C71C70 /* RMXGLProxy.swift in Sources */,
+				500206001ACEA85C0085283C /* GameViewController.swift in Sources */,
+				5002061F1ACEA8C90085283C /* RMSKeys.swift in Sources */,
+				500206211ACEA8C90085283C /* RMXInterface.swift in Sources */,
+				500206181ACEA88A0085283C /* RMXShape.swift in Sources */,
+				500206071ACEA87F0085283C /* RMX.swift in Sources */,
+				5002061E1ACEA8C90085283C /* RMXView.swift in Sources */,
+				500206031ACEA8760085283C /* RMXInitialize.swift in Sources */,
+				500206191ACEA88A0085283C /* RMXSpriteActions.swift in Sources */,
+				500206221ACEA8C90085283C /* RMXMouse.swift in Sources */,
+				500206021ACEA86D0085283C /* RMXViewController.swift in Sources */,
+				500205E01ACEA7610085283C /* AppDelegate.swift in Sources */,
+				500206151ACEA88A0085283C /* RMXClock.swift in Sources */,
+				500206101ACEA88A0085283C /* RMSCollisionBody.swift in Sources */,
+				500206291ACEA9BB0085283C /* RMOpenGL.m in Sources */,
+				500205FF1ACEA8260085283C /* GameView.swift in Sources */,
+				500206051ACEA87F0085283C /* RMSGeometry.swift in Sources */,
+				500206171ACEA88A0085283C /* RMXPhysics.swift in Sources */,
+				500206011ACEA8690085283C /* RMXController.swift in Sources */,
+				5002060D1ACEA88A0085283C /* RMSArt.swift in Sources */,
+				5002060E1ACEA88A0085283C /* RMSParticle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500205EC1ACEA7620085283C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				500205F71ACEA7620085283C /* NSOpenGLViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5039273E1AC71B6600A59744 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -917,12 +1156,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				503927371AC710C100A59744 /* main.swift in Sources */,
+				500205CF1ACEA2980085283C /* RFOpenGLView.m in Sources */,
 				506332361AC5D60900BB4477 /* RMSPhysicsBody.swift in Sources */,
 				5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */,
 				506332371AC5D60900BB4477 /* RMSWorld.swift in Sources */,
 				506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */,
 				5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */,
 				506332411AC5D61B00BB4477 /* RMSMaths.swift in Sources */,
+				500205D61ACEA5860085283C /* GameViewController.swift in Sources */,
 				50BA279D1ACAA616007347A9 /* RMSChildNode.swift in Sources */,
 				50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */,
 				5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */,
@@ -949,6 +1190,7 @@
 				5063324E1AC5D9B100BB4477 /* RMXInterface.swift in Sources */,
 				506332511AC5D9D400BB4477 /* RMXController.swift in Sources */,
 				506332431AC5D61B00BB4477 /* RMXDebugger.swift in Sources */,
+				500205D11ACEA37E0085283C /* GameView.swift in Sources */,
 				5071AC071AC6CEB4004E240C /* cStuff.m in Sources */,
 				506332421AC5D61B00BB4477 /* RMX.swift in Sources */,
 			);
@@ -1063,6 +1305,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		500205F21ACEA7620085283C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 500205DA1ACEA7610085283C /* NSOpenGLView */;
+			targetProxy = 500205F11ACEA7620085283C /* PBXContainerItemProxy */;
+		};
 		506332271AC5D59600BB4477 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5063320F1AC5D59500BB4477 /* OSXView */;
@@ -1081,6 +1328,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		500205E91ACEA7620085283C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				500205EA1ACEA7620085283C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		50A9D6331ACD4DC900F209E5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1116,6 +1371,82 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		500205F91ACEA7620085283C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NSOpenGLView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DOSX -DGLVIEW_OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		500205FA1ACEA7620085283C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = NSOpenGLView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DOSX -DGLVIEW_OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		500205FC1ACEA7620085283C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NSOpenGLViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NSOpenGLView.app/Contents/MacOS/NSOpenGLView";
+			};
+			name = Debug;
+		};
+		500205FD1ACEA7620085283C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NSOpenGLViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NSOpenGLView.app/Contents/MacOS/NSOpenGLView";
+			};
+			name = Release;
+		};
 		503927471AC71B6600A59744 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1179,7 +1510,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = "";
-				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX";
+				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX -DOSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
@@ -1195,7 +1526,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = "";
-				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX";
+				OTHER_SWIFT_FLAGS = "-DOPENGL_OSX -DOSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
@@ -1455,6 +1786,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		500205F81ACEA7620085283C /* Build configuration list for PBXNativeTarget "NSOpenGLView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500205F91ACEA7620085283C /* Debug */,
+				500205FA1ACEA7620085283C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		500205FB1ACEA7620085283C /* Build configuration list for PBXNativeTarget "NSOpenGLViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500205FC1ACEA7620085283C /* Debug */,
+				500205FD1ACEA7620085283C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		503927461AC71B6600A59744 /* Build configuration list for PBXNativeTarget "load" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

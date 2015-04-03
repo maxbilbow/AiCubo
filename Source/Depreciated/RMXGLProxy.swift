@@ -60,7 +60,9 @@ import GLKit
 //    var reshapePtr: CFunctionPointer<(Int32, Int32)->Void>?
     
     class func animateScene() {
+        #if OPENGL_OSX
         RepeatedKeys()
+        #endif
         self.world.animate()
     }
     
@@ -121,9 +123,9 @@ import GLKit
         glClearColor(0.8, 0.85, 1.8, 0.0)
 
         glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations
-        
+        #if OPENGL_OSX
         RMXGLMakeLookAt(self.activeCamera.eye, self.activeCamera.center, self.activeCamera.up)
-      
+        #endif
         if self.drawNextFrame >= self.framerate {
         self.drawScene(self.world)
         // Make sure changes appear onscreen
@@ -133,10 +135,12 @@ import GLKit
         } else {
             self.drawNextFrame++
         }
+        #if OPENGL_OSX
         RMXGLPostRedisplay()
         
         RMXGlutSwapBuffers()
          glFlush()
+        #endif
         //tester.checks[1] = observer->toString();
         //NSLog([world.observer viewDescription]);
     }
@@ -147,12 +151,16 @@ import GLKit
 extension RMXGLProxy {
     class func run(type: RMXWorldType){
         self.world = RMSWorld(worldType: type)
+        #if OPENGL_OSX
         RMXGLRun(Process.argc, Process.unsafeArgv)
+        #endif
     }
     
     
     class func GetLastMouseDelta(inout dx:Int32 , inout dy:Int32 ) {
+        #if OPENGL_OSX
         RMXCGGetLastMouseDelta(&dx,&dy)
+        #endif
     }
     
     class func drawScene(parent: RMSParticle){

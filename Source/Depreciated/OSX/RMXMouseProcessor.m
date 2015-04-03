@@ -11,7 +11,9 @@
 
 @import GLUT;
 #import "RMOpenGL.h"
+#ifdef OPENGL_OSX
 #import <OSXView-Swift.h>
+#endif
 
 @class Main, RMX, RMXGLProxy, RMXSpriteActions, RMXParticle;
 //static BOOL g_bLightingEnabled = TRUE;

@@ -74,7 +74,9 @@ void RMXGLShine(int32_t a, int32_t b, GLKVector4 color) {
 }
 
 void RMGLutWarpPointer(int x, int y){
+    #ifdef OPENGL_OSX
     RMGLMouseCenter();
+    #endif
 }
  GLKVector4 RMXRandomColor() {
     //float rCol[4];

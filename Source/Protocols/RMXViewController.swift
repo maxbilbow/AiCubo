@@ -18,7 +18,7 @@ extension RMX {
     static func Controller(gvc: RMXViewController) -> RMXDPad {
         return RMXDPad(gvc: gvc)
     }
-    #elseif OPENGL_OSX
+    #elseif OSX
     static func Controller(gvc: RMXViewController) -> RMSKeys {
         return RMSKeys(gvc: gvc)
     }
@@ -37,8 +37,8 @@ protocol RMXViewController {
     
     #if iOS
         var view: UIView! { get set }
-        #elseif OPENGL_OSX
-        var view: NSOpenGLView! { get set }
+//        #elseif OPENGL_OSX
+//        var view: NSOpenGLView! { get set }
     #endif
 
     var interface: RMXInterface { get }

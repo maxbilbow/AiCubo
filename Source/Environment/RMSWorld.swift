@@ -19,14 +19,14 @@ class RMSWorld : RMSParticle {
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    lazy var sun: RMSParticle = RMSParticle(parent: self).shape.makeAsSun(rDist: self.body.radius)
+    lazy var sun: RMSParticle = RMSParticle.Unique(self).shape.makeAsSun(rDist: self.body.radius)
     private let GRAVITY: Float = 9.8
     
     
     
     lazy var activeCamera: RMXCamera! = RMXCamera(self.activeSprite)
     
-    lazy var activeSprite: RMSParticle = RMSParticle(parent: self).setAsObserver()
+    lazy var activeSprite: RMSParticle = RMSParticle.Unique(self).setAsObserver()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
     lazy var observer: RMSParticle = self.activeSprite

@@ -65,6 +65,9 @@ extension RMX {
             }
             for child in world.children {
                 let sprite = child.1
+                if sprite.isUnique {
+                    return
+                }
                 if sprite.isAnimated {
                     sprite.addBehaviour{ (isOn: Bool)->() in
                         return
@@ -131,7 +134,7 @@ extension RMX {
         return world
     }
     static func makePoppy(witWorld world: RMSWorld) -> RMSParticle{
-        let poppy: RMSParticle = RMSParticle(parent: world, name: "Poppy").setAsObserver().setAsShape()
+        let poppy: RMSParticle = RMSParticle.Unique(world, name: "Poppy").setAsObserver().setAsShape()
         poppy.type = .POPPY
         poppy.body.radius = 8
         poppy.position = GLKVector3Make(100,poppy.body.radius,-50)
