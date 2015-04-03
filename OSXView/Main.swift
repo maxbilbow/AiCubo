@@ -11,8 +11,8 @@
 class Main: NSObject, NSApplicationDelegate {
     
     
-    func start(){
-        RMXGLProxy.run()
+    func start(type: RMXWorldType = RMSWorld.TYPE){
+        RMXGLProxy.run(type)
     }
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
@@ -30,4 +30,4 @@ class Main: NSObject, NSApplicationDelegate {
 }
 
 
-Main().start()
+Main().start(type: .TESTING_ENVIRONMENT)

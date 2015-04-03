@@ -88,13 +88,13 @@ class RMSParticle : RMXObject , RMXChildNode {
             self.prepareToRest = restIf
         })
         
-        self.resets.last?()
+        self.resets.last!()
     }
     
     private var _asObserver = false
     private var _asShape = false
     
-    func setAsShape(type: ShapeType = .CUBE) -> RMSParticle? {//, mass: Float? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMSParticle {
+    func setAsShape(type: ShapeType = .CUBE) -> RMSParticle {//, mass: Float? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMSParticle {
         if _asShape { return self }
         
         self.resets.append({
@@ -125,7 +125,7 @@ class RMSParticle : RMXObject , RMXChildNode {
     
     
     
-    func addBehaviour(behaviour: () -> ()) {
+    func addBehaviour(behaviour: (isOn: Bool) -> ()) {
         self.behaviours.append(behaviour)
         //self.behaviours.last?()
     }
@@ -145,9 +145,6 @@ class RMSParticle : RMXObject , RMXChildNode {
             self.actions.animate()
             self.body.animate()
             self.actions.manipulate()
-            for behaviour in self.behaviours {
-                behaviour()
-            }
         }
     
     ///add this as a behaviour (create the variables outside of function before adding)

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import GLKit
+
 protocol RMXNodeProperty {
     var parent: RMSParticle { get set }
     var world: RMSWorld { get }

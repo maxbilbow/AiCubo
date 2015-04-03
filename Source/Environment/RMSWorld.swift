@@ -9,8 +9,9 @@
 import Foundation
 import GLKit
 
+enum RMXWorldType { case DEFAULT, TESTING_ENVIRONMENT, FETCH }
 class RMSWorld : RMSParticle {
-    
+    static var TYPE: RMXWorldType = .DEFAULT
     let gravityScaler: Float = 0.05
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
@@ -18,41 +19,74 @@ class RMSWorld : RMSParticle {
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    var sun: RMSParticle?
+    lazy var sun: RMSParticle = RMSParticle(parent: self).shape.makeAsSun(rDist: self.body.radius)
     private let GRAVITY: Float = 9.8
     
     
     
-    
+    lazy var activeCamera: RMXCamera! = RMXCamera(self.activeSprite)
     
     lazy var activeSprite: RMSParticle = RMSParticle(parent: self).setAsObserver()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
     lazy var observer: RMSParticle = self.activeSprite
+    lazy var poppy: RMSParticle = RMX.makePoppy(witWorld: self)
+    lazy var players: [Int: RMSParticle] = [
+        self.activeSprite.rmxID: self.activeSprite ,
+        self.poppy.rmxID: self.poppy,
+        self.sun.rmxID: self.sun
+    ]
+    lazy var achildrenctiveCamera: RMXCamera = RMXCamera(self.observer)
     
-    lazy var activeCamera: RMXCamera = RMXCamera(self.observer)
+    var worldType: RMXWorldType = .DEFAULT
     
-
-    
-    init(parent: RMXObject! = nil, name: String = "The World", capacity: Int = 15000) {
-        super.init(parent: nil, type: .WORLD, name: name)
-//        self.children.c.reserveCapacity(capacity)
+    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: Float = 2000, parent: RMSParticle! = nil) {
+        super.init(parent: parent, type: .WORLD, name: name)
+        self.worldType = type
         self.world = self
-        self.body.radius = 2000
+        self.body.radius = radius
         self.activeSprite.addInitCall { () -> () in
             self.observer.position = GLKVector3Make(20, 20, 20)
         }
-        
-        self.activeCamera = RMXCamera(self.activeSprite)
-        
-        self.children[self.activeSprite.rmxID] = self.activeSprite
-        //fatalError("Grav: \(self.physics.gravity)")
-         self.isAnimated = false
+//        self.activeCamera = RMXCamera(self.activeSprite)
+        self.isAnimated = false
         self.shape.isVisible = false
-        
+        self.addInitCall ({
+            self.worldDidInitialize()
+        })
     }
-    
+    private var _firstFetch = true
+    func worldDidInitialize() {
+        self.insertChildNode(self.players)
+        switch (self.worldType){
+        case .TESTING_ENVIRONMENT:
+            RMXArt.initializeTestingEnvironment(self)
+            RMX.buildScene(self)
+            break
+        case .FETCH:
+            RMXArt.initializeTestingEnvironment(self,withAxis: false, withCubes: 100)
+            if _firstFetch {
+                for child in children {
+                    self.players[child.0] = child.1
+                }
+                _firstFetch = false
+            }
+            for player in players {
+                RMX.addBasicCollisionTo(forNode: player.1, withActors: self.children)
+            }
+            
+            break
+        default:
+            RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 0)
+        }
+//        self.reset()
+    }
   
+    func setWorldType(worldType type: RMXWorldType = .DEFAULT){
+        self.worldType = type
+        self.children.removeAll(keepCapacity: true)
+        self.worldDidInitialize()
+    }
    
             
     func µAt(someBody: RMSParticle) -> Float {
@@ -113,8 +147,7 @@ class RMSWorld : RMSParticle {
     }
     
     override func reset() {
-        self.observer.reset()
-        //super.reset()
+        super.reset()
     }
     
     func closestObjectTo(sender: RMSParticle)->RMSParticle? {
@@ -172,6 +205,7 @@ class RMSWorld : RMSParticle {
     func action(action: String = "reset",speed: Float = 0, point: [Float] = []) {
         self.actionProcessor.movement( action,speed: speed, point: point)
     }
+    
     
     
     

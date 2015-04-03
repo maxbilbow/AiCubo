@@ -5,7 +5,7 @@
 //  Created by Max Bilbow on 10/03/2015.
 //  Copyright (c) 2015 Rattle Media. All rights reserved.
 //
-
+import GLKit
 
 class RMXObject  {
     static var COUNT: Int = 0
@@ -18,7 +18,7 @@ class RMXObject  {
     var body: RMSPhysicsBody! = nil
     var collisionBody: RMSCollisionBody! = nil
     var resets: [() -> () ]
-    var behaviours: [() -> ()]
+    var behaviours: [(Bool) -> ()]
     var children: [Int : RMSParticle]
     var hasChildren: Bool {
         return !children.isEmpty
@@ -39,7 +39,7 @@ class RMXObject  {
         _name = name
         RMXObject.COUNT++
         self.resets = Array<() -> ()>()
-        self.behaviours = Array<() -> ()>()
+        self.behaviours = Array<(Bool) -> ()>()
         var timePassed = 1000
         func restIf()->Bool{
             if timePassed == 0 {
@@ -52,7 +52,7 @@ class RMXObject  {
         }
         self.prepareToRest = restIf
         
-        self.resets.append({ println("INIT: \(name), \(RMXObject.COUNT)")})
+//        self.resets.append({ println("INIT: \(name), \(RMXObject.COUNT)")})
         self.objectDidInitialize()
         
     }
@@ -78,6 +78,9 @@ class RMXObject  {
     func reset(){
         for re in resets {
             re()
+        }
+        for child in children {
+            child.1.reset()
         }
     }
    
@@ -134,8 +137,11 @@ class RMXObject  {
             self.isActive = bool
         }
     }
-    
+    var hasBehaviour = true
     func animate(){
+        for behaviour in self.behaviours {
+            behaviour(self.hasBehaviour)
+        }
         for child in children {
             child.1.animate()
         }
@@ -144,6 +150,13 @@ class RMXObject  {
     func insertChildNode(child: RMSParticle){
         self.children[child.rmxID] = child
     }
+    
+    func insertChildNode(children: [Int:RMSParticle]){
+        for child in children {
+            self.children[child.0] = child.1
+        }
+    }
+    
     
     
     func expellChild(rmxID: Int){
@@ -154,4 +167,14 @@ class RMXObject  {
         self.children.removeValueForKey(child.rmxID)
     }
     
+    func removeBehaviours(){
+        self.behaviours.removeAll()
+    }
+    
+    func setBehaviours(areOn: Bool){
+        self.hasBehaviour = areOn
+        for child in children{
+            child.1.hasBehaviour = areOn
+        }
+    }
 }

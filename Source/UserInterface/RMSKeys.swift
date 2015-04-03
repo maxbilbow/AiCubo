@@ -13,8 +13,8 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
  
     var keys: [ RMKey ]?
 //    var specialKeys: [ RMKey ] = [ RMKey ]()
-    override init(gvc: RMXViewController, world: RMSWorld){
-        super.init(gvc: gvc, world: world)
+    override init(gvc: RMXViewController){
+        super.init(gvc: gvc)
         //self.set(action: "forward", key: "w")
         self.keys = [
             RMKey(action: "forward", key: "w"),

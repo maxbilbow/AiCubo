@@ -43,10 +43,34 @@ class RMXDPad : RMXInterface {
 //        return super.view as! RMXView
 //    }
     override func setUpGestureRecognisers(){
+//        let image = UIImage(contentsOfFile: "popNose.png")
+//        button.setImage(image, forState: UIControlState.Normal)
+        
+        func pauseButton (view: UIView)  {
+            let button: UIButton = UIButton(frame: CGRectMake(0, view.bounds.height - 30, view.bounds.width / 3, 20))
+            
+            button.setTitle("SWITCH", forState:UIControlState.Normal)
+            button.addTarget(self, action: Selector("pauseGame:"), forControlEvents:UIControlEvents.TouchDown)
+            button.enabled = true
+            view.addSubview(button)
+            
+            let behaviours: UIButton = UIButton(frame: CGRectMake(view.bounds.width / 3, view.bounds.height - 30, view.bounds.width / 3, 20))
+            
+            behaviours.setTitle("BHAVIOURS", forState:UIControlState.Normal)
+//            behaviours.setTitle("BHAVIOURS OFF", forState:UIControlState.Selected)
+            behaviours.addTarget(self, action: Selector("toggleBehaviours:"), forControlEvents:UIControlEvents.TouchDown)
+            behaviours.enabled = true
+            view.addSubview(behaviours)
+        }
+        
+        
         let w = self.gvc.view.bounds.size.width
         let h = self.gvc.view.bounds.size.height
         let leftView: UIView = UIImageView(frame: CGRectMake(0, 0, w/2, h))
         let rightView: UIView = UIImageView(frame: CGRectMake(w/2, 0, w/2, h))
+        pauseButton(leftView)
+        
+        
         
         func setLeftView() {
             
@@ -60,15 +84,13 @@ class RMXDPad : RMXInterface {
             movement.minimumPressDuration = 0
             view.addGestureRecognizer(movement)
             
-            //let tapLeft: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapLeft:")
-            //view.addGestureRecognizer(tapLeft)
-            
-            
-//            view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
-//            
-//            view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressLeft:"))
-            
             view.userInteractionEnabled = true
+            
+            
+            let twoFingerTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "toggleAllGravity:")
+            twoFingerTap.numberOfTouchesRequired = 2
+            twoFingerTap.numberOfTapsRequired = 1
+            view.addGestureRecognizer(twoFingerTap)
             
             self.gvc.view.addSubview(leftView)
         }
@@ -76,8 +98,9 @@ class RMXDPad : RMXInterface {
         func setRightView() {
             
             let view = rightView
-            let rPan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self,action: "handlePanRightSide:")
-            view.addGestureRecognizer(rPan)
+            let look:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self,action: "handleOrientation:")
+//            look.minimumPressDuration = 0
+            view.addGestureRecognizer(look)
             
             let tapRight: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapRight:")
             view.addGestureRecognizer(tapRight)
@@ -89,29 +112,18 @@ class RMXDPad : RMXInterface {
             view.userInteractionEnabled = true
             self.gvc.view.addSubview(rightView)
             
-        }
-        
-        
-        
-        func setForBothViews(){
-            
-            
-            let view = self.gvc.view
-            
-
-            
-            let twoFingerTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleDoubleTouchTap:")
+            let twoFingerTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "toggleGravity:")
             twoFingerTap.numberOfTouchesRequired = 2
             twoFingerTap.numberOfTapsRequired = 1
             view.addGestureRecognizer(twoFingerTap)
             
-
-            //        lp.minimumPressDuration =
-            
             
         }
         
-        setLeftView(); setRightView(); setForBothViews()
+        
+    
+        
+        setLeftView(); setRightView()//; setUpButtons()
         
         func misc() {
             
@@ -153,7 +165,13 @@ class RMXDPad : RMXInterface {
     }
     
     var i = 0
-    var _origin: CGPoint = CGPoint(x: 0,y: 0)
+    var moveOrigin: CGPoint = CGPoint(x: 0,y: 0)
+    var lookOrigin: CGPoint = CGPoint(x: 0,y: 0)
+    func toggleBehaviours(recogniser: UITapGestureRecognizer){
+        self.world.hasBehaviour = !self.world.hasBehaviour
+        self.world.setBehaviours(self.world.hasBehaviour)
+    }
+    
 }
 
 

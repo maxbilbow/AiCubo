@@ -21,7 +21,7 @@ import GLKit
 
 #if OPENGL_ES
     import UIKit
-    typealias RMXView = UIView
+//    typealias RMXView = UIView
     typealias RMXContext = EAGLContext
 //    typealias RMXController = RMXDPad
     #elseif OPENGL_OSX
@@ -30,7 +30,7 @@ import GLKit
     import GLUT
 //    typealias RMXController = RMSKeys
     typealias GLKViewController = NSViewController
-    typealias RMXView = NSView
+//    typealias RMXView = NSView
     typealias RMXContext = UnsafeMutablePointer<_CGLContextObject>
 #endif
 

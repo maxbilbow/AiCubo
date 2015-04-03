@@ -55,6 +55,7 @@ class RMXShape : RMSNodeProperty {
     
     func makeAsSun(rDist: Float = 1000, isRotating: Bool = true, rAxis: GLKVector3 = GLKVector3Make(0,0,1)) -> RMSParticle{
         self.type = .SPHERE
+        self.isVisible = true
         self.parent.rotationCenterDistance = rDist
         self.parent.isRotating = isRotating
         self.parent.setRotationSpeed(speed: 1)
@@ -62,6 +63,7 @@ class RMXShape : RMSNodeProperty {
         self.parent.setHasGravity(false)
         self.isLight = true
         self.parent.rAxis = rAxis
+        self.parent.rotation = PI / 4
         return self.parent
     }
     

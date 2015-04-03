@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5003E7141ACCA3FF00F40E46 /* RMXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5003E7131ACCA3FF00F40E46 /* RMXView.swift */; };
 		501A93971AC77EC800924AAF /* texture_poppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 501A93961AC77EC800924AAF /* texture_poppy.png */; };
 		501A93981AC77EC800924AAF /* texture_poppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 501A93961AC77EC800924AAF /* texture_poppy.png */; };
 		503927371AC710C100A59744 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332141AC5D59500BB4477 /* main.swift */; };
-		503927451AC71B6600A59744 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503927441AC71B6600A59744 /* main.swift */; };
 		503927491AC71BCF00A59744 /* run.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC061AC6CEB4004E240C /* run.m */; };
 		5039274A1AC71C1F00A59744 /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
 		5039274B1AC71C1F00A59744 /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
@@ -76,6 +76,46 @@
 		5071AC091AC6CEB4004E240C /* RMXKeyboardProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC041AC6CEB4004E240C /* RMXKeyboardProcessor.m */; };
 		5071AC0A1AC6CEB4004E240C /* RMXMouseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC051AC6CEB4004E240C /* RMXMouseProcessor.m */; };
 		5071AC0B1AC6CEB4004E240C /* run.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC061AC6CEB4004E240C /* run.m */; };
+		50982D4B1ACE97240035EB56 /* iOSControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53F1AC4ACC100AAACF7 /* iOSControllers.swift */; };
+		50982D4C1ACE97240035EB56 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
+		50982D4D1ACE97240035EB56 /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
+		50982D4E1ACE97240035EB56 /* RMXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5003E7131ACCA3FF00F40E46 /* RMXView.swift */; };
+		50982D4F1ACE97240035EB56 /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
+		50982D501ACE97240035EB56 /* RMXDPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */; };
+		50982D511ACE97240035EB56 /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
+		50982D521ACE97300035EB56 /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
+		50982D531ACE97300035EB56 /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
+		50982D541ACE97300035EB56 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
+		50982D561ACE97450035EB56 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
+		50982D571ACE97450035EB56 /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
+		50982D581ACE97450035EB56 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
+		50982D591ACE97450035EB56 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
+		50982D5A1ACE97450035EB56 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
+		50982D5B1ACE97450035EB56 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
+		50982D5C1ACE97450035EB56 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
+		50982D5D1ACE97450035EB56 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
+		50982D5E1ACE97450035EB56 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
+		50982D5F1ACE97450035EB56 /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		50982D601ACE97450035EB56 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
+		50982D611ACE97450035EB56 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
+		50982D621ACE97450035EB56 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		50982D661ACE9B2F0035EB56 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50982D651ACE9B2F0035EB56 /* GameView.swift */; };
+		50982D671ACE9B890035EB56 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D62F1ACD4DC900F209E5 /* GameViewController.swift */; };
+		50982D681ACE9C030035EB56 /* RMX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5361AC4ACC100AAACF7 /* RMX.swift */; };
+		50982D691ACE9C110035EB56 /* RMXValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */; };
+		50982D6A1ACE9C160035EB56 /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
+		50982D6B1ACE9C1C0035EB56 /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
+		50982D6C1ACE9C220035EB56 /* RMSGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */; };
+		50982D6D1ACE9C280035EB56 /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
+		50982D6E1ACE9C3E0035EB56 /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
+		50A9D5F41ACD33B700F209E5 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C186C1ACBE1A000FE85D7 /* GameView.swift */; };
+		50A9D62E1ACD4DC900F209E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D62D1ACD4DC900F209E5 /* AppDelegate.swift */; };
+		50A9D6321ACD4DC900F209E5 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D6311ACD4DC900F209E5 /* Shaders.metal */; };
+		50A9D6351ACD4DC900F209E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D6331ACD4DC900F209E5 /* Main.storyboard */; };
+		50A9D6371ACD4DC900F209E5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D6361ACD4DC900F209E5 /* Images.xcassets */; };
+		50A9D63A1ACD4DC900F209E5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D6381ACD4DC900F209E5 /* LaunchScreen.xib */; };
+		50A9D6461ACD4DC900F209E5 /* MetalViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D6451ACD4DC900F209E5 /* MetalViewTests.swift */; };
+		50A9D64E1ACD9C9700F209E5 /* popNose.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D64D1ACD9C9700F209E5 /* popNose.png */; };
 		50BA27991ACAA3AD007347A9 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
 		50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
 		50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
@@ -129,6 +169,13 @@
 			remoteGlobalIDString = 5063320F1AC5D59500BB4477;
 			remoteInfo = OSXView;
 		};
+		50A9D6401ACD4DC900F209E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50A9D6281ACD4DC900F209E5;
+			remoteInfo = MetalView;
+		};
 		50C2B50F1AC4AA2100AAACF7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
@@ -160,10 +207,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5003E7131ACCA3FF00F40E46 /* RMXView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXView.swift; sourceTree = "<group>"; };
+		500C186C1ACBE1A000FE85D7 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Views/GameView.swift; sourceTree = SOURCE_ROOT; };
 		501A93961AC77EC800924AAF /* texture_poppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_poppy.png; sourceTree = "<group>"; };
 		503927421AC71B6600A59744 /* load */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = load; sourceTree = BUILT_PRODUCTS_DIR; };
-		503927441AC71B6600A59744 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		503927681AC746D100A59744 /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 		506332051AC5D54C00BB4477 /* AiCuboOSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AiCuboOSX; sourceTree = BUILT_PRODUCTS_DIR; };
 		506332101AC5D59500BB4477 /* OSXView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506332131AC5D59500BB4477 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -182,6 +229,19 @@
 		5071AC051AC6CEB4004E240C /* RMXMouseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RMXMouseProcessor.m; path = Source/Depreciated/OSX/RMXMouseProcessor.m; sourceTree = SOURCE_ROOT; };
 		5071AC061AC6CEB4004E240C /* run.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = run.m; path = Source/Depreciated/OSX/run.m; sourceTree = SOURCE_ROOT; };
 		508D68F41AC97F0100BF10FF /* RMXQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXQuestions.swift; sourceTree = "<group>"; };
+		50982D651ACE9B2F0035EB56 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		50A9D6291ACD4DC900F209E5 /* MetalView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A9D62C1ACD4DC900F209E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50A9D62D1ACD4DC900F209E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		50A9D62F1ACD4DC900F209E5 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		50A9D6311ACD4DC900F209E5 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		50A9D6341ACD4DC900F209E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		50A9D6361ACD4DC900F209E5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		50A9D6391ACD4DC900F209E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		50A9D63F1ACD4DC900F209E5 /* MetalViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetalViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50A9D6441ACD4DC900F209E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50A9D6451ACD4DC900F209E5 /* MetalViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewTests.swift; sourceTree = "<group>"; };
+		50A9D64D1ACD9C9700F209E5 /* popNose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popNose.png; sourceTree = "<group>"; };
 		50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSCollisionBody.swift; sourceTree = "<group>"; };
 		50BA279B1ACAA554007347A9 /* RMSChildNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSChildNode.swift; sourceTree = "<group>"; };
 		50C2B4F51AC4AA2100AAACF7 /* AiCubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AiCubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -261,6 +321,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50A9D6261ACD4DC900F209E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50A9D63C1ACD4DC900F209E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C2B4F21AC4AA2100AAACF7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -278,15 +352,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		503927431AC71B6600A59744 /* load */ = {
-			isa = PBXGroup;
-			children = (
-				503927441AC71B6600A59744 /* main.swift */,
-				503927681AC746D100A59744 /* Application.xib */,
-			);
-			path = load;
-			sourceTree = "<group>";
-		};
 		506332111AC5D59500BB4477 /* OSXView */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +396,46 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		50A9D62A1ACD4DC900F209E5 /* MetalView */ = {
+			isa = PBXGroup;
+			children = (
+				50A9D62D1ACD4DC900F209E5 /* AppDelegate.swift */,
+				50A9D62F1ACD4DC900F209E5 /* GameViewController.swift */,
+				50982D651ACE9B2F0035EB56 /* GameView.swift */,
+				50A9D6311ACD4DC900F209E5 /* Shaders.metal */,
+				50A9D6331ACD4DC900F209E5 /* Main.storyboard */,
+				50A9D6361ACD4DC900F209E5 /* Images.xcassets */,
+				50A9D6381ACD4DC900F209E5 /* LaunchScreen.xib */,
+				50A9D62B1ACD4DC900F209E5 /* Supporting Files */,
+			);
+			path = MetalView;
+			sourceTree = "<group>";
+		};
+		50A9D62B1ACD4DC900F209E5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				50A9D62C1ACD4DC900F209E5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		50A9D6421ACD4DC900F209E5 /* MetalViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				50A9D6451ACD4DC900F209E5 /* MetalViewTests.swift */,
+				50A9D6431ACD4DC900F209E5 /* Supporting Files */,
+			);
+			path = MetalViewTests;
+			sourceTree = "<group>";
+		};
+		50A9D6431ACD4DC900F209E5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				50A9D6441ACD4DC900F209E5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		50C2B4EC1AC4AA2100AAACF7 = {
 			isa = PBXGroup;
 			children = (
@@ -339,7 +444,8 @@
 				50C2B5111AC4AA2100AAACF7 /* AiCuboTests */,
 				506332111AC5D59500BB4477 /* OSXView */,
 				506332281AC5D59600BB4477 /* OSXViewTests */,
-				503927431AC71B6600A59744 /* load */,
+				50A9D62A1ACD4DC900F209E5 /* MetalView */,
+				50A9D6421ACD4DC900F209E5 /* MetalViewTests */,
 				50C2B4F61AC4AA2100AAACF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -353,6 +459,8 @@
 				506332101AC5D59500BB4477 /* OSXView.app */,
 				506332251AC5D59600BB4477 /* OSXViewTests.xctest */,
 				503927421AC71B6600A59744 /* load */,
+				50A9D6291ACD4DC900F209E5 /* MetalView.app */,
+				50A9D63F1ACD4DC900F209E5 /* MetalViewTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -371,6 +479,7 @@
 				50C2B4FC1AC4AA2100AAACF7 /* Shader.fsh */,
 				50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */,
 				50C2B5001AC4AA2100AAACF7 /* GameViewController.swift */,
+				500C186C1ACBE1A000FE85D7 /* GameView.swift */,
 				50C2B5021AC4AA2100AAACF7 /* Main.storyboard */,
 				50C2B5051AC4AA2100AAACF7 /* Images.xcassets */,
 				50C2B5071AC4AA2100AAACF7 /* LaunchScreen.xib */,
@@ -408,6 +517,7 @@
 		50C2B5221AC4ACC100AAACF7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				50A9D64D1ACD9C9700F209E5 /* popNose.png */,
 				501A93961AC77EC800924AAF /* texture_poppy.png */,
 				50C2B5231AC4ACC100AAACF7 /* texture_numbers.png */,
 			);
@@ -479,6 +589,7 @@
 				50C2B53F1AC4ACC100AAACF7 /* iOSControllers.swift */,
 				50F215981AC758CF00ED6FA6 /* Accelorometer.swift */,
 				50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */,
+				5003E7131ACCA3FF00F40E46 /* RMXView.swift */,
 				50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */,
 				50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */,
 				50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */,
@@ -560,6 +671,41 @@
 			productReference = 506332251AC5D59600BB4477 /* OSXViewTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		50A9D6281ACD4DC900F209E5 /* MetalView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50A9D6471ACD4DC900F209E5 /* Build configuration list for PBXNativeTarget "MetalView" */;
+			buildPhases = (
+				50A9D6251ACD4DC900F209E5 /* Sources */,
+				50A9D6261ACD4DC900F209E5 /* Frameworks */,
+				50A9D6271ACD4DC900F209E5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetalView;
+			productName = MetalView;
+			productReference = 50A9D6291ACD4DC900F209E5 /* MetalView.app */;
+			productType = "com.apple.product-type.application";
+		};
+		50A9D63E1ACD4DC900F209E5 /* MetalViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50A9D64A1ACD4DC900F209E5 /* Build configuration list for PBXNativeTarget "MetalViewTests" */;
+			buildPhases = (
+				50A9D63B1ACD4DC900F209E5 /* Sources */,
+				50A9D63C1ACD4DC900F209E5 /* Frameworks */,
+				50A9D63D1ACD4DC900F209E5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50A9D6411ACD4DC900F209E5 /* PBXTargetDependency */,
+			);
+			name = MetalViewTests;
+			productName = MetalViewTests;
+			productReference = 50A9D63F1ACD4DC900F209E5 /* MetalViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		50C2B4F41AC4AA2100AAACF7 /* AiCubo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C2B5181AC4AA2100AAACF7 /* Build configuration list for PBXNativeTarget "AiCubo" */;
@@ -618,6 +764,13 @@
 						CreatedOnToolsVersion = 6.3;
 						TestTargetID = 5063320F1AC5D59500BB4477;
 					};
+					50A9D6281ACD4DC900F209E5 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					50A9D63E1ACD4DC900F209E5 = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 50A9D6281ACD4DC900F209E5;
+					};
 					50C2B4F41AC4AA2100AAACF7 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = 668T39KN4E;
@@ -647,6 +800,8 @@
 				5063320F1AC5D59500BB4477 /* OSXView */,
 				506332241AC5D59600BB4477 /* OSXViewTests */,
 				503927411AC71B6600A59744 /* load */,
+				50A9D6281ACD4DC900F209E5 /* MetalView */,
+				50A9D63E1ACD4DC900F209E5 /* MetalViewTests */,
 			);
 		};
 /* End PBXProject section */
@@ -670,6 +825,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50A9D6271ACD4DC900F209E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A9D6351ACD4DC900F209E5 /* Main.storyboard in Resources */,
+				50A9D63A1ACD4DC900F209E5 /* LaunchScreen.xib in Resources */,
+				50A9D6371ACD4DC900F209E5 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50A9D63D1ACD4DC900F209E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C2B4F31AC4AA2100AAACF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -681,6 +853,7 @@
 				50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */,
 				50C2B4FD1AC4AA2100AAACF7 /* Shader.fsh in Resources */,
 				501A93971AC77EC800924AAF /* texture_poppy.png in Resources */,
+				50A9D64E1ACD9C9700F209E5 /* popNose.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,7 +872,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5039274A1AC71C1F00A59744 /* RMSActionProcessor.swift in Sources */,
-				503927451AC71B6600A59744 /* main.swift in Sources */,
 				503927601AC71C8900A59744 /* RMXPhysics.swift in Sources */,
 				503927651AC71CBC00A59744 /* RMXKeyboardProcessor.m in Sources */,
 				5039274E1AC71C2400A59744 /* RMXInitialize.swift in Sources */,
@@ -790,6 +962,55 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50A9D6251ACD4DC900F209E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A9D6321ACD4DC900F209E5 /* Shaders.metal in Sources */,
+				50982D591ACE97450035EB56 /* RMSCollisionBody.swift in Sources */,
+				50982D601ACE97450035EB56 /* RMXPhysics.swift in Sources */,
+				50982D5B1ACE97450035EB56 /* RMXNodeProperty.swift in Sources */,
+				50982D5A1ACE97450035EB56 /* RMSChildNode.swift in Sources */,
+				50982D5D1ACE97450035EB56 /* RMXCamera.swift in Sources */,
+				50982D661ACE9B2F0035EB56 /* GameView.swift in Sources */,
+				50982D4B1ACE97240035EB56 /* iOSControllers.swift in Sources */,
+				50982D6A1ACE9C160035EB56 /* RMXDebugger.swift in Sources */,
+				50982D671ACE9B890035EB56 /* GameViewController.swift in Sources */,
+				50982D571ACE97450035EB56 /* RMSParticle.swift in Sources */,
+				50982D6B1ACE9C1C0035EB56 /* RMSMaths.swift in Sources */,
+				50982D4E1ACE97240035EB56 /* RMXView.swift in Sources */,
+				50982D5F1ACE97450035EB56 /* RMXObject.swift in Sources */,
+				50982D5C1ACE97450035EB56 /* RMSWorld.swift in Sources */,
+				50982D4D1ACE97240035EB56 /* RMSActionProcessor.swift in Sources */,
+				50982D521ACE97300035EB56 /* RMXController.swift in Sources */,
+				50982D501ACE97240035EB56 /* RMXDPad.swift in Sources */,
+				50982D6E1ACE9C3E0035EB56 /* CWrappers.c in Sources */,
+				50982D5E1ACE97450035EB56 /* RMXClock.swift in Sources */,
+				50982D561ACE97450035EB56 /* RMSArt.swift in Sources */,
+				50982D541ACE97300035EB56 /* RMXInitialize.swift in Sources */,
+				50A9D62E1ACD4DC900F209E5 /* AppDelegate.swift in Sources */,
+				50982D691ACE9C110035EB56 /* RMXValue.swift in Sources */,
+				50982D6D1ACE9C280035EB56 /* RMSEquations.swift in Sources */,
+				50982D611ACE97450035EB56 /* RMXShape.swift in Sources */,
+				50982D531ACE97300035EB56 /* RMXViewController.swift in Sources */,
+				50982D511ACE97240035EB56 /* RMXInterface.swift in Sources */,
+				50982D4F1ACE97240035EB56 /* RMSKeys.swift in Sources */,
+				50982D6C1ACE9C220035EB56 /* RMSGeometry.swift in Sources */,
+				50982D581ACE97450035EB56 /* RMSPhysicsBody.swift in Sources */,
+				50982D4C1ACE97240035EB56 /* Accelorometer.swift in Sources */,
+				50982D621ACE97450035EB56 /* RMXSpriteActions.swift in Sources */,
+				50982D681ACE9C030035EB56 /* RMX.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50A9D63B1ACD4DC900F209E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A9D6461ACD4DC900F209E5 /* MetalViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50C2B4F11AC4AA2100AAACF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -812,9 +1033,11 @@
 				50C2B5481AC4ACC100AAACF7 /* RMSParticle.swift in Sources */,
 				50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */,
 				50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */,
+				5003E7141ACCA3FF00F40E46 /* RMXView.swift in Sources */,
 				50D0AF8D1ACAD9DF0008A2B8 /* RMXNodeProperty.swift in Sources */,
 				50C2B55C1AC4ACC100AAACF7 /* RMSActionProcessor.swift in Sources */,
 				50C2B5011AC4AA2100AAACF7 /* GameViewController.swift in Sources */,
+				50A9D5F41ACD33B700F209E5 /* GameView.swift in Sources */,
 				50C2B55F1AC4ACC100AAACF7 /* RMXInterface.swift in Sources */,
 				50C2B5461AC4ACC100AAACF7 /* CWrappers.c in Sources */,
 				50C2B5511AC4ACC100AAACF7 /* RMSEquations.swift in Sources */,
@@ -845,6 +1068,11 @@
 			target = 5063320F1AC5D59500BB4477 /* OSXView */;
 			targetProxy = 506332261AC5D59600BB4477 /* PBXContainerItemProxy */;
 		};
+		50A9D6411ACD4DC900F209E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50A9D6281ACD4DC900F209E5 /* MetalView */;
+			targetProxy = 50A9D6401ACD4DC900F209E5 /* PBXContainerItemProxy */;
+		};
 		50C2B5101AC4AA2100AAACF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 50C2B4F41AC4AA2100AAACF7 /* AiCubo */;
@@ -853,6 +1081,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		50A9D6331ACD4DC900F209E5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50A9D6341ACD4DC900F209E5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		50A9D6381ACD4DC900F209E5 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50A9D6391ACD4DC900F209E5 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
 		50C2B5021AC4AA2100AAACF7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -995,6 +1239,68 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXView.app/Contents/MacOS/OSXView";
+			};
+			name = Release;
+		};
+		50A9D6481ACD4DC900F209E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MetalView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DMETAL_iOS -DiOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		50A9D6491ACD4DC900F209E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MetalView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DMETAL_iOS -DiOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		50A9D64B1ACD4DC900F209E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MetalViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MetalView.app/MetalView";
+			};
+			name = Debug;
+		};
+		50A9D64C1ACD4DC900F209E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MetalViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MetalView.app/MetalView";
 			};
 			name = Release;
 		};
@@ -1181,6 +1487,24 @@
 			buildConfigurations = (
 				506332311AC5D59600BB4477 /* Debug */,
 				506332321AC5D59600BB4477 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50A9D6471ACD4DC900F209E5 /* Build configuration list for PBXNativeTarget "MetalView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50A9D6481ACD4DC900F209E5 /* Debug */,
+				50A9D6491ACD4DC900F209E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50A9D64A1ACD4DC900F209E5 /* Build configuration list for PBXNativeTarget "MetalViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50A9D64B1ACD4DC900F209E5 /* Debug */,
+				50A9D64C1ACD4DC900F209E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

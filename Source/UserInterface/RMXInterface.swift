@@ -7,7 +7,7 @@
 //
 
 import Foundation
-#if OPENGL_ES
+#if iOS
     import UIKit
     #elseif OPENGL_OSX
     import GLKit
@@ -19,7 +19,9 @@ class RMXInterface : NSObject {
 //    #if OPENGL_ES
     var gvc: RMXViewController
 //    #endif
-    var world: RMSWorld
+    var world: RMSWorld {
+        return self.gvc.gameView.world
+    }
     
     var lookSpeed: Float = PI_OVER_180
     var moveSpeed: Float = 1
@@ -27,24 +29,30 @@ class RMXInterface : NSObject {
     var activeSprite: RMSParticle {
         return self.world.activeSprite
     }
-    #if OPENGL_ES
+    
+    #if iOS
     var view: UIView {
-        return self.gvc.view as UIView
+        return self.gvc.gameView as! UIView
     }
-    #elseif OPENGL_OSX
+    #else
     var view: NSObject {
-        return self.gvc.view //as GLKView
+        return self.gvc.gameView as! NSObject
     }
     #endif
+
+    var gameView: RMXView {
+        return self.gvc.gameView
+    }
+
+    
     var controllers: [ String : ( isActive: Bool, process: ()->() ) ]
     
     var activeCamera: RMXCamera {
         return self.world.activeCamera
     }
     
-    init(gvc: RMXViewController, world: RMSWorld){
+    init(gvc: RMXViewController){
         self.gvc = gvc
-        self.world = world
 //        self.actions = self.world.actions
         self.controllers = [ "debug" : ( isActive: _isDebugging,
             process: {

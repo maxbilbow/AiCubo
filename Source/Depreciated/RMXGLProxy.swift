@@ -14,7 +14,7 @@ import GLKit
 @objc public class RMXGLProxy {
     //let world: RMXWorld? = RMXArt.initializeTestingEnvironment()
     static var callbacks: [()->Void] = Array<()->Void>()
-    static var world: RMSWorld = RMX.buildScene()
+    static var world: RMSWorld! = nil
     static var effect: GLKBaseEffect? = GLKBaseEffect()
     static var actions: RMSActionProcessor {
         return self.world.actionProcessor
@@ -145,8 +145,8 @@ import GLKit
 
 
 extension RMXGLProxy {
-    class func run(){
-        self.world = RMX.buildScene()
+    class func run(type: RMXWorldType){
+        self.world = RMSWorld(worldType: type)
         RMXGLRun(Process.argc, Process.unsafeArgv)
     }
     
@@ -185,7 +185,7 @@ extension RMXGLProxy {
                 if object.1.isLightSource {
                     RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape.color)
                 } else {
-//                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.1.shape.color)
+                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.1.shape.color)
                     RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, object.1.shape.color)
 //                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, object.1.shape.color)
                 }
@@ -193,7 +193,7 @@ extension RMXGLProxy {
                 shape(object.1.shape.type, radius)
 
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, RMXVector4Zero);
-//                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, RMXVector4Zero);
+                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, RMXVector4Zero);
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, RMXVector4Zero);
 //                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, RMXVector4Zero);
                 

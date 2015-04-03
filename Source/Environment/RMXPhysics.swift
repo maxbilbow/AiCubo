@@ -38,7 +38,7 @@ class RMXPhysics {
     
     
     func normalFor(sender: RMSParticle) -> RMXVector3 {
-        let g = sender.body.position.y > 0 ? 0 : self.gravity.y
+        let g = sender.position.y > 0 ? 0 : self.gravity.y
         return GLKVector3MultiplyScalar(GLKVector3Make(0, 0, 0),-sender.body.mass)
     }
     

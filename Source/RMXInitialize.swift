@@ -12,91 +12,117 @@ import GLKit
 extension RMX {
     static let RANDOM_MOVEMENT = true
     
-    static func buildScene() -> RMSWorld{
-        let world: RMSWorld = RMXArt.initializeTestingEnvironment()
+    static func addBasicCollisionTo(forNode sprite: RMSParticle, withActors actors: [Int:RMSParticle]){//, inObjets
+//        sprite.isAlwaysActive = true
+        if sprite.type == .OBSERVER {
+            sprite.addBehaviour{ (isOn: Bool)->() in
+                if let closest = sprite.world.closestObjectTo(sprite) {
+                let distTest = closest.body.radius + sprite.body.radius
+                    if closest.rmxID != sprite.rmxID {
+                        let dist = sprite.body.distanceTo(closest)
+                        if dist <= distTest {
+                            closest.body.velocity += sprite.body.velocity
+                        }
+                    }
+                }
+            }
+        }
+        /*
+        
+            if sprite.type != .OBSERVER {
+                sprite.addBehaviour{ (isOn: Bool)->() in
+                    if !isOn {
+                        return
+                    }
+                    for player in actors {
+                        let actor = player.1
+                        if actor.rmxID != sprite.rmxID {
+                            let distTest = actor.body.radius + sprite.body.radius
+                            let dist = sprite.body.distanceTo(actor)
+                            if dist <= distTest {
+                                sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
+                            } else if dist < distTest && actor.type == .OBSERVER{
+                                sprite.actions.prepareToJump()
+                            }
+                        }
+                    }
+                }
+
+      } */
+    }
+    static func buildScene(world: RMSWorld) -> RMSWorld{
+//        let world: RMSWorld = RMXArt.initializeTestingEnvironment()
         RMXLog("BUILDING")
         
-        let poppy = self.addPoppy(toWorld: world)
-        poppy.type = .POPPY
+        let poppy = self.makePoppy(witWorld: world)
+        
         let observer = world.activeSprite
-        let actors = [ observer, poppy ]
+        let actors = [ 0:observer, 1:poppy ]
         
         autoreleasepool {
             for child in world.children {
+                self.addBasicCollisionTo(forNode: child.1, withActors: actors)
+            }
+            for child in world.children {
                 let sprite = child.1
-                sprite.isAlwaysActive = true
-                if sprite.type == .DEFAULT {
-                    sprite.addBehaviour({
-                        for actor in actors {
-                            if actor.rmxID != sprite.rmxID {
-                                let distTest = actor.body.radius + sprite.body.radius
-                        let dist = sprite.body.distanceTo(actor)
-                        if dist <= distTest {
-                            sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
-                        } else if dist < distTest && actor.type == .OBSERVER{
-                            sprite.actions.prepareToJump()
-                        }
+                if sprite.isAnimated {
+                    sprite.addBehaviour{ (isOn: Bool)->() in
+                        return
+                        if !sprite.hasGravity && world.observer.actions.item != nil {
+                            if sprite.body.distanceTo((world.observer.actions.item)!) < 50 {
+                                sprite.setHasGravity(true)
                             }
                         }
-                    })
-                    
-                    if sprite.isAnimated {
-                        sprite.addBehaviour({
-                            if !sprite.hasGravity && world.observer.actions.item != nil {
-                                if sprite.body.distanceTo((world.observer.actions.item)!) < 50 {
-                                    sprite.setHasGravity(true)
-                                }
-                            }
-                        })
-                    var timePassed = 0
-                    var timeLimit = random() % 600
-                    let speed:Float = Float(random() % 15)/3
+                    }
+                var timePassed = 0
+                var timeLimit = random() % 600
+                let speed:Float = Float(random() % 15)/3
 //                    let theta = Float(random() % 100)/100
 //                    let phi = Float(random() % 100)/100
 //                    var target = world.furthestObjectFrom(sprite)
-                    var randomMovement = false
-                    var accelerating = false
-                    sprite.addBehaviour({ () -> () in
-                        if !self.RANDOM_MOVEMENT { return }
-                        if sprite.hasGravity { //Dont start until gravity has been toggled once
-                            randomMovement = true
-                        }
-                    
-                        if randomMovement && !sprite.hasGravity {
-                            if timePassed >= timeLimit {
-                                if sprite.hasItem {
-                                    sprite.actions.turnToFace(observer)
-                                    sprite.actions.throwItem(500)
-                                }
-                                timePassed = 0
-                                timeLimit = random() % 1600 + 10
-                                
-                                if sprite.body.distanceTo(world) > world.body.radius - 50 {
-                                    accelerating = false
-                                    timeLimit = 600
-                                } else {
-                                  let rmxID = random() % RMXObject.COUNT
-                                    if let target = world.children[rmxID] {
-                                    sprite.actions.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
+                var randomMovement = false
+                var accelerating = false
+                    sprite.addBehaviour{ (isOn:Bool) -> () in
+                        if !isOn { return }
+                    if !self.RANDOM_MOVEMENT { return }
+                    if sprite.hasGravity { //Dont start until gravity has been toggled once
+                        randomMovement = true
+                    }
+                
+                    if randomMovement && !sprite.hasGravity {
+                        if timePassed >= timeLimit {
+                            if sprite.hasItem {
+                                sprite.actions.turnToFace(observer)
+                                sprite.actions.throwItem(500)
+                            }
+                            timePassed = 0
+                            timeLimit = random() % 1600 + 10
+                            
+                            if sprite.body.distanceTo(world) > world.body.radius - 50 {
+                                accelerating = false
+                                timeLimit = 600
+                            } else {
+                              let rmxID = random() % RMXObject.COUNT
+                                if let target = world.children[rmxID] {
+                                sprite.actions.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
 //                                        if let target = world.furthestObjectFrom(sprite) {
 //                                            
 //                                        }
-                                        sprite.actions.grabItem(item: target)
-                                        return nil
-                                    })
-                                    
-                                    accelerating = true
-                                    }
+                                    sprite.actions.grabItem(item: target)
+                                    return nil
+                                })
+                                
+                                accelerating = true
                                 }
-                            } else {
-                                if accelerating {
-                                    sprite.body.accelerateForward(speed)
-                                }
-                                timePassed++
                             }
+                        } else {
+                            if accelerating {
+                                sprite.body.accelerateForward(speed)
+                            }
+                            timePassed++
                         }
-                    })
                     }
+                }
                 }
             }
         }
@@ -104,29 +130,28 @@ extension RMX {
 
         return world
     }
-    
-    
-    static func addPoppy(toWorld world: RMSWorld) -> RMSParticle {
-        let poppy: RMSParticle = RMSParticle(parent: world, name: "Poppy").setAsObserver().setAsShape()!
+    static func makePoppy(witWorld world: RMSWorld) -> RMSParticle{
+        let poppy: RMSParticle = RMSParticle(parent: world, name: "Poppy").setAsObserver().setAsShape()
+        poppy.type = .POPPY
         poppy.body.radius = 8
         poppy.position = GLKVector3Make(100,poppy.body.radius,-50)
-            var itemToWatch: RMSParticle! = nil
+        var itemToWatch: RMSParticle! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
         var pacingSpeed: Float = 3
         let updateInterval = 1
-
-        poppy.behaviours.append { () -> () in
+        
+        poppy.behaviours.append { (isOn: Bool) -> () in
             
             func idle(sender: RMSParticle, objects: [AnyObject]? = []) -> AnyObject? {
-                sender.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(10))
-                sender.body.accelerateForward(0.1)
+                sender.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(5))
+                sender.body.accelerateForward(0.05)
                 return nil
             }
             
             func fetch(sender: RMSParticle, objects: [AnyObject]?) -> AnyObject? {
-//                sender.body.hasGravity = (objects?[0] as! RMSParticle).hasGravity
+                //                sender.body.hasGravity = (objects?[0] as! RMSParticle).hasGravity
                 return sender.actions.grabItem(item: itemToWatch)
             }
             
@@ -191,18 +216,22 @@ extension RMX {
             }
         }
         poppy.shape.color = GLKVector4Make(0.1,0.1,0.1,1.0)
-        world.insertChildNode(poppy)
-        let head = RMSParticle(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)!
+        
+        let head = RMSParticle(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)
         head.body.radius = poppy.body.radius / 2
         head.shape.color = GLKVector4Make(0.1,0.1,0.1,0.1)
         head.position = GLKVector3Make(0,poppy.body.radius + head.body.radius / 4, poppy.body.radius + head.body.radius / 4)
         poppy.insertChildNode(head)
+        
+       
         return poppy
     }
     
+
+    
     #if OPENGL_OSX
-    static func SetUpGLProxy() -> RMSWorld {
-        RMXGLProxy.run()
+    static func SetUpGLProxy(type: RMXWorldType) -> RMSWorld {
+        RMXGLProxy.run(type)
         return RMXGLProxy.world
     }
     #endif
