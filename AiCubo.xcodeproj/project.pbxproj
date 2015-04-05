@@ -16,7 +16,6 @@
 		500205E81ACEA7620085283C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 500205E71ACEA7620085283C /* Images.xcassets */; };
 		500205EB1ACEA7620085283C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500205E91ACEA7620085283C /* MainMenu.xib */; };
 		500205F71ACEA7620085283C /* NSOpenGLViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205F61ACEA7620085283C /* NSOpenGLViewTests.swift */; };
-		500205FF1ACEA8260085283C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D01ACEA37E0085283C /* GameView.swift */; };
 		500206001ACEA85C0085283C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D51ACEA5860085283C /* GameViewController.swift */; };
 		500206011ACEA8690085283C /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
 		500206021ACEA86D0085283C /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
@@ -28,15 +27,13 @@
 		500206081ACEA87F0085283C /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
 		500206091ACEA87F0085283C /* RMXValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */; };
 		5002060D1ACEA88A0085283C /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
-		5002060E1ACEA88A0085283C /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
 		5002060F1ACEA88A0085283C /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
 		500206101ACEA88A0085283C /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
-		500206111ACEA88A0085283C /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
 		500206121ACEA88A0085283C /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		500206131ACEA88A0085283C /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
 		500206141ACEA88A0085283C /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		500206151ACEA88A0085283C /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
-		500206161ACEA88A0085283C /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		500206161ACEA88A0085283C /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		500206171ACEA88A0085283C /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		500206181ACEA88A0085283C /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		500206191ACEA88A0085283C /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
@@ -69,12 +66,11 @@
 		503927571AC71C5000A59744 /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
 		503927581AC71C7100A59744 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		503927591AC71C7A00A59744 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
-		5039275A1AC71C7F00A59744 /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
 		5039275B1AC71C8300A59744 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
 		5039275C1AC71C8300A59744 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
 		5039275D1AC71C8300A59744 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		5039275E1AC71C8300A59744 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
-		5039275F1AC71C8600A59744 /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		5039275F1AC71C8600A59744 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		503927601AC71C8900A59744 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		503927611AC71CAD00A59744 /* RMXGLProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332521AC5DB1300BB4477 /* RMXGLProxy.swift */; };
 		503927621AC71CB500A59744 /* RMOpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 506332491AC5D6E600BB4477 /* RMOpenGL.m */; };
@@ -87,12 +83,11 @@
 		5063321D1AC5D59600BB4477 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5063321C1AC5D59600BB4477 /* Images.xcassets */; };
 		5063322C1AC5D59600BB4477 /* OSXViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5063322B1AC5D59600BB4477 /* OSXViewTests.swift */; };
 		506332341AC5D60900BB4477 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
-		506332351AC5D60900BB4477 /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
 		506332361AC5D60900BB4477 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
 		506332371AC5D60900BB4477 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
 		506332381AC5D60900BB4477 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		506332391AC5D60900BB4477 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
-		5063323A1AC5D60900BB4477 /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		5063323A1AC5D60900BB4477 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
@@ -128,15 +123,13 @@
 		50982D531ACE97300035EB56 /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
 		50982D541ACE97300035EB56 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
 		50982D561ACE97450035EB56 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
-		50982D571ACE97450035EB56 /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
 		50982D581ACE97450035EB56 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
 		50982D591ACE97450035EB56 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
-		50982D5A1ACE97450035EB56 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
 		50982D5B1ACE97450035EB56 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50982D5C1ACE97450035EB56 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
 		50982D5D1ACE97450035EB56 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		50982D5E1ACE97450035EB56 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
-		50982D5F1ACE97450035EB56 /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		50982D5F1ACE97450035EB56 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		50982D601ACE97450035EB56 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		50982D611ACE97450035EB56 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		50982D621ACE97450035EB56 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
@@ -151,7 +144,6 @@
 		50982D6E1ACE9C3E0035EB56 /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
 		50A9D5F41ACD33B700F209E5 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C186C1ACBE1A000FE85D7 /* GameView.swift */; };
 		50A9D62E1ACD4DC900F209E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D62D1ACD4DC900F209E5 /* AppDelegate.swift */; };
-		50A9D6321ACD4DC900F209E5 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D6311ACD4DC900F209E5 /* Shaders.metal */; };
 		50A9D6351ACD4DC900F209E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D6331ACD4DC900F209E5 /* Main.storyboard */; };
 		50A9D6371ACD4DC900F209E5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D6361ACD4DC900F209E5 /* Images.xcassets */; };
 		50A9D63A1ACD4DC900F209E5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D6381ACD4DC900F209E5 /* LaunchScreen.xib */; };
@@ -159,8 +151,6 @@
 		50A9D64E1ACD9C9700F209E5 /* popNose.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A9D64D1ACD9C9700F209E5 /* popNose.png */; };
 		50BA27991ACAA3AD007347A9 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
 		50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
-		50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
-		50BA279D1ACAA616007347A9 /* RMSChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA279B1ACAA554007347A9 /* RMSChildNode.swift */; };
 		50C2B4FB1AC4AA2100AAACF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */; };
 		50C2B4FD1AC4AA2100AAACF7 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FC1AC4AA2100AAACF7 /* Shader.fsh */; };
 		50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */; };
@@ -172,12 +162,11 @@
 		50C2B5451AC4ACC100AAACF7 /* texture_numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5231AC4ACC100AAACF7 /* texture_numbers.png */; };
 		50C2B5461AC4ACC100AAACF7 /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
 		50C2B5471AC4ACC100AAACF7 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
-		50C2B5481AC4ACC100AAACF7 /* RMSParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */; };
 		50C2B5491AC4ACC100AAACF7 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
 		50C2B54A1AC4ACC100AAACF7 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
 		50C2B54B1AC4ACC100AAACF7 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		50C2B54C1AC4ACC100AAACF7 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
-		50C2B54D1AC4ACC100AAACF7 /* RMXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */; };
+		50C2B54D1AC4ACC100AAACF7 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		50C2B54E1AC4ACC100AAACF7 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		50C2B54F1AC4ACC100AAACF7 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		50C2B5501AC4ACC100AAACF7 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
@@ -200,6 +189,49 @@
 		50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
 		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
+		6C77A1DB1AD12F5B006C008F /* RMXMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */; };
+		6C77A1DE1AD1309F006C008F /* RMXTerrainMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DC1AD1308E006C008F /* RMXTerrainMesh.swift */; };
+		6C77A1DF1AD130A5006C008F /* RMXMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */; };
+		6C77A1E41AD136FD006C008F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1E31AD136FD006C008F /* Shaders.metal */; };
+		6C77A1E61AD16834006C008F /* RMXMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1E51AD16834006C008F /* RMXMetalView.swift */; };
+		6C77A1E91AD16987006C008F /* RMXTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1E71AD1696E006C008F /* RMXTypes.swift */; };
+		6C77A1EB1AD16C5E006C008F /* RMTLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1EA1AD16C5E006C008F /* RMTLRenderer.swift */; };
+		6C77A1EE1AD171BB006C008F /* RMTLCow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1EC1AD17173006C008F /* RMTLCow.swift */; };
+		6C77A1F51AD172F6006C008F /* MBEOBJGroup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1F01AD172F6006C008F /* MBEOBJGroup.mm */; };
+		6C77A1F61AD172F6006C008F /* MBEOBJMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1F21AD172F6006C008F /* MBEOBJMesh.m */; };
+		6C77A1F71AD172F6006C008F /* MBEOBJModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1F41AD172F6006C008F /* MBEOBJModel.mm */; };
+		6C77A1FC1AD173C1006C008F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D01ACEA37E0085283C /* GameView.swift */; };
+		6C77A1FE1AD1744E006C008F /* RMXMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */; };
+		6C77A25F1AD18A33006C008F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A25E1AD18A33006C008F /* AppDelegate.swift */; };
+		6C77A2611AD18A33006C008F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2601AD18A33006C008F /* GameView.swift */; };
+		6C77A2631AD18A33006C008F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2621AD18A33006C008F /* GameViewController.swift */; };
+		6C77A2651AD18A33006C008F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C77A2641AD18A33006C008F /* art.scnassets */; };
+		6C77A2671AD18A33006C008F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C77A2661AD18A33006C008F /* Images.xcassets */; };
+		6C77A26A1AD18A33006C008F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C77A2681AD18A33006C008F /* MainMenu.xib */; };
+		6C77A2761AD18A33006C008F /* SceneCuboTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2751AD18A33006C008F /* SceneCuboTests.swift */; };
+		6C77A27D1AD18AC0006C008F /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
+		6C77A27E1AD18AEB006C008F /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
+		6C77A27F1AD18B27006C008F /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
+		6C77A2801AD18B2C006C008F /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
+		6C77A2811AD18B33006C008F /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
+		6C77A2821AD18B3A006C008F /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
+		6C77A2831AD18B3D006C008F /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
+		6C77A2841AD18B42006C008F /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
+		6C77A2851AD18B45006C008F /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
+		6C77A2861AD18B47006C008F /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		6C77A2871AD18DEC006C008F /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
+		6C77A2881AD19033006C008F /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
+		6C77A2891AD19038006C008F /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
+		6C77A28C1AD19041006C008F /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
+		6C77A28D1AD19044006C008F /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
+		6C77A28E1AD19053006C008F /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
+		6C77A28F1AD1905D006C008F /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
+		6C77A2901AD1AC58006C008F /* RMX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5361AC4ACC100AAACF7 /* RMX.swift */; };
+		6C77A2911AD1AC5C006C008F /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
+		6C77A2931AD1AC60006C008F /* RMXValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */; };
+		6C77A2951AD1ACE1006C008F /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
+		6C77A2961AD1ACF3006C008F /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
+		6C77A2971AD1B23E006C008F /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
 		6C94806E1ACEB9F100C71C70 /* RMXGLProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332521AC5DB1300BB4477 /* RMXGLProxy.swift */; };
 		6C94806F1ACEBA2300C71C70 /* cStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC021AC6CEB4004E240C /* cStuff.m */; };
 		6C9480701ACEBA2600C71C70 /* RMOShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC031AC6CEB4004E240C /* RMOShapes.m */; };
@@ -233,6 +265,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 50C2B4F41AC4AA2100AAACF7;
 			remoteInfo = AiCubo;
+		};
+		6C77A2701AD18A33006C008F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50C2B4ED1AC4AA2100AAACF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C77A2591AD18A33006C008F;
+			remoteInfo = SceneCubo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -299,7 +338,6 @@
 		50A9D62C1ACD4DC900F209E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50A9D62D1ACD4DC900F209E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50A9D62F1ACD4DC900F209E5 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		50A9D6311ACD4DC900F209E5 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		50A9D6341ACD4DC900F209E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		50A9D6361ACD4DC900F209E5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		50A9D6391ACD4DC900F209E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -308,7 +346,6 @@
 		50A9D6451ACD4DC900F209E5 /* MetalViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewTests.swift; sourceTree = "<group>"; };
 		50A9D64D1ACD9C9700F209E5 /* popNose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popNose.png; sourceTree = "<group>"; };
 		50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSCollisionBody.swift; sourceTree = "<group>"; };
-		50BA279B1ACAA554007347A9 /* RMSChildNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSChildNode.swift; sourceTree = "<group>"; };
 		50C2B4F51AC4AA2100AAACF7 /* AiCubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AiCubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C2B4F91AC4AA2100AAACF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -326,12 +363,11 @@
 		50C2B5251AC4ACC100AAACF7 /* CWrappers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CWrappers.c; sourceTree = "<group>"; };
 		50C2B5261AC4ACC100AAACF7 /* Vertices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertices.h; sourceTree = "<group>"; };
 		50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSArt.swift; sourceTree = "<group>"; };
-		50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSParticle.swift; sourceTree = "<group>"; };
 		50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSPhysicsBody.swift; sourceTree = "<group>"; };
 		50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSWorld.swift; sourceTree = "<group>"; };
 		50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXCamera.swift; sourceTree = "<group>"; };
 		50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXClock.swift; sourceTree = "<group>"; };
-		50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXObject.swift; sourceTree = "<group>"; };
+		50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXNode.swift; sourceTree = "<group>"; };
 		50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXPhysics.swift; sourceTree = "<group>"; };
 		50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXShape.swift; sourceTree = "<group>"; };
 		50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXSpriteActions.swift; sourceTree = "<group>"; };
@@ -341,9 +377,9 @@
 		50C2B5361AC4ACC100AAACF7 /* RMX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMX.swift; sourceTree = "<group>"; };
 		50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXDebugger.swift; sourceTree = "<group>"; };
 		50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXValue.swift; sourceTree = "<group>"; };
-		50C2B5391AC4ACC100AAACF7 /* RMXVertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXVertex.swift; sourceTree = "<group>"; };
-		50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXController.swift; sourceTree = "<group>"; };
-		50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXViewController.swift; sourceTree = "<group>"; };
+		50C2B5391AC4ACC100AAACF7 /* RMOVertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMOVertex.swift; path = ../Generics/RMOVertex.swift; sourceTree = "<group>"; };
+		50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXController.swift; path = ../Protocols/RMXController.swift; sourceTree = "<group>"; };
+		50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXViewController.swift; path = ../Protocols/RMXViewController.swift; sourceTree = "<group>"; };
 		50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXInitialize.swift; path = Source/RMXInitialize.swift; sourceTree = SOURCE_ROOT; };
 		50C2B53F1AC4ACC100AAACF7 /* iOSControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSControllers.swift; sourceTree = "<group>"; };
 		50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSActionProcessor.swift; sourceTree = "<group>"; };
@@ -355,6 +391,32 @@
 		50D5EC2B1AC9364C0028759F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		50F215961AC751BA00ED6FA6 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		50F215981AC758CF00ED6FA6 /* Accelorometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accelorometer.swift; sourceTree = "<group>"; };
+		6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXMesh.swift; sourceTree = "<group>"; };
+		6C77A1DC1AD1308E006C008F /* RMXTerrainMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXTerrainMesh.swift; path = Source/Geometry/RMXTerrainMesh.swift; sourceTree = SOURCE_ROOT; };
+		6C77A1E31AD136FD006C008F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		6C77A1E51AD16834006C008F /* RMXMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXMetalView.swift; path = ../Environment/RMXMetalView.swift; sourceTree = "<group>"; };
+		6C77A1E71AD1696E006C008F /* RMXTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXTypes.swift; sourceTree = "<group>"; };
+		6C77A1EA1AD16C5E006C008F /* RMTLRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMTLRenderer.swift; sourceTree = "<group>"; };
+		6C77A1EC1AD17173006C008F /* RMTLCow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMTLCow.swift; sourceTree = "<group>"; };
+		6C77A1EF1AD172F6006C008F /* MBEOBJGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBEOBJGroup.h; sourceTree = "<group>"; };
+		6C77A1F01AD172F6006C008F /* MBEOBJGroup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MBEOBJGroup.mm; sourceTree = "<group>"; };
+		6C77A1F11AD172F6006C008F /* MBEOBJMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBEOBJMesh.h; sourceTree = "<group>"; };
+		6C77A1F21AD172F6006C008F /* MBEOBJMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBEOBJMesh.m; sourceTree = "<group>"; };
+		6C77A1F31AD172F6006C008F /* MBEOBJModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBEOBJModel.h; sourceTree = "<group>"; };
+		6C77A1F41AD172F6006C008F /* MBEOBJModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MBEOBJModel.mm; sourceTree = "<group>"; };
+		6C77A1F91AD1731F006C008F /* MBETextureLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBETextureLoader.h; sourceTree = "<group>"; };
+		6C77A1FA1AD1731F006C008F /* MBETextureLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBETextureLoader.m; sourceTree = "<group>"; };
+		6C77A25A1AD18A33006C008F /* SceneCubo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneCubo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C77A25D1AD18A33006C008F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C77A25E1AD18A33006C008F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6C77A2601AD18A33006C008F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		6C77A2621AD18A33006C008F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		6C77A2641AD18A33006C008F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		6C77A2661AD18A33006C008F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6C77A2691AD18A33006C008F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		6C77A26F1AD18A33006C008F /* SceneCuboTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SceneCuboTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C77A2741AD18A33006C008F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C77A2751AD18A33006C008F /* SceneCuboTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCuboTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +484,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		50C2B50B1AC4AA2100AAACF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C77A2571AD18A33006C008F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C77A26C1AD18A33006C008F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -522,14 +598,15 @@
 		50A9D62A1ACD4DC900F209E5 /* MetalView */ = {
 			isa = PBXGroup;
 			children = (
+				6C77A1E31AD136FD006C008F /* Shaders.metal */,
 				50A9D62D1ACD4DC900F209E5 /* AppDelegate.swift */,
 				50A9D62F1ACD4DC900F209E5 /* GameViewController.swift */,
 				50982D651ACE9B2F0035EB56 /* GameView.swift */,
-				50A9D6311ACD4DC900F209E5 /* Shaders.metal */,
 				50A9D6331ACD4DC900F209E5 /* Main.storyboard */,
 				50A9D6361ACD4DC900F209E5 /* Images.xcassets */,
 				50A9D6381ACD4DC900F209E5 /* LaunchScreen.xib */,
 				50A9D62B1ACD4DC900F209E5 /* Supporting Files */,
+				6C77A1EA1AD16C5E006C008F /* RMTLRenderer.swift */,
 			);
 			path = MetalView;
 			sourceTree = "<group>";
@@ -562,6 +639,7 @@
 		50C2B4EC1AC4AA2100AAACF7 = {
 			isa = PBXGroup;
 			children = (
+				6C77A2001AD18184006C008F /* CORE */,
 				50D5EC2B1AC9364C0028759F /* MyPlayground.playground */,
 				50C2B4F71AC4AA2100AAACF7 /* AiCubo */,
 				50C2B5111AC4AA2100AAACF7 /* AiCuboTests */,
@@ -570,6 +648,8 @@
 				50A9D62A1ACD4DC900F209E5 /* MetalView */,
 				50A9D6421ACD4DC900F209E5 /* MetalViewTests */,
 				500205F31ACEA7620085283C /* NSOpenGLViewTests */,
+				6C77A25B1AD18A33006C008F /* SceneCubo */,
+				6C77A2721AD18A33006C008F /* SceneCuboTests */,
 				50C2B4F61AC4AA2100AAACF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -587,6 +667,8 @@
 				50A9D63F1ACD4DC900F209E5 /* MetalViewTests.xctest */,
 				500205DB1ACEA7610085283C /* NSOpenGLView.app */,
 				500205F01ACEA7620085283C /* NSOpenGLViewTests.xctest */,
+				6C77A25A1AD18A33006C008F /* SceneCubo.app */,
+				6C77A26F1AD18A33006C008F /* SceneCuboTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -594,13 +676,6 @@
 		50C2B4F71AC4AA2100AAACF7 /* AiCubo */ = {
 			isa = PBXGroup;
 			children = (
-				50C2B5221AC4ACC100AAACF7 /* Assets */,
-				50C2B5241AC4ACC100AAACF7 /* C */,
-				50C2B5271AC4ACC100AAACF7 /* Environment */,
-				50C2B5321AC4ACC100AAACF7 /* Generics */,
-				50C2B53A1AC4ACC100AAACF7 /* Protocols */,
-				50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */,
-				50C2B53E1AC4ACC100AAACF7 /* UserInterface */,
 				50C2B4FA1AC4AA2100AAACF7 /* AppDelegate.swift */,
 				50C2B4FC1AC4AA2100AAACF7 /* Shader.fsh */,
 				50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */,
@@ -610,7 +685,6 @@
 				50C2B5051AC4AA2100AAACF7 /* Images.xcassets */,
 				50C2B5071AC4AA2100AAACF7 /* LaunchScreen.xib */,
 				50C2B4F81AC4AA2100AAACF7 /* Supporting Files */,
-				50C2B51E1AC4AA3800AAACF7 /* AiCubo-Bridging-Header.h */,
 			);
 			path = AiCubo;
 			sourceTree = "<group>";
@@ -664,16 +738,16 @@
 		50C2B5271AC4ACC100AAACF7 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
+				50C2B5391AC4ACC100AAACF7 /* RMOVertex.swift */,
+				6C77A1E01AD13264006C008F /* Geometry METAL */,
 				50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */,
-				50C2B5291AC4ACC100AAACF7 /* RMSParticle.swift */,
 				50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */,
 				50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */,
-				50BA279B1ACAA554007347A9 /* RMSChildNode.swift */,
 				50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */,
 				50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */,
 				50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */,
 				50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */,
-				50C2B52E1AC4ACC100AAACF7 /* RMXObject.swift */,
+				50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */,
 				50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */,
 				50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */,
 				50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */,
@@ -686,12 +760,10 @@
 			isa = PBXGroup;
 			children = (
 				50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */,
-				50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */,
 				50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */,
 				50C2B5361AC4ACC100AAACF7 /* RMX.swift */,
 				50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */,
 				50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */,
-				50C2B5391AC4ACC100AAACF7 /* RMXVertex.swift */,
 				506332521AC5DB1300BB4477 /* RMXGLProxy.swift */,
 				508D68F41AC97F0100BF10FF /* RMXQuestions.swift */,
 			);
@@ -699,19 +771,11 @@
 			path = Source/Generics;
 			sourceTree = SOURCE_ROOT;
 		};
-		50C2B53A1AC4ACC100AAACF7 /* Protocols */ = {
+		50C2B53E1AC4ACC100AAACF7 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
 				50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */,
 				50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */,
-			);
-			name = Protocols;
-			path = Source/Protocols;
-			sourceTree = SOURCE_ROOT;
-		};
-		50C2B53E1AC4ACC100AAACF7 /* UserInterface */ = {
-			isa = PBXGroup;
-			children = (
 				50C2B53F1AC4ACC100AAACF7 /* iOSControllers.swift */,
 				50F215981AC758CF00ED6FA6 /* Accelorometer.swift */,
 				50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */,
@@ -724,6 +788,90 @@
 			name = UserInterface;
 			path = Source/UserInterface;
 			sourceTree = SOURCE_ROOT;
+		};
+		6C77A1E01AD13264006C008F /* Geometry METAL */ = {
+			isa = PBXGroup;
+			children = (
+				6C77A1F81AD172FB006C008F /* To convert */,
+				6C77A1E71AD1696E006C008F /* RMXTypes.swift */,
+				50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */,
+				6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */,
+				6C77A1DC1AD1308E006C008F /* RMXTerrainMesh.swift */,
+				6C77A1E51AD16834006C008F /* RMXMetalView.swift */,
+				6C77A1EC1AD17173006C008F /* RMTLCow.swift */,
+			);
+			name = "Geometry METAL";
+			path = ../Generics;
+			sourceTree = "<group>";
+		};
+		6C77A1F81AD172FB006C008F /* To convert */ = {
+			isa = PBXGroup;
+			children = (
+				6C77A1F91AD1731F006C008F /* MBETextureLoader.h */,
+				6C77A1FA1AD1731F006C008F /* MBETextureLoader.m */,
+				6C77A1EF1AD172F6006C008F /* MBEOBJGroup.h */,
+				6C77A1F01AD172F6006C008F /* MBEOBJGroup.mm */,
+				6C77A1F11AD172F6006C008F /* MBEOBJMesh.h */,
+				6C77A1F21AD172F6006C008F /* MBEOBJMesh.m */,
+				6C77A1F31AD172F6006C008F /* MBEOBJModel.h */,
+				6C77A1F41AD172F6006C008F /* MBEOBJModel.mm */,
+			);
+			name = "To convert";
+			sourceTree = "<group>";
+		};
+		6C77A2001AD18184006C008F /* CORE */ = {
+			isa = PBXGroup;
+			children = (
+				50C2B5221AC4ACC100AAACF7 /* Assets */,
+				50C2B5241AC4ACC100AAACF7 /* C */,
+				50C2B5271AC4ACC100AAACF7 /* Environment */,
+				50C2B5321AC4ACC100AAACF7 /* Generics */,
+				50C2B53E1AC4ACC100AAACF7 /* UserInterface */,
+				50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */,
+				50C2B51E1AC4AA3800AAACF7 /* AiCubo-Bridging-Header.h */,
+			);
+			name = CORE;
+			path = AiCubo;
+			sourceTree = "<group>";
+		};
+		6C77A25B1AD18A33006C008F /* SceneCubo */ = {
+			isa = PBXGroup;
+			children = (
+				6C77A25E1AD18A33006C008F /* AppDelegate.swift */,
+				6C77A2601AD18A33006C008F /* GameView.swift */,
+				6C77A2621AD18A33006C008F /* GameViewController.swift */,
+				6C77A2641AD18A33006C008F /* art.scnassets */,
+				6C77A2661AD18A33006C008F /* Images.xcassets */,
+				6C77A2681AD18A33006C008F /* MainMenu.xib */,
+				6C77A25C1AD18A33006C008F /* Supporting Files */,
+			);
+			path = SceneCubo;
+			sourceTree = "<group>";
+		};
+		6C77A25C1AD18A33006C008F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6C77A25D1AD18A33006C008F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6C77A2721AD18A33006C008F /* SceneCuboTests */ = {
+			isa = PBXGroup;
+			children = (
+				6C77A2751AD18A33006C008F /* SceneCuboTests.swift */,
+				6C77A2731AD18A33006C008F /* Supporting Files */,
+			);
+			path = SceneCuboTests;
+			sourceTree = "<group>";
+		};
+		6C77A2731AD18A33006C008F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6C77A2741AD18A33006C008F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -902,6 +1050,41 @@
 			productReference = 50C2B50E1AC4AA2100AAACF7 /* AiCuboTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		6C77A2591AD18A33006C008F /* SceneCubo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C77A2771AD18A33006C008F /* Build configuration list for PBXNativeTarget "SceneCubo" */;
+			buildPhases = (
+				6C77A2561AD18A33006C008F /* Sources */,
+				6C77A2571AD18A33006C008F /* Frameworks */,
+				6C77A2581AD18A33006C008F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SceneCubo;
+			productName = SceneCubo;
+			productReference = 6C77A25A1AD18A33006C008F /* SceneCubo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6C77A26E1AD18A33006C008F /* SceneCuboTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C77A27A1AD18A33006C008F /* Build configuration list for PBXNativeTarget "SceneCuboTests" */;
+			buildPhases = (
+				6C77A26B1AD18A33006C008F /* Sources */,
+				6C77A26C1AD18A33006C008F /* Frameworks */,
+				6C77A26D1AD18A33006C008F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C77A2711AD18A33006C008F /* PBXTargetDependency */,
+			);
+			name = SceneCuboTests;
+			productName = SceneCuboTests;
+			productReference = 6C77A26F1AD18A33006C008F /* SceneCuboTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -947,6 +1130,13 @@
 						CreatedOnToolsVersion = 6.3;
 						TestTargetID = 50C2B4F41AC4AA2100AAACF7;
 					};
+					6C77A2591AD18A33006C008F = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					6C77A26E1AD18A33006C008F = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 6C77A2591AD18A33006C008F;
+					};
 				};
 			};
 			buildConfigurationList = 50C2B4F01AC4AA2100AAACF7 /* Build configuration list for PBXProject "AiCubo" */;
@@ -972,6 +1162,8 @@
 				50A9D63E1ACD4DC900F209E5 /* MetalViewTests */,
 				500205DA1ACEA7610085283C /* NSOpenGLView */,
 				500205EF1ACEA7620085283C /* NSOpenGLViewTests */,
+				6C77A2591AD18A33006C008F /* SceneCubo */,
+				6C77A26E1AD18A33006C008F /* SceneCuboTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1052,6 +1244,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6C77A2581AD18A33006C008F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C77A2651AD18A33006C008F /* art.scnassets in Resources */,
+				6C77A2671AD18A33006C008F /* Images.xcassets in Resources */,
+				6C77A26A1AD18A33006C008F /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C77A26D1AD18A33006C008F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1063,7 +1272,6 @@
 				500206081ACEA87F0085283C /* RMXDebugger.swift in Sources */,
 				500206061ACEA87F0085283C /* RMSMaths.swift in Sources */,
 				6C94806F1ACEBA2300C71C70 /* cStuff.m in Sources */,
-				500206111ACEA88A0085283C /* RMSChildNode.swift in Sources */,
 				500206231ACEA9AE0085283C /* CWrappers.c in Sources */,
 				500206091ACEA87F0085283C /* RMXValue.swift in Sources */,
 				5002061A1ACEA8B20085283C /* RFOpenGLView.m in Sources */,
@@ -1071,7 +1279,7 @@
 				500206041ACEA87F0085283C /* RMSEquations.swift in Sources */,
 				500206121ACEA88A0085283C /* RMXNodeProperty.swift in Sources */,
 				500206131ACEA88A0085283C /* RMSWorld.swift in Sources */,
-				500206161ACEA88A0085283C /* RMXObject.swift in Sources */,
+				500206161ACEA88A0085283C /* RMXNode.swift in Sources */,
 				5002061D1ACEA8C90085283C /* RMSActionProcessor.swift in Sources */,
 				500206141ACEA88A0085283C /* RMXCamera.swift in Sources */,
 				6C94806E1ACEB9F100C71C70 /* RMXGLProxy.swift in Sources */,
@@ -1081,6 +1289,7 @@
 				500206181ACEA88A0085283C /* RMXShape.swift in Sources */,
 				500206071ACEA87F0085283C /* RMX.swift in Sources */,
 				5002061E1ACEA8C90085283C /* RMXView.swift in Sources */,
+				6C77A1FC1AD173C1006C008F /* GameView.swift in Sources */,
 				500206031ACEA8760085283C /* RMXInitialize.swift in Sources */,
 				500206191ACEA88A0085283C /* RMXSpriteActions.swift in Sources */,
 				500206221ACEA8C90085283C /* RMXMouse.swift in Sources */,
@@ -1089,12 +1298,10 @@
 				500206151ACEA88A0085283C /* RMXClock.swift in Sources */,
 				500206101ACEA88A0085283C /* RMSCollisionBody.swift in Sources */,
 				500206291ACEA9BB0085283C /* RMOpenGL.m in Sources */,
-				500205FF1ACEA8260085283C /* GameView.swift in Sources */,
 				500206051ACEA87F0085283C /* RMSGeometry.swift in Sources */,
 				500206171ACEA88A0085283C /* RMXPhysics.swift in Sources */,
 				500206011ACEA8690085283C /* RMXController.swift in Sources */,
 				5002060D1ACEA88A0085283C /* RMSArt.swift in Sources */,
-				5002060E1ACEA88A0085283C /* RMSParticle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,10 +1328,9 @@
 				503927671AC71CE800A59744 /* RMXController.swift in Sources */,
 				503927621AC71CB500A59744 /* RMOpenGL.m in Sources */,
 				503927551AC71C4700A59744 /* RMXDebugger.swift in Sources */,
-				5039275A1AC71C7F00A59744 /* RMSParticle.swift in Sources */,
 				503927511AC71C4700A59744 /* RMSEquations.swift in Sources */,
 				503927631AC71CBC00A59744 /* cStuff.m in Sources */,
-				5039275F1AC71C8600A59744 /* RMXObject.swift in Sources */,
+				5039275F1AC71C8600A59744 /* RMXNode.swift in Sources */,
 				5039274C1AC71C1F00A59744 /* RMXInterface.swift in Sources */,
 				5039275C1AC71C8300A59744 /* RMSWorld.swift in Sources */,
 				5039274B1AC71C1F00A59744 /* RMSKeys.swift in Sources */,
@@ -1159,12 +1365,12 @@
 				500205CF1ACEA2980085283C /* RFOpenGLView.m in Sources */,
 				506332361AC5D60900BB4477 /* RMSPhysicsBody.swift in Sources */,
 				5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */,
+				6C77A1FE1AD1744E006C008F /* RMXMesh.swift in Sources */,
 				506332371AC5D60900BB4477 /* RMSWorld.swift in Sources */,
 				506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */,
 				5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */,
 				506332411AC5D61B00BB4477 /* RMSMaths.swift in Sources */,
 				500205D61ACEA5860085283C /* GameViewController.swift in Sources */,
-				50BA279D1ACAA616007347A9 /* RMSChildNode.swift in Sources */,
 				50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */,
 				5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */,
 				5063324A1AC5D6E600BB4477 /* RMOpenGL.m in Sources */,
@@ -1174,7 +1380,6 @@
 				506332341AC5D60900BB4477 /* RMSArt.swift in Sources */,
 				506332391AC5D60900BB4477 /* RMXClock.swift in Sources */,
 				506332461AC5D62800BB4477 /* RMXInitialize.swift in Sources */,
-				506332351AC5D60900BB4477 /* RMSParticle.swift in Sources */,
 				506332401AC5D61B00BB4477 /* RMSGeometry.swift in Sources */,
 				5063324C1AC5D98500BB4477 /* RMXMouse.swift in Sources */,
 				5071AC0B1AC6CEB4004E240C /* run.m in Sources */,
@@ -1183,7 +1388,7 @@
 				5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */,
 				5063323E1AC5D60D00BB4477 /* CWrappers.c in Sources */,
 				5071AC081AC6CEB4004E240C /* RMOShapes.m in Sources */,
-				5063323A1AC5D60900BB4477 /* RMXObject.swift in Sources */,
+				5063323A1AC5D60900BB4477 /* RMXNode.swift in Sources */,
 				506332441AC5D61B00BB4477 /* RMXValue.swift in Sources */,
 				5071AC091AC6CEB4004E240C /* RMXKeyboardProcessor.m in Sources */,
 				5063324F1AC5D9BE00BB4477 /* RMSKeys.swift in Sources */,
@@ -1208,31 +1413,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50A9D6321ACD4DC900F209E5 /* Shaders.metal in Sources */,
 				50982D591ACE97450035EB56 /* RMSCollisionBody.swift in Sources */,
 				50982D601ACE97450035EB56 /* RMXPhysics.swift in Sources */,
 				50982D5B1ACE97450035EB56 /* RMXNodeProperty.swift in Sources */,
-				50982D5A1ACE97450035EB56 /* RMSChildNode.swift in Sources */,
+				6C77A1E61AD16834006C008F /* RMXMetalView.swift in Sources */,
 				50982D5D1ACE97450035EB56 /* RMXCamera.swift in Sources */,
 				50982D661ACE9B2F0035EB56 /* GameView.swift in Sources */,
 				50982D4B1ACE97240035EB56 /* iOSControllers.swift in Sources */,
 				50982D6A1ACE9C160035EB56 /* RMXDebugger.swift in Sources */,
+				6C77A1DE1AD1309F006C008F /* RMXTerrainMesh.swift in Sources */,
 				50982D671ACE9B890035EB56 /* GameViewController.swift in Sources */,
-				50982D571ACE97450035EB56 /* RMSParticle.swift in Sources */,
 				50982D6B1ACE9C1C0035EB56 /* RMSMaths.swift in Sources */,
 				50982D4E1ACE97240035EB56 /* RMXView.swift in Sources */,
-				50982D5F1ACE97450035EB56 /* RMXObject.swift in Sources */,
+				6C77A1F71AD172F6006C008F /* MBEOBJModel.mm in Sources */,
+				50982D5F1ACE97450035EB56 /* RMXNode.swift in Sources */,
 				50982D5C1ACE97450035EB56 /* RMSWorld.swift in Sources */,
+				6C77A1EE1AD171BB006C008F /* RMTLCow.swift in Sources */,
 				50982D4D1ACE97240035EB56 /* RMSActionProcessor.swift in Sources */,
 				50982D521ACE97300035EB56 /* RMXController.swift in Sources */,
 				50982D501ACE97240035EB56 /* RMXDPad.swift in Sources */,
+				6C77A1E91AD16987006C008F /* RMXTypes.swift in Sources */,
 				50982D6E1ACE9C3E0035EB56 /* CWrappers.c in Sources */,
+				6C77A1DF1AD130A5006C008F /* RMXMesh.swift in Sources */,
 				50982D5E1ACE97450035EB56 /* RMXClock.swift in Sources */,
 				50982D561ACE97450035EB56 /* RMSArt.swift in Sources */,
 				50982D541ACE97300035EB56 /* RMXInitialize.swift in Sources */,
 				50A9D62E1ACD4DC900F209E5 /* AppDelegate.swift in Sources */,
+				6C77A1E41AD136FD006C008F /* Shaders.metal in Sources */,
 				50982D691ACE9C110035EB56 /* RMXValue.swift in Sources */,
+				6C77A1F61AD172F6006C008F /* MBEOBJMesh.m in Sources */,
+				6C77A1F51AD172F6006C008F /* MBEOBJGroup.mm in Sources */,
 				50982D6D1ACE9C280035EB56 /* RMSEquations.swift in Sources */,
+				6C77A1EB1AD16C5E006C008F /* RMTLRenderer.swift in Sources */,
 				50982D611ACE97450035EB56 /* RMXShape.swift in Sources */,
 				50982D531ACE97300035EB56 /* RMXViewController.swift in Sources */,
 				50982D511ACE97240035EB56 /* RMXInterface.swift in Sources */,
@@ -1261,6 +1473,7 @@
 				50C2B55B1AC4ACC100AAACF7 /* iOSControllers.swift in Sources */,
 				50C2B54F1AC4ACC100AAACF7 /* RMXShape.swift in Sources */,
 				50C2B54A1AC4ACC100AAACF7 /* RMSWorld.swift in Sources */,
+				6C77A1DB1AD12F5B006C008F /* RMXMesh.swift in Sources */,
 				50C2B54E1AC4ACC100AAACF7 /* RMXPhysics.swift in Sources */,
 				50C2B54B1AC4ACC100AAACF7 /* RMXCamera.swift in Sources */,
 				50C2B5471AC4ACC100AAACF7 /* RMSArt.swift in Sources */,
@@ -1272,8 +1485,6 @@
 				50C2B5561AC4ACC100AAACF7 /* RMXValue.swift in Sources */,
 				50BA27991ACAA3AD007347A9 /* RMSCollisionBody.swift in Sources */,
 				50C2B5531AC4ACC100AAACF7 /* RMSMaths.swift in Sources */,
-				50C2B5481AC4ACC100AAACF7 /* RMSParticle.swift in Sources */,
-				50BA279C1ACAA554007347A9 /* RMSChildNode.swift in Sources */,
 				50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */,
 				5003E7141ACCA3FF00F40E46 /* RMXView.swift in Sources */,
 				50D0AF8D1ACAD9DF0008A2B8 /* RMXNodeProperty.swift in Sources */,
@@ -1284,7 +1495,7 @@
 				50C2B5461AC4ACC100AAACF7 /* CWrappers.c in Sources */,
 				50C2B5511AC4ACC100AAACF7 /* RMSEquations.swift in Sources */,
 				50C2B5501AC4ACC100AAACF7 /* RMXSpriteActions.swift in Sources */,
-				50C2B54D1AC4ACC100AAACF7 /* RMXObject.swift in Sources */,
+				50C2B54D1AC4ACC100AAACF7 /* RMXNode.swift in Sources */,
 				50C2B5581AC4ACC100AAACF7 /* RMXController.swift in Sources */,
 				50C2B55D1AC4ACC100AAACF7 /* RMSKeys.swift in Sources */,
 				50C2B55E1AC4ACC100AAACF7 /* RMXDPad.swift in Sources */,
@@ -1299,6 +1510,47 @@
 			buildActionMask = 2147483647;
 			files = (
 				50C2B5151AC4AA2100AAACF7 /* AiCuboTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C77A2561AD18A33006C008F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C77A27F1AD18B27006C008F /* RMSPhysicsBody.swift in Sources */,
+				6C77A2851AD18B45006C008F /* RMXShape.swift in Sources */,
+				6C77A2611AD18A33006C008F /* GameView.swift in Sources */,
+				6C77A2971AD1B23E006C008F /* RMXDebugger.swift in Sources */,
+				6C77A2841AD18B42006C008F /* RMXPhysics.swift in Sources */,
+				6C77A2831AD18B3D006C008F /* RMXClock.swift in Sources */,
+				6C77A2811AD18B33006C008F /* RMXNodeProperty.swift in Sources */,
+				6C77A2951AD1ACE1006C008F /* RMXInitialize.swift in Sources */,
+				6C77A2911AD1AC5C006C008F /* RMSEquations.swift in Sources */,
+				6C77A2801AD18B2C006C008F /* RMSCollisionBody.swift in Sources */,
+				6C77A2821AD18B3A006C008F /* RMXCamera.swift in Sources */,
+				6C77A2891AD19038006C008F /* RMXViewController.swift in Sources */,
+				6C77A28D1AD19044006C008F /* RMSKeys.swift in Sources */,
+				6C77A28C1AD19041006C008F /* RMSActionProcessor.swift in Sources */,
+				6C77A27E1AD18AEB006C008F /* RMSWorld.swift in Sources */,
+				6C77A2881AD19033006C008F /* RMXController.swift in Sources */,
+				6C77A2961AD1ACF3006C008F /* RMSArt.swift in Sources */,
+				6C77A27D1AD18AC0006C008F /* RMXNode.swift in Sources */,
+				6C77A2901AD1AC58006C008F /* RMX.swift in Sources */,
+				6C77A2871AD18DEC006C008F /* RMSMaths.swift in Sources */,
+				6C77A2861AD18B47006C008F /* RMXSpriteActions.swift in Sources */,
+				6C77A28E1AD19053006C008F /* RMXInterface.swift in Sources */,
+				6C77A2631AD18A33006C008F /* GameViewController.swift in Sources */,
+				6C77A2931AD1AC60006C008F /* RMXValue.swift in Sources */,
+				6C77A25F1AD18A33006C008F /* AppDelegate.swift in Sources */,
+				6C77A28F1AD1905D006C008F /* RMXMouse.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C77A26B1AD18A33006C008F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C77A2761AD18A33006C008F /* SceneCuboTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1324,6 +1576,11 @@
 			isa = PBXTargetDependency;
 			target = 50C2B4F41AC4AA2100AAACF7 /* AiCubo */;
 			targetProxy = 50C2B50F1AC4AA2100AAACF7 /* PBXContainerItemProxy */;
+		};
+		6C77A2711AD18A33006C008F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C77A2591AD18A33006C008F /* SceneCubo */;
+			targetProxy = 6C77A2701AD18A33006C008F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1366,6 +1623,14 @@
 				50C2B5081AC4AA2100AAACF7 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		6C77A2681AD18A33006C008F /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C77A2691AD18A33006C008F /* Base */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1505,6 +1770,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"OPENGL_OSX=1",
+					"OSX=1",
 				);
 				INFOPLIST_FILE = OSXView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -1583,7 +1850,7 @@
 				);
 				INFOPLIST_FILE = MetalView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMETAL_iOS -DiOS";
+				OTHER_SWIFT_FLAGS = "-DMETAL -DMETAL_iOS -DiOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
 			};
@@ -1595,7 +1862,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MetalView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMETAL_iOS -DiOS";
+				OTHER_SWIFT_FLAGS = "-DMETAL -DMETAL_iOS -DiOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
 			};
@@ -1783,6 +2050,84 @@
 			};
 			name = Release;
 		};
+		6C77A2781AD18A33006C008F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"SceneKit=1",
+					"OSX=1",
+				);
+				INFOPLIST_FILE = SceneCubo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DSceneKit -DOSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		6C77A2791AD18A33006C008F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SceneCubo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DSceneKit -DOSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AiCubo/AiCubo-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		6C77A27B1AD18A33006C008F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SceneCuboTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SceneCubo.app/Contents/MacOS/SceneCubo";
+			};
+			name = Debug;
+		};
+		6C77A27C1AD18A33006C008F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SceneCuboTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SceneCubo.app/Contents/MacOS/SceneCubo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1884,6 +2229,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		6C77A2771AD18A33006C008F /* Build configuration list for PBXNativeTarget "SceneCubo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C77A2781AD18A33006C008F /* Debug */,
+				6C77A2791AD18A33006C008F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6C77A27A1AD18A33006C008F /* Build configuration list for PBXNativeTarget "SceneCuboTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C77A27B1AD18A33006C008F /* Debug */,
+				6C77A27C1AD18A33006C008F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

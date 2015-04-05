@@ -8,15 +8,21 @@
 
 import Foundation
 import GLKit
-
-class RMXCamera : RMSNodeProperty {
+#if SceneKit
+import SceneKit
+    #else
+    protocol SCNCamera {}
+    #endif
+class RMXCamera : SCNCamera, RMXNodeProperty {
     
-    var pov: RMSParticle {
-        return self.parent
+    lazy var pov: RMXNode? = self.parent
+    var parent: RMXNode! = nil
+    var world: RMSWorld {
+        return self.pov!.world
     }
     
     var near, far, fieldOfView: Float
-    var facingVector: GLKVector3 = RMXVector3Zero
+    var facingVector: GLKVector3 = GLKVector3Zero
     var effect: GLKBaseEffect! = nil
 
     var aspectRatio: Float  {
@@ -42,31 +48,54 @@ class RMXCamera : RMSNodeProperty {
             center.x,   center.y,   center.z,
             up.x,       up.y,       up.z)
     }
-    init(_ parent: RMSParticle, viewSize: (Float,Float) = (1280, 750), farPane far: Float = 10000 ){
+    init(_ parent: RMXNode, viewSize: (Float,Float) = (1280, 750), farPane far: Float = 10000 ){
         self.far = far
         self.near = 1
         self.fieldOfView = 65.0
         self.viewHeight = viewSize.1
         self.viewWidth = viewSize.0
-        super.init(parent)
+        self.parent = parent
+        #if SceneKit
+        super.init()
+        #endif
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     var eye: GLKVector3 {
-        return self.position
+        #if SceneKit
+            let v = SCNVector3ToGLKVector3(self.pov!.position)
+            #else
+            let v = self.pov!.position
+        #endif
+        return v
     
     }
     
     var center: GLKVector3{
-        return self.body.forwardVector + self.position
+        let r = self.pov!.body!.forwardVector + self.pov!.position
+        #if SceneKit
+            let v = SCNVector3ToGLKVector3(r)
+            #else
+            let v = r
+        #endif
+        return v
     }
     
     private let simple = false
     var up: GLKVector3 {
-        
         if simple {
             return GLKVector3Make(0,1,0)
         } else {
-            return self.body.upVector
+            let r = self.pov!.body!.upVector
+            #if SceneKit
+                let v = SCNVector3ToGLKVector3(r)
+                #else
+                let v = r
+            #endif
+            return v
         }
     }
     
@@ -88,13 +117,18 @@ class RMXCamera : RMSNodeProperty {
         }
     }
         
-    
+    /*
     var quatarnion: GLKQuaternion {
-        return GLKQuaternionMakeWithMatrix4(self.body.orientation)
+        return GLKQuaternionMakeWithMatrix4(self.pov.body!.orientation)
     }
     
     var orientation: GLKMatrix4 {
-        return self.body.orientation
+        return self.pov.body!.orientation
+    }
+*/
+    
+    func animate() {
+        
     }
 
 }

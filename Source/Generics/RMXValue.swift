@@ -96,6 +96,22 @@ extension GLKVector3 {
     }
 }
 
+extension SCNVector3 {
+    var print: String {
+        return "\(x.toData()) \(y.toData()) \(z.toData())"
+    }
+    
+    func negate() -> SCNVector3{
+        return SCNVector3Make(-x,-y,-z)
+    }
+    
+    func distanceTo(v: SCNVector3) -> CGFloat{
+        let A = SCNVector3ToGLKVector3(self); let B = SCNVector3ToGLKVector3(v)
+        return CGFloat(GLKVector3Distance(A,B))
+        //return RMXVector3Distance(self, v)
+    }
+}
+
 extension GLKVector4 {
     var print: String {
         return "\(x.toData()) \(y.toData()) \(z.toData()) \(w.toData())"

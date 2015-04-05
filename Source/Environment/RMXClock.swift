@@ -26,8 +26,9 @@ typealias RMXTimedCallback = (frequency: NSTimeInterval? , call:()->())
 //}
 
 
-class RMXClock :RMXObject {
-    
+class RMXClock {
+    var world: RMXNode
+
     var timeSinceLastUpdate: NSTimeInterval = 0
     var interface: RMXInterface
     
@@ -49,7 +50,7 @@ class RMXClock :RMXObject {
     
     init(world: RMSWorld, interface: RMXInterface){
         self.interface = interface
-        super.init(parent: world, name: "Clock")
+        self.world = world
     }
     
     ///Probably not necessary to call, given its use... getCounter does the same.

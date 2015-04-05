@@ -10,7 +10,7 @@ import GLKit
 
 class RMXPhysics {
     ///metres per second per second
-    var worldGravity: Float {
+    var worldGravity: RMFloat {
         return 9.8 * self.world.gravityScaler
     }
     
@@ -21,46 +21,46 @@ class RMXPhysics {
     init(world: RMSWorld) {
         //if parent != nil {
             self.world = world
-            self.directionOfGravity = GLKVector3Make(0,-1,0)
+            self.directionOfGravity = RMXVector3Make(0,-1,0)
 //        } else {
 //            fatalError(__FUNCTION__)
 //        }
     }
    
-    var gravity: GLKVector3 {
+    var gravity: RMXVector3 {
         return self.directionOfGravity * self.worldGravity
     }
     
 //    func gVector(hasGravity: Bool) -> RMXVector3 {
-//        return GLKVector3MultiplyScalar(self.getGravityFor, hasGravity ? Float(-gravity) : 0 )
+//        return GLKVector3MultiplyScalar(self.getGravityFor, hasGravity ? RMFloat(-gravity) : 0 )
 //    }
     
     
     
-    func normalFor(sender: RMSParticle) -> RMXVector3 {
+    func normalFor(sender: RMXNode) -> RMXVector3 {
         let g = sender.position.y > 0 ? 0 : self.gravity.y
-        return GLKVector3MultiplyScalar(GLKVector3Make(0, 0, 0),-sender.body.mass)
+        return RMXVector3MultiplyScalar(RMXVector3Make(0, 0, 0),-sender.body!.mass)
     }
     
-    func gravityFor(sender: RMSParticle) -> RMXVector3{
-        return GLKVector3MultiplyScalar(self.gravity,sender.body.mass)
+    func gravityFor(sender: RMXNode) -> RMXVector3{
+        return RMXVector3MultiplyScalar(self.gravity,sender.body!.mass)
     }
     
     
     
-    func dragFor(sender: RMSParticle) -> RMXVector3{
-        let dragC: Float = sender.body.dragC
-        let rho: Float = 0.005 * sender.world.massDensityAt(sender)
-        let u: Float = GLKVector3Length(sender.body.velocity)
-        let area: Float = sender.body.dragArea
+    func dragFor(sender: RMXNode) -> RMXVector3{
+        let dragC: RMFloat = sender.body!.dragC
+        let rho: RMFloat = 0.005 * sender.world.massDensityAt(sender)
+        let u: RMFloat = RMXVector3Length(sender.body!.velocity)
+        let area: RMFloat = sender.body!.dragArea
         var v: RMXVector3 = RMXVector3Zero
         let drag = (0.5 * rho * u * u * dragC * area)/3
-        return GLKVector3Make(drag, drag, drag)
+        return RMXVector3Make(drag, drag, drag)
     }
     
-    func frictionFor(sender: RMSParticle) -> RMXVector3{
+    func frictionFor(sender: RMXNode) -> RMXVector3{
         let µ = sender.world.µAt(sender)
-        return GLKVector3Make(µ/3, 0, µ/3);//TODO
+        return RMXVector3Make(µ/3, 0, µ/3);//TODO
     }
     
    

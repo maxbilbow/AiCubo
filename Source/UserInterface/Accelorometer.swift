@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import GLKit
 
 extension RMXDPad {
     func accelerometer() {

@@ -10,7 +10,6 @@ import Foundation
 import GLKit
 
 
-enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3 }
 
 //public struct RMSVertex {
 //    var Position: [Float]

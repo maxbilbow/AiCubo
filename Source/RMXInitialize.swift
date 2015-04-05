@@ -12,16 +12,16 @@ import GLKit
 extension RMX {
     static let RANDOM_MOVEMENT = true
     
-    static func addBasicCollisionTo(forNode sprite: RMSParticle, withActors actors: [Int:RMSParticle]){//, inObjets
+    static func addBasicCollisionTo(forNode sprite: RMXNode, withActors actors: [Int:RMXNode]){//, inObjets
 //        sprite.isAlwaysActive = true
         if sprite.type == .OBSERVER {
             sprite.addBehaviour{ (isOn: Bool)->() in
                 if let closest = sprite.world.closestObjectTo(sprite) {
-                let distTest = closest.body.radius + sprite.body.radius
+                let distTest = closest.body!.radius + sprite.body!.radius
                     if closest.rmxID != sprite.rmxID {
-                        let dist = sprite.body.distanceTo(closest)
+                        let dist = sprite.body!.distanceTo(closest)
                         if dist <= distTest {
-                            closest.body.velocity += sprite.body.velocity
+                            closest.body!.velocity += sprite.body!.velocity
                         }
                     }
                 }
@@ -51,8 +51,6 @@ extension RMX {
       } */
     }
     static func buildScene(world: RMSWorld) -> RMSWorld{
-//        let world: RMSWorld = RMXArt.initializeTestingEnvironment()
-        RMXLog("BUILDING")
         
         let poppy = self.makePoppy(witWorld: world)
         
@@ -72,14 +70,14 @@ extension RMX {
                     sprite.addBehaviour{ (isOn: Bool)->() in
                         return
                         if !sprite.hasGravity && world.observer.actions.item != nil {
-                            if sprite.body.distanceTo((world.observer.actions.item)!) < 50 {
-                                sprite.setHasGravity(true)
+                            if sprite.body!.distanceTo((world.observer.actions.item)!) < 50 {
+                                sprite.hasGravity = true
                             }
                         }
                     }
                 var timePassed = 0
                 var timeLimit = random() % 600
-                let speed:Float = Float(random() % 15)/3
+                let speed:RMFloat = RMFloat(random() % 15)/3
 //                    let theta = Float(random() % 100)/100
 //                    let phi = Float(random() % 100)/100
 //                    var target = world.furthestObjectFrom(sprite)
@@ -101,11 +99,11 @@ extension RMX {
                             timePassed = 0
                             timeLimit = random() % 1600 + 10
                             
-                            if sprite.body.distanceTo(world) > world.body.radius - 50 {
+                            if sprite.body!.distanceTo(world) > world.radius - 50 {
                                 accelerating = false
                                 timeLimit = 600
                             } else {
-                              let rmxID = random() % RMXObject.COUNT
+                              let rmxID = random() % RMXNode.COUNT
                                 if let target = world.children[rmxID] {
                                 sprite.actions.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
 //                                        if let target = world.furthestObjectFrom(sprite) {
@@ -120,7 +118,7 @@ extension RMX {
                             }
                         } else {
                             if accelerating {
-                                sprite.body.accelerateForward(speed)
+                                sprite.body!.accelerateForward(speed)
                             }
                             timePassed++
                         }
@@ -133,12 +131,12 @@ extension RMX {
 
         return world
     }
-    static func makePoppy(witWorld world: RMSWorld) -> RMSParticle{
-        let poppy: RMSParticle = RMSParticle.Unique(world, name: "Poppy").setAsObserver().setAsShape()
+    static func makePoppy(witWorld world: RMSWorld) -> RMXNode{
+        let poppy: RMXNode = RMXNode.Unique(world, name: "Poppy").setAsObserver().setAsShape()
         poppy.type = .POPPY
-        poppy.body.radius = 8
-        poppy.position = GLKVector3Make(100,poppy.body.radius,-50)
-        var itemToWatch: RMSParticle! = nil
+        poppy.body!.radius = 8
+        poppy.position = RMXVector3Make(100,poppy.radius,-50)
+        var itemToWatch: RMXNode! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
@@ -147,24 +145,24 @@ extension RMX {
         
         poppy.behaviours.append { (isOn: Bool) -> () in
             
-            func idle(sender: RMSParticle, objects: [AnyObject]? = []) -> AnyObject? {
-                sender.body.addTheta(leftRightRadians: GLKMathDegreesToRadians(5))
-                sender.body.accelerateForward(0.05)
+            func idle(sender: RMXNode, objects: [AnyObject]? = []) -> AnyObject? {
+                sender.body!.addTheta(leftRightRadians: 5 * PI_OVER_180)
+                sender.body!.accelerateForward(0.05)
                 return nil
             }
             
-            func fetch(sender: RMSParticle, objects: [AnyObject]?) -> AnyObject? {
-                //                sender.body.hasGravity = (objects?[0] as! RMSParticle).hasGravity
+            func fetch(sender: RMXNode, objects: [AnyObject]?) -> AnyObject? {
+                //                sender.body.hasGravity = (objects?[0] as! RMXNode).hasGravity
                 return sender.actions.grabItem(item: itemToWatch)
             }
             
-            func drop(sender: RMSParticle, objects: [AnyObject]?) -> AnyObject?  {
+            func drop(sender: RMXNode, objects: [AnyObject]?) -> AnyObject?  {
                 sender.actions.releaseItem()
                 return nil
             }
             
-            func getReady(sender: RMSParticle, objects: [AnyObject]?)  -> AnyObject? {
-                sender.body.completeStop()
+            func getReady(sender: RMXNode, objects: [AnyObject]?)  -> AnyObject? {
+                sender.body!.completeStop()
                 return nil
             }
             
@@ -174,7 +172,7 @@ extension RMX {
                 if observer.hasItem {
                     itemToWatch = observer.actions.item
                     state = .READY_TO_CHASE
-                    poppy.body.hasGravity = observer.hasGravity
+                    poppy.hasGravity = observer.hasGravity
                 } else {
                     idle(poppy)
                 }
@@ -182,7 +180,7 @@ extension RMX {
             case .READY_TO_CHASE:
                 if !observer.hasItem {
                     state = .CHASING
-                    poppy.body.hasGravity = itemToWatch.hasGravity
+                    poppy.hasGravity = itemToWatch.hasGravity
                 } else {
                     poppy.actions.headTo(itemToWatch, speed: 1, doOnArrival: getReady)
                 }
@@ -190,12 +188,12 @@ extension RMX {
             case .CHASING:
                 if  observer.hasItem {
                     itemToWatch = observer.actions.item
-                    poppy.body.hasGravity = observer.hasGravity
+                    poppy.hasGravity = observer.hasGravity
                     state = .READY_TO_CHASE
                 } else if poppy.hasItem {
                     itemToWatch = nil
                     state = .FETCHING
-                    poppy.body.hasGravity = observer.hasGravity
+                    poppy.hasGravity = observer.hasGravity
                 } else {
                     poppy.actions.headTo(itemToWatch, speed: 1, doOnArrival: fetch, objects: observer)
                 }
@@ -203,13 +201,13 @@ extension RMX {
             case .FETCHING:
                 if !poppy.hasItem  {
                     state = .IDLE
-                    poppy.body.hasGravity = observer.hasGravity
+                    poppy.hasGravity = observer.hasGravity
                 } else {
                     poppy.actions.headTo(observer, speed: 1, doOnArrival: drop)
                 }
                 break
             default:
-                poppy.body.hasGravity = observer.hasGravity
+                poppy.hasGravity = observer.hasGravity
                 if observer.hasItem {
                     state = .READY_TO_CHASE
                 } else {
@@ -220,10 +218,10 @@ extension RMX {
         }
         poppy.shape.color = GLKVector4Make(0.1,0.1,0.1,1.0)
         
-        let head = RMSParticle(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)
-        head.body.radius = poppy.body.radius / 2
+        let head = RMXNode(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)
+        head.body!.radius = poppy.radius / 2
         head.shape.color = GLKVector4Make(0.1,0.1,0.1,0.1)
-        head.position = GLKVector3Make(0,poppy.body.radius + head.body.radius / 4, poppy.body.radius + head.body.radius / 4)
+        head.position = RMXVector3Make(0,poppy.radius + head.radius / 4, poppy.radius + head.radius / 4)
         poppy.insertChildNode(head)
         
        

@@ -11,7 +11,7 @@ import GLUT
 
 class GameView : RFOpenGLView, RMXView {
     
-    var world: RMSWorld = RMSWorld()
+    var world: RMSWorld! = RMSWorld()
     
     func setWorld(type: RMXWorldType){
         if self.world.worldType != type {

@@ -10,38 +10,38 @@ import Foundation
 import GLKit
 
 class RMXSpriteActions : RMSNodeProperty {
-    var armLength: Float = 0
-    lazy private var _reach: Float = self.body.radius
-    var reach:Float {
-        return self.body.radius + _reach
+    var armLength: RMFloat = 0
+    lazy private var _reach: RMFloat = self.parent.radius
+    var reach:RMFloat {
+        return self.parent.radius + _reach
     }
     
-    var jumpStrength: Float = 10
-    var squatLevel:Float = 0
+    var jumpStrength: RMFloat = 10
+    var squatLevel:RMFloat = 0
     private var _prepairingToJump: Bool = false
     private var _goingUp:Bool = false
     private var _ignoreNextJump:Bool = false
     private var _itemWasAnimated:Bool = false
     private var _itemHadGravity:Bool = false
     
-    var altitude: Float {
-        return self.body.position.y
+    var altitude: RMFloat {
+        return self.parent.position.y
     }
-    var item: RMSParticle?
+    var item: RMXNode?
     var itemPosition: RMXVector3 = RMXVector3Zero
     
-    var sprite: RMSParticle {
-        return self.parent// as! RMSParticle
+    var sprite: RMXNode {
+        return self.parent// as! RMXNode
     }
 
-    func throwItem(strength: Float) -> Bool
+    func throwItem(strength: RMFloat) -> Bool
     {
         if self.item != nil {
             self.item!.isAnimated = true
-            self.item!.setHasGravity(_itemHadGravity)
-            let fwd4 = self.body.forwardVector
-            let fwd3 = GLKVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item!.body.velocity = self.body.velocity + GLKVector3MultiplyScalar(fwd3,strength)
+            self.item!.hasGravity = _itemHadGravity
+            let fwd4 = self.parent.body!.forwardVector
+            let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
+            self.item!.body!.velocity = self.parent.body!.velocity + RMXVector3MultiplyScalar(fwd3,strength)
             self.item!.wasJustThrown = true
             self.item = nil
             return true
@@ -53,32 +53,31 @@ class RMXSpriteActions : RMSNodeProperty {
     func manipulate() {
         if self.item != nil {
             self.item?.wasJustWoken = true
-            let fwd4 = self.body.forwardVector
-            let fwd3 = GLKVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item?.position = self.sprite.viewPoint + GLKVector3MultiplyScalar(fwd3, self.armLength + self.item!.body.radius + self.body.radius)
+            let fwd4 = self.parent.body!.forwardVector
+            let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
+            self.item?.position = self.parent.viewPoint + RMXVector3MultiplyScalar(fwd3, self.armLength + self.item!.radius + self.parent.radius)
         }
     }
     
-    private func setItem(item: RMSParticle!){
+    private func setItem(item: RMXNode!){
         self.item = item
         if item != nil {
             self.item?.wasJustWoken = true
             //self.sprite.itemPosition = item!.body.position
             _itemWasAnimated = item!.isAnimated
             _itemHadGravity = item!.hasGravity
-            self.item!.setHasGravity(false)
+            self.item!.hasGravity = false
             self.item!.isAnimated = true
-            self.armLength = self.reach// self.body.distanceTo(self.item!)
-            if RMX.isDebugging { NSLog(item!.name) }
+            self.armLength = self.reach
         }
     }
     
-    func grabItem(item: RMSParticle? = nil) -> Bool {
+    func grabItem(item: RMXNode? = nil) -> Bool {
         if self.item != nil {
             self.releaseItem()
         } else {
-            let item: RMSParticle? = item ?? self.parent.world.closestObjectTo(self.sprite)
-            if item != nil && self.body.distanceTo(item!) <= self.reach {
+            let item: RMXNode? = item ?? self.parent.world.closestObjectTo(self.sprite)
+            if item != nil && self.parent.body!.distanceTo(item!) <= self.reach {
                 self.setItem(item)
             }
         }
@@ -91,24 +90,24 @@ class RMXSpriteActions : RMSNodeProperty {
         if self.item != nil {
             self.item?.wasJustWoken = true
             self.item!.isAnimated = true //_itemWasAnimated
-            self.item!.setHasGravity(_itemHadGravity)
+            self.item!.hasGravity = _itemHadGravity
             self.setItem(nil)
         }
     }
     
-    func extendArmLength(i: Float)    {
+    func extendArmLength(i: RMFloat)    {
         if self.armLength + i > 1 {
             self.armLength += i
         }
     }
     
     func applyForce(force: RMXVector3) {
-        self.body.acceleration += force
+        self.parent.body!.acceleration += force
     }
     
     enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
     private var _jumpState: JumpState = .NOT_JUMPING
-    private var _maxSquat: Float = 0
+    private var _maxSquat: RMFloat = 0
     
     func jumpTest() -> JumpState {
         
@@ -119,12 +118,12 @@ class RMXSpriteActions : RMSNodeProperty {
             if self.squatLevel > _maxSquat{
                 _jumpState = .JUMPING
             } else {
-                let increment: Float = _maxSquat / 50
+                let increment: RMFloat = _maxSquat / 50
                 self.squatLevel += increment
             }
             break
         case .JUMPING:
-            if self.altitude > self.body.radius * 2 || _jumpStrength < self.body.weight {//|| self.body.velocity.y <= 0 {
+            if self.altitude > self.parent.body!.radius * 2 || _jumpStrength < self.parent.body!.weight {//|| self.body.velocity.y <= 0 {
                 _jumpState = .GOING_UP
                 self.squatLevel = 0
             } else {
@@ -139,7 +138,7 @@ class RMXSpriteActions : RMSNodeProperty {
             }
             break
         case .COMING_DOWN:
-            if self.altitude <= self.parent.body.radius {
+            if self.altitude <= self.parent.body!.radius {
                 _jumpState = .NOT_JUMPING
             }
             break
@@ -152,15 +151,15 @@ class RMXSpriteActions : RMSNodeProperty {
     func prepareToJump() -> Bool{
         if _jumpState == .NOT_JUMPING && self.parent.isGrounded {
             _jumpState = .PREPARING_TO_JUMP
-            _maxSquat = self.body.radius / 4
+            _maxSquat = self.parent.body!.radius / 4
             return true
         } else {
             return false
         }
     }
     
-    private var _jumpStrength: Float {
-        return fabs(self.body.weight * self.jumpStrength * self.squatLevel/_maxSquat)
+    private var _jumpStrength: RMFloat {
+        return fabs(self.parent.body!.weight * self.jumpStrength * self.squatLevel/_maxSquat)
     }
     func jump() {
         if _jumpState == .PREPARING_TO_JUMP {
@@ -168,30 +167,30 @@ class RMXSpriteActions : RMSNodeProperty {
         }
     }
 
-    func setReach(reach: Float) {
+    func setReach(reach: RMFloat) {
         _reach = reach
     }
     
-    private class func stop(sender: RMSParticle, objects: [AnyObject]?) -> AnyObject? {
-        sender.body.completeStop()
+    private class func stop(sender: RMXNode, objects: [AnyObject]?) -> AnyObject? {
+        sender.body!.completeStop()
         return nil
     }
     
-    func headTo(object: RMSParticle, var speed: Float = 1, doOnArrival: (sender: RMSParticle, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
+    func headTo(object: RMXNode, var speed: RMFloat = 1, doOnArrival: (sender: RMXNode, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
         let dist = self.turnToFace(object)
         if  dist >= fabs(object.actions.reach + self.reach) {
             #if OPENGL_OSX
                 speed *= 0.5
             #endif
-            self.body.accelerateForward(speed)
+            self.parent.body!.accelerateForward(speed)
             if !self.parent.hasGravity {
                 let climb = speed * 0.1
                 if self.parent.altitude < object.altitude {
-                    self.body.accelerateUp(climb)
+                    self.parent.body!.accelerateUp(climb)
                 } else if self.parent.altitude > object.altitude {
-                    self.body.accelerateUp(-climb / 2)
+                    self.parent.body!.accelerateUp(-climb / 2)
                 } else {
-                    self.body.upStop()
+                    self.parent.body!.upStop()
                     RMXVector3SetY(&self.body.velocity, 0)
                 }
             }
@@ -203,12 +202,13 @@ class RMXSpriteActions : RMSNodeProperty {
         return dist
 
     }
-    func turnToFace(object:RMSParticle) -> Float {
-        var goto =  object.centerOfView
+    
+    func turnToFace(object: RMXNode) -> RMFloat {
+        var goto = object.centerOfView
         
         
         let theta = -RMXGetTheta(vectorA: self.position, vectorB: goto)
-        self.body.setTheta(leftRightRadians: theta)
+        self.parent.body!.setTheta(leftRightRadians: theta)
         
         if self.parent.hasGravity { //TODO delete and fix below
             RMXVector3SetY(&goto,self.parent.position.y)
@@ -220,7 +220,7 @@ class RMXSpriteActions : RMSNodeProperty {
             self.body.setPhi(upDownRadians: phi)
         }*/
 
-        return self.body.distanceTo(goto)
+        return self.parent.body!.distanceTo(point: goto)
     }
     
    

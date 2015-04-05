@@ -12,7 +12,7 @@
 
 #endif
 #define FULL_SCREEN 0
-#define OPENGL_OSX
+//#define OPENGL_OSX
 //#import <Foundation/Foundation.h>
 @import GLKit;
 
@@ -30,6 +30,7 @@ void RMXGLMakeLookAt(GLKVector3 eye, GLKVector3 center, GLKVector3 up);
 void RMXGLPostRedisplay();
 void RMXGLMaterialfv(int32_t a,int32_t b, GLKVector4 color);
 void RMXGLTranslate(GLKVector3 v);
+void RMXGLTranslatef(float x,float y, float z);
 void RMXGLShine(int a, int b, GLKVector4 color);
 void RMXGLRender(void (*render)(float),float size);
 void RMXGLCenter(void (*center)(int,int),int x, int y);

@@ -56,6 +56,9 @@ void RMXGLMaterialfv(int32_t a,int32_t b, GLKVector4 color){
 void RMXGLTranslate(GLKVector3 v){
     glTranslatef(v.x, v.y, v.z);
 }
+void RMXGLTranslatef(float x,float y, float z){
+     glTranslatef(x,y,z);
+}
 
 void RMXGLShine(int32_t a, int32_t b, GLKVector4 color) {
     glLightfv(a, b, color.v);

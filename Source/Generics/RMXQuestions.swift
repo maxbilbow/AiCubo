@@ -9,7 +9,7 @@
 import Foundation
 
 struct RMXAsk {
-    static func doesObjectHaveItem(object: RMSParticle){
+    static func doesObjectHaveItem(object: RMXNode){
         return object.hasItem
     }
     

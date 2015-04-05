@@ -13,20 +13,30 @@ import Foundation
     import GLKit
 #endif
 
-class RMXInterface : NSObject {
+#if SceneKit
+    import SceneKit
+    typealias SceneObject = SCNView
+#elseif OPENGL_ES
+    typealias SceneObject = GLKView
+    #elseif iOS
+    typealias SceneObject = UIView
+    #else
+    typealias SceneObject = NSObject
+#endif
+
+class RMXInterface {// : SceneObject {
+    lazy var actions: RMSActionProcessor = RMSActionProcessor(world: self.world)
     private let _isDebugging = false
     var debugData: String = "No Data"
 //    #if OPENGL_ES
-    var gvc: RMXViewController
+    var gvc: RMXViewController! = nil
 //    #endif
-    var world: RMSWorld {
-        return self.gvc.gameView.world
-    }
+    let world: RMSWorld = RMSWorld()
     
-    var lookSpeed: Float = PI_OVER_180
-    var moveSpeed: Float = 1
+    var lookSpeed: RMFloat = PI_OVER_180
+    var moveSpeed: RMFloat = 1
     
-    var activeSprite: RMSParticle {
+    var activeSprite: RMXNode {
         return self.world.activeSprite
     }
     
@@ -34,9 +44,11 @@ class RMXInterface : NSObject {
     var view: UIView {
         return self.gvc.gameView as! UIView
     }
+    #elseif SceneKit
+    
     #else
     var view: NSObject {
-        return self.gvc.gameView as NSObject
+        return self.gvc.gameView as! NSObject
     }
     #endif
 
@@ -58,13 +70,25 @@ class RMXInterface : NSObject {
             process: {
               
         } ) ]
-        super.init()
+        //super.init()
         self.world.clock = RMXClock(world: world, interface: self)
         self.viewDidLoad()
     }
+   /*
+    #if SceneKit
     
+    required init?(coder: NSCoder) {
+        self.controllers = [ "debug" : ( isActive: _isDebugging,
+            process: {
+                
+        } ) ]
+        super.init(coder: coder)
+        self.viewDidLoad()
+    }
+    #endif */
     func viewDidLoad(){
         self.controllers["debug"] = ( isActive: _isDebugging, process: self.debug )
+        self.world.clock = RMXClock(world: world, interface: self)
         self.setUpGestureRecognisers()
     }
 

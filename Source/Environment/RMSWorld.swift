@@ -10,28 +10,27 @@ import Foundation
 import GLKit
 
 enum RMXWorldType { case DEFAULT, TESTING_ENVIRONMENT, FETCH }
-class RMSWorld : RMSParticle {
+class RMSWorld : RMXNode {
     static var TYPE: RMXWorldType = .DEFAULT
-    let gravityScaler: Float = 0.05
+    let gravityScaler: RMFloat = 0.05
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
 
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    lazy var sun: RMSParticle = RMSParticle.Unique(self).shape.makeAsSun(rDist: self.body.radius)
-    private let GRAVITY: Float = 9.8
-    
+    lazy var sun: RMXNode = RMXNode.Unique(self).shape.makeAsSun(rDist: self.radius)
+    private let GRAVITY: RMFloat = 9.8
     
     
     lazy var activeCamera: RMXCamera! = RMXCamera(self.activeSprite)
     
-    lazy var activeSprite: RMSParticle = RMSParticle.Unique(self).setAsObserver()
+    lazy var activeSprite: RMXNode = RMXNode.Unique(self).setAsObserver()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
-    lazy var observer: RMSParticle = self.activeSprite
-    lazy var poppy: RMSParticle = RMX.makePoppy(witWorld: self)
-    lazy var players: [Int: RMSParticle] = [
+    lazy var observer: RMXNode = self.activeSprite
+    lazy var poppy: RMXNode = RMX.makePoppy(witWorld: self)
+    lazy var players: [Int: RMXNode] = [
         self.activeSprite.rmxID: self.activeSprite ,
         self.poppy.rmxID: self.poppy,
         self.sun.rmxID: self.sun
@@ -40,13 +39,14 @@ class RMSWorld : RMSParticle {
     
     var worldType: RMXWorldType = .DEFAULT
     
-    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: Float = 2000, parent: RMSParticle! = nil) {
+    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloat = 2000, parent: RMXNode! = nil) {
         super.init(parent: parent, type: .WORLD, name: name)
+        
         self.worldType = type
         self.world = self
-        self.body.radius = radius
+        self.body!.radius = radius
         self.activeSprite.addInitCall { () -> () in
-            self.observer.position = GLKVector3Make(20, 20, 20)
+            self.observer.position = RMXVector3Make(20, 20, 20)
         }
 //        self.activeCamera = RMXCamera(self.activeSprite)
         self.isAnimated = false
@@ -55,9 +55,17 @@ class RMSWorld : RMSParticle {
             self.worldDidInitialize()
         })
     }
+    #if SceneKit
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    #endif
+    
     private var _firstFetch = true
+    
+    
     func worldDidInitialize() {
-        self.insertChildNode(self.players)
+        self.insertChildNode(children: self.players)
         switch (self.worldType){
         case .TESTING_ENVIRONMENT:
             RMXArt.initializeTestingEnvironment(self)
@@ -89,7 +97,7 @@ class RMSWorld : RMSParticle {
     }
    
             
-    func µAt(someBody: RMSParticle) -> Float {
+    func µAt(someBody: RMXNode) -> RMFloat {
         if !someBody.isInWorld && someBody.isObserver {
             return 0.0000001
         } else if (someBody.position.y <= someBody.ground   ) {
@@ -99,7 +107,7 @@ class RMSWorld : RMSParticle {
         }
 
     }
-    func massDensityAt(someBody: RMSParticle) -> Float {
+    func massDensityAt(someBody: RMXNode) -> RMFloat {
         if !someBody.isInWorld && someBody.isObserver {
             return 0.0000001
         } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
@@ -108,33 +116,33 @@ class RMSWorld : RMSParticle {
             return 0.01
         }
     }
-    func collisionTest(sender: RMSParticle) -> Bool{
+    func collisionTest(sender: RMXNode) -> Bool{
     //Have I gone through a barrier?
-        let velocity = sender.body.velocity
+        let velocity = sender.body!.velocity
         let v = velocity.y
         let p = sender.position.y
-        let next = sender.body.velocity + sender.position
-        let bounceY: Float = -v
+        let next = sender.body!.velocity + sender.position
+        let bounceY: RMFloat = -v
         let g = sender.ground
         if p <= g && v < 0 && sender.isInWorld {
-            if p < g / sender.body.coushin {
-                RMXVector3SetY(&sender.body.velocity, bounceY * sender.body.coushin)
+            if p < g / sender.body!.coushin {
+                RMXVector3SetY(&sender.body!.velocity, bounceY * sender.body!.coushin)
                 RMXVector3SetY(&sender.position, g)
             } else {
-                RMXVector3SetY(&sender.body.velocity, sender.hasGravity ? 0 : bounceY * sender.body.coushin)
+                RMXVector3SetY(&sender.body!.velocity, sender.hasGravity ? 0 : bounceY * sender.body!.coushin)
                 RMXVector3SetY(&sender.position, g)
             }
             return true
         }
-        if GLKVector3Length(next) >= self.body.radius && sender.type != .OBSERVER {
+        if RMXVector3Length(next) >= self.radius && sender.type != .OBSERVER {
             sender.actions.headTo(self)
-            sender.body.velocity = GLKVector3Negate(velocity)
+            sender.body!.velocity = velocity.negate()
         }
         
         return false
     }
     
-    func gravityAt(sender: RMSParticle) -> RMXVector3 {
+    func gravityAt(sender: RMXNode) -> RMXVector3 {
         return self.physics.gravityFor(sender)
     }
     
@@ -142,7 +150,6 @@ class RMSWorld : RMSParticle {
    
     override func animate() {
         self.actionProcessor.animate()
-        self.debug()
         super.animate()
     }
     
@@ -150,13 +157,13 @@ class RMSWorld : RMSParticle {
         super.reset()
     }
     
-    func closestObjectTo(sender: RMSParticle)->RMSParticle? {
+    func closestObjectTo(sender: RMXNode)->RMXNode? {
         var closest: Int = -1
-        var dista: Float = Float.infinity// = sender.body.distanceTo(closest)
+        var dista: RMFloat = RMFloat.infinity// = sender.body.distanceTo(closest)
         for object in children {
             let child = object.1
             if child != sender {
-                let distb: Float = sender.body.distanceTo(child)
+                let distb: RMFloat = sender.body!.distanceTo(child)
                 if distb < dista {
                     closest = child.rmxID
                     dista = distb
@@ -164,20 +171,20 @@ class RMSWorld : RMSParticle {
             }
         }
         if let result = children[closest] {
-            if dista < sender.actions.reach + result.body.radius  {
+            if dista < sender.actions.reach + result.radius  {
                 return result
             }
         }
         return nil
     }
     
-    func furthestObjectFrom(sender: RMSParticle)->RMSParticle? {
+    func furthestObjectFrom(sender: RMXNode)->RMXNode? {
         var furthest: Int = -1
-        var dista: Float = 0// = sender.body.distanceTo(closest)
+        var dista: RMFloat = 0// = sender.body.distanceTo(closest)
         for object in children {
             let child = object.1
             if child != sender {
-                let distb: Float = sender.body.distanceTo(child)
+                let distb: RMFloat = sender.body!.distanceTo(child)
                 if distb > dista {
                     furthest = child.rmxID
                     dista = distb
@@ -195,14 +202,14 @@ class RMSWorld : RMSParticle {
         for object in children {
             let child = object.1
             if (child != self.observer) && !(child.isLightSource) {
-                child.setHasGravity(self.hasGravity)
+                child.hasGravity = self.hasGravity
             }
         }
         super.toggleGravity()
     }
 
     
-    func action(action: String = "reset",speed: Float = 0, point: [Float] = []) {
+    func action(action: String = "reset",speed: RMFloat = 0, point: [RMFloat] = []) {
         self.actionProcessor.movement( action,speed: speed, point: point)
     }
     
@@ -211,59 +218,3 @@ class RMSWorld : RMSParticle {
     
 }
 
-
-/* 
-private func normalForceAt(sender: RMSParticle) -> RMXVector3 {
-var result: Float = 0
-var bounce: Float = 0
-let normal = self.physics.normalFor(sender)
-let altitude = sender.body.position.y
-let ground = sender.ground
-if altitude < 0 {
-RMXVector3SetY(&sender.body.position, 0)
-}
-if altitude < ground { //* 9 / 10 {
-if let bouncing = sender.variables["isBouncing"] {
-if bouncing.isActive {
-bouncing.i *= 0.8
-if bouncing.i <= 0.1 {
-bounce = 0
-bouncing.isActive = false
-bouncing.i = 0
-RMXVector3SetY(&sender.body.position, ground)
-//                        print(__LINE__)
-} else {
-bounce = bouncing.i
-//                        print(__LINE__)
-}
-
-} else {
-
-bouncing.i += 0.01
-if bouncing.i >= 1 {
-bouncing.isActive = true
-//                        print(__LINE__)
-} else {
-bounce = 0
-//                        print(__LINE__)
-}
-}
-}
-//            print(__LINE__)
-result = normal.y + (1 + fabs(altitude / ground + altitude)) * bounce
-} else if altitude  <= ground  {
-result = normal.y
-RMXVector3SetY(&sender.body.position, ground)
-//            print(__LINE__)
-} else if altitude > ground {
-result = 0//someBody.weight// * self.physics.gravity; //air;
-//            print(__LINE__)
-} else {
-result = normal.y
-//            print(__LINE__)
-}
-//        println(": \(bounce) \(result) \(self.physics.gravity.print)\n")
-return GLKVector3Make(0, result, 0)
-}
-*/
-*/

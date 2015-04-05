@@ -26,9 +26,9 @@ extension RMX {
 }
 
 protocol RMXView {
-    var world: RMSWorld { get set }
-    init(frame: CGRect)
-    func viewDidLoad()
+    var world: RMSWorld! { get set }
+//    init(frame: CGRect)
+//    func viewDidLoad()
 }
 
 protocol RMXViewController {

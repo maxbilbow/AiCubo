@@ -35,12 +35,12 @@ import GLKit
 #endif
 
 
-func == (lhs: RMXObject, rhs: RMXObject) -> Bool {
+func == (lhs: RMXNode, rhs: RMXNode) -> Bool {
     return lhs.rmxID == rhs.rmxID
 }
 
 
-func != (lhs: RMXObject, rhs: RMXObject) -> Bool {
+func != (lhs: RMXNode, rhs: RMXNode) -> Bool {
     return lhs.rmxID != rhs.rmxID
 }
 

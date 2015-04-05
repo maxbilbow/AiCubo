@@ -13,7 +13,7 @@ class RMSCollisionBody : RMSNodeProperty {
     
     var type: RMXCollisionBodyType
     
-    init(_ parent: RMSParticle, type: RMXCollisionBodyType = .DEFAULT) {
+    init(_ parent: RMXNode, type: RMXCollisionBodyType = .DEFAULT) {
         self.type = type
         super.init(parent)
     }

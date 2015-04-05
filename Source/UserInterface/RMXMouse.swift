@@ -18,9 +18,9 @@ protocol RMXMouse {
     var x: Int32 {get}
     var y: Int32 {get}
     var hasFocus: Bool { get set }
-    var speed: Float { get set }
+    var speed: RMFloat { get set }
     func setMousePos(x: Int32, y:Int32)
-    func mouse2view(x:Int32, y:Int32, speed: Float)
+    func mouse2view(x:Int32, y:Int32, speed: RMFloat)
     func toggleFocus()
 //    func centerView(center: CFunctionPointer<(Int32, Int32)->Void>)
     func calibrateView(x: Int32, y:Int32)
@@ -28,12 +28,12 @@ protocol RMXMouse {
 
 class RMSMouse : RMXMouse{
     
-    var parent: RMSParticle
+    var parent: RMXNode
     var hasFocus = false
     var dx: Int32 = 0
     var dy: Int32 = 0
     var pos:(x:Int32, y:Int32) = ( x:0, y: 0 )
-    var speed: Float = 0.2
+    var speed: RMFloat = 0.2
 
     var x: Int32 {
         return self.pos.x
@@ -43,7 +43,7 @@ class RMSMouse : RMXMouse{
         return self.pos.y
     }
     
-    init(parent: RMSParticle){
+    init(parent: RMXNode){
         self.parent = parent
     }
     func toggleFocus()    {
@@ -67,7 +67,7 @@ class RMSMouse : RMXMouse{
     
     var position: RMXVector3 {
         #if OPENGL_OSX
-            return GLKVector3Make(Float(pos.x), Float(pos.y), 0)
+            return RMXVector3Make(RMFloat(pos.x), RMFloat(pos.y), 0)
             #else
             return RMXVector3Zero
         #endif
@@ -80,7 +80,7 @@ class RMSMouse : RMXMouse{
         self.pos.y = y//;
     }
     
-    func mouse2view(x:Int32, y:Int32, speed: Float = PI_OVER_180) {
+    func mouse2view(x:Int32, y:Int32, speed: RMFloat = PI_OVER_180) {
     //dx = dy = 0;
     
     
@@ -90,13 +90,13 @@ class RMSMouse : RMXMouse{
         RMGLMouseCenter();
     #endif
 
-        var dir: Float = (self.hasFocus ? 1 : -1) * self.speed
+        var dir: RMFloat = (self.hasFocus ? 1 : -1) * self.speed
     
-        var theta: Float = Float(DeltaX) * dir
-        var phi: Float =   Float(DeltaY) * dir// / 20.0f;
+        var theta: RMFloat = RMFloat(DeltaX) * dir
+        var phi: RMFloat =   RMFloat(DeltaY) * dir// / 20.0f;
         
-        self.parent.body.addTheta(leftRightRadians: theta * speed)
-        self.parent.body.addPhi(upDownRadians:phi * -speed)
+        self.parent.body!.addTheta(leftRightRadians: theta * speed)
+        self.parent.body!.addPhi(upDownRadians:phi * -speed)
     
     }
     

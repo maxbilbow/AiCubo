@@ -12,59 +12,87 @@ import GLKit
 import OpenGL
 import GLUT
     #endif
+enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3 }
 
-class RMXShape : RMSNodeProperty {
+#if SceneKit
+    import SceneKit
+    #else
+    protocol SCNGeometry{}
+#endif
 
+class RMXShape : SCNGeometry, RMXNodeProperty {
+    var parent: RMXNode! = nil
+    var world: RMSWorld {
+        return self.parent.world
+    }
     var type: ShapeType = .NULL
     
     var scaleMatrix: GLKMatrix4 {
-        return GLKMatrix4MakeScale(self.radius,self.radius,self.radius)
+        let radius = Float(self.parent.radius)
+        return GLKMatrix4MakeScale(radius,radius,radius)
     }
+        
     var rotationMatrix: GLKMatrix4 {
-        return self.parent.body.orientation // + self.parent.parent!.body.orientation //GLKMatrix4MakeRotation(self.rotation, self.parent.rAxis.x,self.parent.rAxis.y,self.parent.rAxis.z)
+        #if SceneKit
+        return SCNMatrix4ToGLKMatrix4(self.parent.body!.orientation)
+        #else
+        return self.parent.body!.orientation
+        #endif
     }
-//    var geometry: RMSGeometry!
+        
     var translationMatrix: GLKMatrix4 {
         var p = self.parent.position
         if self.parent.parent != nil {
             p += self.parent.parent!.position
         }
-        return GLKMatrix4MakeTranslation(p.x, p.y, p.z)
+        
+        return GLKMatrix4MakeTranslation(Float(p.x), Float(p.y), Float(p.z))
     }
     
-    var rotation: Float {
-        return self.parent.rotation
-    }
-    var radius: Float {
-        return self.parent.body.radius
+//    var rotation: RMFloat {
+//        return self.parent.rotation
+//    }
+        
+    var radius: RMFloat {
+        return self.parent.radius
     }
     
     var color: GLKVector4 = GLKVector4Make(0.5,0.5,0.5,1)
     var isLight: Bool = false
     var gl_light_type, gl_light: Int32
-    var isVisible: Bool = true;
-    var brigtness: Float = 1
+    var isVisible: Bool = true
+    var brigtness: RMFloat = 1
     
-    init(_ parent: RMSParticle, type: ShapeType = .NULL )    {
+    init(_ parent: RMXNode? = nil, type: ShapeType = .NULL ) {
         self.gl_light_type = GL_POSITION
         self.gl_light = GL_LIGHT0
         self.type = type
-        super.init(parent)
+        self.parent = parent
+        #if SceneKit
+        super.init()
+        #endif
     }
+    #if SceneKit
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    #endif
     
-    
-    func makeAsSun(rDist: Float = 1000, isRotating: Bool = true, rAxis: GLKVector3 = GLKVector3Make(0,0,1)) -> RMSParticle{
+    private var _rotation: RMFloat = 0
+    func makeAsSun(rDist: RMFloat = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
         self.type = .SPHERE
         self.isVisible = true
         self.parent.rotationCenterDistance = rDist
         self.parent.isRotating = isRotating
         self.parent.setRotationSpeed(speed: 1)
         self.color = GLKVector4Make(1, 1, 1, 1.0)
-        self.parent.setHasGravity(false)
+        self.parent.hasGravity = false
         self.isLight = true
         self.parent.rAxis = rAxis
-        self.parent.rotation = PI / 4
+        self._rotation = PI / 4
         return self.parent
     }
-    
+        func animate(){
+            
+        }
 }

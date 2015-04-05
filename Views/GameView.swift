@@ -6,7 +6,9 @@
 //  Copyright (c) 2015 Rattle Media Ltd. All rights reserved.
 //
 
-//import Foundation
+import Foundation
+import GLKit
+import UIKit
 
 class GameView : GLKView, RMXView {
     
@@ -226,7 +228,7 @@ class GameView : GLKView, RMXView {
         
     }
 
-    func drawChildren(object: RMSParticle, var matrixStack: GLKMatrixStackRef) {
+    func drawChildren(object: RMXNode, var matrixStack: GLKMatrixStackRef) {
         if object.isDrawable {
             let sprite = object.shape
             let scaleMatrix = sprite.scaleMatrix

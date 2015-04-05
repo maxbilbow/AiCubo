@@ -9,85 +9,140 @@
 
 import GLKit
 
-class RMSPhysicsBody: RMSNodeProperty {
-    
-    private let PI: Float = 3.14159265358979323846
-    var velocity, acceleration, forces: GLKVector3
-    var orientation: GLKMatrix4//, groundOrientation: GLKMatrix3
-    private var _orientation: GLKMatrix4 {
+
+#if !SceneKit
+    protocol SCNPhysicsBody {}
+    #else
+    import SceneKit
+    #endif
+class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
+
+    #if !SceneKit
+    var velocity = RMXVector3Zero
+    var mass: RMFloat = 0
+    #else
+    #endif
+    var acceleration = RMXVector3Zero
+    var forces = RMXVector3Zero
+
+    var orientation: RMXMatrix4 = RMXMatrix4Identity//, groundOrientation: GLKMatrix3
+    private var _orientation: RMXMatrix4 {
         return self.orientation// false ? self.groundOrientation : self.orientation
     }
-    var vMatrix: GLKMatrix4
+    var vMatrix: RMXMatrix4 = RMXMatrix4Zero
 
-    var accelerationRate:Float = 0
-    var rotationSpeed:Float
-    var hasFriction = true
-    var hasGravity = false
-    var coushin: Float = 2
+    var accelerationRate:RMFloat = 0
+    var rotationSpeed:RMFloat = 0
     
-    var theta, phi, radius, mass, dragC: Float
-    var dragArea: Float {
-        return ( self.radius * self.radius * self.PI )
+    var hasFriction: Bool {
+        return self.parent.hasFriction
+    }
+    var hasGravity: Bool{
+        return self.parent.hasGravity
+    }
+    var coushin: RMFloat = 2
+    
+    var theta: RMFloat = 0
+    var phi: RMFloat = 0
+    var radius: RMFloat = 1
+    var dragC: RMFloat = 0
+    
+    var dragArea: RMFloat {
+        return ( self.radius * self.radius * PI )
+    }
+    var parent: RMXNode!
+    var world: RMSWorld {
+        return self.parent.world
     }
     
-    init(_ parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1,
-        accRate: Float = 1, rotSpeed:Float = 1){
-        self.theta = 0
-        self.phi = 0
-        self.mass = mass
-        self.radius = radius
-        self.dragC = dragC
-        
-        self.velocity = GLKVector3Make(0,0,0)
-        self.acceleration = GLKVector3Make(0,0,0)
-        self.forces = GLKVector3Make(0,0,0)
-        self.orientation = GLKMatrix4Identity
-//        self.groundOrientation = GLKMatrix3Identity
-        self.vMatrix = GLKMatrix4MakeScale(0,0,0)
-        self.accelerationRate = accRate
-        self.rotationSpeed = rotSpeed
-        super.init(parent)
+    var actions: RMXSpriteActions {
+        return self.parent.actions
     }
     
-//    class func New(parent: RMSParticle) -> RMSPhysicsBody{
-//        return RMSPhysicsBody(parent)
-//    }
-//    class func New(parent: RMSParticle, mass: Float = 1, radius: Float = 1, dragC: Float = 0.1) -> RMSPhysicsBody {
-//        return RMSPhysicsBody(parent, mass: mass, radius: radius, dragC: dragC)
-//    }
-//    
-    var weight: Float{
+    var collisionBody: RMSCollisionBody {
+        return self.parent.collisionBody
+    }
+    
+    var physics: RMXPhysics {
+        return self.world.physics
+    }
+
+    var position: RMXVector3 {
+        return self.parent.position
+    }
+
+    init(_ parent: RMXNode, mass: RMFloat = 1, radius: RMFloat = 1, dragC: RMFloat = 0.1,
+        accRate: RMFloat = 1, rotSpeed:RMFloat = 1){
+            self.parent = parent
+            #if SceneKit
+            super.init()
+            #endif
+            self.initialize(parent, mass: mass, radius: radius, dragC: dragC, accRate: accRate, rotSpeed: rotSpeed)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func initialize(parent: RMXNode, mass: RMFloat = 1, radius: RMFloat = 1, dragC: RMFloat = 0.1,
+        accRate: RMFloat = 1, rotSpeed:RMFloat = 1){
+            self.mass = mass
+            self.radius = radius
+            self.dragC = dragC
+            self.accelerationRate = accRate
+            self.rotationSpeed = rotSpeed
+            self.parent = parent
+
+    }
+    
+    
+    var weight: RMFloat{
         return self.mass * self.physics.worldGravity
     }
     
-    var upVector: GLKVector3 {
-        return GLKVector3Make(self.orientation.m01, self.orientation.m11, self.orientation.m21)//GLKVector3Make(0,1,0)
+    var upVector: RMXVector3 {
+        #if SceneKit
+        return RMXVector3Make(self.orientation.m12, self.orientation.m22, self.orientation.m32)
+            #else
+        return RMXVector3Make(self.orientation.m01, self.orientation.m11, self.orientation.m21)//GLKVector3Make(0,1,0)
+        #endif
     }
     
-    var leftVector: GLKVector3 {
-        return GLKVector3Make(self.orientation.m00, self.orientation.m10, self.orientation.m20)
+    var leftVector: RMXVector3 {
+        #if SceneKit
+            return RMXVector3Make(self.orientation.m11, self.orientation.m21, self.orientation.m31)
+            #else
+            return RMXVector3Make(self.orientation.m00, self.orientation.m10, self.orientation.m20)
+        #endif
+       
     }
     
-    var forwardVector: GLKVector3 {
-        return GLKVector3Make(self.orientation.m02, self.orientation.m12, self.orientation.m22)
+    var forwardVector: RMXVector3 {
+        #if SceneKit
+            return RMXVector3Make(self.orientation.m13, self.orientation.m23, self.orientation.m33)
+            #else
+            return RMXVector3Make(self.orientation.m02, self.orientation.m12, self.orientation.m22)
+
+        #endif
     }
     
-    func distanceTo(vector: GLKVector3) -> Float{
-        return GLKVector3Distance(self.position, vector)
-    }
-    func distanceTo(object:RMXObject) -> Float{
-        return GLKVector3Distance(self.position,object.position)
+    func distanceTo(#point: RMXVector3) -> RMFloat{
+        return RMXVector3Distance(self.position, point)
     }
     
-    func accelerateForward(v: Float) {
+    func distanceTo(object:RMXNode) -> RMFloat{
+            return RMXVector3Distance(self.position,object.position)
+    }
+    
+    func accelerateForward(v: RMFloat) {
         RMXVector3SetZ(&self.acceleration, v * self.accelerationRate)
     }
     
-    func accelerateUp(v: Float) {
+    func accelerateUp(v: RMFloat) {
         RMXVector3SetY(&self.acceleration, v * self.accelerationRate)
     }
     
-    func accelerateLeft(v: Float) {
+    func accelerateLeft(v: RMFloat) {
         RMXVector3SetX(&self.acceleration, v * self.accelerationRate)
     }
     
@@ -115,34 +170,34 @@ class RMSPhysicsBody: RMSNodeProperty {
         self.upStop()
     }
     
-    private let _phiLimit = Float(2)
+    private let _phiLimit = RMFloat(2)
     
     ///input as radians
-    func addTheta(leftRightRadians theta: Float){
+    func addTheta(leftRightRadians theta: RMFloat){
         //let theta: Float = GLKMathDegreesToRadians(x)
         self.theta += theta
-        self.orientation = GLKMatrix4RotateY(self.orientation, theta)
+        self.orientation = RMXMatrix4Rotate(self.orientation, theta,0,1,0)
     }
     
     
-    func addPhi(upDownRadians phi: Float) {
+    func addPhi(upDownRadians phi: RMFloat) {
         self.phi += phi
-        self.orientation = GLKMatrix4RotateWithVector3(self.orientation, phi, self.leftVector)
+        self.orientation = RMXMatrix4RotateWithVector3(self.orientation, phi, self.leftVector)
     }
     
-    func setTheta(leftRightRadians theta: Float){
+    func setTheta(leftRightRadians theta: RMFloat){
         self.addTheta(leftRightRadians: -self.theta)
         self.addTheta(leftRightRadians: theta)
     }
     
-    func setPhi(upDownRadians phi: Float){
+    func setPhi(upDownRadians phi: RMFloat){
         self.addPhi(upDownRadians: -self.phi)
         self.addPhi(upDownRadians: phi)
     }
     
 
     
-    func addRoll(sideRollRadians roll: Float){
+    func addRoll(sideRollRadians roll: RMFloat){
         //TODO
     }
     
@@ -151,21 +206,20 @@ class RMSPhysicsBody: RMSNodeProperty {
 //        self.velocity += GLKMatrix4MultiplyVector3(self.orientation, GLKVector3Make(v[0] * speed,v[1] * speed,v[2] * speed))
 //    }
     
-    override func animate()    {
-        super.animate()
+    func animate()    {
         let g = self.hasGravity ? self.world.gravityAt(self.parent) : RMXVector3Zero
         let n = self.hasGravity ? self.physics.normalFor(self.parent) : RMXVector3Zero
         let f = self.physics.frictionFor(self.parent)// : GLKVector3Make(1,1,1);
         let d = self.physics.dragFor(self.parent)// : GLKVector3Make(1,1,1);
         
-        let frictionAndDrag = GLKVector3Make(
-            Float(1 + f.x + d.x),
-            Float(1 + f.y + d.y),
-            Float(1 + f.z + d.z)
+        let frictionAndDrag = RMXVector3Make(
+            RMFloat(1 + f.x + d.x),
+            RMFloat(1 + f.y + d.y),
+            RMFloat(1 + f.z + d.z)
             )
-        self.velocity = GLKVector3Divide(self.velocity, frictionAndDrag)
+        self.velocity = RMXVector3Divide(self.velocity, frictionAndDrag)
         
-        let forces = GLKVector3Make(
+        let forces = RMXVector3Make(
             (g.x + /* d.x + f.x +*/ n.x),
             (g.y +/* d.y + f.y +*/ n.y),//+body.acceleration.y,
             (g.z +/* d.z + f.z +*/ n.z)
@@ -175,14 +229,14 @@ class RMSPhysicsBody: RMSNodeProperty {
         //    self.body.forces.y += g.y + n.y;
         //    self.body.forces.z += g.z + n.z;
         
-        self.forces = forces + GLKMatrix4MultiplyVector3(GLKMatrix4Transpose(self.orientation), self.acceleration)
-        self.velocity = GLKVector3Add(self.velocity,self.forces);//transpos or?
+        self.forces = forces + RMXMatrix4MultiplyVector3(RMXMatrix4Transpose(self.orientation), self.acceleration)
+        self.velocity += self.forces
         
         self.world.collisionTest(self.parent)
 
         
         //self.applyLimits()
-        self.parent.position = GLKVector3Add(self.position,self.velocity);
+        self.parent.position = self.position + self.velocity
         
         
     }

@@ -10,6 +10,6 @@ import Foundation
 
 protocol RMXControllerProtocol {
     var world: RMSWorld { get }
-    var activeSprite: RMSParticle { get }
+    var activeSprite: RMXNode { get }
     var activeCamera: RMXCamera { get }
 }

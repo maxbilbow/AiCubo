@@ -32,6 +32,10 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         ]
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     func set(action a: String, key k: String ) {
         let newKey = RMKey(action: a, key: k)

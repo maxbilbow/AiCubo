@@ -22,7 +22,7 @@ extension RMX {
 }
 class RMSActionProcessor {
     //let keys: RMXController = RMXController()
-    var activeSprite: RMSParticle {
+    var activeSprite: RMXNode {
         return self.world.observer
     }
     var world: RMSWorld
@@ -34,75 +34,75 @@ class RMSActionProcessor {
 
 
     
-    private var _movement: (x:Float, y:Float, z:Float) = (x:0, y:0, z:0)
-    private var _panThreshold: Float = 70
-    func movement(action: String!, speed: Float = 0,  point: [Float]) -> Bool{
+    private var _movement: (x:RMFloat, y:RMFloat, z:RMFloat) = (x:0, y:0, z:0)
+    private var _panThreshold: RMFloat = 70
+    func movement(action: String!, speed: RMFloat = 0,  point: [RMFloat]) -> Bool{
         //if (keys.keyStates[keys.forward])  [observer accelerateForward:speed];
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
-                self.activeSprite.body.accelerateForward(point[2] * speed)
-                self.activeSprite.body.accelerateLeft(point[0] * speed)
-                self.activeSprite.body.accelerateUp(point[1] * speed)
+                self.activeSprite.body!.accelerateForward(point[2] * speed)
+                self.activeSprite.body!.accelerateLeft(point[0] * speed)
+                self.activeSprite.body!.accelerateUp(point[1] * speed)
         }
         if action == "stop" {
-            self.activeSprite.body.stop()
+            self.activeSprite.body!.stop()
             _movement = (0,0,0)
         }
         
         if action == "look" && point.count == 2 {
-            self.activeSprite.body.addTheta(leftRightRadians: point[0] * -speed)
-            self.activeSprite.body.addPhi(upDownRadians: point[1] * speed)
+            self.activeSprite.body!.addTheta(leftRightRadians: point[0] * -speed)
+            self.activeSprite.body!.addPhi(upDownRadians: point[1] * speed)
         }
         
         if (action == "forward") {
             if speed == 0 {
-                self.activeSprite.body.forwardStop()
+                self.activeSprite.body!.forwardStop()
             }
             else {
-                self.activeSprite.body.accelerateForward(speed)
+                self.activeSprite.body!.accelerateForward(speed)
             }
         }
         
         if (action == "back") {
             if speed == 0 {
-                self.activeSprite.body.forwardStop()
+                self.activeSprite.body!.forwardStop()
             }
             else {
-                self.activeSprite.body.accelerateForward(-speed)
+                self.activeSprite.body!.accelerateForward(-speed)
             }
         }
         if (action == "left") {
             if speed == 0 {
-                self.activeSprite.body.leftStop()
+                self.activeSprite.body!.leftStop()
             }
             else {
-                self.activeSprite.body.accelerateLeft(speed)
+                self.activeSprite.body!.accelerateLeft(speed)
             }
         }
         if (action == "right") {
             if speed == 0 {
-                self.activeSprite.body.leftStop()
+                self.activeSprite.body!.leftStop()
             }
             else {
-                self.activeSprite.body.accelerateLeft(-speed)
+                self.activeSprite.body!.accelerateLeft(-speed)
             }
         }
         
         if (action == "up") {
             if speed == 0 {
-                self.activeSprite.body.upStop()
+                self.activeSprite.body!.upStop()
             }
             else {
-                self.activeSprite.body.accelerateUp(-speed)
+                self.activeSprite.body!.accelerateUp(-speed)
             }
         }
         if (action == "down") {
             if speed == 0 {
-                self.activeSprite.body.upStop()
+                self.activeSprite.body!.upStop()
             }
             else {
-                self.activeSprite.body.accelerateUp(speed)
+                self.activeSprite.body!.accelerateUp(speed)
             }
         }
         if (action == "jump") {
@@ -132,10 +132,10 @@ class RMSActionProcessor {
         }
         if self.activeSprite.hasItem {
             if action == "enlargeItem"   {
-                let size = (self.activeSprite.actions.item?.body.radius)! * speed
+                let size = (self.activeSprite.actions.item?.radius)! * speed
                 if size > 0.5 && size < 15 {
-                    self.activeSprite.actions.item?.body.radius = size
-                    self.activeSprite.actions.item?.body.mass *= size
+                    self.activeSprite.actions.item?.body!.radius = size
+                    self.activeSprite.actions.item?.body!.mass *= size
                 }
 
             }
@@ -177,6 +177,6 @@ class RMSActionProcessor {
         }
     }
         
-    var extendArm: Float = 0
+    var extendArm: RMFloat = 0
    
 }

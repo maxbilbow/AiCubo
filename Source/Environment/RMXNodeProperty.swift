@@ -8,28 +8,40 @@
 
 import Foundation
 import GLKit
+#if SceneKit
+    import SceneKit
+    #endif
 
 protocol RMXNodeProperty {
-    var parent: RMSParticle { get set }
+    var parent: RMXNode! { get set }
     var world: RMSWorld { get }
-    var actions: RMXSpriteActions { get }
-    var body: RMSPhysicsBody { get }
-    var collisionBody: RMSCollisionBody { get }
-    var physics: RMXPhysics { get }
-    var position: GLKVector3 { get }
+//    var actions: RMXSpriteActions { get }
+//    #if SceneKit
+//    var body: SCNPhysicsBody { get }
+//    #else
+//    var body: RMSPhysicsBody { get }
+//    #endif
+//    var collisionBody: RMSCollisionBody { get }
+//    var physics: RMXPhysics { get }
+//    var position: GLKVector3 { get }
     func animate()
 }
 
 
 class RMSNodeProperty: RMXNodeProperty {
-    var parent: RMSParticle
+    var parent: RMXNode!
     var world: RMSWorld {
         return self.parent.world
     }
-    
-    var body: RMSPhysicsBody {
-        return self.parent.body
+    #if SceneKit
+    var body: SCNPhysicsBody {
+        return self.parent.body!
     }
+    #else
+    var body: RMSPhysicsBody {
+        return self.parent.body!
+    }
+    #endif
     
     var actions: RMXSpriteActions {
         return self.parent.actions
@@ -43,7 +55,7 @@ class RMSNodeProperty: RMXNodeProperty {
         return self.world.physics
     }
     
-    var position: GLKVector3 {
+    var position: RMXVector3 {
         return self.parent.position
     }
     
@@ -51,7 +63,7 @@ class RMSNodeProperty: RMXNodeProperty {
         
     }
     
-    init(_ parent: RMSParticle){
+    init(_ parent: RMXNode){
         self.parent = parent
     }
 }

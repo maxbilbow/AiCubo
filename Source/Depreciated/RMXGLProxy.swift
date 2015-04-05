@@ -7,7 +7,9 @@
 //
 
 import Foundation
-
+#if SceneKit
+    import SceneKit
+    #endif
 
 import GLKit
 
@@ -40,7 +42,7 @@ import GLKit
         return self.activeSprite.actions.item?.body
     }
     
-    static var activeSprite: RMSParticle {
+    static var activeSprite: RMXNode {
         return self.world.activeSprite
     }
     
@@ -71,12 +73,12 @@ import GLKit
     }
     
     class func performActionWithSpeed(speed: Float, action: String){
-        self.actions.movement(action, speed: speed, point: [])
+        self.actions.movement(action, speed: RMFloat(speed), point: [])
     }
 
 
-    class func performActionWith(point: [Float], action: String!, speed: Float){
-        self.actions.movement(action, speed: speed, point: point)
+    class func performActionWith(point: [RMFloat], action: String!, speed: Float){
+        self.actions.movement(action, speed: RMFloat(speed), point: point)
     }
 
     
@@ -163,33 +165,45 @@ extension RMXGLProxy {
         #endif
     }
     
-    class func drawScene(parent: RMSParticle){
-        func shape(type: ShapeType, radius: Float){
+    class func drawScene(parent: RMXNode){
+        func shape(type: ShapeType, radius: RMFloat){
             switch (type) {
             case .CUBE:
-                DrawCubeWithTextureCoords(radius)
+                DrawCubeWithTextureCoords(Float(radius))
             case .SPHERE:
-                RMXDrawSphere(radius)
+                RMXDrawSphere(Float(radius))
             case .PLANE:
-                DrawPlane(radius)
+                DrawPlane(Float(radius))
             default:
                 return
             }
         }
         
         for object in parent.children  {
-            let position = object.1.body.position
-            let radius = object.1.body.radius
+            let position = object.1.position
+            let radius = object.1.radius
 
             if object.1.isLightSource {
-                RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type, GLKVector4MakeWithVector3(position, 1))
+                #if SceneKit
+                    RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type,SCNVector4ToGLKVector4(RMXVector4MakeWithVector3(position, 1)))
+                    #else
+                RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type, RMXVector4MakeWithVector3(position, 1))
+                #endif
                 
             }
             
             if object.1.isDrawable {
                 glPushMatrix()
-                RMXGLTranslate(object.1.anchor)
-                RMXGLTranslate(position)
+                RMXGLTranslatef(
+                    Float(object.1.anchor.x),
+                    Float(object.1.anchor.y),
+                    Float(object.1.anchor.z)
+                )
+                RMXGLTranslatef(
+                    Float(position.x),
+                    Float(position.y),
+                    Float(position.z)
+                    )
                 if object.1.isLightSource {
                     RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape.color)
                 } else {
@@ -200,9 +214,9 @@ extension RMXGLProxy {
                 
                 shape(object.1.shape.type, radius)
 
-                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, RMXVector4Zero);
-                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, RMXVector4Zero);
-                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, RMXVector4Zero);
+                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, GLKVector4Zero);
+                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, GLKVector4Zero);
+                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, GLKVector4Zero);
 //                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, RMXVector4Zero);
                 
                 self.drawScene(object.1)
