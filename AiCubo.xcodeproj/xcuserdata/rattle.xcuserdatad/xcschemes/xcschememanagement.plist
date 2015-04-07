@@ -34,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+		<key>SceneIOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>load.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -98,6 +103,16 @@
 			<true/>
 		</dict>
 		<key>6C77A26E1AD18A33006C008F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CD1C6601AD4A1C500C659AD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CD1C6761AD4A1C600C659AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>

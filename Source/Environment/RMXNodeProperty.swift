@@ -13,7 +13,7 @@ import GLKit
     #endif
 
 protocol RMXNodeProperty {
-    var parent: RMXNode! { get set }
+    var owner: RMXNode! { get set }
     var world: RMSWorld { get }
 //    var actions: RMXSpriteActions { get }
 //    #if SceneKit
@@ -29,26 +29,26 @@ protocol RMXNodeProperty {
 
 
 class RMSNodeProperty: RMXNodeProperty {
-    var parent: RMXNode!
+    var owner: RMXNode!
     var world: RMSWorld {
-        return self.parent.world
+        return self.owner.world
     }
     #if SceneKit
     var body: SCNPhysicsBody {
-        return self.parent.body!
+        return self.owner.body!
     }
     #else
     var body: RMSPhysicsBody {
-        return self.parent.body!
+        return self.owner.body!
     }
     #endif
     
     var actions: RMXSpriteActions {
-        return self.parent.actions
+        return self.owner.actions
     }
     
     var collisionBody: RMSCollisionBody {
-        return self.parent.collisionBody
+        return self.owner.collisionBody
     }
     
     var physics: RMXPhysics {
@@ -56,14 +56,14 @@ class RMSNodeProperty: RMXNodeProperty {
     }
     
     var position: RMXVector3 {
-        return self.parent.position
+        return self.owner.position
     }
     
     func animate(){
         
     }
     
-    init(_ parent: RMXNode){
-        self.parent = parent
+    init(_ owner: RMXNode){
+        self.owner = owner
     }
 }

@@ -15,25 +15,29 @@ import SceneKit
     #endif
 class RMXCamera : SCNCamera, RMXNodeProperty {
     
-    lazy var pov: RMXNode? = self.parent
-    var parent: RMXNode! = nil
+    lazy var pov: RMXNode? = self.owner
+    var owner: RMXNode! = nil
     var world: RMSWorld {
         return self.pov!.world
     }
-    
-    var near, far, fieldOfView: Float
     var facingVector: GLKVector3 = GLKVector3Zero
-    var effect: GLKBaseEffect! = nil
 
     var aspectRatio: Float  {
         return self.viewWidth / self.viewHeight
     }
     
-    var viewWidth: Float
-    var viewHeight: Float
+    var viewWidth: Float = 1280
+    var viewHeight: Float = 750
+    
+    #if !SceneKit
+    var zNear:Float = 1
+    var zFar: Float = 10000
+    var yFov: Float = 65.0
+    var xFov: Float = 65.0
+   
 
     var projectionMatrix: GLKMatrix4 {
-        return GLKMatrix4MakePerspective(GLKMathDegreesToRadians(self.fieldOfView), self.aspectRatio, self.near, self.far)
+        return GLKMatrix4MakePerspective(GLKMathDegreesToRadians(self.yFov), self.aspectRatio, self.zNear, self.zFar)
     }
     
     func getProjectionMatrix(width: Float, height: Float) -> GLKMatrix4 {
@@ -48,22 +52,45 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
             center.x,   center.y,   center.z,
             up.x,       up.y,       up.z)
     }
-    init(_ parent: RMXNode, viewSize: (Float,Float) = (1280, 750), farPane far: Float = 10000 ){
-        self.far = far
-        self.near = 1
-        self.fieldOfView = 65.0
+    
+    func makePerspective(width: Int32, height:Int32, inout effect: GLKBaseEffect?){
+        if RMX.usingDepreciated {
+            #if OPENGL_OSX
+            RMXGLMakePerspective(self.yFov, Float(width) / Float(height), self.zNear, self.zFar)
+            #endif
+        } else {
+            effect?.transform.projectionMatrix = GLKMatrix4MakePerspective(self.yFov, Float(width) / Float(height), self.zNear, self.zFar)
+        }
+    }
+    
+    #endif
+    
+    init(_ owner: RMXNode, viewSize: (Float,Float) = (1280, 750)){
         self.viewHeight = viewSize.1
         self.viewWidth = viewSize.0
-        self.parent = parent
+        self.owner = owner
         #if SceneKit
         super.init()
         #endif
+        self.initCam()
     }
-
+    #if SceneKit
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.initCam()
     }
+    override init(){
+        super.init()
+        self.initCam()
+    }
+    #endif
     
+    private func initCam(){
+        self.zNear = 1
+        self.zFar = 10000
+        self.yFov = 65
+        self.xFov = 65
+    }
     var eye: GLKVector3 {
         #if SceneKit
             let v = SCNVector3ToGLKVector3(self.pov!.position)
@@ -107,15 +134,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     
 
     
-    func makePerspective(width: Int32, height:Int32, inout effect: GLKBaseEffect?){
-        if RMX.usingDepreciated {
-            #if OPENGL_OSX
-            RMXGLMakePerspective(self.fieldOfView, Float(width) / Float(height), self.near, self.far)
-            #endif
-        } else {
-            effect?.transform.projectionMatrix = GLKMatrix4MakePerspective(self.fieldOfView, Float(width) / Float(height), self.near, self.far)
-        }
-    }
+    
         
     /*
     var quatarnion: GLKQuaternion {

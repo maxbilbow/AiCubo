@@ -14,12 +14,12 @@ extension RMXDPad {
         if true { return }
         else {
             let g = self.motionManager.deviceMotion.gravity
-            self.world.physics.directionOfGravity = GLKVector3Make(Float(g.x), Float(g.y), Float(g.z))
+            self.world!.physics.directionOfGravity = GLKVector3Make(Float(g.x), Float(g.y), Float(g.z))
         }
         
         let key = "accelerometerCounter"
         //let i = self.world.clock?.getCounter(forKey:key)
-        if i == 1 { self.world.clock?.setCounter(forKey: key) } else { return }
+        if i == 1 { self.world!.clock?.setCounter(forKey: key) } else { return }
         if self.motionManager.deviceMotion != nil {
             var x,y,z, q, r, s, t, u, v,a,b,c,e,f,g,h,i,j,k,l,m:Double
             x = self.motionManager.deviceMotion.gravity.x

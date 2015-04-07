@@ -7,54 +7,58 @@
 //
 
 import Foundation
-
+import AppKit
 
 class RMSKeys : RMXInterface, RMXControllerProtocol {
  
-    var keys: [ RMKey ]?
-//    var specialKeys: [ RMKey ] = [ RMKey ]()
-    override init(gvc: RMXViewController){
-        super.init(gvc: gvc)
-        //self.set(action: "forward", key: "w")
-        self.keys = [
-            RMKey(action: "forward", key: "w"),
-            RMKey(action: "back", key: "s"),
-            RMKey(action: "left", key: "a"),
-            RMKey(action: "right", key: "d"),
-            RMKey(action: "up", key: "e"),
-            RMKey(action: "down", key: "q"),
-            RMKey(action: "jump", key: " "),
-            RMKey(action: "toggleGravity", key: "g"),
-            RMKey(action: "universalGravity", key: "G"),
-            RMKey(action: "lockMouse", key: "m")//,
-//            RMKey(action: "grab", key: "Mouse 1"),
-//            RMKey(action: "throw", key: "Mouse 2")
-        ]
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
+    lazy var keys: [ RMKey ] = [
+        RMKey(self, action: "forward", characters: "w"),
+        RMKey(self, action: "back", characters: "s"),
+        RMKey(self, action: "left", characters: "a"),
+        RMKey(self, action: "right", characters: "d"),
+        RMKey(self, action: "up", characters: "e"),
+        RMKey(self, action: "down", characters: "q"),
+        RMKey(self, action: "jump", characters: " "),
+        RMKey(self, action: "toggleGravity", characters: "g", isRepeating: false,speed: (0,1)),
+        RMKey(self, action: "toggleAllGravity", characters: "G", isRepeating: false,speed: (0,1)),
+        RMKey(self, action: "reset", characters: "R", isRepeating: false,speed: (0,1)),
+        RMKey(self, action: "look", characters: "mouseMoved", isRepeating: false,speed: (0.01,0)),
+        RMKey(self, action: "lockMouse", characters: "m")//,
+        //            RMKey(action: "grab", key: "Mouse 1"),
+        //            RMKey(action: "throw", key: "Mouse 2")
+    ]
     
-    func set(action a: String, key k: String ) {
-        let newKey = RMKey(action: a, key: k)
+    override func viewDidLoad(#coder: NSCoder! = nil) {
+        super.viewDidLoad(coder: coder)
+        self.lookSpeed *= 0.1
+    }
+    func set(action a: String, characters k: String ) {
+        let newKey = RMKey(self, action: a, characters: k)
         var exists = false
-        for key in self.keys! {
+        for key in self.keys {
             if key.action == a {
                 key.set(k)
                 exists = true
                 break
             }
             if !exists {
-                self.keys!.append(newKey)
+                self.keys.append(newKey)
             }
         }
     }
     
-    func get(action: String) -> RMKey? {
-        for key in keys! {
+    func get(action: String?) -> RMKey? {
+        for key in keys {
             if key.action == action {
+                return key
+            }
+        }
+        return nil
+    }
+    
+    func get(forChar char: String?) -> RMKey? {
+        for key in keys {
+            if key.characters == char {
                 return key
             }
         }
@@ -63,10 +67,10 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
     
     func match(chr: String) -> NSMutableArray {
         let keys: NSMutableArray = NSMutableArray(capacity: chr.pathComponents.count)
-        for key in self.keys! {
+        for key in self.keys {
             //RMXLog(key.description)
             for str in chr.pathComponents {
-                if key.key == str {
+                if key.characters == str {
                     keys.addObject(key)
                 }
             }
@@ -76,54 +80,115 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
     }
     
     func match(value: UInt16) -> RMKey? {
-        for key in keys! {
+        for key in keys {
             //RMXLog(key.description)
-            if key.value == Int(value) {
+            if key.charToInt == Int(value) {
                 return key
             }
         }
         return nil
+    }
+    var mousePos: NSPoint = NSPoint(x: NSEvent.mouseLocation().x, y: NSEvent.mouseLocation().y)
+    var mouseDelta: NSPoint {
+        let newPos = NSEvent.mouseLocation()
+        let delta = NSPoint(
+            x: newPos.x - self.mousePos.x,
+            y: newPos.y - self.mousePos.y
+        )
+        self.mousePos = newPos
+        return delta
+    }
+    override func update() {
+        for key in self.keys {
+            key.update()
+        }
+        super.update()
+        let delta = self.mouseDelta
+        //self.get(forChar: "mouseMoved")?.actionWithValues([RMFloat(self.mouseDelta.x), RMFloat(self.mouseDelta.y)])
+        self.action(action: "look", speed: self.lookSpeed, point: [RMFloat(delta.x), RMFloat(delta.y)])
+//        RMXLog("\(self.mouseDelta.x), \(self.mouseDelta.y)")
     }
 }
 
 
  class RMKey {
 //    private var _key: String?
-    var pressed: Bool = false
+    var isPressed: Bool = false
     var action: String
-    var key: String
+    var characters: String
     var isSpecial = false
+    var speed:(on:RMFloat,off:RMFloat)
+    var isRepeating: Bool = true
+    var values: [RMFloat] = []
+    private var keys: RMSKeys
     
-    init(action: String, key: String) {
-        self.action = action
-        self.key = key
-    }
-    
-    init(action: String, var specialKey key: String) {
+    init(_ keys: RMSKeys, action: String, characters: String, isRepeating: Bool = true, speed: (on:RMFloat,off:RMFloat) = (1,0), values: [RMFloat]? = nil) {
+        self.keys = keys
         self.action = action
         self.isSpecial = true
-        self.key = key
+        self.characters = characters
+        self.speed = speed
+        self.isRepeating = isRepeating
+        if values != nil {
+            self.values = values!
+        }
     }
     
-    func set(key: String){
-        self.key = key
+    func set(characters: String){
+        self.characters = characters
+    }
+    
+    ///Returns true if key was not already pressed, and sets isPressed = true
+    func press() -> Bool{
+        if self.isRepeating {
+            if self.isPressed {
+                return false
+            } else {
+                self.isPressed = true
+                return true
+            }
+        } else  {
+            self.isPressed = true
+            self.keys.action(action: self.action, speed: self.speed.on, point: self.values)
+            return true
+        }
+    }
+    
+    func actionWithValues(values: [RMFloat]){
+        self.keys.action(action: self.action, speed: self.speed.on, point: values)
+    }
+    
+    ///Returns true if key was already pressed, and sets isPressed = false
+    func release() -> Bool{
+        if self.isPressed {
+            self.isPressed = false
+            self.keys.action(action: self.action, speed: self.speed.off, point: self.values)
+            return true
+        } else {
+            return false
+        }
     }
     
     init(name: String){
         fatalError("'\(name)' not recognised in \(__FILE__.lastPathComponent)")
     }
-    var value: Int {
-        return self.key.toInt() ?? -1
+    var charToInt: Int {
+        return self.characters.toInt() ?? -1
     }
     
     var description: String {
-        return "\(self.action): \(self.key), \(self.value)"
+        return "\(self.action): \(self.characters), speed: \(self.speed), pressed: \(self.isPressed)"
     }
     
+    func update(){
+        if self.isRepeating && self.isPressed {
+            self.keys.action(action: self.action, speed: self.speed.on, point: self.values)
+        }
+    }
 }
 
 func ==(lhs: RMKey, rhs: Int) -> Bool{
-    return lhs.value == rhs
+    return lhs.charToInt == rhs
 }
 
 func ==(lhs: RMKey, rhs: String) -> Bool{
@@ -134,3 +199,52 @@ func ==(lhs: RMKey, rhs: RMKey) -> Bool{
     return lhs.action == rhs.action
 }
 
+
+extension GameView {
+    
+    var keys: RMSKeys {
+        return self.interface as! RMSKeys
+    }
+    
+    override func keyDown(theEvent: NSEvent) {
+        if let key = self.keys.get(forChar: theEvent.characters) {
+            if key.press() {
+                //RMXLog(key.description)
+                
+            }
+        } else {
+            super.keyDown(theEvent)
+        }
+        
+    }
+    
+    override func keyUp(theEvent: NSEvent) {
+        if let key = self.keys.get(forChar: theEvent.characters) {
+            if key.release() {
+                //RMXLog(key.description)
+            }
+        } else {
+            super.keyUp(theEvent)
+        }
+    }
+    
+   
+    /*
+    override func mouseMoved(theEvent: NSEvent) {
+        keys.get(forChar: "mouseMoved")?.actionWithValues([RMFloat(theEvent.deltaX), RMFloat(theEvent.deltaY)])
+        RMXLog("\(theEvent.deltaX), \(theEvent.deltaY)")
+    }
+    
+    override func cursorUpdate(event: NSEvent) {
+        RMXLog("\(event.deltaX), \(event.deltaY)")
+        keys.get(forChar: "mouseMoved")?.actionWithValues([RMFloat(event.deltaX), RMFloat(event.deltaY)])
+        super.cursorUpdate(event)
+    }
+    
+    override func mouseDragged(theEvent: NSEvent) {
+       // keys.get(forChar: "mouseMoved")?.actionWithValues([RMFloat(theEvent.deltaX), RMFloat(theEvent.deltaY)])
+        //RMXLog("\(theEvent.deltaX), \(theEvent.deltaY)")
+        super.mouseDragged(theEvent)
+    }
+*/
+}

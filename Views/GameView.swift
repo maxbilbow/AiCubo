@@ -12,6 +12,17 @@ import UIKit
 
 class GameView : GLKView, RMXView {
     
+    var world: RMSWorld? {
+        return self.interface?.world
+    }
+    var interface: RMXInterface?
+    var gvc: RMXViewController?
+    
+    func initialize(gvc: RMXViewController, interface: RMXInterface){
+        self.interface = interface
+        self.gvc = gvc
+    }
+    
     var shapes: [RMSGeometry] = [ RMSGeometry.CUBE, RMSGeometry.PLANE, RMSGeometry.SPHERE ]
     var modelMatrix: GLKMatrix4!
     var viewMatrix: GLKMatrix4 {
@@ -34,23 +45,28 @@ class GameView : GLKView, RMXView {
     var initialized: Bool = false
 
     var lightPosition: GLKVector4 {
-        return GLKVector4MakeWithVector3(self.world.sun.position, 1.0)// : GLKVector4Make(0, 0,-10,1.0)
+        if let sun =  self.world?.sun {
+            return GLKVector4MakeWithVector3(sun.position,1)
+        } else {
+            return GLKVector4Make(0, 0,-10,1.0)
+        }
     }
 
     var lightColor: GLKVector4 {
-        return self.world.sun.shape.color// : GLKVector4Make(1, 1, 1, 1.0)
+        if let sun =  self.world?.sun {
+            return sun.shape.color
+        } else {
+            return GLKVector4Make(1, 1, 1, 1.0)
+        }
     }
-    
-    
-    var world: RMSWorld = RMSWorld()
 
     func setWorld(type: RMXWorldType){
-        if self.world.worldType != type {
-            self.world.setWorldType(worldType: type)
+        if self.world!.worldType != type {
+            self.world!.setWorldType(worldType: type)
         }
     }
     var camera: RMXCamera {
-        return self.world.activeCamera
+        return self.world!.activeCamera
     }
 
     override required init(frame: CGRect) {
@@ -97,13 +113,13 @@ class GameView : GLKView, RMXView {
         self.effect.light0.position = lightPosition
         //        self.projectionMatrix = self.camera.getProjectionMatrix(Float(self.view.bounds.size.width), height: Float(self.view.bounds.size.height))
         //        self.viewMatrix = self.interface.activeCamera.modelViewMatrix
-        self.rotation += Float(self.world.clock!.timeSinceLastUpdate * 0.5)
+        self.rotation += Float(self.world!.clock!.timeSinceLastUpdate * 0.5)
         //super.update()
         
         glClearColor(1.0, 1.0, 1.0, 1.0);
         glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT));
         var matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
-        self.drawChildren(self.world, matrixStack: matrixStack)
+        self.drawChildren(self.world!, matrixStack: matrixStack)
         glBindVertexArrayOES(0)
     }
 

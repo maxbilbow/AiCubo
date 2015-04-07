@@ -31,11 +31,13 @@ class ViewController : UIViewController {
 class GameViewController : GLKViewController, RMXViewController {
    
     
-    lazy var interface: RMXInterface = RMX.Controller(self)
+    lazy var interface: RMXInterface? = RMX.Controller(self)
     var timer: CADisplayLink?
+    var world: RMSWorld? {
+        return self.interface?.world
+    }
     
-    
-    @IBOutlet var gameView: GameView! //= GameView(frame: self.view.bounds)
+    @IBOutlet var gameView: GameView? //= GameView(frame: self.view.bounds)
     
     
     @IBAction func setWorld(button: UIButton){
@@ -52,7 +54,7 @@ class GameViewController : GLKViewController, RMXViewController {
             self.gameView = GameView(frame: self.view.bounds)
         }
 
-        self.gameView.setWorld(RMSWorld.TYPE)
+        self.gameView!.setWorld(RMSWorld.TYPE)
         self.view = self.gameView
 //        GameView.worldType = .TESTING_ENVIRONMENT
 //        return self.view
@@ -66,19 +68,21 @@ class GameViewController : GLKViewController, RMXViewController {
     */
     
     override func viewDidLoad() {
+        self.view = self.gameView
+        self.gameView!.initialize(self, interface: self.interface!)
         super.viewDidLoad()
         self.preferredFramesPerSecond = 30
 //        self.view = self.menuView
         self.resetGame()
-        self.setUpTimers()
+        //self.setUpTimers()
 //        self.view.hidden = true
         
         
     }
     func setUpTimers(){
-        timer = CADisplayLink(target: self.interface, selector: Selector("update"))
-        timer!.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
-//        timer!.frameInterval = 
+//        timer = CADisplayLink(target: self.interface, selector: Selector("update"))
+//        timer!.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+
         let stateTimer = CADisplayLink(target: self, selector: Selector("resetGame"))
 //        stateTimer.frameInterval = 100
         stateTimer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -86,12 +90,15 @@ class GameViewController : GLKViewController, RMXViewController {
     
     override func glkView(view: GLKView!, drawInRect rect: CGRect) {
         super.glkView(view, drawInRect: rect)
-        self.gameView.update()
+        self.interface?.update()
+        self.gameView!.update()
     }
     
     deinit {
         timer?.invalidate()
     }
+    
+    
     
     #if OPENGL_ES
     override func didReceiveMemoryWarning() {

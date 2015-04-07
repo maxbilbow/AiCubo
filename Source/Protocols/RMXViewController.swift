@@ -16,7 +16,7 @@ extension RMX {
         return RMXDPad(view: view, world: world)
     } */
     static func Controller(gvc: RMXViewController) -> RMXDPad {
-        return RMXDPad(gvc: gvc)
+        return RMXDPad(gvc: gvc).initialize(gvc, gameView: gvc.gameView) as! RMXDPad
     }
     #elseif OSX
     static func Controller(gvc: RMXViewController) -> RMSKeys {
@@ -26,14 +26,18 @@ extension RMX {
 }
 
 protocol RMXView {
-    var world: RMSWorld! { get set }
-//    init(frame: CGRect)
-//    func viewDidLoad()
+    var world: RMSWorld? { get }
+    var interface: RMXInterface? { get set }
+    var gvc: RMXViewController? { get set }
+    
+    func initialize(gvc: RMXViewController, interface: RMXInterface)
 }
 
 protocol RMXViewController {
     
-    var gameView: GameView! { get }
+    var gameView: GameView? { get }
+    var world: RMSWorld? { get }
+    var interface: RMXInterface? { get set }
     
     #if iOS
         var view: UIView! { get set }
@@ -41,8 +45,10 @@ protocol RMXViewController {
 //        var view: NSOpenGLView! { get set }
     #endif
 
-    var interface: RMXInterface { get }
+//    var interface: RMXInterface { get }
 
 
 }
+
+
 

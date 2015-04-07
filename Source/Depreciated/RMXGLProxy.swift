@@ -18,9 +18,7 @@ import GLKit
     static var callbacks: [()->Void] = Array<()->Void>()
     static var world: RMSWorld! = nil
     static var effect: GLKBaseEffect? = GLKBaseEffect()
-    static var actions: RMSActionProcessor {
-        return self.world.actionProcessor
-    }
+    static var actions: RMSActionProcessor! = nil
     
     static var activeCamera: RMXCamera {
         return self.world.activeCamera
@@ -84,7 +82,6 @@ import GLKit
     
     class func initialize(world: RMSWorld, callbacks: ()->Void ...){
         self.world = world
-        self.activeCamera.effect = self.effect
         for function in self.callbacks {
             self.callbacks.append(function)
         }
@@ -153,6 +150,7 @@ import GLKit
 extension RMXGLProxy {
     class func run(type: RMXWorldType){
         self.world = RMSWorld(worldType: type)
+        self.actions = RMSActionProcessor(world: self.world)
         #if OPENGL_OSX
         RMXGLRun(Process.argc, Process.unsafeArgv)
         #endif

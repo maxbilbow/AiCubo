@@ -14,21 +14,31 @@ import SceneKit
 enum RMXNodeType { case DEFAULT, POPPY, OBSERVER, SHAPE, SIMPLE_PARTICLE, WORLD }
 
 protocol RMXChildNode {
-    var parent: RMXNode? { get set }
+    var parent: RMXNode? { get }
 }
 
 
 class RMXNode : SCNNode, RMXChildNode{
     static var COUNT: Int = 0
-    var rmxID: Int
+    var rmxID: Int = RMXNode.COUNT
     var isUnique: Bool = false
     var hasFriction = true
     var hasGravity = false
     lazy var shape: RMXShape = RMXShape(self)
 
+    
+    var parent: RMXNode? {
+        #if SceneKit
+            return self.parentNode as? RMXNode
+            #else
+            return self.parentNode
+        #endif
+        
+    }
+    
     lazy var world: RMSWorld = self as! RMSWorld
     #if OSX
-    lazy var mouse: RMXMouse = RMSMouse(parent: self)
+    lazy var mouse: RMXMouse = RMSMouse(parentNode: self)
     #endif
     lazy var actions: RMXSpriteActions = RMXSpriteActions(self)
     var type: RMXNodeType = .DEFAULT
@@ -36,7 +46,9 @@ class RMXNode : SCNNode, RMXChildNode{
     var anchor = RMXVector3Zero
     
     #if !SceneKit
+    var parentNode: RMXNode?
     var position: GLKVector3 = GLKVector3Zero
+    var transform: RMXMatrix4 = RMXMatrix4Identity
     var scale: GLKVector3 = GLKVector3Zero
     lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self)
     
@@ -77,16 +89,23 @@ class RMXNode : SCNNode, RMXChildNode{
     }
     
     var isAnimated: Bool = true
-    private var _name: String
-    var parent: RMXNode?
-    
-    
+    private var _name: String = ""
+
     var collisionBody: RMSCollisionBody! = nil
-    var resets: [() -> () ]
-    var behaviours: [(Bool) -> ()]
-    var children: [Int : RMXNode]
+    
+    var startingPoint: RMXVector3?
+    
+    lazy var resets: [() -> () ] = [{
+        self.body!.velocity = RMXVector3Zero
+        self.body!.acceleration = RMXVector3Zero
+        self.position = self.startingPoint ?? RMXVector3Zero
+        self.transform = RMXMatrix4Identity
+    }]
+    
+    var behaviours: [(Bool) -> ()] = Array<(Bool) -> ()>()
+    var children: [Int : RMXNode] = Dictionary<Int, RMXNode>()
     var hasChildren: Bool {
-        return !children.isEmpty
+        return self.children.isEmpty
     }
     var isAlwaysActive = true
     var isActive = true
@@ -119,7 +138,7 @@ class RMXNode : SCNNode, RMXChildNode{
     
     //Set automated rotation (used mainly for the sun)
     ///@todo create a behavior protocal/class instead of fun pointers.
-    var rAxis = RMXVector3Zero
+    var rAxis = RMXVector3Make(0,0,1)
     private var _rotation: RMFloat = 0
     var rotationCenterDistance:RMFloat = 0
     var isRotating = false
@@ -129,72 +148,80 @@ class RMXNode : SCNNode, RMXChildNode{
     }
     
     
-    class func Unique(parent:RMXNode?, type: RMXNodeType = .DEFAULT, name: String = "RMXNode") -> RMXNode {
-        let result = RMXNode(parent: parent, type: type, name: name)
+    class func Unique(parentNode:RMXNode?, type: RMXNodeType = .DEFAULT) -> RMXNode {
+        let result = RMXNode().initWithParent(parentNode!)
+        result.type = type
         result.isUnique = true
         return result
     }
-    
-    
-    init(parent:RMXNode?, type: RMXNodeType = .DEFAULT, name: String = "RMXNode")
+    /*
+    @availability(*, deprecated=10.9)
+    init(parentNode:RMXNode?, type: RMXNodeType = .DEFAULT, name: String = "RMXNode")
     {
-        self.children = Dictionary<Int,RMXNode>()
-        self.parent = parent
-        
-        self.rmxID = RMXNode.COUNT
-        
+//        self.parentNode = parentNode
+        //        self.rmxID = RMXNode.COUNT
         _name = name
-        RMXNode.COUNT++
-        self.resets = Array<() -> ()>()
-        self.behaviours = Array<(Bool) -> ()>()
-        var timePassed = 1000
-        func restIf()->Bool{
-            if timePassed == 0 {
-                timePassed = 1000
-                return true
-            } else {
-                timePassed -= 1
-                return false
-            }
-        }
-        self.prepareToRest = restIf
-    
         
+        self.type = type
+
         #if SceneKit
             super.init()
             self.geometry = self.shape
             self.physicsBody = RMSPhysicsBody(self)
             self.position = RMXVector3Zero
         #endif
+        parentNode?.addChildNode(self)
+
         
-        self.resets.append({
-            self.isAnimated = true
-            self.rAxis = RMXVector3Make(0,0,1)
-            self.type = type
-            self.isRotating = false
-            self.rotationCenterDistance = 0
-            func restIf() -> Bool {
-                return RMXVector3Length(self.body!.velocity) < 0.01
-            }
-            self.prepareToRest = restIf
-        })
-        
-        self.resets.last!()
         self.nodeDidInitialize()
-    }
+    } */
     #if SceneKit
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.geometry = self.shape
+        self.physicsBody = RMSPhysicsBody(self)
+        self.position = RMXVector3Zero
+        self.nodeDidInitialize()
     }
+    
+    override init(){
+        super.init()
+        self.geometry = self.shape
+        self.physicsBody = RMSPhysicsBody(self)
+        self.position = RMXVector3Zero
+        self.nodeDidInitialize()
+    }
+    
+   
+    #else
+    init(){
+        self.nodeDidInitialize()
+    }
+    
     #endif
+    
     private var _asObserver = false
     private var _asShape = false
 
+    func initWithParent(parentNode: RMXNode) -> RMXNode {
+        #if SceneKit
+            parentNode.addChildNode(self)
+            #else
+            self.parentNode = parentNode
+        #endif
+        self.world = parentNode.world
+        return self
+    }
     
     func nodeDidInitialize(){
-        if self.parent != nil {
+        RMXNode.COUNT++
+        if self.parentNode != nil {
             self.world = self.parent!.world
         }
+        func restIf() -> Bool {
+            return RMXVector3Length(self.body!.velocity) < 0.01
+        }
+        self.prepareToRest = restIf
     }
     
     func getName() -> String {
@@ -209,6 +236,7 @@ class RMXNode : SCNNode, RMXChildNode{
         return "\(_name): \(self.rmxID)"
     }
     
+    @availability(*, deprecated=0.0, obsoleted=1.0, message="Because !")
     func addInitCall(reset: () -> ()){
         self.resets.append(reset)
         self.resets.last?()
@@ -240,7 +268,10 @@ class RMXNode : SCNNode, RMXChildNode{
         }
     }
     
-    var prepareToRest: (() -> Bool)
+    lazy var prepareToRest: (() -> Bool) = {
+        return RMXVector3Length(self.body!.velocity) < 0.01
+    }
+
     
     func setRestCondition(restIf: () -> Bool) {
         self.prepareToRest = restIf
@@ -276,22 +307,30 @@ class RMXNode : SCNNode, RMXChildNode{
     
     
     func insertChildNode(child: RMXNode){
-        child.parent = self
+        #if SceneKit
+            self.addChildNode(child)
+            #else
+            child.parentNode = self
+        #endif
         child.world = self.world
         self.children[child.rmxID] = child
+        #if SceneKit
+        self.insertChildNode(child, atIndex: 0)
+        #endif
     }
+    
     
     func insertChildNode(#children: [Int:RMXNode]){
         for child in children {
-            self.children[child.0] = child.1
+            self.insertChildNode(child.1)
         }
     }
 
     
     func expellChild(id rmxID: Int){
         if let child = self.children[rmxID] {
-            if child.parent! == self {
-                child.parent! = self.world
+            if child.parentNode! == self {
+                //child.parent! = self.world
                 self.children.removeValueForKey(rmxID)
             }
         }
@@ -299,8 +338,8 @@ class RMXNode : SCNNode, RMXChildNode{
     }
     
     func expellChild(child: RMXNode){
-        if child.parent! == self {
-            child.parent! = self.world
+        if child.parentNode! == self {
+            child.parent!.world = self.world
             self.children.removeValueForKey(child.rmxID)
         }
     }
@@ -349,7 +388,9 @@ class RMXNode : SCNNode, RMXChildNode{
     
     func setAsShape(type: ShapeType = .CUBE) -> RMXNode {//, mass: RMFloat? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXNode {
         if self._asShape { return self }
-        
+        #if SceneKit
+        self.geometry = RMXArt.CUBE
+        #endif
         self.resets.append({
             self.shape.type = type
             self.shape.isVisible = true
@@ -366,11 +407,9 @@ class RMXNode : SCNNode, RMXChildNode{
             self.actions.armLength = self.radius * RMFloat(2)
             
             self.body!.mass = 9
-            #if SceneKit
-            self.scale.y = 20
-                #else
+
             self.body!.radius = 20
-                #endif
+
             self.position = RMXVector3Make(0,self.radius,-20)
             self.hasGravity = true
             self.isAlwaysActive = true

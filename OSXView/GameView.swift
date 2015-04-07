@@ -11,16 +11,27 @@ import GLUT
 
 class GameView : RFOpenGLView, RMXView {
     
-    var world: RMSWorld! = RMSWorld()
+    var world: RMSWorld? {
+        return self.interface?.world
+    }
+    
+    var interface: RMXInterface?
+    var gvc: RMXViewController?
+    
+    func initialize(gvc: RMXViewController, interface: RMXInterface) {
+        self.gvc = gvc
+        self.interface = interface
+    }
+    
     
     func setWorld(type: RMXWorldType){
-        if self.world.worldType != type {
-            self.world.setWorldType(worldType: type)
+        if self.world!.worldType != type {
+            self.world!.setWorldType(worldType: type)
         }
     }
     
     var camera: RMXCamera {
-        return self.world.activeCamera
+        return self.world!.activeCamera
     }
     
     
@@ -45,7 +56,7 @@ class GameView : RFOpenGLView, RMXView {
     
     override func drawFrame() {
         super.drawFrame()
-        RMXGLProxy.drawScene(self.world)
+        RMXGLProxy.drawScene(self.world!)
     }
     override func animate() {
         super.animate()

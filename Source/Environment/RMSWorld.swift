@@ -16,7 +16,7 @@ class RMSWorld : RMXNode {
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
 
-    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
+//    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
     lazy var sun: RMXNode = RMXNode.Unique(self).shape.makeAsSun(rDist: self.radius)
@@ -29,40 +29,41 @@ class RMSWorld : RMXNode {
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
     lazy var observer: RMXNode = self.activeSprite
-    lazy var poppy: RMXNode = RMX.makePoppy(witWorld: self)
+    lazy var poppy: RMXNode = RMX.makePoppy(world: self)
     lazy var players: [Int: RMXNode] = [
         self.activeSprite.rmxID: self.activeSprite ,
         self.poppy.rmxID: self.poppy,
         self.sun.rmxID: self.sun
     ]
-    lazy var achildrenctiveCamera: RMXCamera = RMXCamera(self.observer)
     
     var worldType: RMXWorldType = .DEFAULT
     
     init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloat = 2000, parent: RMXNode! = nil) {
-        super.init(parent: parent, type: .WORLD, name: name)
+        super.init()//parentNode: parent, type: .WORLD, name: name)
         
-        self.worldType = type
-        self.world = self
-        self.body!.radius = radius
-        self.activeSprite.addInitCall { () -> () in
-            self.observer.position = RMXVector3Make(20, 20, 20)
-        }
-//        self.activeCamera = RMXCamera(self.activeSprite)
-        self.isAnimated = false
-        self.shape.isVisible = false
-        self.addInitCall ({
-            self.worldDidInitialize()
-        })
     }
     #if SceneKit
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+    }
+    
+    
+    override init(){
+        super.init()
     }
     #endif
     
     private var _firstFetch = true
     
+    override func nodeDidInitialize() {
+        super.nodeDidInitialize()
+        self.body!.radius = 2000
+        self.world = self
+        self.isAnimated = false
+        self.shape.isVisible = false
+        
+        self.worldDidInitialize()
+    }
     
     func worldDidInitialize() {
         self.insertChildNode(children: self.players)
@@ -149,7 +150,6 @@ class RMSWorld : RMXNode {
     
    
     override func animate() {
-        self.actionProcessor.animate()
         super.animate()
     }
     
@@ -209,9 +209,7 @@ class RMSWorld : RMXNode {
     }
 
     
-    func action(action: String = "reset",speed: RMFloat = 0, point: [RMFloat] = []) {
-        self.actionProcessor.movement( action,speed: speed, point: point)
-    }
+   
     
     
     

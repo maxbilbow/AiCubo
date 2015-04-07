@@ -118,13 +118,13 @@ void keyUpOperations(int key){
             SelectFromMenu(MENU_TEXTURING);
             break;*/
         case 'G':
-            [RMXGLProxy performAction:@"toggleAllGravity"];
+            [RMXGLProxy performActionWithSpeed:1 action:@"toggleAllGravity"];
             break;
         case 'm':
-            [RMXGLProxy performAction:@"toggleMouseLock"];
+            [RMXGLProxy performActionWithSpeed:1 action:@"toggleMouseLock"];
             break;
         case 'f':
-            [RMXGLProxy performAction:@"toggleFog"];
+            [RMXGLProxy performActionWithSpeed:1 action:@"toggleFog"];
             break;
         case 32:
     // [observer stop();
@@ -135,7 +135,7 @@ void keyUpOperations(int key){
 //            if (DEBUG) NSLog(@"%i: TAB",key);
             break;
         case 'g':
-            [RMXGLProxy performAction:@"toggleGravity"];
+            [RMXGLProxy performActionWithSpeed:1 action:@"toggleGravity"];
             break;
         case '0':
         case '1':
@@ -153,7 +153,7 @@ void keyUpOperations(int key){
            // sun.setAnchor(&observer);
             break;
         case 'R':
-            [RMXGLProxy performAction:@"resetWorld"];
+            [RMXGLProxy performActionWithSpeed:1 action:@"reset"];
             break;
         case 6: //cntrl f
             NSLog(@"ERROR: Toggle Full Screen not working");//[window toggleFullScreen];

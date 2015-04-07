@@ -52,7 +52,7 @@ extension RMX {
     }
     static func buildScene(world: RMSWorld) -> RMSWorld{
         
-        let poppy = self.makePoppy(witWorld: world)
+        let poppy = self.makePoppy(world: world)
         
         let observer = world.activeSprite
         let actors = [ 0:observer, 1:poppy ]
@@ -131,8 +131,8 @@ extension RMX {
 
         return world
     }
-    static func makePoppy(witWorld world: RMSWorld) -> RMXNode{
-        let poppy: RMXNode = RMXNode.Unique(world, name: "Poppy").setAsObserver().setAsShape()
+    static func makePoppy(#world: RMSWorld) -> RMXNode{
+        let poppy: RMXNode = RMXNode.Unique(world).setAsObserver().setAsShape()
         poppy.type = .POPPY
         poppy.body!.radius = 8
         poppy.position = RMXVector3Make(100,poppy.radius,-50)
@@ -218,7 +218,7 @@ extension RMX {
         }
         poppy.shape.color = GLKVector4Make(0.1,0.1,0.1,1.0)
         
-        let head = RMXNode(parent: poppy, type: .DEFAULT, name: "Poppy Head").setAsShape(type: .SPHERE)
+        let head = RMXNode().initWithParent(poppy).setAsShape(type: .SPHERE)
         head.body!.radius = poppy.radius / 2
         head.shape.color = GLKVector4Make(0.1,0.1,0.1,0.1)
         head.position = RMXVector3Make(0,poppy.radius + head.radius / 4, poppy.radius + head.radius / 4)

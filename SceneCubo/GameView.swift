@@ -8,12 +8,23 @@
 
 import SceneKit
 
-class GameView: SCNView ,RMXView{
+class GameView: RMSView ,RMXView {
     
-    var world: RMSWorld! = nil
+    var world: RMSWorld? {
+        return self.interface?.world
+    }
+    var interface: RMXInterface?
+    var gvc: RMXViewController?
+    
+    func initialize(gvc: RMXViewController, interface: RMXInterface){
+        self.gvc = gvc
+        self.interface = interface
+        self.delegate = self.interface
+    }
     
     
-    override func mouseDown(theEvent: NSEvent) {
+    
+override func mouseDown(theEvent: NSEvent) {
         /* Called when a mouse click occurs */
         
         // check what nodes are clicked
@@ -26,6 +37,10 @@ class GameView: SCNView ,RMXView{
                 
                 // get its material
                 let material = result.node!.geometry!.firstMaterial!
+                if let node = result.node as? RMXNode {
+                    self.world?.observer.actions.grabItem(item: node)
+                    RMXLog(node.label)
+                }
                 
                 // highlight it
                 SCNTransaction.begin()
@@ -50,27 +65,17 @@ class GameView: SCNView ,RMXView{
         super.mouseDown(theEvent)
     }
     
-    var viewMatrix: GLKMatrix4 {
-        return self.camera.modelViewMatrix
-    }
-    
-
-    var projectionMatrix: GLKMatrix4 {
-        return self.camera.getProjectionMatrix(Float(self.bounds.size.width), height: Float(self.bounds.size.height))
-    }
-  
+      
     func setWorld(type: RMXWorldType){
-        if self.world.worldType != type {
-            self.world.setWorldType(worldType: type)
+        if self.world!.worldType != type {
+            self.world!.setWorldType(worldType: type)
         }
     }
     
     var camera: RMXCamera {
-        return self.world.activeCamera
+        return self.world!.activeCamera
     }
     
 
-    override func keyDown(theEvent: NSEvent) {
-        
-    }
+    
 }

@@ -125,7 +125,7 @@ func RMXMatrix4MultiplyVector3(mat: RMXMatrix4, v: RMXVector3) -> RMXVector3{
     #if SceneKit
         return SCNVector3FromGLKVector3(GLKMatrix4MultiplyVector3(SCNMatrix4ToGLKMatrix4(mat),SCNVector3ToGLKVector3(v)))
         #else
-        return GLKMatrix4MultiplyVector3(mat, v)
+        return GLKMatrix4MultiplyVector3(GLKMatrix4Transpose(mat), v)
     #endif
 }
 func RMXVector3Divide(n:RMXVector3, d: RMXVector3) -> RMXVector3 {
@@ -173,9 +173,15 @@ func += (inout lhs: GLKVector3, rhs: SCNVector3) {
 }
 
 func += (inout lhs: SCNVector3, rhs: GLKVector3) {
+    #if iOS
+        lhs.x += Float(rhs.x)
+        lhs.y += Float(rhs.y)
+        lhs.z += Float(rhs.z)
+    #else
         lhs.x += CGFloat(rhs.x)
         lhs.y += CGFloat(rhs.y)
         lhs.z += CGFloat(rhs.z)
+    #endif
 }
 
 func += (inout lhs: SCNVector3, rhs: SCNVector3) {

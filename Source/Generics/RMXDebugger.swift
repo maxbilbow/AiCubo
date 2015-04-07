@@ -130,3 +130,10 @@ public func RMXLog(_ message: AnyObject? = "", sender: AnyObject? = __FUNCTION__
         println("\(file?.lastPathComponent)::\(sender): \(message)")
     }
 }
+/*
+public func RMXLog(_ messages: [AnyObject], sender: AnyObject? = __FUNCTION__, file: AnyObject? = __FILE__){
+    if RMX.isDebugging{
+        println("\(file?.lastPathComponent)::\(sender): \(message)")
+    }
+}*/
+

@@ -1,15 +1,15 @@
 //
-//  DogSimTests.swift
-//  DogSimTests
+//  SceneIOSTests.swift
+//  SceneIOSTests
 //
-//  Created by Max Bilbow on 05/04/2015.
-//  Copyright (c) 2015 Rattle Media. All rights reserved.
+//  Created by Max Bilbow on 08/04/2015.
+//  Copyright (c) 2015 Rattle Media Ltd. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class DogSimTests: XCTestCase {
+class SceneIOSTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

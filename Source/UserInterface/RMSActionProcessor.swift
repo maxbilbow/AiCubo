@@ -32,12 +32,11 @@ class RMSActionProcessor {
         RMXLog()
     }
 
-
+    var gameView: GameView?
     
     private var _movement: (x:RMFloat, y:RMFloat, z:RMFloat) = (x:0, y:0, z:0)
     private var _panThreshold: RMFloat = 70
     func movement(action: String!, speed: RMFloat = 0,  point: [RMFloat]) -> Bool{
-        //if (keys.keyStates[keys.forward])  [observer accelerateForward:speed];
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
@@ -114,6 +113,9 @@ class RMSActionProcessor {
             }
         }
         
+        if action == "reset" && speed == 1 {
+            self.world.reset()
+        }
         
         if action == "grab" {
             self.activeSprite.actions.grabItem()
@@ -146,28 +148,33 @@ class RMSActionProcessor {
                 }
             }
         } else {
-            if action == "toggleAllGravity" {
+            if action == "toggleAllGravity" && speed == 1{
                 self.world.toggleGravity()
             }
         }
         
-        if action == "toggleGravity" && speed == 0 {
+        if action == "toggleGravity" && speed == 1 {
             self.activeSprite.toggleGravity()
         }
         
         
-        if action == "toggleMouseLock" {
+        if action == "toggleMouseLock" && speed == 1{
             #if OPENGL_OSX
             self.activeSprite.mouse.toggleFocus()
             #endif
         }
 
+        
+        if action == "lockMouse" {
+//            self.gameView?.cursorUpdate(<#event: NSEvent#>)
+        }
+        
         if action == "toggleFog" {
             RMX.toggleFog()
         }
 
 //        RMXLog("\(self.world.activeCamera.viewDescription)\n\(action!) \(speed), \(self.world.activeSprite.position.z)\n")
-        
+//        println(self.activeSprite.position.print)
         return true
     }
     

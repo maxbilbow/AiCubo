@@ -21,29 +21,29 @@ enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3 }
 #endif
 
 class RMXShape : SCNGeometry, RMXNodeProperty {
-    var parent: RMXNode! = nil
+    var owner: RMXNode! = nil
     var world: RMSWorld {
-        return self.parent.world
+        return self.owner.world
     }
     var type: ShapeType = .NULL
     
     var scaleMatrix: GLKMatrix4 {
-        let radius = Float(self.parent.radius)
+        let radius = Float(self.owner.radius)
         return GLKMatrix4MakeScale(radius,radius,radius)
     }
         
     var rotationMatrix: GLKMatrix4 {
         #if SceneKit
-        return SCNMatrix4ToGLKMatrix4(self.parent.body!.orientation)
+        return SCNMatrix4ToGLKMatrix4(self.owner.body!.orientation)
         #else
-        return self.parent.body!.orientation
+        return self.owner.body!.orientation
         #endif
     }
         
     var translationMatrix: GLKMatrix4 {
-        var p = self.parent.position
-        if self.parent.parent != nil {
-            p += self.parent.parent!.position
+        var p = self.owner.position
+        if self.owner.parent != nil {
+            p += self.owner.parent!.position
         }
         
         return GLKMatrix4MakeTranslation(Float(p.x), Float(p.y), Float(p.z))
@@ -54,7 +54,7 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
 //    }
         
     var radius: RMFloat {
-        return self.parent.radius
+        return self.owner.radius
     }
     
     var color: GLKVector4 = GLKVector4Make(0.5,0.5,0.5,1)
@@ -63,11 +63,11 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
     var isVisible: Bool = true
     var brigtness: RMFloat = 1
     
-    init(_ parent: RMXNode? = nil, type: ShapeType = .NULL ) {
+    init(_ owner: RMXNode? = nil, type: ShapeType = .NULL ) {
         self.gl_light_type = GL_POSITION
         self.gl_light = GL_LIGHT0
         self.type = type
-        self.parent = parent
+        self.owner = owner
         #if SceneKit
         super.init()
         #endif
@@ -82,15 +82,15 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
     func makeAsSun(rDist: RMFloat = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
         self.type = .SPHERE
         self.isVisible = true
-        self.parent.rotationCenterDistance = rDist
-        self.parent.isRotating = isRotating
-        self.parent.setRotationSpeed(speed: 1)
+        self.owner.rotationCenterDistance = rDist
+        self.owner.isRotating = isRotating
+        self.owner.setRotationSpeed(speed: 1)
         self.color = GLKVector4Make(1, 1, 1, 1.0)
-        self.parent.hasGravity = false
+        self.owner.hasGravity = false
         self.isLight = true
-        self.parent.rAxis = rAxis
+        self.owner.rAxis = rAxis
         self._rotation = PI / 4
-        return self.parent
+        return self.owner
     }
         func animate(){
             

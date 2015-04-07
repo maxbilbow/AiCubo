@@ -7,95 +7,124 @@
 //
 
 import Foundation
+    import GLKit
 #if iOS
     import UIKit
     #elseif OSX
-    import GLKit
+
 #endif
 
 #if SceneKit
     import SceneKit
-    typealias SceneObject = SCNView
-#elseif OPENGL_ES
-    typealias SceneObject = GLKView
-    #elseif iOS
-    typealias SceneObject = UIView
-    #else
     typealias SceneObject = NSObject
+    typealias RendererDelegate = SCNSceneRendererDelegate
+    #else
+    protocol RendererDelegate {}
+    protocol SceneObject {}
+    #endif
+
+#if OPENGL_ES
+    typealias RMSView = GLKView
+    #elseif iOS
+    typealias RMSView = UIView
+    #elseif SceneKit
+    typealias RMSView = SCNView
+    #elseif OSX
+    typealias RMSView = NSView
 #endif
 
-class RMXInterface {// : SceneObject {
-    lazy var actions: RMSActionProcessor = RMSActionProcessor(world: self.world)
+class RMXInterface : SceneObject, RendererDelegate {
+    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self.world!)
     private let _isDebugging = false
     var debugData: String = "No Data"
-//    #if OPENGL_ES
-    var gvc: RMXViewController! = nil
-//    #endif
-    let world: RMSWorld = RMSWorld()
     
+    var gvc: RMXViewController?
+    var gameView: GameView?
+    
+//    lazy var controllers: [ String : ( isActive: Bool, process: ()->() ) ] = [ "debug" : ( isActive: self._isDebugging,
+//        process: {
+//            
+//    } ) ]
+    
+   
+    
+    var world: RMSWorld?
+
     var lookSpeed: RMFloat = PI_OVER_180
     var moveSpeed: RMFloat = 1
     
-    var activeSprite: RMXNode {
-        return self.world.activeSprite
+    var activeSprite: RMXNode? {
+        return self.world?.activeSprite
     }
     
     #if iOS
     var view: UIView {
-        return self.gvc.gameView as! UIView
+        return self.gvc!.gameView!
     }
-    #elseif SceneKit
     
-    #else
-    var view: NSObject {
-        return self.gvc.gameView as! NSObject
+    #elseif OPENGL_OSX
+    var view: GameView {
+        return self.gvc!.gameView!
     }
     #endif
 
-    var gameView: RMXView {
-        return self.gvc.gameView
-    }
-
     
-    var controllers: [ String : ( isActive: Bool, process: ()->() ) ]
     
-    var activeCamera: RMXCamera {
-        return self.world.activeCamera
+    var activeCamera: RMXCamera? {
+        return self.world?.activeCamera
     }
     
-    init(gvc: RMXViewController){
+    init(gvc: RMXViewController, world: RMSWorld? = nil){
         self.gvc = gvc
-//        self.actions = self.world.actions
-        self.controllers = [ "debug" : ( isActive: _isDebugging,
-            process: {
-              
-        } ) ]
-        //super.init()
-        self.world.clock = RMXClock(world: world, interface: self)
+        self.world = world
+        #if SceneKit
+        super.init()
+        #endif
+        self.initialize(gvc, gameView: gvc.gameView!, world: world)
         self.viewDidLoad()
+        NSLog("\(__FUNCTION__)")
     }
-   /*
-    #if SceneKit
     
-    required init?(coder: NSCoder) {
-        self.controllers = [ "debug" : ( isActive: _isDebugging,
-            process: {
-                
-        } ) ]
-        super.init(coder: coder)
-        self.viewDidLoad()
+    func initialize(gvc: RMXViewController?, gameView: GameView?, world: RMSWorld? = nil) -> RMXInterface {
+        if gvc != nil {
+            self.gvc = gvc
+        }
+        if gameView != nil {
+            self.gameView = gameView
+        }
+        if world != nil {
+            self.world = world
+        }
+        if self.world == nil {
+            self.world = RMSWorld(worldType: .DEFAULT)
+        }
+        self.world!.clock = RMXClock(world: self.world!, interface: self)
+        #if SceneKit
+        self.gameView!.delegate = self
+        #endif
+        return self
     }
-    #endif */
-    func viewDidLoad(){
-        self.controllers["debug"] = ( isActive: _isDebugging, process: self.debug )
-        self.world.clock = RMXClock(world: world, interface: self)
+    
+    
+    func viewDidLoad(coder: NSCoder! = nil){
+        #if SceneKit
+        if coder != nil {
+            self.world = RMSWorld(coder: coder)
+        }
+        #endif
+        if self.world == nil {
+            self.world = RMSWorld(worldType: .DEFAULT)
+        }
+//        self.controllers["debug"] = ( isActive: _isDebugging, process: self.debug )
         self.setUpGestureRecognisers()
-    }
 
+    }
+    
     func setUpGestureRecognisers() {
         
     }
     
+    /*
     func setController(forKey key: String, run process: ()->() ) -> ( isActive: Bool, process: ()->() )? {
         let old = self.controllers.updateValue((isActive: false, process: process ), forKey: key)
         if old != nil {
@@ -115,6 +144,7 @@ class RMXInterface {// : SceneObject {
             }
         }
     }
+*/
 
     func log(_ message: String = "", sender: String = __FUNCTION__, line: Int = __LINE__) {
         if _isDebugging {
@@ -131,16 +161,23 @@ class RMXInterface {// : SceneObject {
         debugData = ""
     }
     
-        
+    
+    #if SceneKit
+    func renderer(aRenderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
+        self.update()
+    }
+    #endif
+    
     func update(){
-        ///Includes debug()
-        self.processControllers()
-        self.world.animate()
+        self.actionProcessor.animate()
+        self.world?.animate()
     }
     
     ///Stop all inputs (i.e. no gestures received)
     ///@virtual
     func handleRelease(arg: AnyObject, args: AnyObject ...) { }
 
-
+    func action(action: String = "reset",speed: RMFloat = 0, point: [RMFloat] = []) {
+        self.actionProcessor.movement( action,speed: speed, point: point)
+    }
 }

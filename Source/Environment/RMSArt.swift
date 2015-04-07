@@ -8,6 +8,9 @@
 
 import Foundation
 import GLKit
+#if SceneKit
+    import SceneKit
+    #endif
 
 class RMXArt {
     static let colorBronzeDiff: [Float]  = [ 0.8, 0.6, 0.0, 1.0 ]
@@ -18,7 +21,16 @@ class RMXArt {
     static let colorGreen: [Float]       = [ 0.0, 0.1, 0.0, 1.0 ]
     static let colorYellow: [Float]      = [ 1.0, 0.0, 0.0, 1.0 ]
     static let nillVector: [Float]       = [ 0  ,   0,  0,  0   ]
+    #if SceneKit
+    static let CUBE = SCNBox(
+        width: 1.0,
+        height:1.0,
+        length:1.0,
+        chamferRadius:0.0)
     
+    static let SPHERE = SCNSphere(radius:0.5)
+    static let CYLINDER = SCNCylinder(radius:0.5, height:1.0)
+    #endif
     
     class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloat = 1000) -> RMSWorld {
         RMXArt.drawSun(world)
@@ -39,9 +51,12 @@ class RMXArt {
     }
     
     class func drawPlane(world: RMSWorld) {
-        let ZX = RMXNode(parent: world)
+        let ZX = RMXNode().initWithParent(world)
         ZX.body!.radius = world.body!.radius
         ZX.shape.type = .CUBE
+        #if SceneKit
+            ZX.geometry = self.CUBE
+        #endif
         ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
         //        ZX.body.addPhi(upDownRadians: GLKMathDegreesToRadians(90))
         ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
@@ -78,17 +93,20 @@ class RMXArt {
             for (var i: RMFloat = 0; i < shapesPerAxis; ++i){
                 let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                 point += step
-                let object:RMXNode = RMXNode(parent: world)
-                object.addInitCall( {
+                let object:RMXNode = RMXNode().initWithParent(world)
+                object.resets.append({
                     object.hasGravity = false
                     object.body!.radius = shapeRadius
                     object.position = position
                     object.shape.isVisible = true
                     object.shape.type = .CUBE
-            
+                    #if SceneKit
+                    object.geometry = self.CUBE
+                    #endif
                     object.shape.color = GLKVector4Make(color[0], color[1], color[2], color[3])
                     object.isAnimated = false
                 })
+                object.resets.last?()
                 world.insertChildNode(object)
             }
             
@@ -120,15 +138,21 @@ class RMXArt {
         randPos[1] = randPos[1] + 50
         
         //gravity = !gravity;
-            let object: RMXNode = RMXNode(parent: world)
+            let object: RMXNode = RMXNode().initWithParent(world)
 //            if(false){//(rand() % 10000) == 1) {
 //                object.shape.makeAsSun(rDist: 0, isRotating:false)
 //            }
         
         if(random() % 50 == 1) {
             object.shape.type = .SPHERE
+            #if SceneKit
+                object.geometry = self.SPHERE
+            #endif
         } else {
             object.shape.type = .CUBE
+            #if SceneKit
+                object.geometry = self.CUBE
+            #endif
         }
         
         object.hasGravity = false //(rand()% 100) == 1

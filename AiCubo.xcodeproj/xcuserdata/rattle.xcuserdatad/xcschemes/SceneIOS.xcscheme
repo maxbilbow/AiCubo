@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C77A2091AD181FA006C008F"
-               BuildableName = "DogSim.app"
-               BlueprintName = "DogSim"
-               ReferencedContainer = "container:DogSim.xcodeproj">
+               BlueprintIdentifier = "6CD1C6601AD4A1C500C659AD"
+               BuildableName = "SceneIOS.app"
+               BlueprintName = "SceneIOS"
+               ReferencedContainer = "container:AiCubo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C77A2201AD181FA006C008F"
-               BuildableName = "DogSimTests.xctest"
-               BlueprintName = "DogSimTests"
-               ReferencedContainer = "container:DogSim.xcodeproj">
+               BlueprintIdentifier = "6CD1C6761AD4A1C600C659AD"
+               BuildableName = "SceneIOSTests.xctest"
+               BlueprintName = "SceneIOSTests"
+               ReferencedContainer = "container:AiCubo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +46,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6C77A2201AD181FA006C008F"
-               BuildableName = "DogSimTests.xctest"
-               BlueprintName = "DogSimTests"
-               ReferencedContainer = "container:DogSim.xcodeproj">
+               BlueprintIdentifier = "6CD1C6761AD4A1C600C659AD"
+               BuildableName = "SceneIOSTests.xctest"
+               BlueprintName = "SceneIOSTests"
+               ReferencedContainer = "container:AiCubo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C77A2091AD181FA006C008F"
-            BuildableName = "DogSim.app"
-            BlueprintName = "DogSim"
-            ReferencedContainer = "container:DogSim.xcodeproj">
+            BlueprintIdentifier = "6CD1C6601AD4A1C500C659AD"
+            BuildableName = "SceneIOS.app"
+            BlueprintName = "SceneIOS"
+            ReferencedContainer = "container:AiCubo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,10 +76,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C77A2091AD181FA006C008F"
-            BuildableName = "DogSim.app"
-            BlueprintName = "DogSim"
-            ReferencedContainer = "container:DogSim.xcodeproj">
+            BlueprintIdentifier = "6CD1C6601AD4A1C500C659AD"
+            BuildableName = "SceneIOS.app"
+            BlueprintName = "SceneIOS"
+            ReferencedContainer = "container:AiCubo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,10 +95,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C77A2091AD181FA006C008F"
-            BuildableName = "DogSim.app"
-            BlueprintName = "DogSim"
-            ReferencedContainer = "container:DogSim.xcodeproj">
+            BlueprintIdentifier = "6CD1C6601AD4A1C500C659AD"
+            BuildableName = "SceneIOS.app"
+            BlueprintName = "SceneIOS"
+            ReferencedContainer = "container:AiCubo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

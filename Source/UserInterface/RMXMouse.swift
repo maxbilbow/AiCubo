@@ -43,7 +43,7 @@ class RMSMouse : RMXMouse{
         return self.pos.y
     }
     
-    init(parent: RMXNode){
+    init(parentNode parent: RMXNode){
         self.parent = parent
     }
     func toggleFocus()    {
