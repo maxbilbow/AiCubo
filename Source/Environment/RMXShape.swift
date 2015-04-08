@@ -49,11 +49,11 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
         return GLKMatrix4MakeTranslation(Float(p.x), Float(p.y), Float(p.z))
     }
     
-//    var rotation: RMFloat {
+//    var rotation: RMFloatB {
 //        return self.parent.rotation
 //    }
         
-    var radius: RMFloat {
+    var radius: RMFloatB {
         return self.owner.radius
     }
     
@@ -61,7 +61,7 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
     var isLight: Bool = false
     var gl_light_type, gl_light: Int32
     var isVisible: Bool = true
-    var brigtness: RMFloat = 1
+    var brigtness: RMFloatB = 1
     
     init(_ owner: RMXNode? = nil, type: ShapeType = .NULL ) {
         self.gl_light_type = GL_POSITION
@@ -83,8 +83,8 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
 //    }
     
     
-    private var _rotation: RMFloat = 0
-    func makeAsSun(rDist: RMFloat = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
+    private var _rotation: RMFloatB = 0
+    func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
         self.type = .SPHERE
         #if SceneKit
         self.owner.geometry = RMXArt.SPHERE

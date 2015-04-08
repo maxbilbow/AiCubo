@@ -20,11 +20,13 @@ class GameViewController : NSViewController, RMXViewController {
     func resetGame() {//type: RMXWorldType = GameViewController.worldType) -> UIView {
         if self.gameView == nil || self.gameView !== self.view {
             self.gameView = GameView(frame: self.view.bounds)
+            @IBOutlet weak var _gameView: SCNView!
             self.view = self.gameView!
         }
         
         
     
+        @IBOutlet var s: SCNView!
         
         self.gameView!.setWorld(RMSWorld.TYPE)
        

@@ -68,8 +68,8 @@ extension RMXDPad {
         } else if recogniser.state == .Ended {
             _handleRelease(recogniser.state)
         } else {
-            let forward = Float(point.y - self.moveOrigin.y)
-            let sideward = Float(point.x - self.moveOrigin.x)
+            let forward = RMFloatB(point.y - self.moveOrigin.y)
+            let sideward = RMFloatB(point.x - self.moveOrigin.x)
             self.action(action: "move", speed: self.moveSpeed, point: [sideward,0, forward])
         }
         
@@ -83,7 +83,8 @@ extension RMXDPad {
             }
 //            _handleRelease(recognizer.state)
         }
-            func handlePinch(recognizer: UIPinchGestureRecognizer) {
+    
+    func handlePinch(recognizer: UIPinchGestureRecognizer) {
             let x: Float = Float(recognizer.scale) * 0.2
             self.log()
             self.action(action: "enlargeItem", speed: x)
@@ -121,4 +122,7 @@ extension RMXDPad {
         }
     
     }
-    
+
+
+
+

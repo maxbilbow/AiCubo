@@ -20,6 +20,7 @@ class ViewController : UIViewController {
     
     @IBAction func playFetch(sender: AnyObject) {
         RMSWorld.TYPE = .FETCH
+        @IBOutlet var _gameView: SCNView!
     }
     
     @IBAction func testingEnvironment(sender: AnyObject) {

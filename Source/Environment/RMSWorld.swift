@@ -11,8 +11,8 @@ import GLKit
 
 enum RMXWorldType { case DEFAULT, TESTING_ENVIRONMENT, FETCH }
 class RMSWorld : RMXNode {
-    static var TYPE: RMXWorldType = .TESTING_ENVIRONMENT
-    let gravityScaler: RMFloat = 0.05
+    static var TYPE: RMXWorldType = .DEFAULT
+    let gravityScaler: RMFloatB = 0.05
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
 
@@ -20,7 +20,7 @@ class RMSWorld : RMXNode {
     
     
     lazy var sun: RMXNode = RMXNode.Unique(self).shape.makeAsSun(rDist: self.radius)
-    private let GRAVITY: RMFloat = 9.8
+    private let GRAVITY: RMFloatB = 9.8
     
     
     lazy var activeCamera: RMXCamera! = RMXCamera(self.activeSprite)
@@ -36,9 +36,9 @@ class RMSWorld : RMXNode {
         self.sun.rmxID: self.sun
     ]
     
-    var worldType: RMXWorldType = .TESTING_ENVIRONMENT
+    var worldType: RMXWorldType = .DEFAULT
     
-    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloat = 2000, parent: RMXNode! = nil) {
+    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloatB = 2000, parent: RMXNode! = nil) {
         super.init()//parentNode: parent, type: .WORLD, name: name)
         
     }
@@ -98,7 +98,7 @@ class RMSWorld : RMXNode {
     }
    
             
-    func µAt(someBody: RMXNode) -> RMFloat {
+    func µAt(someBody: RMXNode) -> RMFloatB {
         if !someBody.isInWorld && someBody.isObserver {
             return 0.0000001
         } else if (someBody.position.y <= someBody.ground   ) {
@@ -108,7 +108,7 @@ class RMSWorld : RMXNode {
         }
 
     }
-    func massDensityAt(someBody: RMXNode) -> RMFloat {
+    func massDensityAt(someBody: RMXNode) -> RMFloatB {
         if !someBody.isInWorld && someBody.isObserver {
             return 0.0000001
         } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
@@ -123,7 +123,7 @@ class RMSWorld : RMXNode {
         let v = velocity.y
         let p = sender.position.y
         let next = sender.body!.velocity + sender.position
-        let bounceY: RMFloat = -v
+        let bounceY: RMFloatB = -v
         let g = sender.ground
         if p <= g && v < 0 && sender.isInWorld {
             if p < g / sender.body!.coushin {
@@ -159,11 +159,11 @@ class RMSWorld : RMXNode {
     
     func closestObjectTo(sender: RMXNode)->RMXNode? {
         var closest: Int = -1
-        var dista: RMFloat = RMFloat.infinity// = sender.body.distanceTo(closest)
+        var dista: RMFloatB = RMFloatB.infinity// = sender.body.distanceTo(closest)
         for object in children {
             let child = object.1
             if child != sender {
-                let distb: RMFloat = sender.body!.distanceTo(child)
+                let distb: RMFloatB = sender.body!.distanceTo(child)
                 if distb < dista {
                     closest = child.rmxID
                     dista = distb
@@ -180,11 +180,11 @@ class RMSWorld : RMXNode {
     
     func furthestObjectFrom(sender: RMXNode)->RMXNode? {
         var furthest: Int = -1
-        var dista: RMFloat = 0// = sender.body.distanceTo(closest)
+        var dista: RMFloatB = 0// = sender.body.distanceTo(closest)
         for object in children {
             let child = object.1
             if child != sender {
-                let distb: RMFloat = sender.body!.distanceTo(child)
+                let distb: RMFloatB = sender.body!.distanceTo(child)
                 if distb > dista {
                     furthest = child.rmxID
                     dista = distb

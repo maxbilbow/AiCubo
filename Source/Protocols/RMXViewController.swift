@@ -16,11 +16,11 @@ extension RMX {
         return RMXDPad(view: view, world: world)
     } */
     static func Controller(gvc: RMXViewController) -> RMXDPad {
-        return RMXDPad(gvc: gvc).initialize(gvc, gameView: gvc.gameView) as! RMXDPad
+        return RMXDPad(gvc: gvc)//.initialize(gvc, gameView: gvc.gameView) as! RMXDPad
     }
     #elseif OSX
     static func Controller(gvc: RMXViewController) -> RMSKeys {
-        return RMSKeys(gvc: gvc)
+        return RMSKeys(gvc: gvc)//.initialize(gvc, gameView: gvc.gameView) as! RMSKeys
     }
 #endif
 }

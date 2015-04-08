@@ -14,7 +14,7 @@ extension RMXDPad {
         if true { return }
         else {
             let g = self.motionManager.deviceMotion.gravity
-            self.world!.physics.directionOfGravity = GLKVector3Make(Float(g.x), Float(g.y), Float(g.z))
+            self.world!.physics.directionOfGravity = RMXVector3Make(RMFloatB(g.x), RMFloatB(g.y), RMFloatB(g.z))
         }
         
         let key = "accelerometerCounter"

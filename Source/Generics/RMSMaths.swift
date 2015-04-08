@@ -23,8 +23,12 @@ typealias RMXMatrix4 = GLKMatrix4
     typealias RMXVector4 = SCNVector4
     typealias RMXMatrix4 = SCNMatrix4
     typealias RMFloat = CGFloat
-    #endif
-
+    #if OSX
+        typealias RMFloatB = CGFloat
+        #elseif iOS
+        typealias RMFloatB = Float
+        #endif
+#endif
 
     #if SceneKit
         let RMXVector3Zero = SCNVector3Zero
@@ -41,7 +45,7 @@ typealias RMXMatrix4 = GLKMatrix4
 let GLKVector3Zero = GLKVector3Make(0,0,0)
 let GLKVector4Zero = GLKVector4Make(0,0,0,0)
 
-func RMXVector3Make(x:RMFloat, y:RMFloat, z:RMFloat) -> RMXVector3 {
+func RMXVector3Make(x:RMFloatB, y:RMFloatB, z:RMFloatB) -> RMXVector3 {
     #if SceneKit
        return SCNVector3Make(x,y,z)
         #else
@@ -49,7 +53,7 @@ func RMXVector3Make(x:RMFloat, y:RMFloat, z:RMFloat) -> RMXVector3 {
     #endif
 }
 
-func RMXVector4Make(x:RMFloat, y:RMFloat, z:RMFloat, w: RMFloat) -> RMXVector4 {
+func RMXVector4Make(x:RMFloatB, y:RMFloatB, z:RMFloatB, w: RMFloatB) -> RMXVector4 {
     #if SceneKit
         return SCNVector4Make(x,y,z,w)
         #else
@@ -57,15 +61,15 @@ func RMXVector4Make(x:RMFloat, y:RMFloat, z:RMFloat, w: RMFloat) -> RMXVector4 {
     #endif
 }
 
-func RMXVector3Length(v: RMXVector3) -> RMFloat {
+func RMXVector3Length(v: RMXVector3) -> RMFloatB {
     #if SceneKit
-        return RMFloat(GLKVector3Length(SCNVector3ToGLKVector3(v)))
+        return RMFloatB(GLKVector3Length(SCNVector3ToGLKVector3(v)))
         #else
         return GLKVector3Length(v)
     #endif
 }
 
-func RMXVector3SetX(inout v: RMXVector3, x: RMFloat){
+func RMXVector3SetX(inout v: RMXVector3, x: RMFloatB){
     #if SceneKit
         v.x = x
         #else
@@ -73,7 +77,7 @@ func RMXVector3SetX(inout v: RMXVector3, x: RMFloat){
     #endif
 }
 
-func RMXVector3SetY(inout v: RMXVector3, y: RMFloat){
+func RMXVector3SetY(inout v: RMXVector3, y: RMFloatB){
     #if SceneKit
         v.y = y
         #else
@@ -82,7 +86,7 @@ func RMXVector3SetY(inout v: RMXVector3, y: RMFloat){
 }
 
 
-func RMXMatrix4SetY(inout m: RMXMatrix4, y: RMFloat){
+func RMXMatrix4SetY(inout m: RMXMatrix4, y: RMFloatB){
     #if SceneKit
         m.m42 = y
         #else
@@ -96,7 +100,7 @@ func RMXMatrix4SetY(inout m: RMXMatrix4, y: RMFloat){
     #endif
 }
 
-func RMXVector3SetZ(inout v: RMXVector3, z: RMFloat){
+func RMXVector3SetZ(inout v: RMXVector3, z: RMFloatB){
     #if SceneKit
         v.z = z
         #else
@@ -104,7 +108,7 @@ func RMXVector3SetZ(inout v: RMXVector3, z: RMFloat){
     #endif
 }
 
-func RMXVector3PlusX(inout v: RMXVector3, x: RMFloat){
+func RMXVector3PlusX(inout v: RMXVector3, x: RMFloatB){
     #if SceneKit
         v.x += x
         #else
@@ -112,7 +116,7 @@ func RMXVector3PlusX(inout v: RMXVector3, x: RMFloat){
     #endif
 }
 
-func RMXVector3PlusY(inout v: RMXVector3, y: RMFloat){
+func RMXVector3PlusY(inout v: RMXVector3, y: RMFloatB){
     #if SceneKit
         v.y += y
         #else
@@ -120,7 +124,7 @@ func RMXVector3PlusY(inout v: RMXVector3, y: RMFloat){
     #endif
 }
 
-func RMXVector3PlusZ(inout v: RMXVector3, z: RMFloat){
+func RMXVector3PlusZ(inout v: RMXVector3, z: RMFloatB){
     #if SceneKit
         v.z += z
         #else
@@ -223,7 +227,7 @@ func += (inout lhs: SCNVector3, rhs: SCNVector3) {
         lhs.z += rhs.z
 }
 
-func * (lhs: RMXVector3, rhs: RMFloat) -> RMXVector3 {
+func * (lhs: RMXVector3, rhs: RMFloatB) -> RMXVector3 {
     return RMXVector3MultiplyScalar(lhs, rhs)
 }
 
@@ -260,18 +264,18 @@ func *= (inout lhs:SCNMatrix4, rhs:SCNMatrix4) {
     lhs = SCNMatrix4Mult(rhs,lhs)
 }
 
-func RMXVector3Distance(a:RMXVector3,b:RMXVector3)->RMFloat {
+func RMXVector3Distance(a:RMXVector3,b:RMXVector3)->RMFloatB {
     #if SceneKit
         let A = SCNVector3ToGLKVector3(a); let B = SCNVector3ToGLKVector3(b)
-        return RMFloat(GLKVector3Distance(A,B))
+        return RMFloatB(GLKVector3Distance(A,B))
         #else
         return GLKVector3Distance(a,b)
     #endif
 }
-func RMXMatrix4RotateY(matrix: RMXMatrix4, theta: RMFloat) -> RMXMatrix4 {
+func RMXMatrix4RotateY(matrix: RMXMatrix4, theta: RMFloatB) -> RMXMatrix4 {
     return RMXMatrix4Rotate(matrix, theta,0,1,0)
 }
-func RMXMatrix4Rotate(mat: RMXMatrix4, angle: RMFloat, x: RMFloat, y: RMFloat, z: RMFloat)-> RMXMatrix4{
+func RMXMatrix4Rotate(mat: RMXMatrix4, angle: RMFloatB, x: RMFloatB, y: RMFloatB, z: RMFloatB)-> RMXMatrix4{
     #if SceneKit
         return SCNMatrix4Rotate(mat, angle, x, y, z)
         #else
@@ -279,7 +283,7 @@ func RMXMatrix4Rotate(mat: RMXMatrix4, angle: RMFloat, x: RMFloat, y: RMFloat, z
     #endif
 }
 
-func RMXMatrix4RotateWithVector3(mat: RMXMatrix4, angle: RMFloat, vector: RMXVector3) -> RMXMatrix4{
+func RMXMatrix4RotateWithVector3(mat: RMXMatrix4, angle: RMFloatB, vector: RMXVector3) -> RMXMatrix4{
     #if SceneKit
         return SCNMatrix4Rotate(mat, angle, vector.x, vector.y, vector.z)
         #else
@@ -297,7 +301,7 @@ func RMXMatrix4Normalize(mat: RMXMatrix4){
 //    GLKMatrix4
 }
 
-func RMXVector3MakeNormal(x:RMFloat,y:RMFloat,z:RMFloat) -> RMXVector3 {
+func RMXVector3MakeNormal(x:RMFloatB,y:RMFloatB,z:RMFloatB) -> RMXVector3 {
      var v = RMXVector3Make(x,y,z)
     #if SceneKit
         v = SCNVector3FromGLKVector3(GLKVector3Normalize(SCNVector3ToGLKVector3(v)))
@@ -317,17 +321,17 @@ func RMXGetThetaAndPhi(vectorA A: RMXVector3, vectorB B: RMXVector3) -> (theta:F
 }
 */
 
-func RMXGetTheta(vectorA A: GLKVector2, vectorB B: GLKVector2) -> RMFloat{
+func RMXGetTheta(vectorA A: GLKVector2, vectorB B: GLKVector2) -> RMFloatB{
     let delta = GLKVector2Subtract(B, A)
     let r: Float = GLKVector2Length(delta)
     let alpha: Float = asinf(delta.x/r)
     let beta: Float = acosf(delta.y/r)
 //    let theta: Float = GLKMathRadiansToDegrees(atanf(delta.x/delta.y))
     let result = alpha * beta >= 0 ? beta : TWO_PIf - beta
-    return RMFloat(alpha.isNaN ? 0 : result)
+    return RMFloatB(alpha.isNaN ? 0 : result)
 }
 
-func RMXGetPhi(vectorA A: GLKVector2, vectorB B: GLKVector2) -> RMFloat{
+func RMXGetPhi(vectorA A: GLKVector2, vectorB B: GLKVector2) -> RMFloatB{
     let delta = GLKVector2Subtract(B, A)
     let r: Float = GLKVector2Length(delta)
     let alpha: Float = asinf(delta.x/r)
@@ -335,17 +339,17 @@ func RMXGetPhi(vectorA A: GLKVector2, vectorB B: GLKVector2) -> RMFloat{
     //    let theta: Float = GLKMathRadiansToDegrees(atanf(delta.x/delta.y))
     let result = alpha //alpha * beta >= 0 ? beta : TWO_PI - beta
     NSLog("PHI: \(GLKMathRadiansToDegrees(alpha))")
-    return RMFloat(alpha.isNaN ? 0 : result)
+    return RMFloatB(alpha.isNaN ? 0 : result)
 }
 
-func RMXGetTheta(vectorA U: RMXVector3, vectorB V: RMXVector3) -> RMFloat{
+func RMXGetTheta(vectorA U: RMXVector3, vectorB V: RMXVector3) -> RMFloatB{
     let A = GLKVector2Make(Float(U.x), Float(U.z)); let B = GLKVector2Make(Float(V.x), Float(V.z))
     return RMXGetTheta(vectorA: A,vectorB: B)
 }
 
 
 
-func RMXGetPhi(vectorA U: GLKVector3, vectorB V: GLKVector3) -> RMFloat{
+func RMXGetPhi(vectorA U: GLKVector3, vectorB V: GLKVector3) -> RMFloatB{
     let A = GLKVector2Make(U.z, U.y); let B = GLKVector2Make(V.z, V.y)
     return RMXGetPhi(vectorA: A,vectorB: B)
 }
@@ -354,7 +358,7 @@ func x (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
     return GLKVector3CrossProduct(lhs, rhs)
 }
 
-func RMXVector4MakeWithVector3(v: RMXVector3, w: RMFloat) -> RMXVector4{
+func RMXVector4MakeWithVector3(v: RMXVector3, w: RMFloatB) -> RMXVector4{
     return RMXVector4Make(v.x,v.y,v.z,w)
 }
 
@@ -401,13 +405,13 @@ extension GLKVector3 {
 
 }
 
-let PI: RMFloat = 3.14159265358979323846
+let PI: RMFloatB = 3.14159265358979323846
 let PIf = Float(PI)
-let TWO_PI: RMFloat = 2 * PI
+let TWO_PI: RMFloatB = 2 * PI
 let TWO_PIf = Float(TWO_PI)
-let PI_OVER_2: RMFloat = PI / 2
+let PI_OVER_2: RMFloatB = PI / 2
 let PI_OVER_2f = Float(PI_OVER_2)
-let PI_OVER_180: RMFloat = PI / 180
+let PI_OVER_180: RMFloatB = PI / 180
 let PI_OVER_180f = Float(PI_OVER_180)
 /*
 BOOL RMXVector3IsZero(RMXVector3 v)
@@ -516,7 +520,7 @@ RMXVector3 RMXVector3MultiplyScalarAndSpeed(RMXVector3 v, float s){
     return SCNVector3FromGLKVector3(GLKVector3MultiplyScalar(SCNVector3ToGLKVector3(RMXVector3Abs(v)),s*RMXGetSpeed(v)));
 }
 */
-func RMXVector3MultiplyScalar(v: RMXVector3, s: RMFloat) -> RMXVector3{
+func RMXVector3MultiplyScalar(v: RMXVector3, s: RMFloatB) -> RMXVector3{
     #if SceneKit
     return SCNVector3Make(
         v.x * s,

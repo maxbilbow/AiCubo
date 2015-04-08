@@ -33,8 +33,11 @@ class RMXDPad : RMXInterface {
         }
         
         self.moveSpeed *= -0.05
+        #if SceneKit
+            self.lookSpeed *= 0.01
+            #else
         self.lookSpeed *= -0.02
-
+        #endif
     }
     override func update() {
         super.update()
@@ -115,6 +118,20 @@ class RMXDPad : RMXInterface {
             twoFingerTap.numberOfTapsRequired = 1
             view.addGestureRecognizer(twoFingerTap)
             
+            #if SceneKit
+                
+                // add a tap gesture recognizer
+                let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+//                var gestureRecognizers = [AnyObject]()
+//                gestureRecognizers.append(tapGesture)
+//                if let existingGestureRecognizers = scnView.gestureRecognizers {
+//                    gestureRecognizers.extend(existingGestureRecognizers)
+//                }
+//                scnView.gestureRecognizers = gestureRecognizers
+                view.addGestureRecognizer(tapGesture)
+                
+                
+            #endif
             
         }
         

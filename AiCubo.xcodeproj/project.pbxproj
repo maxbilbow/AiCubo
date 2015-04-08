@@ -188,6 +188,35 @@
 		50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
 		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
+		6C68A1FB1AD58E9B003A4DB3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2621AD18A33006C008F /* GameViewController.swift */; };
+		6C68A1FC1AD58EB7003A4DB3 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2601AD18A33006C008F /* GameView.swift */; };
+		6C68A1FD1AD58FAF003A4DB3 /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
+		6C68A1FE1AD58FAF003A4DB3 /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
+		6C68A1FF1AD58FAF003A4DB3 /* iOSControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53F1AC4ACC100AAACF7 /* iOSControllers.swift */; };
+		6C68A2001AD58FAF003A4DB3 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
+		6C68A2011AD58FAF003A4DB3 /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
+		6C68A2021AD58FAF003A4DB3 /* RMXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5003E7131ACCA3FF00F40E46 /* RMXView.swift */; };
+		6C68A2041AD58FAF003A4DB3 /* RMXDPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5421AC4ACC100AAACF7 /* RMXDPad.swift */; };
+		6C68A2051AD58FAF003A4DB3 /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
+		6C68A2071AD58FDA003A4DB3 /* RMXValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5381AC4ACC100AAACF7 /* RMXValue.swift */; };
+		6C68A2081AD58FDD003A4DB3 /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
+		6C68A2091AD58FE0003A4DB3 /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
+		6C68A20A1AD58FE0003A4DB3 /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
+		6C68A20B1AD58FE0003A4DB3 /* RMX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5361AC4ACC100AAACF7 /* RMX.swift */; };
+		6C68A20C1AD58FE9003A4DB3 /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
+		6C68A20D1AD58FE9003A4DB3 /* RMSPhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */; };
+		6C68A20E1AD58FE9003A4DB3 /* RMSCollisionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */; };
+		6C68A20F1AD58FE9003A4DB3 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
+		6C68A2101AD58FE9003A4DB3 /* RMSWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52B1AC4ACC100AAACF7 /* RMSWorld.swift */; };
+		6C68A2111AD58FE9003A4DB3 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
+		6C68A2121AD58FE9003A4DB3 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
+		6C68A2131AD58FE9003A4DB3 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
+		6C68A2141AD58FE9003A4DB3 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
+		6C68A2151AD58FE9003A4DB3 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
+		6C68A2161AD58FE9003A4DB3 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		6C68A2171AD59316003A4DB3 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
+		6C68A2181AD597D8003A4DB3 /* SceneKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C6691AD4A1C600C659AD /* SceneKitController.swift */; };
+		6C68A21A1AD59F47003A4DB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1C66B1AD4A1C600C659AD /* Main.storyboard */; };
 		6C77A1DB1AD12F5B006C008F /* RMXMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */; };
 		6C77A1DE1AD1309F006C008F /* RMXTerrainMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DC1AD1308E006C008F /* RMXTerrainMesh.swift */; };
 		6C77A1DF1AD130A5006C008F /* RMXMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */; };
@@ -236,8 +265,6 @@
 		6C9480701ACEBA2600C71C70 /* RMOShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC031AC6CEB4004E240C /* RMOShapes.m */; };
 		6CD1C6661AD4A1C500C659AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C6651AD4A1C500C659AD /* AppDelegate.swift */; };
 		6CD1C6681AD4A1C600C659AD /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1C6671AD4A1C600C659AD /* art.scnassets */; };
-		6CD1C66A1AD4A1C600C659AD /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C6691AD4A1C600C659AD /* GameViewController.swift */; };
-		6CD1C66D1AD4A1C600C659AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1C66B1AD4A1C600C659AD /* Main.storyboard */; };
 		6CD1C66F1AD4A1C600C659AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1C66E1AD4A1C600C659AD /* Images.xcassets */; };
 		6CD1C6721AD4A1C600C659AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1C6701AD4A1C600C659AD /* LaunchScreen.xib */; };
 		6CD1C67E1AD4A1C600C659AD /* SceneIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C67D1AD4A1C600C659AD /* SceneIOSTests.swift */; };
@@ -435,7 +462,7 @@
 		6CD1C6641AD4A1C500C659AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CD1C6651AD4A1C500C659AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CD1C6671AD4A1C600C659AD /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		6CD1C6691AD4A1C600C659AD /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		6CD1C6691AD4A1C600C659AD /* SceneKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitController.swift; sourceTree = "<group>"; };
 		6CD1C66C1AD4A1C600C659AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6CD1C66E1AD4A1C600C659AD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6CD1C6711AD4A1C600C659AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -922,7 +949,7 @@
 			children = (
 				6CD1C6651AD4A1C500C659AD /* AppDelegate.swift */,
 				6CD1C6671AD4A1C600C659AD /* art.scnassets */,
-				6CD1C6691AD4A1C600C659AD /* GameViewController.swift */,
+				6CD1C6691AD4A1C600C659AD /* SceneKitController.swift */,
 				6CD1C66B1AD4A1C600C659AD /* Main.storyboard */,
 				6CD1C66E1AD4A1C600C659AD /* Images.xcassets */,
 				6CD1C6701AD4A1C600C659AD /* LaunchScreen.xib */,
@@ -1395,7 +1422,7 @@
 				6CD1C6721AD4A1C600C659AD /* LaunchScreen.xib in Resources */,
 				6CD1C66F1AD4A1C600C659AD /* Images.xcassets in Resources */,
 				6CD1C6681AD4A1C600C659AD /* art.scnassets in Resources */,
-				6CD1C66D1AD4A1C600C659AD /* Main.storyboard in Resources */,
+				6C68A21A1AD59F47003A4DB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1702,8 +1729,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CD1C66A1AD4A1C600C659AD /* GameViewController.swift in Sources */,
+				6C68A20D1AD58FE9003A4DB3 /* RMSPhysicsBody.swift in Sources */,
+				6C68A1FB1AD58E9B003A4DB3 /* GameViewController.swift in Sources */,
+				6C68A2141AD58FE9003A4DB3 /* RMXPhysics.swift in Sources */,
+				6C68A20F1AD58FE9003A4DB3 /* RMXNodeProperty.swift in Sources */,
+				6C68A1FF1AD58FAF003A4DB3 /* iOSControllers.swift in Sources */,
+				6C68A2111AD58FE9003A4DB3 /* RMXCamera.swift in Sources */,
+				6C68A2131AD58FE9003A4DB3 /* RMXNode.swift in Sources */,
+				6C68A1FD1AD58FAF003A4DB3 /* RMXController.swift in Sources */,
+				6C68A2021AD58FAF003A4DB3 /* RMXView.swift in Sources */,
+				6C68A20E1AD58FE9003A4DB3 /* RMSCollisionBody.swift in Sources */,
+				6C68A2011AD58FAF003A4DB3 /* RMSActionProcessor.swift in Sources */,
+				6C68A2101AD58FE9003A4DB3 /* RMSWorld.swift in Sources */,
+				6C68A20A1AD58FE0003A4DB3 /* RMSMaths.swift in Sources */,
+				6C68A2001AD58FAF003A4DB3 /* Accelorometer.swift in Sources */,
+				6C68A1FC1AD58EB7003A4DB3 /* GameView.swift in Sources */,
+				6C68A2121AD58FE9003A4DB3 /* RMXClock.swift in Sources */,
+				6C68A2041AD58FAF003A4DB3 /* RMXDPad.swift in Sources */,
+				6C68A2051AD58FAF003A4DB3 /* RMXInterface.swift in Sources */,
+				6C68A2071AD58FDA003A4DB3 /* RMXValue.swift in Sources */,
+				6C68A2151AD58FE9003A4DB3 /* RMXShape.swift in Sources */,
+				6C68A2181AD597D8003A4DB3 /* SceneKitController.swift in Sources */,
+				6C68A20B1AD58FE0003A4DB3 /* RMX.swift in Sources */,
+				6C68A2091AD58FE0003A4DB3 /* RMSEquations.swift in Sources */,
+				6C68A1FE1AD58FAF003A4DB3 /* RMXViewController.swift in Sources */,
+				6C68A2171AD59316003A4DB3 /* RMXInitialize.swift in Sources */,
 				6CD1C6661AD4A1C500C659AD /* AppDelegate.swift in Sources */,
+				6C68A20C1AD58FE9003A4DB3 /* RMSArt.swift in Sources */,
+				6C68A2161AD58FE9003A4DB3 /* RMXSpriteActions.swift in Sources */,
+				6C68A2081AD58FDD003A4DB3 /* RMXDebugger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2319,7 +2373,9 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SceneIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DiOS -DSceneKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2329,7 +2385,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SceneIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DiOS -DSceneKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2495,6 +2553,7 @@
 				6CD1C6811AD4A1C600C659AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6CD1C6821AD4A1C600C659AD /* Build configuration list for PBXNativeTarget "SceneIOSTests" */ = {
 			isa = XCConfigurationList;
@@ -2503,6 +2562,7 @@
 				6CD1C6841AD4A1C600C659AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

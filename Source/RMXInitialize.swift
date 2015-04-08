@@ -77,7 +77,7 @@ extension RMX {
                     }
                 var timePassed = 0
                 var timeLimit = random() % 600
-                let speed:RMFloat = RMFloat(random() % 15)/3
+                let speed:RMFloatB = RMFloatB(random() % 15)/3
 //                    let theta = Float(random() % 100)/100
 //                    let phi = Float(random() % 100)/100
 //                    var target = world.furthestObjectFrom(sprite)
@@ -140,7 +140,7 @@ extension RMX {
         poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
-        var speed: RMFloat = 0.01
+        var speed: RMFloatB = 0.01
         let updateInterval = 1
         
         poppy.behaviours.append { (isOn: Bool) -> () in
@@ -219,7 +219,7 @@ extension RMX {
         poppy.setColor(RMXVector4Make(0.1,0.1,0.1,1.0))
         
         #if SceneKit
-            let r: RMFloat = 0.3
+            let r: RMFloatB = 0.3
             #else
             let r = poppy.radius / 2
             #endif

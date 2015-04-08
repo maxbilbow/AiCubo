@@ -15,10 +15,10 @@ import GLKit
 class RMXArt {
     static let colorBronzeDiff: [Float]  = [ 0.8, 0.6, 0.0, 1.0 ]
     static let colorBronzeSpec: [Float]  = [ 1.0, 1.0, 0.4, 1.0 ]
-    static let colorBlue: [RMFloat]        = [ 0.0, 0.0, 0.1, 1.0 ]
+    static let colorBlue: [RMFloatB]        = [ 0.0, 0.0, 0.1, 1.0 ]
     static let colorNone: [Float]        = [ 0.0, 0.0, 0.0, 0.0 ]
-    static let colorRed: [RMFloat]         = [ 0.1, 0.0, 0.0, 1.0 ]
-    static let colorGreen: [RMFloat]       = [ 0.0, 0.1, 0.0, 1.0 ]
+    static let colorRed: [RMFloatB]         = [ 0.1, 0.0, 0.0, 1.0 ]
+    static let colorGreen: [RMFloatB]       = [ 0.0, 0.1, 0.0, 1.0 ]
     static let colorYellow: [Float]      = [ 1.0, 0.0, 0.0, 1.0 ]
     static let nillVector: [Float]       = [ 0  ,   0,  0,  0   ]
     #if SceneKit
@@ -41,7 +41,7 @@ class RMXArt {
     
     #endif
     
-    class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloat = 1000) -> RMSWorld {
+    class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloatB = 1000) -> RMSWorld {
         RMXArt.drawSun(world)
         
         RMXArt.drawPlane(world)
@@ -62,10 +62,10 @@ class RMXArt {
     class func drawPlane(world: RMSWorld) {
         let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
         ZX.body!.setRadius(world.body!.radius)
-//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
+//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
         ZX.body!.setPhi(upDownRadians: 180 * PI_OVER_180)
-//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
-        ZX.body!.addPhi(upDownRadians: 90 * RMFloat(PI_OVER_180))
+//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
+        ZX.body!.addPhi(upDownRadians: 90 * RMFloatB(PI_OVER_180))
         ZX.setColor(color: NSColor.greenColor())
 //        ZX.geometry?.firstMaterial!.doubleSided = true
         ZX.isAnimated = false
@@ -74,10 +74,10 @@ class RMXArt {
         world.insertChildNode(ZX)
     }
     class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
-        let shapeRadius: RMFloat = 5
+        let shapeRadius: RMFloatB = 5
         let axisLenght = world.radius * 2
-        let shapesPerAxis: RMFloat = axisLenght / (shapeRadius * 3)
-        let step: RMFloat = axisLenght / shapesPerAxis
+        let shapesPerAxis: RMFloatB = axisLenght / (shapeRadius * 3)
+        let step: RMFloatB = axisLenght / shapesPerAxis
         
         func drawAxis(axis: String) {
             var point =  -world.radius
@@ -95,7 +95,7 @@ class RMXArt {
             default:
                 fatalError(__FUNCTION__)
             }
-            for (var i: RMFloat = 0; i < shapesPerAxis; ++i){
+            for (var i: RMFloatB = 0; i < shapesPerAxis; ++i){
                 let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                 point += step
                 let object:RMXNode = RMXNode().initWithParent(world).setAsShape(type: .CUBE)
@@ -116,14 +116,14 @@ class RMXArt {
         drawAxis("z")
     }
     
-    class func randomObjects(world: RMSWorld, noOfShapes: RMFloat = 100 )    {
+    class func randomObjects(world: RMSWorld, noOfShapes: RMFloatB = 100 )    {
     //int max =100, min = -100;
     //BOOL gravity = true;
         
-        for(var i: RMFloat = -noOfShapes / 2; i < noOfShapes / 2; ++i) {
-            var randPos: [RMFloat]
-            var X: RMFloat = 0; var Y: RMFloat = 0; var Z: RMFloat = 0
-            func thisRandom(inout x: RMFloat, inout y: RMFloat, inout z: RMFloat) -> [RMFloat] {
+        for(var i: RMFloatB = -noOfShapes / 2; i < noOfShapes / 2; ++i) {
+            var randPos: [RMFloatB]
+            var X: RMFloatB = 0; var Y: RMFloatB = 0; var Z: RMFloatB = 0
+            func thisRandom(inout x: RMFloatB, inout y: RMFloatB, inout z: RMFloatB) -> [RMFloatB] {
                 do {
                     let points = RMX.doASum(world.radius, count: i, noOfShapes: noOfShapes )
                     x = points.x
@@ -151,11 +151,11 @@ class RMXArt {
         }
         
         object.hasGravity = false //(rand()% 100) == 1
-        object.body!.setRadius(RMFloat(random() % 9 + 2))
+        object.body!.setRadius(RMFloatB(random() % 9 + 2))
         object.transform = RMXMatrix4Translate(object.transform, RMXVector3Make(randPos[0], randPos[1], randPos[2]))
         object.startingPoint = object.position
         object.body!.mass = RMFloat(random()%15+1)/10;
-        object.body!.dragC = RMFloat(random() % 99+1)/100;
+        object.body!.dragC = RMFloatB(random() % 99+1)/100;
         object.setColor(RMXRandomColor())
         world.insertChildNode(object)
         
@@ -167,9 +167,9 @@ class RMXArt {
     class func randomColor() -> RMXVector4 {
     //float rCol[4];
         var rCol = RMXVector4Make(
-            RMFloat(random() % 800)/500,
-            RMFloat(random() % 800)/500,
-            RMFloat(random() % 800)/500,
+            RMFloatB(random() % 800)/500,
+            RMFloatB(random() % 800)/500,
+            RMFloatB(random() % 800)/500,
         1)
 
     return rCol
@@ -178,9 +178,9 @@ class RMXArt {
 }
 func RMXVector3Random(max: Int = 100, div: Int = 1, min: Int = 0) -> RMXVector3 {
     return RMXVector3Make(
-        RMFloat((random() % max + min)/div),
-        RMFloat((random() % max + min)/div),
-        RMFloat((random() % max + min)/div)
+        RMFloatB((random() % max + min)/div),
+        RMFloatB((random() % max + min)/div),
+        RMFloatB((random() % max + min)/div)
     )
 
 }
@@ -188,8 +188,8 @@ func RMXVector3Random(max: Int = 100, div: Int = 1, min: Int = 0) -> RMXVector3 
 func RMXRandomColor() -> RMXVector4 {
     //float rCol[4];
     return RMXVector4Make(
-        RMFloat(random() % 800)/500,
-        RMFloat(random() % 800)/500,
-        RMFloat(random() % 800)/500,
+        RMFloatB(random() % 800)/500,
+        RMFloatB(random() % 800)/500,
+        RMFloatB(random() % 800)/500,
         1.0)
 }

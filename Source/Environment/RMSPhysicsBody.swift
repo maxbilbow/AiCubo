@@ -19,7 +19,7 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
 
     #if !SceneKit
     var velocity = RMXVector3Zero
-    var mass: RMFloat = 0
+    var mass: RMFloatB = 0
     #else
     #endif
     var acceleration = RMXVector3Zero
@@ -32,11 +32,11 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     var vMatrix: RMXMatrix4 = RMXMatrix4Zero
 
     #if SceneKit
-    var accelerationRate:RMFloat = -1
+    var accelerationRate:RMFloatB = -1
     #else
-    var accelerationRate:RMFloat = 1
+    var accelerationRate:RMFloatB = 1
     #endif
-    var rotationSpeed:RMFloat = 1
+    var rotationSpeed:RMFloatB = 1
     
     var hasFriction: Bool {
         return self.owner.hasFriction
@@ -44,17 +44,17 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     var hasGravity: Bool{
         return self.owner.hasGravity
     }
-    var coushin: RMFloat = 2
+    var coushin: RMFloatB = 2
     
-    var theta: RMFloat = 0
-    var phi: RMFloat = 0
-    private var _radius: RMFloat = 1
-    var radius: RMFloat {
+    var theta: RMFloatB = 0
+    var phi: RMFloatB = 0
+    private var _radius: RMFloatB = 1
+    var radius: RMFloatB {
         return _radius
     }
-    var dragC: RMFloat = 0.1
+    var dragC: RMFloatB = 0.1
     
-    var dragArea: RMFloat {
+    var dragArea: RMFloatB {
         return ( self.radius * self.radius * PI )
     }
     var owner: RMXNode!
@@ -78,8 +78,8 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         return self.owner.position
     }
 
-    init(_ owner: RMXNode, mass: RMFloat = 1, radius: RMFloat = 1, dragC: RMFloat = 0.1,
-        accRate: RMFloat = 1, rotSpeed:RMFloat = 1){
+    init(_ owner: RMXNode, mass: RMFloatB = 1, radius: RMFloatB = 1, dragC: RMFloatB = 0.1,
+        accRate: RMFloatB = 1, rotSpeed:RMFloatB = 1){
             self.owner = owner
             #if SceneKit
             super.init()
@@ -92,8 +92,8 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initialize(owner: RMXNode, mass: RMFloat = 1, radius: RMFloat = 1, dragC: RMFloat = 0.1,
-        accRate: RMFloat = 1, rotSpeed:RMFloat = 1){
+    private func initialize(owner: RMXNode, mass: RMFloat = 1, radius: RMFloatB = 1, dragC: RMFloatB = 0.1,
+        accRate: RMFloatB = 1, rotSpeed:RMFloatB = 1){
             self.mass = mass
             self.setRadius(radius)
             self.dragC = dragC
@@ -104,33 +104,33 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
 
     }
     
-    func setRadius(radius: RMFloat){
+    func setRadius(radius: RMFloatB){
         _radius = radius
         let s = radius * 2
         self.owner.scale = RMXVector3Make(s,s,s)
     }
     
-    var weight: RMFloat{
-        return self.mass * self.physics.worldGravity
+    var weight: RMFloatB{
+        return RMFloatB(self.mass) * self.physics.worldGravity
     }
    
-    func distanceTo(#point: RMXVector3) -> RMFloat{
+    func distanceTo(#point: RMXVector3) -> RMFloatB{
         return RMXVector3Distance(self.position, point)
     }
     
-    func distanceTo(object:RMXNode) -> RMFloat{
+    func distanceTo(object:RMXNode) -> RMFloatB{
             return RMXVector3Distance(self.position,object.position)
     }
     
-    func accelerateForward(v: RMFloat) {
+    func accelerateForward(v: RMFloatB) {
         RMXVector3SetZ(&self.acceleration, v * self.accelerationRate)
     }
     
-    func accelerateUp(v: RMFloat) {
+    func accelerateUp(v: RMFloatB) {
         RMXVector3SetY(&self.acceleration, v * self.accelerationRate)
     }
     
-    func accelerateLeft(v: RMFloat) {
+    func accelerateLeft(v: RMFloatB) {
         RMXVector3SetX(&self.acceleration, v * self.accelerationRate)
     }
     
@@ -158,13 +158,21 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         self.upStop()
     }
     
-    private let _phiLimit = RMFloat(2)
+    private let _phiLimit = RMFloatB(2)
     
     ///input as radians
-    func addTheta(leftRightRadians theta: RMFloat){
+    func addTheta(leftRightRadians theta: RMFloatB){
         //let theta: Float = GLKMathDegreesToRadians(x)
         self.theta += theta
+       // #if OSX
         self.owner.transform = RMXMatrix4Rotate(self.owner.transform, theta,0,1,0)
+        //#elseif iOS
+//            var mv = RMXMatrix4Translate(self.owner.transform, self.owner.position)
+//            mv = RMXMatrix4Rotate(mv, theta,0,1,0)
+//            self.owner.transform  = RMXMatrix4Translate(mv, self.owner.position.negate())
+
+//            self.owner.rotation = SCNVector4Make(0,1,0,theta)
+//        #endif
         
 //        let mat = RMXMatrix4Rotate(RMXMatrix4Identity,theta,0,1,0)
 //        self.owner.transform = mat * self.owner.transform
@@ -173,33 +181,29 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     }
     
 //    private var _orientation: RMXMatrix4 = RMXMatrix4Identity
-    func addPhi(upDownRadians phi: RMFloat) {
+    func addPhi(upDownRadians phi: RMFloatB) {
         self.phi += phi
         let axis = self.owner.leftVector
-        
-//        let mat = RMXMatrix4Rotate(RMXMatrix4Identity,phi,axis.x,axis.y,axis.z)
-//        self.owner.transform = mat * self.owner.transform
-//
-        
-        //RMXLog(axis.print)
-        if !self.owner.isObserver {
-       self.owner.transform = RMXMatrix4RotateWithVector3(self.owner.transform, phi, axis)
-        }
+        //#if OSX
+            self.owner.transform = RMXMatrix4RotateWithVector3(self.owner.transform, phi, axis)
+//        #elseif iOS
+//        
+//        #endif
     }
     
-    func setTheta(leftRightRadians theta: RMFloat){
+    func setTheta(leftRightRadians theta: RMFloatB){
         self.addTheta(leftRightRadians: -self.theta)
         self.addTheta(leftRightRadians: theta)
     }
     
-    func setPhi(upDownRadians phi: RMFloat){
+    func setPhi(upDownRadians phi: RMFloatB){
         self.addPhi(upDownRadians: -self.phi)
         self.addPhi(upDownRadians: phi)
     }
     
 
     
-    func addRoll(sideRollRadians roll: RMFloat){
+    func addRoll(sideRollRadians roll: RMFloatB){
         //TODO
     }
     
@@ -216,9 +220,9 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         let d = self.physics.dragFor(self.owner)// : GLKVector3Make(1,1,1);
         
         let frictionAndDrag = RMXVector3Make(
-            RMFloat(1 + f.x + d.x),
-            RMFloat(1 + f.y + d.y),
-            RMFloat(1 + f.z + d.z)
+            RMFloatB(1 + f.x + d.x),
+            RMFloatB(1 + f.y + d.y),
+            RMFloatB(1 + f.z + d.z)
             )
         self.velocity = RMXVector3Divide(self.velocity, frictionAndDrag)
         

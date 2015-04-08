@@ -10,21 +10,21 @@ import Foundation
 import GLKit
 
 class RMXSpriteActions : RMSNodeProperty {
-    var armLength: RMFloat = 0
-    lazy private var _reach: RMFloat = self.owner.radius
-    var reach:RMFloat {
+    var armLength: RMFloatB = 0
+    lazy private var _reach: RMFloatB = self.owner.radius
+    var reach:RMFloatB {
         return self.owner.radius + _reach
     }
     
-    var jumpStrength: RMFloat = 10
-    var squatLevel:RMFloat = 0
+    var jumpStrength: RMFloatB = 10
+    var squatLevel:RMFloatB = 0
     private var _prepairingToJump: Bool = false
     private var _goingUp:Bool = false
     private var _ignoreNextJump:Bool = false
     private var _itemWasAnimated:Bool = false
     private var _itemHadGravity:Bool = false
     
-    var altitude: RMFloat {
+    var altitude: RMFloatB {
         return self.owner.position.y
     }
     var item: RMXNode?
@@ -34,7 +34,7 @@ class RMXSpriteActions : RMSNodeProperty {
         return self.owner// as! RMXNode
     }
 
-    func throwItem(strength: RMFloat) -> Bool
+    func throwItem(strength: RMFloatB) -> Bool
     {
         if self.item != nil {
             self.item!.isAnimated = true
@@ -60,10 +60,9 @@ class RMXSpriteActions : RMSNodeProperty {
     }
     
     private func setItem(item: RMXNode!){
-        self.item = item
-        
         if item != nil {
-            self.owner.insertChildNode(item)
+            self.item = item
+//            self.owner.insertChildNode(item)
             self.item?.wasJustWoken = true
             //self.sprite.itemPosition = item!.body.position
             _itemWasAnimated = item!.isAnimated
@@ -74,18 +73,21 @@ class RMXSpriteActions : RMSNodeProperty {
         }
     }
     
+    
     func grabItem(item: RMXNode? = nil) -> Bool {
         if self.item != nil {
             self.releaseItem()
+            return false
         } else if item != nil {
             self.setItem(item)
-        }else if let item = self.owner.world.closestObjectTo(self.sprite) {
-            if  self.owner.body!.distanceTo(item) <= self.reach {
+            return true
+        } else if let closestItem = self.owner.world.closestObjectTo(self.sprite) {
+            if  self.owner.body!.distanceTo(closestItem) <= self.reach {
                 self.setItem(item)
+                return true
             }
         }
-        if item != nil { return true }
-        else { return false }
+        return false
     }
     
     func releaseItem() {
@@ -100,7 +102,7 @@ class RMXSpriteActions : RMSNodeProperty {
         }
     }
     
-    func extendArmLength(i: RMFloat)    {
+    func extendArmLength(i: RMFloatB)    {
         if self.armLength + i > 1 {
             self.armLength += i
         }
@@ -112,7 +114,7 @@ class RMXSpriteActions : RMSNodeProperty {
     
     enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
     private var _jumpState: JumpState = .NOT_JUMPING
-    private var _maxSquat: RMFloat = 0
+    private var _maxSquat: RMFloatB = 0
     
     func jumpTest() -> JumpState {
         
@@ -123,7 +125,7 @@ class RMXSpriteActions : RMSNodeProperty {
             if self.squatLevel > _maxSquat{
                 _jumpState = .JUMPING
             } else {
-                let increment: RMFloat = _maxSquat / 50
+                let increment: RMFloatB = _maxSquat / 50
                 self.squatLevel += increment
             }
             break
@@ -163,7 +165,7 @@ class RMXSpriteActions : RMSNodeProperty {
         }
     }
     
-    private var _jumpStrength: RMFloat {
+    private var _jumpStrength: RMFloatB {
         return fabs(self.owner.body!.weight * self.jumpStrength * self.squatLevel/_maxSquat)
     }
     func jump() {
@@ -172,7 +174,7 @@ class RMXSpriteActions : RMSNodeProperty {
         }
     }
 
-    func setReach(reach: RMFloat) {
+    func setReach(reach: RMFloatB) {
         _reach = reach
     }
     
@@ -181,7 +183,7 @@ class RMXSpriteActions : RMSNodeProperty {
         return nil
     }
     
-    func headTo(object: RMXNode, var speed: RMFloat = 1, doOnArrival: (sender: RMXNode, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
+    func headTo(object: RMXNode, var speed: RMFloatB = 1, doOnArrival: (sender: RMXNode, objects: [AnyObject]?)-> AnyObject? = RMXSpriteActions.stop, objects: AnyObject ... )-> AnyObject? {
         let dist = self.turnToFace(object)
         if  dist >= fabs(object.actions.reach + self.reach) {
             #if OPENGL_OSX
@@ -208,7 +210,7 @@ class RMXSpriteActions : RMSNodeProperty {
 
     }
     
-    func turnToFace(object: RMXNode) -> RMFloat {
+    func turnToFace(object: RMXNode) -> RMFloatB {
         var goto = object.centerOfView
         
         

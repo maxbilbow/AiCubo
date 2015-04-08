@@ -25,10 +25,10 @@ import Foundation
 
 #if OPENGL_ES
     typealias RMSView = GLKView
-    #elseif iOS
-    typealias RMSView = UIView
     #elseif SceneKit
     typealias RMSView = SCNView
+    #elseif iOS
+    typealias RMSView = UIView
     #elseif OSX
     typealias RMSView = NSView
 #endif
@@ -50,8 +50,8 @@ class RMXInterface : SceneObject, RendererDelegate {
     
     var world: RMSWorld?
 
-    var lookSpeed: RMFloat = PI_OVER_180
-    var moveSpeed: RMFloat = 1
+    var lookSpeed: RMFloatB = PI_OVER_180
+    var moveSpeed: RMFloatB = 1
     
     var activeSprite: RMXNode? {
         return self.world?.activeSprite
@@ -177,7 +177,7 @@ class RMXInterface : SceneObject, RendererDelegate {
     ///@virtual
     func handleRelease(arg: AnyObject, args: AnyObject ...) { }
 
-    func action(action: String = "reset",speed: RMFloat = 0, point: [RMFloat] = []) {
+    func action(action: String = "reset",speed: RMFloatB = 0, point: [RMFloatB] = []) {
         self.actionProcessor.movement( action,speed: speed, point: point)
     }
 }

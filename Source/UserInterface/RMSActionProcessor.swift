@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if OSX
 import AppKit
+    #elseif iOS
+    import UIKit
+    #endif
 
 enum RMXMoveType { case PUSH, DRAG }
 
@@ -35,9 +39,9 @@ class RMSActionProcessor {
 
     var gameView: GameView?
     
-    private var _movement: (x:RMFloat, y:RMFloat, z:RMFloat) = (x:0, y:0, z:0)
-    private var _panThreshold: RMFloat = 70
-    func movement(action: String!, speed: RMFloat = 0,  point: [RMFloat]) -> Bool{
+    private var _movement: (x:RMFloatB, y:RMFloatB, z:RMFloatB) = (x:0, y:0, z:0)
+    private var _panThreshold: RMFloatB = 70
+    func movement(action: String!, speed: RMFloatB = 0,  point: [RMFloatB]) -> Bool{
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
@@ -132,7 +136,7 @@ class RMSActionProcessor {
                 let size = (self.activeSprite.actions.item?.radius)! * speed
                 if size > 0.5 && size < 15 {
                     self.activeSprite.actions.item?.body!.setRadius(size)
-                    self.activeSprite.actions.item?.body!.mass *= size
+                    self.activeSprite.actions.item?.body!.mass *= RMFloat(size)
                 }
 
             }
@@ -162,7 +166,7 @@ class RMSActionProcessor {
         
         if action == "lockMouse" && speed == 1 {
             self.isMouseLocked = !self.isMouseLocked
-            self.mousePos = NSEvent.mouseLocation()
+//            self.mousePos = NSEvent.mouseLocation()
 //            self.gameView?.cursorUpdate(<#event: NSEvent#>)
         }
         
@@ -181,7 +185,7 @@ class RMSActionProcessor {
         }
     }
         
-    var extendArm: RMFloat = 0
-    var mousePos: NSPoint = NSPoint(x: 0,y: 0)
+    var extendArm: RMFloatB = 0
+//    var mousePos: NSPoint = NSPoint(x: 0,y: 0)
     var isMouseLocked = false
 }

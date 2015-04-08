@@ -9,18 +9,36 @@
 import SceneKit
 import QuartzCore
 
-class GameViewController: NSViewController, RMXViewController, SCNSceneRendererDelegate {
-    
+#if iOS
+    typealias ViewController = UIViewController
+    typealias NSColor = UIColor
+    #elseif OSX
+    typealias ViewController = NSViewController
+    #endif
+
+class GameViewController: ViewController, RMXViewController, SCNSceneRendererDelegate {
+    #if iOS
+    weak var gameView: GameView? {
+        return self.view as? GameView
+    }
+    #elseif OSX
     @IBOutlet weak var gameView: GameView?
+    #endif
     
-    lazy var interface: RMXInterface? = RMSKeys(gvc: self)
+    lazy var interface: RMXInterface? = RMX.Controller(self)
+    
     var world: RMSWorld? {
         return self.interface!.world
     }
    
     override func awakeFromNib(){
         // create a new scene
+        #if iOS
+        self.view = GameView(frame: self.view.bounds)
+        RMSWorld.TYPE = .TESTING_ENVIRONMENT
+        #endif
         self.gameView!.initialize(self, interface: self.interface!)
+        self.world?.setWorldType()
         let scene = SCNScene(named: "art.scnassets/ship.dae")!//, world: self.gameView.world!)
         
         // create and add a camera to the scene
@@ -72,12 +90,16 @@ class GameViewController: NSViewController, RMXViewController, SCNSceneRendererD
 //        self.world?.insertChildNode(ship2)
         
         // animate the 3d object
+        #if OSX
         let animation = CABasicAnimation(keyPath: "rotation")
         animation.toValue = NSValue(SCNVector4: SCNVector4(x: CGFloat(0), y: CGFloat(1), z: CGFloat(0), w: CGFloat(M_PI)*2))
         animation.duration = 10
         animation.repeatCount = MAXFLOAT //repeat forever
         ship.addAnimation(animation, forKey: nil)
-
+            #elseif iOS
+        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 20, z: 20, duration: 10)))
+            #endif
+        
         scene.rootNode.addChildNode(self.world!)
         // set the scene to the view
         self.gameView!.scene = scene

@@ -65,7 +65,7 @@ class RMXNode : SCNNode, RMXChildNode{
         return "\(_name): \(self.rmxID)"
     }
     
-    var altitude: RMFloat {
+    var altitude: RMFloatB {
         return self.position.y
     }
     
@@ -75,7 +75,7 @@ class RMXNode : SCNNode, RMXChildNode{
     
     #else
     
-    var altitude: RMFloat {
+    var altitude: RMFloatB {
         return self.position.y
     }
     #endif
@@ -141,8 +141,8 @@ class RMXNode : SCNNode, RMXChildNode{
     //Set automated rotation (used mainly for the sun)
     ///@todo create a behavior protocal/class instead of fun pointers.
     var rAxis = RMXVector3Make(0,0,1)
-    private var _rotation: RMFloat = 0
-    var rotationCenterDistance:RMFloat = 0
+    private var _rotation: RMFloatB = 0
+    var rotationCenterDistance:RMFloatB = 0
     var isRotating = false
     //static var COUNT: Int = 0
     var isInWorld: Bool {
@@ -293,10 +293,10 @@ class RMXNode : SCNNode, RMXChildNode{
     }
     
     class Variable {
-        var i: RMFloat = 0
+        var i: RMFloatB = 0
         var isActive: Bool = false
         let bools: [String:Bool] = [ "isTrue" : false ]
-        init(i: RMFloat = 0){
+        init(i: RMFloatB = 0){
             self.i = i
         }
         
@@ -317,9 +317,6 @@ class RMXNode : SCNNode, RMXChildNode{
         #endif
         child.world = self.world
         self.children[child.rmxID] = child
-        #if SceneKit
-        self.insertChildNode(child, atIndex: 0)
-        #endif
     }
     
     
@@ -394,7 +391,7 @@ class RMXNode : SCNNode, RMXChildNode{
     }
     
     
-    func setAsShape(type: ShapeType = .CUBE) -> RMXNode {//, mass: RMFloat? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXNode {
+    func setAsShape(type: ShapeType = .CUBE) -> RMXNode {//, mass: RMFloatB? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXNode {
         if self._asShape { return self }
         self.shape.type = type
         self.shape.isVisible = true
@@ -427,7 +424,7 @@ class RMXNode : SCNNode, RMXChildNode{
         self.type = .OBSERVER
         if _asObserver { return self }
         self.resets.append({
-            self.actions.armLength = self.radius * RMFloat(2)
+            self.actions.armLength = self.radius * RMFloatB(2)
             
             self.body!.mass = 9
 
@@ -449,7 +446,7 @@ class RMXNode : SCNNode, RMXChildNode{
 
 extension RMXNode {
     
-    func setRotationSpeed(speed s: RMFloat){
+    func setRotationSpeed(speed s: RMFloatB){
         self.body!.rotationSpeed = s
     }
     
@@ -473,7 +470,7 @@ extension RMXNode {
         return self.forwardVector + self.position
     }
     
-    var ground: RMFloat {
+    var ground: RMFloatB {
         return self.body!.radius - self.actions.squatLevel
     }
     
@@ -481,7 +478,7 @@ extension RMXNode {
         self.body!.velocity = RMXVector3Zero
     }
     
-    func rotate(radiansTheta theta: RMFloat,radiansPhi phi: RMFloat = 0,radiansRoll roll: RMFloat = 0,  speed: RMFloat = 1){
+    func rotate(radiansTheta theta: RMFloatB,radiansPhi phi: RMFloatB = 0,radiansRoll roll: RMFloatB = 0,  speed: RMFloatB = 1){
         self.body!.addTheta(leftRightRadians: theta * -speed)
         self.body!.addPhi(upDownRadians: phi * speed)
         self.body!.addRoll(sideRollRadians: roll * speed)
@@ -491,11 +488,11 @@ extension RMXNode {
         return self.position.y <= self.radius
     }
     
-    var upThrust: RMFloat {
+    var upThrust: RMFloatB {
         return self.body!.velocity.y
     }
     
-    var downForce: RMFloat {
+    var downForce: RMFloatB {
         return self.body!.forces.y
     }
     
@@ -503,7 +500,7 @@ extension RMXNode {
         return self.shape.isLight
     }
     
-    var radius: RMFloat {
+    var radius: RMFloatB {
         #if SceneKit
         return self.body!.radius//.scale.y
         #else
@@ -554,7 +551,7 @@ extension RMXNode {
 extension RMXNode {
     func setColor(col: RMXVector4){
         #if SceneKit
-        let color = NSColor(calibratedRed: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
+        let color = NSColor(red: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
         self.setColor(color: color)
         #else
         self.shape.color = col
@@ -582,5 +579,12 @@ extension RMXNode {
             #else
             self.shape.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
         #endif
+    }
+    
+    func grabNode(node: SCNNode?){
+        if let node = node {
+            self.addChildNode(node)
+            node.position = self.viewPoint
+        }
     }
 }
