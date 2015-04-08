@@ -132,22 +132,22 @@ extension RMX {
         return world
     }
     static func makePoppy(#world: RMSWorld) -> RMXNode{
-        let poppy: RMXNode = RMXNode.Unique(world).setAsObserver().setAsShape()
+        let poppy: RMXNode = RMXNode.Unique(world).setAsObserver().setAsShape(type: .CYLINDER)
         poppy.type = .POPPY
-        poppy.body!.radius = 8
+        poppy.body!.setRadius(8)
         poppy.position = RMXVector3Make(100,poppy.radius,-50)
         var itemToWatch: RMXNode! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
-        var pacingSpeed: Float = 3
+        var speed: RMFloat = 0.01
         let updateInterval = 1
         
         poppy.behaviours.append { (isOn: Bool) -> () in
             
             func idle(sender: RMXNode, objects: [AnyObject]? = []) -> AnyObject? {
                 sender.body!.addTheta(leftRightRadians: 5 * PI_OVER_180)
-                sender.body!.accelerateForward(0.05)
+                sender.body!.accelerateForward(speed)
                 return nil
             }
             
@@ -182,7 +182,7 @@ extension RMX {
                     state = .CHASING
                     poppy.hasGravity = itemToWatch.hasGravity
                 } else {
-                    poppy.actions.headTo(itemToWatch, speed: 1, doOnArrival: getReady)
+                    poppy.actions.headTo(itemToWatch, speed: speed * 10, doOnArrival: getReady)
                 }
                 break
             case .CHASING:
@@ -195,7 +195,7 @@ extension RMX {
                     state = .FETCHING
                     poppy.hasGravity = observer.hasGravity
                 } else {
-                    poppy.actions.headTo(itemToWatch, speed: 1, doOnArrival: fetch, objects: observer)
+                    poppy.actions.headTo(itemToWatch, speed: speed * 10, doOnArrival: fetch, objects: observer)
                 }
                 break
             case .FETCHING:
@@ -203,7 +203,7 @@ extension RMX {
                     state = .IDLE
                     poppy.hasGravity = observer.hasGravity
                 } else {
-                    poppy.actions.headTo(observer, speed: 1, doOnArrival: drop)
+                    poppy.actions.headTo(observer, speed: speed * 10, doOnArrival: drop)
                 }
                 break
             default:
@@ -218,10 +218,15 @@ extension RMX {
         }
         poppy.shape.color = GLKVector4Make(0.1,0.1,0.1,1.0)
         
+        #if SceneKit
+            let r: RMFloat = 0.3
+            #else
+            let r = poppy.radius / 2
+            #endif
         let head = RMXNode().initWithParent(poppy).setAsShape(type: .SPHERE)
-        head.body!.radius = poppy.radius / 2
+        head.body!.setRadius(r)
         head.shape.color = GLKVector4Make(0.1,0.1,0.1,0.1)
-        head.position = RMXVector3Make(0,poppy.radius + head.radius / 4, poppy.radius + head.radius / 4)
+        head.position = RMXVector3Make(0,head.scale.y, -head.scale.z)
         poppy.insertChildNode(head)
         
        

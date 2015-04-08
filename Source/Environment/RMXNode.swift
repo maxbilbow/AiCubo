@@ -388,15 +388,30 @@ class RMXNode : SCNNode, RMXChildNode{
     
     func setAsShape(type: ShapeType = .CUBE) -> RMXNode {//, mass: RMFloat? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXNode {
         if self._asShape { return self }
+        self.shape.type = type
+        self.shape.isVisible = true
         #if SceneKit
-        self.geometry = RMXArt.CUBE
+            switch(type) {
+            case .CUBE:
+                self.geometry = RMXArt.CUBE
+                break
+            case .SPHERE:
+                self.geometry = RMXArt.SPHERE
+                break
+            case .CYLINDER:
+                self.geometry = RMXArt.CYLINDER
+                break
+            case .PLANE:
+                self.geometry = RMXArt.PLANE
+                break
+            default:
+                self.geometry = RMXArt.CYLINDER
+            }
         #endif
         self.resets.append({
-            self.shape.type = type
             self.shape.isVisible = true
         })
         self._asShape = true
-        self.resets.last?()
         return self
     }
     
@@ -408,7 +423,7 @@ class RMXNode : SCNNode, RMXChildNode{
             
             self.body!.mass = 9
 
-            self.body!.radius = 20
+            self.body!.setRadius(20)
 
             self.position = RMXVector3Make(0,self.radius,-20)
             self.hasGravity = true

@@ -120,23 +120,17 @@ class RMSActionProcessor {
         if action == "grab" {
             self.activeSprite.actions.grabItem()
         }
-        if action == "throw" {
-            
+        if action == "throw" && speed > 0 {
             if self.activeSprite.hasItem {
-                RMXLog("Throw: \(self.activeSprite.actions.item?.name) with speed: \(speed)")
+                RMXLog("Throw: \(self.activeSprite.actions.item?.label) with speed: \(speed)")
                 self.activeSprite.actions.throwItem(speed)
-            } else {
-                 self.activeSprite.actions.grabItem()
-                 RMXLog("Grab: \(self.activeSprite.actions.item?.name) with speed: \(speed)")
             }
-            
-            
         }
         if self.activeSprite.hasItem {
             if action == "enlargeItem"   {
                 let size = (self.activeSprite.actions.item?.radius)! * speed
                 if size > 0.5 && size < 15 {
-                    self.activeSprite.actions.item?.body!.radius = size
+                    self.activeSprite.actions.item?.body!.setRadius(size)
                     self.activeSprite.actions.item?.body!.mass *= size
                 }
 

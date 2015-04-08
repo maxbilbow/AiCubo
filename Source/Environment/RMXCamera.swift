@@ -86,7 +86,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     #endif
     
     private func initCam(){
-        self.zNear = 1
+        self.zNear = 0.1
         self.zFar = 10000
         self.yFov = 65
         self.xFov = 65

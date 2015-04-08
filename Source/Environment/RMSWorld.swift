@@ -57,7 +57,7 @@ class RMSWorld : RMXNode {
     
     override func nodeDidInitialize() {
         super.nodeDidInitialize()
-        self.body!.radius = 2000
+        self.body!.setRadius(2000)
         self.world = self
         self.isAnimated = false
         self.shape.isVisible = false

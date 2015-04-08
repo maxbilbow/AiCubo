@@ -10,27 +10,29 @@ import Foundation
 import AppKit
 
 class RMSKeys : RMXInterface, RMXControllerProtocol {
- 
+    
+    lazy var mv: (on:RMFloat,off:RMFloat) = (self.moveSpeed, 0)
     lazy var keys: [ RMKey ] = [
-        RMKey(self, action: "forward", characters: "w"),
-        RMKey(self, action: "back", characters: "s"),
-        RMKey(self, action: "left", characters: "a"),
-        RMKey(self, action: "right", characters: "d"),
-        RMKey(self, action: "up", characters: "e"),
-        RMKey(self, action: "down", characters: "q"),
+        RMKey(self, action: "forward", characters: "w", speed: self.mv),
+        RMKey(self, action: "back", characters: "s", speed: self.mv),
+        RMKey(self, action: "left", characters: "a", speed: self.mv),
+        RMKey(self, action: "right", characters: "d", speed: self.mv),
+        RMKey(self, action: "up", characters: "e", speed: self.mv),
+        RMKey(self, action: "down", characters: "q", speed: self.mv),
         RMKey(self, action: "jump", characters: " "),
         RMKey(self, action: "toggleGravity", characters: "g", isRepeating: false,speed: (0,1)),
         RMKey(self, action: "toggleAllGravity", characters: "G", isRepeating: false,speed: (0,1)),
         RMKey(self, action: "reset", characters: "R", isRepeating: false,speed: (0,1)),
         RMKey(self, action: "look", characters: "mouseMoved", isRepeating: false,speed: (0.01,0)),
-        RMKey(self, action: "lockMouse", characters: "m")//,
-        //            RMKey(action: "grab", key: "Mouse 1"),
-        //            RMKey(action: "throw", key: "Mouse 2")
+        RMKey(self, action: "lockMouse", characters: "m"),//,
+        RMKey(self, action: "grab", characters: "Mouse 1", isRepeating: false, speed: (0,1)),
+        RMKey(self, action: "throw", characters: "Mouse 2", isRepeating: false,  speed: (0,20))
     ]
     
-    override func viewDidLoad(#coder: NSCoder! = nil) {
+    override func viewDidLoad(coder: NSCoder! = nil) {
         super.viewDidLoad(coder: coder)
         self.lookSpeed *= 0.1
+//        self.moveSpeed *= 0.1
     }
     func set(action a: String, characters k: String ) {
         let newKey = RMKey(self, action: a, characters: k)
@@ -228,7 +230,14 @@ extension GameView {
         }
     }
     
-   
+    override func rightMouseUp(theEvent: NSEvent) {
+        self.keys.get(forChar: "Mouse 2")?.release()
+    }
+    
+    override func rightMouseDown(theEvent: NSEvent) {
+        self.keys.get(forChar: "Mouse 2")?.press()
+    }
+    
     /*
     override func mouseMoved(theEvent: NSEvent) {
         keys.get(forChar: "mouseMoved")?.actionWithValues([RMFloat(theEvent.deltaX), RMFloat(theEvent.deltaY)])

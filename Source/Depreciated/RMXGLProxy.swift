@@ -173,6 +173,7 @@ extension RMXGLProxy {
             case .PLANE:
                 DrawPlane(Float(radius))
             default:
+                DrawCubeWithTextureCoords(Float(radius))
                 return
             }
         }

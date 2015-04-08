@@ -12,7 +12,7 @@ import GLKit
 import OpenGL
 import GLUT
     #endif
-enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3 }
+enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDER = 4}
 
 #if SceneKit
     import SceneKit
@@ -81,6 +81,9 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
     private var _rotation: RMFloat = 0
     func makeAsSun(rDist: RMFloat = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
         self.type = .SPHERE
+        #if SceneKit
+        self.owner.geometry = RMXArt.SPHERE
+        #endif
         self.isVisible = true
         self.owner.rotationCenterDistance = rDist
         self.owner.isRotating = isRotating

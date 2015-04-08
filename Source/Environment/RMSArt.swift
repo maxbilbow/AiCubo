@@ -27,6 +27,10 @@ class RMXArt {
         height:1.0,
         length:1.0,
         chamferRadius:0.0)
+    static let PLANE = SCNPlane(
+        width: 1.0,
+        height:1.0
+    )
     
     static let SPHERE = SCNSphere(radius:0.5)
     static let CYLINDER = SCNCylinder(radius:0.5, height:1.0)
@@ -47,25 +51,20 @@ class RMXArt {
     
     class func drawSun(world: RMSWorld) {
         world.sun.isRotating = true
-        world.sun.body!.radius = 100
+        world.sun.body!.setRadius(100)
     }
     
     class func drawPlane(world: RMSWorld) {
-        let ZX = RMXNode().initWithParent(world)
-        ZX.body!.radius = world.body!.radius
-        ZX.shape.type = .CUBE
-        #if SceneKit
-            ZX.geometry = self.CUBE
-        #endif
-        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
-        //        ZX.body.addPhi(upDownRadians: GLKMathDegreesToRadians(90))
-        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
-        ZX.body!.addPhi(upDownRadians: 270 * RMFloat(PI_OVER_180))
+        let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
+        ZX.body!.setRadius(world.body!.radius)
+//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
+//        //        ZX.body.addPhi(upDownRadians: GLKMathDegreesToRadians(90))
+//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
+        ZX.body!.addPhi(upDownRadians: 90 * RMFloat(PI_OVER_180))
         ZX.shape.color = GLKVector4Make(1.0,1.0,1.0,1.0)
         ZX.isAnimated = false
-        //#if OPENGL_ES
-            ZX.position = RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z)
-        //#endif
+        ZX.startingPoint = ZX.position
+//        ZX.position = RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z)
         world.insertChildNode(ZX)
     }
     class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
@@ -93,19 +92,15 @@ class RMXArt {
             for (var i: RMFloat = 0; i < shapesPerAxis; ++i){
                 let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                 point += step
-                let object:RMXNode = RMXNode().initWithParent(world)
+                let object:RMXNode = RMXNode().initWithParent(world).setAsShape(type: .CUBE)
                 object.resets.append({
                     object.hasGravity = false
-                    object.body!.radius = shapeRadius
-                    object.position = position
-                    object.shape.isVisible = true
-                    object.shape.type = .CUBE
-                    #if SceneKit
-                    object.geometry = self.CUBE
-                    #endif
+                    object.body!.setRadius(shapeRadius)
                     object.shape.color = GLKVector4Make(color[0], color[1], color[2], color[3])
                     object.isAnimated = false
                 })
+                object.position = position
+                object.startingPoint = position
                 object.resets.last?()
                 world.insertChildNode(object)
             }
@@ -144,20 +139,17 @@ class RMXArt {
 //            }
         
         if(random() % 50 == 1) {
-            object.shape.type = .SPHERE
-            #if SceneKit
-                object.geometry = self.SPHERE
-            #endif
+            object.setAsShape(type: .SPHERE)
+        } else if(random() % 5 == 1){
+            object.setAsShape(type: .CYLINDER)
         } else {
-            object.shape.type = .CUBE
-            #if SceneKit
-                object.geometry = self.CUBE
-            #endif
+            object.setAsShape(type: .CUBE)
         }
         
         object.hasGravity = false //(rand()% 100) == 1
-        object.body!.radius = RMFloat(random() % 9 + 2)
+        object.body!.setRadius(RMFloat(random() % 9 + 2))
         object.position = RMXVector3Make(randPos[0], randPos[1], randPos[2])
+        object.startingPoint = object.position
         object.body!.mass = RMFloat(random()%15+1)/10;
         object.body!.dragC = RMFloat(random() % 99+1)/100;
         object.shape.color = RMXRandomColor()
