@@ -90,6 +90,11 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         self.zFar = 10000
         self.yFov = 65
         self.xFov = 65
+        self.focalBlurRadius = 0.05
+        self.aperture = 0.005
+        self.focalDistance = 0.001
+//        self.position = RMXVector3Zero
+        
         
     }
     var eye: GLKVector3 {
@@ -112,7 +117,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         return v
     }
     
-    private let simple = true
+    private let simple = false
     var up: GLKVector3 {
         if simple {
             return GLKVector3Make(0,1,0)

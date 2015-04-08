@@ -162,22 +162,13 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     
     ///input as radians
     func addTheta(leftRightRadians theta: RMFloatB){
-        //let theta: Float = GLKMathDegreesToRadians(x)
         self.theta += theta
-       // #if OSX
+        //if self.owner.isObserver { RMXLog("Theta: \(self.theta.toData())") }
+        let axis = self.owner.upVector
         self.owner.transform = RMXMatrix4Rotate(self.owner.transform, theta,0,1,0)
-        //#elseif iOS
-//            var mv = RMXMatrix4Translate(self.owner.transform, self.owner.position)
-//            mv = RMXMatrix4Rotate(mv, theta,0,1,0)
-//            self.owner.transform  = RMXMatrix4Translate(mv, self.owner.position.negate())
-
-//            self.owner.rotation = SCNVector4Make(0,1,0,theta)
-//        #endif
-        
-//        let mat = RMXMatrix4Rotate(RMXMatrix4Identity,theta,0,1,0)
-//        self.owner.transform = mat * self.owner.transform
 
 
+        if self.owner.isObserver { RMXLog("\nTheta: \(self.theta.toData()), Phi: \(self.phi.toData())  \nTransform: \n\(self.owner.transform.print)\n\n \(self.owner.orientationMat.print)") }
     }
     
 //    private var _orientation: RMXMatrix4 = RMXMatrix4Identity
@@ -185,7 +176,8 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         self.phi += phi
         let axis = self.owner.leftVector
         //#if OSX
-            self.owner.transform = RMXMatrix4RotateWithVector3(self.owner.transform, phi, axis)
+            self.owner.transform = RMXMatrix4Rotate(self.owner.transform, phi, axis.x,axis.y,axis.z)
+       // if self.owner.isObserver {  RMXLog("  Phi: \(self.phi.toData()), axis: \(axis.print)") }
 //        #elseif iOS
 //        
 //        #endif
@@ -242,10 +234,11 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         self.world.collisionTest(self.owner)
 
         
-     
+        //self.owner.position += self.velocity
         self.owner.transform = RMXMatrix4Translate(self.owner.transform,self.velocity)
         
-//        if self.owner.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print), \(self.owner.leftVector.print) \n    UP: \(self.upVector.print), \(self.owner.upVector.print)\n   FWD: \(self.forwardVector.print), \(self.owner.forwardVector.print)\n   FRC: \(self.forces.print)\n") }
+        
+        
         
     }
     

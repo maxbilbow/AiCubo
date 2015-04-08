@@ -63,9 +63,10 @@ class RMXArt {
         let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
         ZX.body!.setRadius(world.body!.radius)
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
-        ZX.body!.setPhi(upDownRadians: 180 * PI_OVER_180)
+//        ZX.body!.setPhi(upDownRadians: 180 * PI_OVER_180)
+        ZX.transform = RMXMatrix4Rotate(ZX.transform,90 * PI_OVER_180,1,0,0)
+        ZX.geometry!.firstMaterial!.doubleSided = true
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
-        ZX.body!.addPhi(upDownRadians: 90 * RMFloatB(PI_OVER_180))
         ZX.setColor(color: NSColor.greenColor())
 //        ZX.geometry?.firstMaterial!.doubleSided = true
         ZX.isAnimated = false

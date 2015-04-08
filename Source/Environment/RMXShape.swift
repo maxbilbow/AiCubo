@@ -12,7 +12,7 @@ import GLKit
 import OpenGL
 import GLUT
     #endif
-enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDER = 4}
+enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDER = 4, FLOOR}
 
 #if SceneKit
     import SceneKit
@@ -82,7 +82,7 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
 //        self.firstMaterial?.diffuse.contents = col
 //    }
     
-    
+    /*
     private var _rotation: RMFloatB = 0
     func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
         self.type = .SPHERE
@@ -99,8 +99,31 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
         self.owner.rAxis = rAxis
         self._rotation = PI / 4
         return self.owner
-    }
+    } */
         func animate(){
             
         }
+
+    #if SceneKit
+    static let CUBE = SCNBox(
+        width: 1.0,
+        height:1.0,
+        length:1.0,
+        chamferRadius:0.0)
+    static let PLANE = SCNPlane(
+        width: 1.0,
+        height:1.0
+    )
+    
+    static let FLOOR = SCNFloor()
+    
+    static let SPHERE = SCNSphere(radius:1)
+    static let CYLINDER = SCNCylinder(radius:1, height:1.0)
+    
+    static let greenMat: SCNMaterial = SPHERE.firstMaterial!.copy() as! SCNMaterial
+    static let redMat: SCNMaterial = SPHERE.firstMaterial!.copy() as! SCNMaterial
+    static let blueMat: SCNMaterial = SPHERE.firstMaterial!.copy() as! SCNMaterial
+    
+    #endif
+
 }

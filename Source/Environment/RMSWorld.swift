@@ -19,7 +19,7 @@ class RMSWorld : RMXNode {
 //    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    lazy var sun: RMXNode = RMXNode.Unique(self).shape.makeAsSun(rDist: self.radius)
+    lazy var sun: RMXNode = RMXNode.Unique(self).makeAsSun(rDist: self.radius)
     private let GRAVITY: RMFloatB = 9.8
     
     
@@ -38,7 +38,7 @@ class RMSWorld : RMXNode {
     
     var worldType: RMXWorldType = .DEFAULT
     
-    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloatB = 2000, parent: RMXNode! = nil) {
+    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloatB = 1000, parent: RMXNode! = nil) {
         super.init()//parentNode: parent, type: .WORLD, name: name)
         
     }
@@ -57,10 +57,10 @@ class RMSWorld : RMXNode {
     
     override func nodeDidInitialize() {
         super.nodeDidInitialize()
-        self.body!.setRadius(6000)
+        self.body!.setRadius(3000)
         self.world = self
         self.isAnimated = false
-        self.shape.isVisible = false
+        self.isVisible = false
         
         self.worldDidInitialize()
     }
@@ -91,7 +91,7 @@ class RMSWorld : RMXNode {
 //        self.reset()
     }
   
-    func setWorldType(worldType type: RMXWorldType = .DEFAULT){
+    func setWorldType(worldType type: RMXWorldType = RMSWorld.TYPE){
         self.worldType = type
         self.children.removeAll(keepCapacity: true)
         self.worldDidInitialize()
@@ -201,7 +201,7 @@ class RMSWorld : RMXNode {
     override func toggleGravity() {
         for object in children {
             let child = object.1
-            if (child != self.observer) && !(child.isLightSource) {
+            if (child != self.observer) && !(child.isLight) {
                 child.hasGravity = self.hasGravity
             }
         }

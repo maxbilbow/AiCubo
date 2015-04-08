@@ -43,11 +43,8 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         
         // create and add a camera to the scene
         let cameraNode = self.gameView!.world!.observer
-        cameraNode.hasGravity = false
+        cameraNode.hasGravity = true
         cameraNode.camera = self.gameView!.world!.activeCamera
-        cameraNode.camera?.focalBlurRadius = 0.05
-        cameraNode.camera?.aperture = 0.005
-        cameraNode.camera?.focalDistance = 0.001
         
         
 
@@ -80,14 +77,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
 //        world?.addChildNode(ship)
         ship.transform = SCNMatrix4Translate(ship.transform,0,-1,0)
         ship.scale = SCNVector3Make(0.1,0.1,0.1)
-//        let ship2 = RMXNode()//.initWithParent(self.world!)
-//        ship2.geometry = ship.geometry
-//        ship2.name = ship.name
-//        ship2.physicsBody = ship.physicsBody
-//        ship2.skinner = ship.skinner
-//        
-//        scene.rootNode.addChildNode(ship2)
-//        self.world?.insertChildNode(ship2)
+
         
         // animate the 3d object
         #if OSX
@@ -97,7 +87,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         animation.repeatCount = MAXFLOAT //repeat forever
         ship.addAnimation(animation, forKey: nil)
             #elseif iOS
-        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 20, z: 20, duration: 10)))
+        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 1, z: 0, duration: 10)))
             #endif
         
         scene.rootNode.addChildNode(self.world!)

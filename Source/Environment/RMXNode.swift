@@ -24,7 +24,13 @@ class RMXNode : SCNNode, RMXChildNode{
     var isUnique: Bool = false
     var hasFriction = true
     var hasGravity = false
-    lazy var shape: RMXShape = RMXShape(self)
+    var _rotation: RMFloatB = 0
+    var isVisible: Bool = true
+    var isLight: Bool = false
+    var shapeType: ShapeType = .NULL
+    var shape: RMXShape? {
+        return self.geometry as? RMXShape
+    }
 
     
     var parent: RMXNode? {
@@ -130,7 +136,7 @@ class RMXNode : SCNNode, RMXChildNode{
         if _isDrawable != nil {
             return _isDrawable!
         } else {
-            _isDrawable = self.shape.isVisible && self.shape.type != .NULL
+            _isDrawable = self.shape!.isVisible && self.shape!.type != .NULL
         }
         return _isDrawable!
     }
@@ -141,7 +147,7 @@ class RMXNode : SCNNode, RMXChildNode{
     //Set automated rotation (used mainly for the sun)
     ///@todo create a behavior protocal/class instead of fun pointers.
     var rAxis = RMXVector3Make(0,0,1)
-    private var _rotation: RMFloatB = 0
+//    private var _rotation: RMFloatB = 0
     var rotationCenterDistance:RMFloatB = 0
     var isRotating = false
     //static var COUNT: Int = 0
@@ -180,17 +186,11 @@ class RMXNode : SCNNode, RMXChildNode{
     #if SceneKit
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.geometry = self.shape
-        self.physicsBody = RMSPhysicsBody(self)
-        self.position = RMXVector3Zero
         self.nodeDidInitialize()
     }
     
     override init(){
         super.init()
-        self.geometry = self.shape
-        self.physicsBody = RMSPhysicsBody(self)
-        self.position = RMXVector3Zero
         self.nodeDidInitialize()
     }
     
@@ -217,6 +217,10 @@ class RMXNode : SCNNode, RMXChildNode{
     
     func nodeDidInitialize(){
         RMXNode.COUNT++
+        self.geometry = RMXShape(self)
+        self.physicsBody = RMSPhysicsBody(self)
+        self.position = RMXVector3Zero
+        self.pivot = RMXMatrix4Identity
         if self.parentNode != nil {
             self.world = self.parent!.world
         }
@@ -237,12 +241,7 @@ class RMXNode : SCNNode, RMXChildNode{
     var label: String {
         return "\(_name): \(self.rmxID)"
     }
-    
-    @availability(*, deprecated=0.0, obsoleted=1.0, message="Because !")
-    func addInitCall(reset: () -> ()){
-        self.resets.append(reset)
-        self.resets.last?()
-    }
+
    
     func reset(){
         for re in resets {
@@ -366,6 +365,7 @@ class RMXNode : SCNNode, RMXChildNode{
             self.actions.animate()
             self.body!.animate()
             self.actions.manipulate()
+
         }
         
         ///add this as a behaviour (create the variables outside of function before adding)
@@ -378,7 +378,8 @@ class RMXNode : SCNNode, RMXChildNode{
             self.transform = RMXMatrix4Translate(self.transform, RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0))
             #endif
         }
-        //if self.isObserver { RMXLog("\n\(self.orientationMat.print)\n\(self.transform.print),\n   POS: \(self.position.print)") }
+//        if self.isObserver { RMXLog("\n\(self.orientationMat.print)\n\(self.transform.print),\n   POS: \(self.viewPoint.print)") }
+//        if self.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print),\n    UP: \(self.upVector.print)\n   FWD: \(self.forwardVector.print)\n\n") }
         
     }
     
@@ -393,8 +394,8 @@ class RMXNode : SCNNode, RMXChildNode{
     
     func setAsShape(type: ShapeType = .CUBE) -> RMXNode {//, mass: RMFloatB? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXNode {
         if self._asShape { return self }
-        self.shape.type = type
-        self.shape.isVisible = true
+        self.shape!.type = type
+        self.shape!.isVisible = true
         #if SceneKit
             switch(type) {
             case .CUBE:
@@ -409,12 +410,15 @@ class RMXNode : SCNNode, RMXChildNode{
             case .PLANE:
                 self.geometry = RMXArt.PLANE
                 break
+            case .FLOOR:
+                self.geometry = RMXShape.FLOOR
+                break
             default:
                 self.geometry = RMXArt.CYLINDER
             }
         #endif
         self.resets.append({
-            self.shape.isVisible = true
+            self.shape!.isVisible = true
         })
         self._asShape = true
         return self
@@ -496,9 +500,7 @@ extension RMXNode {
         return self.body!.forces.y
     }
     
-    var isLightSource: Bool {
-        return self.shape.isLight
-    }
+
     
     var radius: RMFloatB {
         #if SceneKit
@@ -549,12 +551,22 @@ extension RMXNode {
 
 
 extension RMXNode {
+    
+    func grabNode(node: SCNNode?){
+        if let node = node {
+            self.addChildNode(node)
+            node.position = self.viewPoint
+        }
+    }
+}
+
+extension RMXNode {
     func setColor(col: RMXVector4){
         #if SceneKit
-        let color = NSColor(red: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
-        self.setColor(color: color)
-        #else
-        self.shape.color = col
+            let color = NSColor(red: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
+            self.setColor(color: color)
+            #else
+            self.shape.color = col
         #endif
     }
     
@@ -567,24 +579,54 @@ extension RMXNode {
             self.geometry?.firstMaterial!.ambient.contents = color
             self.geometry?.firstMaterial!.ambient.intensity = 1
             self.geometry?.firstMaterial!.transparent.intensity = 0
-            if self.isLightSource {
+            if self.isLight {
                 self.geometry?.firstMaterial!.emission.contents = color
-                 self.geometry?.firstMaterial!.emission.intensity = 1
+                self.geometry?.firstMaterial!.emission.intensity = 1
                 //                self.geometry?.firstMaterial!.transparency = 0.5
             } else {
                 //                self.geometry?.firstMaterial!.doubleSided = true
-               
+                
                 
             }
             #else
             self.shape.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
         #endif
     }
-    
-    func grabNode(node: SCNNode?){
-        if let node = node {
-            self.addChildNode(node)
-            node.position = self.viewPoint
+
+    func setShape(shapeType type: ShapeType) {
+        self.shapeType = type
+        switch(type){
+        case .CUBE:
+            self.geometry = RMXShape.CUBE
+            break
+        case .SPHERE:
+            self.geometry = RMXShape.SPHERE
+            break
+        case .CYLINDER:
+            self.geometry = RMXShape.CYLINDER
+            break
+        case .PLANE:
+            self.geometry = RMXShape.PLANE
+            break
+        case .FLOOR:
+            self.geometry = RMXShape.FLOOR
+            break
+        default:
+            self.geometry = RMXShape.CUBE
         }
+    }
+    
+    func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(1,0,0)) -> RMXNode {
+        self.setShape(shapeType: .SPHERE)
+        self.isVisible = true
+        self.rotationCenterDistance = rDist
+        self.isRotating = isRotating
+        self.setRotationSpeed(speed: 1)
+        self.hasGravity = false
+        self.isLight = true
+        self.setColor(color: NSColor.whiteColor())
+        self.rAxis = rAxis
+       // self._rotation = PI / 4
+        return self
     }
 }

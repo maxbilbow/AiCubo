@@ -79,7 +79,7 @@ extension RMXDPad {
         func handleOrientation(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
                 let point = recognizer.velocityInView(self.view)
-                self.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), Float(point.y)])
+                self.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), -Float(point.y)])
             }
 //            _handleRelease(recognizer.state)
         }
