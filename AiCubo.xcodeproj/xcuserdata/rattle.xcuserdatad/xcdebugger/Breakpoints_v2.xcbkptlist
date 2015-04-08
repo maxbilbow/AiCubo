@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMSArt.swift"
-            timestampString = "450222960.962811"
+            timestampString = "450227903.768211"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "drawAxis(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -256,6 +256,22 @@
             startingLineNumber = "60"
             endingLineNumber = "60"
             landmarkName = "movement(_:speed:point:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/Environment/RMXNode.swift"
+            timestampString = "450228109.064448"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "598"
+            endingLineNumber = "598"
+            landmarkName = "setColor(color:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

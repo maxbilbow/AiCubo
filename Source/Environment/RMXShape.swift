@@ -57,7 +57,7 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
         return self.owner.radius
     }
     
-    var color: GLKVector4 = GLKVector4Make(0.5,0.5,0.5,1)
+    var color: GLKVector4 = GLKVector4Make(1.0,1.0,1.0,1)
     var isLight: Bool = false
     var gl_light_type, gl_light: Int32
     var isVisible: Bool = true

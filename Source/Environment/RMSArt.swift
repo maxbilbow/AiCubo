@@ -21,6 +21,11 @@ class RMXArt {
     static let colorGreen: [RMFloatB]       = [ 0.0, 0.1, 0.0, 1.0 ]
     static let colorYellow: [Float]      = [ 1.0, 0.0, 0.0, 1.0 ]
     static let nillVector: [Float]       = [ 0  ,   0,  0,  0   ]
+    
+    static let greenVector: RMXVector4 = RMXVector4Make(0.0, 0.1, 0.0, 1.0)
+    static let yellowVector: RMXVector4 = RMXVector4Make(1.0, 1.0, 0.0, 1.0)
+    static let blueVector: RMXVector4 = RMXVector4Make(0.0, 0.0, 1.0, 1.0)
+    static let redVector: RMXVector4 = RMXVector4Make(1.0, 0.0, 0.0, 1.0)
     #if SceneKit
     static let CUBE = SCNBox(
         width: 1.0,
@@ -68,8 +73,11 @@ class RMXArt {
         #if SceneKit
         ZX.geometry!.firstMaterial!.doubleSided = true
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
-            #endif
+            
         ZX.setColor(color: NSColor.greenColor())
+            #else
+            ZX.setColor(self.yellowVector)
+            #endif
 //        ZX.geometry?.firstMaterial!.doubleSided = true
         ZX.isAnimated = false
         ZX.startingPoint = ZX.position
@@ -84,16 +92,16 @@ class RMXArt {
         
         func drawAxis(axis: String) {
             var point =  -world.radius
-            var color: NSColor
+            var color: RMXVector4
             switch axis {
             case "x":
-                color = NSColor.redColor()
+                color = self.redVector
                 break
             case "y":
-                color = NSColor.greenColor()
+                color = self.greenVector
                 break
             case "z":
-                color = NSColor.blueColor()
+                color = self.blueVector
                 break
             default:
                 fatalError(__FUNCTION__)
@@ -104,7 +112,7 @@ class RMXArt {
                 let object:RMXNode = RMXNode().initWithParent(world).setAsShape(type: .CUBE)
                 object.hasGravity = false
                 object.body!.setRadius(shapeRadius)
-                object.setColor(color: color)
+                object.setColor(color)
                 
                 object.isAnimated = false
                 object.transform = RMXMatrix4Translate(object.transform, position)

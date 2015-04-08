@@ -164,9 +164,11 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     func addTheta(leftRightRadians theta: RMFloatB){
         self.theta += theta
         //if self.owner.isObserver { RMXLog("Theta: \(self.theta.toData())") }
-        let axis = self.owner.upVector
+        #if SceneKit
         self.owner.transform = RMXMatrix4Rotate(self.owner.transform, theta,0,1,0)
-
+            #else
+        self.owner.transform = GLKMatrix4Rotate(self.owner.transform, theta,0,1,0)
+            #endif
 
         if self.owner.isObserver { RMXLog("\nTheta: \(self.theta.toData()), Phi: \(self.phi.toData())  \nTransform: \n\(self.owner.transform.print)\n\n \(self.owner.orientationMat.print)") }
     }
@@ -176,11 +178,11 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         self.phi += phi
         let axis = self.owner.leftVector
         //#if OSX
+         #if SceneKit
             self.owner.transform = RMXMatrix4Rotate(self.owner.transform, phi, axis.x,axis.y,axis.z)
-       // if self.owner.isObserver {  RMXLog("  Phi: \(self.phi.toData()), axis: \(axis.print)") }
-//        #elseif iOS
-//        
-//        #endif
+            #else
+            self.owner.transform = GLKMatrix4RotateWithVector3(self.owner.transform, phi, axis)
+            #endif
     }
     
     func setTheta(leftRightRadians theta: RMFloatB){

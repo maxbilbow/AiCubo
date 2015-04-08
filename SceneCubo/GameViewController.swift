@@ -11,7 +11,7 @@ import QuartzCore
 
 #if iOS
     typealias ViewController = UIViewController
-    typealias NSColor = UIColor
+//    typealias NSColor = UIColor
     #elseif OSX
     typealias ViewController = NSViewController
     #endif

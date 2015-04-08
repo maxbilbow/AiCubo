@@ -182,11 +182,11 @@ extension RMXGLProxy {
             let position = object.1.position
             let radius = object.1.radius
 
-            if object.1.isLightSource {
+            if object.1.isLight {
                 #if SceneKit
                     RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type,SCNVector4ToGLKVector4(RMXVector4MakeWithVector3(position, 1)))
                     #else
-                RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type, RMXVector4MakeWithVector3(position, 1))
+                RMXGLShine(object.1.shape!.gl_light, object.1.shape!.gl_light_type, RMXVector4MakeWithVector3(position, 1))
                 #endif
                 
             }
@@ -203,15 +203,15 @@ extension RMXGLProxy {
                     Float(position.y),
                     Float(position.z)
                     )
-                if object.1.isLightSource {
-                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape.color)
+                if object.1.isLight {
+                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape!.color)
                 } else {
-                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.1.shape.color)
-                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, object.1.shape.color)
+                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.1.shape!.color)
+                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, object.1.shape!.color)
 //                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, object.1.shape.color)
                 }
                 
-                shape(object.1.shape.type, radius)
+                shape(object.1.shape!.type, radius)
 
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, GLKVector4Zero);
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, GLKVector4Zero);

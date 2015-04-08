@@ -289,7 +289,7 @@ extension GameView {
 
 extension GameView {
     
-    
+    #if SceneKit
     override func mouseDown(theEvent: NSEvent) {
         /* Called when a mouse click occurs */
         
@@ -333,5 +333,5 @@ extension GameView {
         
         super.mouseDown(theEvent)
     }
-
+    #endif
 }

@@ -81,7 +81,7 @@ class RMXNode : SCNNode, RMXChildNode{
         return self.position.y
     }
     
-    var geometry: RMXShape?
+    lazy var geometry: RMXShape? = RMXShape(self)
     
     #else
     
@@ -522,7 +522,7 @@ extension RMXNode {
 //            return RMXVector3Make(0,1,0)
         return RMXVector3MakeNormal(self.transform.m21, self.transform.m22, self.transform.m23)
         #else
-        let row = GLKMatrix4GetColumn(self.transform, 1)
+        let row = GLKMatrix4GetRow(self.transform, 1)
         return RMXVector3MakeNormal(row.x,row.y,row.z)
         #endif
     }
@@ -531,7 +531,7 @@ extension RMXNode {
         #if SceneKit
         return RMXVector3MakeNormal(self.transform.m11, self.transform.m12, self.transform.m13)
             #else
-            let row = GLKMatrix4GetColumn(self.transform, 0)
+            let row = GLKMatrix4GetRow(self.transform, 0)
             return RMXVector3MakeNormal(row.x,row.y,row.z)
         #endif
     }
@@ -540,7 +540,7 @@ extension RMXNode {
         #if SceneKit
         return RMXVector3MakeNormal(self.transform.m31, self.transform.m32, self.transform.m33)
             #else
-            let row = GLKMatrix4GetColumn(self.transform, 2)
+            let row = GLKMatrix4GetRow(self.transform, 2)
             return RMXVector3MakeNormal(row.x,row.y,row.z)
         #endif
     }
@@ -595,7 +595,7 @@ extension RMXNode {
                 
             }
             #else
-//            self.shape!.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
+            self.shape!.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
         #endif
     }
 
@@ -632,7 +632,9 @@ extension RMXNode {
         self.setRotationSpeed(speed: 1)
         self.hasGravity = false
         self.isLight = true
-        self.setColor(color: NSColor.whiteColor())
+        #if SceneKit
+            self.setColor(color: NSColor.whiteColor())
+            #endif
         self.rAxis = rAxis
        // self._rotation = PI / 4
         return self
