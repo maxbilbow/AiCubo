@@ -81,6 +81,21 @@ func RMXVector3SetY(inout v: RMXVector3, y: RMFloat){
     #endif
 }
 
+
+func RMXMatrix4SetY(inout m: RMXMatrix4, y: RMFloat){
+    #if SceneKit
+        m.m42 = y
+        #else
+        let r = GLKMatrix4GetRow(m,3)
+        m = GLKMatrix4MakeWithRows(
+            GLKMatrix4GetRow(m,0),
+            GLKMatrix4GetRow(m,1),
+            GLKMatrix4GetRow(m,2),
+            GLKVector4Make(r.x,y,r.z,1)
+            )
+    #endif
+}
+
 func RMXVector3SetZ(inout v: RMXVector3, z: RMFloat){
     #if SceneKit
         v.z = z
@@ -118,6 +133,24 @@ func RMXMatrix4Transpose(mat: RMXMatrix4)->RMXMatrix4 {
         return SCNMatrix4FromGLKMatrix4(GLKMatrix4Transpose(SCNMatrix4ToGLKMatrix4(mat)))
         #else
         return GLKMatrix4Transpose(mat)
+    #endif
+}
+
+func RMXMatrix4Make(row1: RMXVector3, row2: RMXVector3, row3: RMXVector3) -> RMXMatrix4 {
+    #if SceneKit
+        return SCNMatrix4(
+            m11: row1.x, m12: row1.y, m13: row1.z, m14: 0,
+            m21: row2.x, m22: row2.y, m23: row2.z, m24: 0,
+            m31: row3.x, m32: row3.y, m33: row3.z, m34: 0,
+            m41: 0     , m42: 0     , m43: 0     , m44: 1
+            )
+    #else
+        return GLKMatrix4MakeWithRows(
+            GLKVector4MakeWithVector3(row1, 0),
+            GLKVector4MakeWithVector3(row2, 0),
+            GLKVector4MakeWithVector3(row3, 0),
+            GLKVector4Make(0,0,0,1)
+        )
     #endif
 }
 
@@ -211,6 +244,22 @@ func + (lhs: SCNMatrix4, rhs: SCNMatrix4) -> SCNMatrix4 {
     return SCNMatrix4FromGLKMatrix4(GLKMatrix4Add(SCNMatrix4ToGLKMatrix4(lhs),SCNMatrix4ToGLKMatrix4(rhs)))
 }
 
+func * (lhs:GLKMatrix4, rhs:GLKMatrix4) -> GLKMatrix4 {
+    return GLKMatrix4Multiply(lhs, rhs)
+}
+
+func * (lhs:SCNMatrix4, rhs:SCNMatrix4) -> SCNMatrix4 {
+    return SCNMatrix4Mult(lhs,rhs)
+}
+
+func *= (inout lhs:GLKMatrix4, rhs:GLKMatrix4) {
+    lhs = GLKMatrix4Multiply(rhs, lhs)
+}
+
+func *= (inout lhs:SCNMatrix4, rhs:SCNMatrix4) {
+    lhs = SCNMatrix4Mult(rhs,lhs)
+}
+
 func RMXVector3Distance(a:RMXVector3,b:RMXVector3)->RMFloat {
     #if SceneKit
         let A = SCNVector3ToGLKVector3(a); let B = SCNVector3ToGLKVector3(b)
@@ -237,7 +286,26 @@ func RMXMatrix4RotateWithVector3(mat: RMXMatrix4, angle: RMFloat, vector: RMXVec
         return GLKMatrix4RotateWithVector3(mat, angle, vector)
     #endif
 }
+func RMXMatrix4Translate(mat: RMXMatrix4, v: RMXVector3)-> RMXMatrix4 {
+    #if SceneKit
+        return SCNMatrix4Translate(mat, v.x, v.y, v.z)
+        #else
+        return GLKMatrix4Translate(mat, v.x, v.y, v.z)
+    #endif
+}
+func RMXMatrix4Normalize(mat: RMXMatrix4){
+//    GLKMatrix4
+}
 
+func RMXVector3MakeNormal(x:RMFloat,y:RMFloat,z:RMFloat) -> RMXVector3 {
+     var v = RMXVector3Make(x,y,z)
+    #if SceneKit
+        v = SCNVector3FromGLKVector3(GLKVector3Normalize(SCNVector3ToGLKVector3(v)))
+        #else
+        v = GLKVector3Normalize(v)
+    #endif
+    return v
+}
 /*
 func RMXGetThetaAndPhi(vectorA A: RMXVector3, vectorB B: RMXVector3) -> (theta:Float, phi:Float){
     let thetaA = GLKVector2Make(A.x, A.z); let thetaB = GLKVector2Make(B.x, B.z)

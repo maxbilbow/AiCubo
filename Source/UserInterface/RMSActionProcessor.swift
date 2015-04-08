@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 enum RMXMoveType { case PUSH, DRAG }
 
@@ -159,7 +160,9 @@ class RMSActionProcessor {
         }
 
         
-        if action == "lockMouse" {
+        if action == "lockMouse" && speed == 1 {
+            self.isMouseLocked = !self.isMouseLocked
+            self.mousePos = NSEvent.mouseLocation()
 //            self.gameView?.cursorUpdate(<#event: NSEvent#>)
         }
         
@@ -179,5 +182,6 @@ class RMSActionProcessor {
     }
         
     var extendArm: RMFloat = 0
-   
+    var mousePos: NSPoint = NSPoint(x: 0,y: 0)
+    var isMouseLocked = false
 }

@@ -90,6 +90,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         self.zFar = 10000
         self.yFov = 65
         self.xFov = 65
+        
     }
     var eye: GLKVector3 {
         #if SceneKit
@@ -102,7 +103,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     }
     
     var center: GLKVector3{
-        let r = self.pov!.body!.forwardVector + self.pov!.position
+        let r = self.pov!.forwardVector + self.pov!.position
         #if SceneKit
             let v = SCNVector3ToGLKVector3(r)
             #else
@@ -111,12 +112,12 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         return v
     }
     
-    private let simple = false
+    private let simple = true
     var up: GLKVector3 {
         if simple {
             return GLKVector3Make(0,1,0)
         } else {
-            let r = self.pov!.body!.upVector
+            let r = self.pov!.upVector
             #if SceneKit
                 let v = SCNVector3ToGLKVector3(r)
                 #else

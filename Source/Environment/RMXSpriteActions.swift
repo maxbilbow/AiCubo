@@ -39,7 +39,7 @@ class RMXSpriteActions : RMSNodeProperty {
         if self.item != nil {
             self.item!.isAnimated = true
             self.item!.hasGravity = _itemHadGravity
-            let fwd4 = self.owner.body!.forwardVector
+            let fwd4 = self.owner.forwardVector
             let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
             self.item!.body!.velocity = self.owner.body!.velocity + RMXVector3MultiplyScalar(fwd3,strength)
             self.item!.wasJustThrown = true
@@ -53,15 +53,17 @@ class RMXSpriteActions : RMSNodeProperty {
     func manipulate() {
         if self.item != nil {
             self.item?.wasJustWoken = true
-            let fwd4 = self.owner.body!.forwardVector
+            let fwd4 = self.owner.forwardVector
             let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item?.position = self.owner.viewPoint + RMXVector3MultiplyScalar(fwd3, self.armLength + self.item!.radius + self.owner.radius)
+            self.item!.transform = RMXMatrix4Translate(self.item!.transform, self.owner.viewPoint + RMXVector3MultiplyScalar(fwd3, self.armLength + self.item!.radius + self.owner.radius))
         }
     }
     
     private func setItem(item: RMXNode!){
         self.item = item
+        
         if item != nil {
+            self.owner.insertChildNode(item)
             self.item?.wasJustWoken = true
             //self.sprite.itemPosition = item!.body.position
             _itemWasAnimated = item!.isAnimated
@@ -75,11 +77,10 @@ class RMXSpriteActions : RMSNodeProperty {
     func grabItem(item: RMXNode? = nil) -> Bool {
         if self.item != nil {
             self.releaseItem()
-//        } else if item != nil {
-//            self.setItem(item)
-        } else {
-            let item: RMXNode? = item ?? self.owner.world.closestObjectTo(self.sprite)
-            if item != nil && self.owner.body!.distanceTo(item!) <= self.reach {
+        } else if item != nil {
+            self.setItem(item)
+        }else if let item = self.owner.world.closestObjectTo(self.sprite) {
+            if  self.owner.body!.distanceTo(item) <= self.reach {
                 self.setItem(item)
             }
         }
@@ -93,6 +94,8 @@ class RMXSpriteActions : RMSNodeProperty {
             self.item?.wasJustWoken = true
             self.item!.isAnimated = true //_itemWasAnimated
             self.item!.hasGravity = _itemHadGravity
+            self.item!.removeFromParentNode()
+            self.world.insertChildNode(self.item!)
             self.setItem(nil)
         }
     }

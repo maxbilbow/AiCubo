@@ -47,7 +47,10 @@ class RMXNode : SCNNode, RMXChildNode{
     
     #if !SceneKit
     var parentNode: RMXNode?
-    var position: GLKVector3 = GLKVector3Zero
+    var position: GLKVector3 {
+        let row = GLKMatrix4GetColumn(self.transform, 3)
+       return GLKVector3Make(row.x, row.y, row.z)
+    }
     var transform: RMXMatrix4 = RMXMatrix4Identity
     var scale: GLKVector3 = GLKVector3Zero
     lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self)
@@ -85,7 +88,7 @@ class RMXNode : SCNNode, RMXChildNode{
     }
     
     var centerOfView: RMXVector3 {
-        return self.position + self.body!.forwardVector// * self.actions.reach
+        return self.position + self.forwardVector// * self.actions.reach
     }
     
     var isAnimated: Bool = true
@@ -98,7 +101,6 @@ class RMXNode : SCNNode, RMXChildNode{
     lazy var resets: [() -> () ] = [{
         self.body!.velocity = RMXVector3Zero
         self.body!.acceleration = RMXVector3Zero
-        self.position = self.startingPoint ?? RMXVector3Zero
         self.transform = RMXMatrix4Identity
     }]
     
@@ -308,6 +310,7 @@ class RMXNode : SCNNode, RMXChildNode{
     
     func insertChildNode(child: RMXNode){
         #if SceneKit
+            child.removeFromParentNode()
             self.addChildNode(child)
             #else
             child.parentNode = self
@@ -372,8 +375,13 @@ class RMXNode : SCNNode, RMXChildNode{
         if self.isRotating {
             self._rotation += self.body!.rotationSpeed / self.rotationCenterDistance
             var temp = RMX.circle(count: self._rotation, radius: self.rotationCenterDistance * 2, limit:  self.rotationCenterDistance)
+            #if SceneKit
             self.position = RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
+            #else
+            self.transform = RMXMatrix4Translate(self.transform, RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0))
+            #endif
         }
+        //if self.isObserver { RMXLog("\n\(self.orientationMat.print)\n\(self.transform.print),\n   POS: \(self.position.print)") }
         
     }
     
@@ -425,7 +433,7 @@ class RMXNode : SCNNode, RMXChildNode{
 
             self.body!.setRadius(20)
 
-            self.position = RMXVector3Make(0,self.radius,-20)
+            self.transform = RMXMatrix4Translate(self.transform,RMXVector3Make(0,self.radius,-20))
             self.hasGravity = true
             self.isAlwaysActive = true
         })
@@ -462,7 +470,7 @@ extension RMXNode {
     
     
     var viewPoint: RMXVector3{
-        return self.body!.forwardVector + self.position
+        return self.forwardVector + self.position
     }
     
     var ground: RMFloat {
@@ -505,5 +513,74 @@ extension RMXNode {
     
 }
 
+extension RMXNode {
+    var upVector: RMXVector3 {
+        #if SceneKit
+//            return RMXVector3Make(0,1,0)
+        return RMXVector3MakeNormal(self.transform.m21, self.transform.m22, self.transform.m23)
+        #else
+        let row = GLKMatrix4GetColumn(self.transform, 1)
+        return RMXVector3MakeNormal(row.x,row.y,row.z)
+        #endif
+    }
+    
+    var leftVector: RMXVector3 {
+        #if SceneKit
+        return RMXVector3MakeNormal(self.transform.m11, self.transform.m12, self.transform.m13)
+            #else
+            let row = GLKMatrix4GetColumn(self.transform, 0)
+            return RMXVector3MakeNormal(row.x,row.y,row.z)
+        #endif
+    }
+    
+    var forwardVector: RMXVector3 {
+        #if SceneKit
+        return RMXVector3MakeNormal(self.transform.m31, self.transform.m32, self.transform.m33)
+            #else
+            let row = GLKMatrix4GetColumn(self.transform, 2)
+            return RMXVector3MakeNormal(row.x,row.y,row.z)
+        #endif
+    }
+    
+    var orientationMat: RMXMatrix4 {
+        let row1 = self.leftVector
+        let row2 = self.upVector
+        let row3 = self.forwardVector
+        return RMXMatrix4Make(row1, row2, row3)
+    }
+}
 
 
+extension RMXNode {
+    func setColor(col: RMXVector4){
+        #if SceneKit
+        let color = NSColor(calibratedRed: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
+        self.setColor(color: color)
+        #else
+        self.shape.color = col
+        #endif
+    }
+    
+    func setColor(#color: NSColor){
+        #if SceneKit
+            self.geometry?.firstMaterial!.diffuse.contents = color
+            self.geometry?.firstMaterial!.diffuse.intensity = 1
+            self.geometry?.firstMaterial!.specular.contents = color
+            self.geometry?.firstMaterial!.specular.intensity = 1
+            self.geometry?.firstMaterial!.ambient.contents = color
+            self.geometry?.firstMaterial!.ambient.intensity = 1
+            self.geometry?.firstMaterial!.transparent.intensity = 0
+            if self.isLightSource {
+                self.geometry?.firstMaterial!.emission.contents = color
+                 self.geometry?.firstMaterial!.emission.intensity = 1
+                //                self.geometry?.firstMaterial!.transparency = 0.5
+            } else {
+                //                self.geometry?.firstMaterial!.doubleSided = true
+               
+                
+            }
+            #else
+            self.shape.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
+        #endif
+    }
+}

@@ -125,4 +125,40 @@ extension GLKVector4 {
         return GLKVector4Distance(self, v)
     }
 }
+
+
+extension SCNVector4 {
+    var print: String {
+        return "\(x.toData()) \(y.toData()) \(z.toData()) \(w.toData())"
+    }
     
+    func negate() -> SCNVector4{
+        return SCNVector4Make(-x,-y,-z,-w)
+    }
+    
+    func distanceTo(v: SCNVector4) -> CGFloat{
+        return CGFloat(GLKVector4Distance(SCNVector4ToGLKVector4(self), SCNVector4ToGLKVector4(v)))
+    }
+}
+
+
+extension SCNMatrix4 {
+    var print: String {
+        let row1 = "   ROW1: \(m11.toData()) \(m12.toData()) \(m13.toData()) \(m14.toData())"
+        let row2 = "   ROW2: \(m21.toData()) \(m22.toData()) \(m23.toData()) \(m24.toData())"
+        let row3 = "   ROW3: \(m31.toData()) \(m32.toData()) \(m33.toData()) \(m34.toData())"
+        let row4 = "   ROW4: \(m41.toData()) \(m42.toData()) \(m43.toData()) \(m44.toData())"
+        return "\(row1)\n\(row2)\n\(row3)\n\(row4)\n"
+    }
+}
+
+
+extension GLKMatrix4 {
+    var print: String {
+        let row1 = "   ROW1: \(m00.toData()) \(m01.toData()) \(m02.toData()) \(m03.toData())"
+        let row2 = "   ROW2: \(m10.toData()) \(m11.toData()) \(m12.toData()) \(m13.toData())"
+        let row3 = "   ROW3: \(m20.toData()) \(m21.toData()) \(m22.toData()) \(m23.toData())"
+        let row4 = "   ROW4: \(m30.toData()) \(m31.toData()) \(m32.toData()) \(m33.toData())"
+        return "\(row1)\n\(row2)\n\(row3)\n\(row4)\n"
+    }
+}

@@ -27,20 +27,22 @@ class GameViewController: NSViewController, RMXViewController, SCNSceneRendererD
         let cameraNode = self.gameView!.world!.observer
         cameraNode.hasGravity = false
         cameraNode.camera = self.gameView!.world!.activeCamera
-        cameraNode.camera?.zFar = 2000
-//        scene.rootNode.addChildNode(cameraNode)
+        cameraNode.camera?.focalBlurRadius = 0.05
+        cameraNode.camera?.aperture = 0.005
+        cameraNode.camera?.focalDistance = 0.001
+        
+        
+
         self.gameView?.pointOfView = cameraNode
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+
         cameraNode.startingPoint = cameraNode.position
         
         // create and add a light to the scene
         let lightNode = self.gameView!.world!.sun
-//        lightNode.body?.rotationSpeed = 0.01
         lightNode.light = SCNLight()
         lightNode.light!.type = SCNLightTypeOmni
-//        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
-//        scene.rootNode.addChildNode(lightNode)
+
         
         // create and add an ambient light to the scene
         let ambientLightNode = RMXNode()
@@ -55,6 +57,11 @@ class GameViewController: NSViewController, RMXViewController, SCNSceneRendererD
         
         
         let ship = scene.rootNode.childNodeWithName("ship", recursively: true)!
+        ship.removeFromParentNode()
+        lightNode.addChildNode(ship)
+//        world?.addChildNode(ship)
+        ship.transform = SCNMatrix4Translate(ship.transform,0,-1,0)
+        ship.scale = SCNVector3Make(0.1,0.1,0.1)
 //        let ship2 = RMXNode()//.initWithParent(self.world!)
 //        ship2.geometry = ship.geometry
 //        ship2.name = ship.name
@@ -66,8 +73,8 @@ class GameViewController: NSViewController, RMXViewController, SCNSceneRendererD
         
         // animate the 3d object
         let animation = CABasicAnimation(keyPath: "rotation")
-        //animation.toValue = NSValue(SCNVector4: SCNVector4(x: CGFloat(0), y: CGFloat(1), z: CGFloat(0), w: CGFloat(M_PI)*2))
-        //animation.duration = 300
+        animation.toValue = NSValue(SCNVector4: SCNVector4(x: CGFloat(0), y: CGFloat(1), z: CGFloat(0), w: CGFloat(M_PI)*2))
+        animation.duration = 10
         animation.repeatCount = MAXFLOAT //repeat forever
         ship.addAnimation(animation, forKey: nil)
 

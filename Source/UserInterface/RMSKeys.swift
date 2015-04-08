@@ -8,6 +8,7 @@
 
 import Foundation
 import AppKit
+import ApplicationServices
 
 class RMSKeys : RMXInterface, RMXControllerProtocol {
     
@@ -24,7 +25,7 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         RMKey(self, action: "toggleAllGravity", characters: "G", isRepeating: false,speed: (0,1)),
         RMKey(self, action: "reset", characters: "R", isRepeating: false,speed: (0,1)),
         RMKey(self, action: "look", characters: "mouseMoved", isRepeating: false,speed: (0.01,0)),
-        RMKey(self, action: "lockMouse", characters: "m"),//,
+        RMKey(self, action: "lockMouse", characters: "m", isRepeating: false, speed: (0,1)),//,
         RMKey(self, action: "grab", characters: "Mouse 1", isRepeating: false, speed: (0,1)),
         RMKey(self, action: "throw", characters: "Mouse 2", isRepeating: false,  speed: (0,20))
     ]
@@ -90,14 +91,36 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         }
         return nil
     }
-    var mousePos: NSPoint = NSPoint(x: NSEvent.mouseLocation().x, y: NSEvent.mouseLocation().y)
+//    var mousePos: NSPoint{// = NSPoint(x: NSEvent.mouseLocation().x, y: NSEvent.mouseLocation().y)
+//        return self.actionProcessor.mousePos
+//    }
+    
+    var origin: NSPoint{
+        let size = (self.gameView?.frame.size)!//.window!.frame
+        let point = (self.gameView?.window!.frame.origin)!
+        let x = point.x + size.width / 2
+        let y = point.y + size.height / 2
+        return NSPoint(x: x, y: y)
+    }
+    var lastPos: NSPoint = NSEvent.mouseLocation()
     var mouseDelta: NSPoint {
         let newPos = NSEvent.mouseLocation()
+        let lastPos = self.lastPos
+        RMXLog("  OLD: \(lastPos.x), \(lastPos.y)\n  New: \(newPos.x), \(newPos.y)")
         let delta = NSPoint(
-            x: newPos.x - self.mousePos.x,
-            y: newPos.y - self.mousePos.y
+            x: newPos.x - lastPos.x,// - self.mousePos.x,
+            y: newPos.y - lastPos.y//self.mousePos.y
         )
-        self.mousePos = newPos
+//        CGDisplayHideCursor(0)
+        CGAssociateMouseAndMouseCursorPosition(0)
+        CGWarpMouseCursorPosition(self.origin)
+//        CGDisplayMoveCursorToPoint(displayAtPoint(screenPoint), self.origin)
+        
+        /* perform your application’s main loop */
+        self.lastPos = NSEvent.mouseLocation()
+        CGAssociateMouseAndMouseCursorPosition (1)
+//        CGDisplayShowCursor(1)
+        
         return delta
     }
     override func update() {
@@ -105,9 +128,14 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
             key.update()
         }
         super.update()
-        let delta = self.mouseDelta
+        
         //self.get(forChar: "mouseMoved")?.actionWithValues([RMFloat(self.mouseDelta.x), RMFloat(self.mouseDelta.y)])
-        self.action(action: "look", speed: self.lookSpeed, point: [RMFloat(delta.x), RMFloat(delta.y)])
+        if self.actionProcessor.isMouseLocked {
+            let delta = self.mouseDelta
+            self.action(action: "look", speed: self.lookSpeed, point: [RMFloat(delta.x), RMFloat(delta.y)])
+            RMXLog("MOUSE: \(delta.x), \(delta.y)")
+            
+        }
 //        RMXLog("\(self.mouseDelta.x), \(self.mouseDelta.y)")
     }
 }

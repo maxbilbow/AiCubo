@@ -11,7 +11,7 @@ import GLKit
 
 enum RMXWorldType { case DEFAULT, TESTING_ENVIRONMENT, FETCH }
 class RMSWorld : RMXNode {
-    static var TYPE: RMXWorldType = .DEFAULT
+    static var TYPE: RMXWorldType = .TESTING_ENVIRONMENT
     let gravityScaler: RMFloat = 0.05
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
@@ -36,7 +36,7 @@ class RMSWorld : RMXNode {
         self.sun.rmxID: self.sun
     ]
     
-    var worldType: RMXWorldType = .DEFAULT
+    var worldType: RMXWorldType = .TESTING_ENVIRONMENT
     
     init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloat = 2000, parent: RMXNode! = nil) {
         super.init()//parentNode: parent, type: .WORLD, name: name)
@@ -57,7 +57,7 @@ class RMSWorld : RMXNode {
     
     override func nodeDidInitialize() {
         super.nodeDidInitialize()
-        self.body!.setRadius(2000)
+        self.body!.setRadius(6000)
         self.world = self
         self.isAnimated = false
         self.shape.isVisible = false
@@ -128,10 +128,10 @@ class RMSWorld : RMXNode {
         if p <= g && v < 0 && sender.isInWorld {
             if p < g / sender.body!.coushin {
                 RMXVector3SetY(&sender.body!.velocity, bounceY * sender.body!.coushin)
-                RMXVector3SetY(&sender.position, g)
+                RMXMatrix4SetY(&sender.transform, g)
             } else {
                 RMXVector3SetY(&sender.body!.velocity, sender.hasGravity ? 0 : bounceY * sender.body!.coushin)
-                RMXVector3SetY(&sender.position, g)
+                RMXMatrix4SetY(&sender.transform, g)
             }
             return true
         }

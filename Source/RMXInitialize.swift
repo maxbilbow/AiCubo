@@ -135,7 +135,7 @@ extension RMX {
         let poppy: RMXNode = RMXNode.Unique(world).setAsObserver().setAsShape(type: .CYLINDER)
         poppy.type = .POPPY
         poppy.body!.setRadius(8)
-        poppy.position = RMXVector3Make(100,poppy.radius,-50)
+        poppy.transform = RMXMatrix4Translate(poppy.transform, RMXVector3Make(100,poppy.radius,-50))
         var itemToWatch: RMXNode! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0
@@ -216,7 +216,7 @@ extension RMX {
                 }
             }
         }
-        poppy.shape.color = GLKVector4Make(0.1,0.1,0.1,1.0)
+        poppy.setColor(RMXVector4Make(0.1,0.1,0.1,1.0))
         
         #if SceneKit
             let r: RMFloat = 0.3
@@ -225,8 +225,8 @@ extension RMX {
             #endif
         let head = RMXNode().initWithParent(poppy).setAsShape(type: .SPHERE)
         head.body!.setRadius(r)
-        head.shape.color = GLKVector4Make(0.1,0.1,0.1,0.1)
-        head.position = RMXVector3Make(0,head.scale.y, -head.scale.z)
+        head.setColor(RMXVector4Make(0.1,0.1,0.1,0.1))
+        head.transform = RMXMatrix4Translate(head.transform,RMXVector3Make(0,head.scale.y, -head.scale.z))
         poppy.insertChildNode(head)
         
        

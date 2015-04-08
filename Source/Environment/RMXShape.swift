@@ -77,6 +77,11 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
         fatalError("init(coder:) has not been implemented")
     }
     #endif
+//    
+//    func setColor(col: NSColor) {
+//        self.firstMaterial?.diffuse.contents = col
+//    }
+    
     
     private var _rotation: RMFloat = 0
     func makeAsSun(rDist: RMFloat = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
@@ -88,9 +93,9 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
         self.owner.rotationCenterDistance = rDist
         self.owner.isRotating = isRotating
         self.owner.setRotationSpeed(speed: 1)
-        self.color = GLKVector4Make(1, 1, 1, 1.0)
         self.owner.hasGravity = false
         self.isLight = true
+        self.owner.setColor(RMXVector4Make(1, 1, 1, 1.0))
         self.owner.rAxis = rAxis
         self._rotation = PI / 4
         return self.owner

@@ -15,10 +15,10 @@ import GLKit
 class RMXArt {
     static let colorBronzeDiff: [Float]  = [ 0.8, 0.6, 0.0, 1.0 ]
     static let colorBronzeSpec: [Float]  = [ 1.0, 1.0, 0.4, 1.0 ]
-    static let colorBlue: [Float]        = [ 0.0, 0.0, 0.1, 1.0 ]
+    static let colorBlue: [RMFloat]        = [ 0.0, 0.0, 0.1, 1.0 ]
     static let colorNone: [Float]        = [ 0.0, 0.0, 0.0, 0.0 ]
-    static let colorRed: [Float]         = [ 0.1, 0.0, 0.0, 1.0 ]
-    static let colorGreen: [Float]       = [ 0.0, 0.1, 0.0, 1.0 ]
+    static let colorRed: [RMFloat]         = [ 0.1, 0.0, 0.0, 1.0 ]
+    static let colorGreen: [RMFloat]       = [ 0.0, 0.1, 0.0, 1.0 ]
     static let colorYellow: [Float]      = [ 1.0, 0.0, 0.0, 1.0 ]
     static let nillVector: [Float]       = [ 0  ,   0,  0,  0   ]
     #if SceneKit
@@ -34,6 +34,11 @@ class RMXArt {
     
     static let SPHERE = SCNSphere(radius:0.5)
     static let CYLINDER = SCNCylinder(radius:0.5, height:1.0)
+    
+    static let greenMat: SCNMaterial = SPHERE.firstMaterial!.copy() as! SCNMaterial
+    static let redMat: SCNMaterial = SPHERE.firstMaterial!.copy() as! SCNMaterial
+    static let blueMat: SCNMaterial = SPHERE.firstMaterial!.copy() as! SCNMaterial
+    
     #endif
     
     class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloat = 1000) -> RMSWorld {
@@ -58,10 +63,11 @@ class RMXArt {
         let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
         ZX.body!.setRadius(world.body!.radius)
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
-//        //        ZX.body.addPhi(upDownRadians: GLKMathDegreesToRadians(90))
+        ZX.body!.setPhi(upDownRadians: 180 * PI_OVER_180)
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloat(PI_OVER_180))
         ZX.body!.addPhi(upDownRadians: 90 * RMFloat(PI_OVER_180))
-        ZX.shape.color = GLKVector4Make(1.0,1.0,1.0,1.0)
+        ZX.setColor(color: NSColor.greenColor())
+//        ZX.geometry?.firstMaterial!.doubleSided = true
         ZX.isAnimated = false
         ZX.startingPoint = ZX.position
 //        ZX.position = RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z)
@@ -75,16 +81,16 @@ class RMXArt {
         
         func drawAxis(axis: String) {
             var point =  -world.radius
-            var color: [Float]
+            var color: NSColor
             switch axis {
             case "x":
-                color = self.colorRed
+                color = NSColor.redColor()
                 break
             case "y":
-                color = self.colorGreen
+                color = NSColor.greenColor()
                 break
             case "z":
-                color = self.colorBlue
+                color = NSColor.blueColor()
                 break
             default:
                 fatalError(__FUNCTION__)
@@ -93,15 +99,13 @@ class RMXArt {
                 let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                 point += step
                 let object:RMXNode = RMXNode().initWithParent(world).setAsShape(type: .CUBE)
-                object.resets.append({
-                    object.hasGravity = false
-                    object.body!.setRadius(shapeRadius)
-                    object.shape.color = GLKVector4Make(color[0], color[1], color[2], color[3])
-                    object.isAnimated = false
-                })
-                object.position = position
+                object.hasGravity = false
+                object.body!.setRadius(shapeRadius)
+                object.setColor(color: color)
+                
+                object.isAnimated = false
+                object.transform = RMXMatrix4Translate(object.transform, position)
                 object.startingPoint = position
-                object.resets.last?()
                 world.insertChildNode(object)
             }
             
@@ -148,11 +152,11 @@ class RMXArt {
         
         object.hasGravity = false //(rand()% 100) == 1
         object.body!.setRadius(RMFloat(random() % 9 + 2))
-        object.position = RMXVector3Make(randPos[0], randPos[1], randPos[2])
+        object.transform = RMXMatrix4Translate(object.transform, RMXVector3Make(randPos[0], randPos[1], randPos[2]))
         object.startingPoint = object.position
         object.body!.mass = RMFloat(random()%15+1)/10;
         object.body!.dragC = RMFloat(random() % 99+1)/100;
-        object.shape.color = RMXRandomColor()
+        object.setColor(RMXRandomColor())
         world.insertChildNode(object)
         
         
@@ -181,11 +185,11 @@ func RMXVector3Random(max: Int = 100, div: Int = 1, min: Int = 0) -> RMXVector3 
 
 }
 
-func RMXRandomColor() -> GLKVector4 {
+func RMXRandomColor() -> RMXVector4 {
     //float rCol[4];
-    return GLKVector4Make(
-        Float(random() % 800)/500,
-        Float(random() % 800)/500,
-        Float(random() % 800)/500,
+    return RMXVector4Make(
+        RMFloat(random() % 800)/500,
+        RMFloat(random() % 800)/500,
+        RMFloat(random() % 800)/500,
         1.0)
 }

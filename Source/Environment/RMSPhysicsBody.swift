@@ -26,7 +26,7 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     var forces = RMXVector3Zero
 
     var orientation: RMXMatrix4 {// = RMXMatrix4Identity //{
-        return self._orientation//.owner.transform
+        return self.owner.orientationMat
     }
     
     var vMatrix: RMXMatrix4 = RMXMatrix4Zero
@@ -113,33 +113,7 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     var weight: RMFloat{
         return self.mass * self.physics.worldGravity
     }
-    
-    var upVector: RMXVector3 {
-        #if SceneKit
-        return RMXVector3Make(self.orientation.m12, self.orientation.m22, self.orientation.m32)
-            #else
-        return RMXVector3Make(self.orientation.m01, self.orientation.m11, self.orientation.m21)//GLKVector3Make(0,1,0)
-        #endif
-    }
-    
-    var leftVector: RMXVector3 {
-        #if SceneKit
-            return RMXVector3Make(self.orientation.m11, self.orientation.m21, self.orientation.m31)
-            #else
-            return RMXVector3Make(self.orientation.m00, self.orientation.m10, self.orientation.m20)
-        #endif
-       
-    }
-    
-    var forwardVector: RMXVector3 {
-        #if SceneKit
-            return RMXVector3Make(self.orientation.m13, self.orientation.m23, self.orientation.m33)
-            #else
-            return RMXVector3Make(self.orientation.m02, self.orientation.m12, self.orientation.m22)
-
-        #endif
-    }
-    
+   
     func distanceTo(#point: RMXVector3) -> RMFloat{
         return RMXVector3Distance(self.position, point)
     }
@@ -191,15 +165,26 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         //let theta: Float = GLKMathDegreesToRadians(x)
         self.theta += theta
         self.owner.transform = RMXMatrix4Rotate(self.owner.transform, theta,0,1,0)
-        self._orientation = RMXMatrix4Rotate(self._orientation, theta,0,1,0)
+        
+//        let mat = RMXMatrix4Rotate(RMXMatrix4Identity,theta,0,1,0)
+//        self.owner.transform = mat * self.owner.transform
+
 
     }
     
-    private var _orientation: RMXMatrix4 = RMXMatrix4Identity
+//    private var _orientation: RMXMatrix4 = RMXMatrix4Identity
     func addPhi(upDownRadians phi: RMFloat) {
         self.phi += phi
-        self.owner.transform = RMXMatrix4RotateWithVector3(self.owner.transform, phi, self.leftVector)
-        self._orientation = RMXMatrix4RotateWithVector3(self._orientation, phi, self.leftVector)
+        let axis = self.owner.leftVector
+        
+//        let mat = RMXMatrix4Rotate(RMXMatrix4Identity,phi,axis.x,axis.y,axis.z)
+//        self.owner.transform = mat * self.owner.transform
+//
+        
+        //RMXLog(axis.print)
+        if !self.owner.isObserver {
+       self.owner.transform = RMXMatrix4RotateWithVector3(self.owner.transform, phi, axis)
+        }
     }
     
     func setTheta(leftRightRadians theta: RMFloat){
@@ -253,14 +238,10 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
         self.world.collisionTest(self.owner)
 
         
-        //self.applyLimits()
-        #if SceneKit
-        self.owner.transform = SCNMatrix4Translate(self.owner.transform,self.velocity.x,self.velocity.y,self.velocity.z)
-            
-            #else
-            self.owner.position = self.position + self.velocity
-        #endif
+     
+        self.owner.transform = RMXMatrix4Translate(self.owner.transform,self.velocity)
         
+//        if self.owner.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print), \(self.owner.leftVector.print) \n    UP: \(self.upVector.print), \(self.owner.upVector.print)\n   FWD: \(self.forwardVector.print), \(self.owner.forwardVector.print)\n   FRC: \(self.forces.print)\n") }
         
     }
     
