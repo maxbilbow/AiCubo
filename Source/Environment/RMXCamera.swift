@@ -90,9 +90,11 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         self.zFar = 10000
         self.yFov = 65
         self.xFov = 65
+        #if SceneKit
         self.focalBlurRadius = 0.05
         self.aperture = 0.005
         self.focalDistance = 0.001
+        #endif
 //        self.position = RMXVector3Zero
         
         

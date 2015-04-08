@@ -96,7 +96,9 @@ class RMXSpriteActions : RMSNodeProperty {
             self.item?.wasJustWoken = true
             self.item!.isAnimated = true //_itemWasAnimated
             self.item!.hasGravity = _itemHadGravity
+            #if SceneKit
             self.item!.removeFromParentNode()
+                #endif
             self.world.insertChildNode(self.item!)
             self.setItem(nil)
         }

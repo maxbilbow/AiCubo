@@ -54,7 +54,7 @@ class GameView : GLKView, RMXView {
 
     var lightColor: GLKVector4 {
         if let sun =  self.world?.sun {
-            return sun.shape.color
+            return sun.shape!.color
         } else {
             return GLKVector4Make(1, 1, 1, 1.0)
         }
@@ -247,9 +247,9 @@ class GameView : GLKView, RMXView {
     func drawChildren(object: RMXNode, var matrixStack: GLKMatrixStackRef) {
         if object.isDrawable {
             let sprite = object.shape
-            let scaleMatrix = sprite.scaleMatrix
-            let translateMatrix = sprite.translationMatrix
-            let rotationMatrix = sprite.rotationMatrix
+            let scaleMatrix = sprite!.scaleMatrix
+            let translateMatrix = sprite!.translationMatrix
+            let rotationMatrix = sprite!.rotationMatrix
             matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
             GLKMatrixStackMultiplyMatrix4(matrixStack, translateMatrix)
             GLKMatrixStackMultiplyMatrix4(matrixStack, rotationMatrix)
@@ -261,7 +261,7 @@ class GameView : GLKView, RMXView {
             glBindVertexArrayOES(self.vertexArray.memory)
             
             self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
-            let shape = RMSGeometry.get(sprite.type)
+            let shape = RMSGeometry.get(sprite!.type)
             glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
             
         }

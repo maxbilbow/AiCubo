@@ -17,6 +17,7 @@ typealias RMXVector3 = GLKVector3
 typealias RMXMatrix3 = GLKMatrix3
 typealias RMXMatrix4 = GLKMatrix4
     typealias RMFloat = Float
+    typealias RMFloatB = Float
     #else
     
     typealias RMXVector3 = SCNVector3

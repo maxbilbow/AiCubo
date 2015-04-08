@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Rattle Media. All rights reserved.
 //
 import GLKit
+import Foundation
 #if SceneKit
 import SceneKit
     #else
@@ -29,7 +30,11 @@ class RMXNode : SCNNode, RMXChildNode{
     var isLight: Bool = false
     var shapeType: ShapeType = .NULL
     var shape: RMXShape? {
+        #if SceneKit
         return self.geometry as? RMXShape
+        #else
+            return self.geometry
+        #endif
     }
 
     
@@ -58,6 +63,7 @@ class RMXNode : SCNNode, RMXChildNode{
        return GLKVector3Make(row.x, row.y, row.z)
     }
     var transform: RMXMatrix4 = RMXMatrix4Identity
+    var pivot: RMXMatrix4 = RMXMatrix4Identity
     var scale: GLKVector3 = GLKVector3Zero
     lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self)
     
@@ -75,9 +81,7 @@ class RMXNode : SCNNode, RMXChildNode{
         return self.position.y
     }
     
-    var geometry: ShapeType {
-        return self.shape.type
-    }
+    var geometry: RMXShape?
     
     #else
     
@@ -219,7 +223,7 @@ class RMXNode : SCNNode, RMXChildNode{
         RMXNode.COUNT++
         self.geometry = RMXShape(self)
         self.physicsBody = RMSPhysicsBody(self)
-        self.position = RMXVector3Zero
+        self.transform = RMXMatrix4Identity
         self.pivot = RMXMatrix4Identity
         if self.parentNode != nil {
             self.world = self.parent!.world
@@ -554,8 +558,10 @@ extension RMXNode {
     
     func grabNode(node: SCNNode?){
         if let node = node {
+            #if SceneKit
             self.addChildNode(node)
             node.position = self.viewPoint
+            #endif
         }
     }
 }
@@ -566,7 +572,7 @@ extension RMXNode {
             let color = NSColor(red: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
             self.setColor(color: color)
             #else
-            self.shape.color = col
+            self.shape!.color = col
         #endif
     }
     
@@ -589,12 +595,13 @@ extension RMXNode {
                 
             }
             #else
-            self.shape.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
+//            self.shape!.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
         #endif
     }
 
     func setShape(shapeType type: ShapeType) {
         self.shapeType = type
+        #if SceneKit
         switch(type){
         case .CUBE:
             self.geometry = RMXShape.CUBE
@@ -614,6 +621,7 @@ extension RMXNode {
         default:
             self.geometry = RMXShape.CUBE
         }
+        #endif
     }
     
     func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(1,0,0)) -> RMXNode {

@@ -65,8 +65,10 @@ class RMXArt {
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
 //        ZX.body!.setPhi(upDownRadians: 180 * PI_OVER_180)
         ZX.transform = RMXMatrix4Rotate(ZX.transform,90 * PI_OVER_180,1,0,0)
+        #if SceneKit
         ZX.geometry!.firstMaterial!.doubleSided = true
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
+            #endif
         ZX.setColor(color: NSColor.greenColor())
 //        ZX.geometry?.firstMaterial!.doubleSided = true
         ZX.isAnimated = false

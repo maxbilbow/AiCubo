@@ -34,6 +34,9 @@ import GLKit
     typealias RMXContext = UnsafeMutablePointer<_CGLContextObject>
 #endif
 
+#if iOS
+typealias NSColor = UIColor
+#endif
 
 func == (lhs: RMXNode, rhs: RMXNode) -> Bool {
     return lhs.rmxID == rhs.rmxID
