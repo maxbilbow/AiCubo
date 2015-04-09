@@ -12,7 +12,7 @@ class Main: NSObject, NSApplicationDelegate {
     
     
     func start(){
-    RMSWorld.TYPE = .TESTING_ENVIRONMENT
+        RMSWorld.TYPE = .TESTING_ENVIRONMENT
         RMXGLProxy.run(RMSWorld.TYPE)
         
     }

@@ -171,6 +171,10 @@ class RMSActionProcessor {
 //            self.gameView?.cursorUpdate(<#event: NSEvent#>)
         }
         
+        if action == "switchEnvitonment" {
+            self.world.environments.plusOne()
+        }
+        
         if action == "toggleFog" {
             RMX.toggleFog()
         }

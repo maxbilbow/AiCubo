@@ -179,46 +179,46 @@ extension RMXGLProxy {
         }
         
         for object in parent.children  {
-            let position = object.1.position
-            let radius = object.1.radius
+            let position = object.position
+            let radius = object.radius
 
-            if object.1.isLight {
+            if object.isLight {
                 #if SceneKit
-                    RMXGLShine(object.1.shape.gl_light, object.1.shape.gl_light_type,SCNVector4ToGLKVector4(RMXVector4MakeWithVector3(position, 1)))
+                    RMXGLShine(object.shape.gl_light, object.shape.gl_light_type,SCNVector4ToGLKVector4(RMXVector4MakeWithVector3(position, 1)))
                     #else
-                RMXGLShine(object.1.shape!.gl_light, object.1.shape!.gl_light_type, RMXVector4MakeWithVector3(position, 1))
+                RMXGLShine(object.shape!.gl_light, object.shape!.gl_light_type, RMXVector4MakeWithVector3(position, 1))
                 #endif
                 
             }
             
-            if object.1.isDrawable {
+            if object.isDrawable {
                 glPushMatrix()
                 RMXGLTranslatef(
-                    Float(object.1.anchor.x),
-                    Float(object.1.anchor.y),
-                    Float(object.1.anchor.z)
+                    Float(object.anchor.x),
+                    Float(object.anchor.y),
+                    Float(object.anchor.z)
                 )
                 RMXGLTranslatef(
                     Float(position.x),
                     Float(position.y),
                     Float(position.z)
                     )
-                if object.1.isLight {
-                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.1.shape!.color)
+                if object.isLight {
+                    RMXGLMaterialfv(GL_FRONT, GL_EMISSION, object.shape!.color)
                 } else {
-                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.1.shape!.color)
-                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, object.1.shape!.color)
+                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, object.shape!.color)
+                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, object.shape!.color)
 //                    RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, object.1.shape.color)
                 }
                 
-                shape(object.1.shape!.type, radius)
+                shape(object.shape!.type, radius)
 
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, GLKVector4Zero);
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, GLKVector4Zero);
                 RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, GLKVector4Zero);
 //                RMXGLMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, RMXVector4Zero);
                 
-                self.drawScene(object.1)
+                self.drawScene(object)
                 glPopMatrix();
             
             }

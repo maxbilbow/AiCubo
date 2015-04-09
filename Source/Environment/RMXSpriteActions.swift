@@ -43,7 +43,7 @@ class RMXSpriteActions : RMSNodeProperty {
             let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
             self.item!.body!.velocity = self.owner.body!.velocity + RMXVector3MultiplyScalar(fwd3,strength)
             self.item!.wasJustThrown = true
-            self.setItem(nil)
+            self.setItem(item: nil)
             return true
         } else {
             return false
@@ -59,33 +59,38 @@ class RMXSpriteActions : RMSNodeProperty {
         }
     }
     
-    private func setItem(item: RMXNode!){
-        if item != nil {
+    private func setItem(item itemIn: RMXNode?){
+        if let item = itemIn {
             self.item = item
 //            self.owner.insertChildNode(item)
             self.item?.wasJustWoken = true
             //self.sprite.itemPosition = item!.body.position
-            _itemWasAnimated = item!.isAnimated
-            _itemHadGravity = item!.hasGravity
-            self.item!.hasGravity = false
-            self.item!.isAnimated = true
+            _itemWasAnimated = item.isAnimated
+            _itemHadGravity = item.hasGravity
+            item.hasGravity = false
+            item.isAnimated = true
             self.armLength = self.reach
-        } else {
-            self.item = item
+        } else if let item = self.item {
+            self.item?.wasJustWoken = true
+            item.isAnimated = true
+            item.hasGravity = _itemHadGravity
+            self.item = nil
         }
     }
     
+    func isWithinReachOf(item: RMXNode) -> Bool{
+        return self.owner.body!.distanceTo(item) <= self.reach + item.radius
+    }
     
-    func grabItem(item: RMXNode? = nil) -> Bool {
-        if self.item != nil {
-            self.releaseItem()
-            return false
-        } else if item != nil {
-            self.setItem(item)
-            return true
-        } else if let closestItem = self.owner.world.closestObjectTo(self.sprite) {
-            if  self.owner.body!.distanceTo(closestItem) <= self.reach {
-                self.setItem(item)
+    func grabItem(item itemIn: RMXNode? = nil) -> Bool {
+        if let item = itemIn {
+            if self.isWithinReachOf(item) {
+                self.setItem(item: item)
+                return true
+            }
+        } else if let item = self.owner.world.closestObjectTo(self.sprite) {
+            if !self.owner.hasItem && self.isWithinReachOf(item) {
+                self.setItem(item: item)
                 return true
             }
         }
@@ -102,7 +107,7 @@ class RMXSpriteActions : RMSNodeProperty {
             self.item!.removeFromParentNode()
                 #endif
             self.world.insertChildNode(self.item!)
-            self.setItem(nil)
+            self.setItem(item: nil)
         }
     }
     

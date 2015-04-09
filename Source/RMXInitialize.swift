@@ -12,57 +12,58 @@ import GLKit
 extension RMX {
     static let RANDOM_MOVEMENT = true
     
-    static func addBasicCollisionTo(forNode sprite: RMXNode, withActors actors: [Int:RMXNode]){//, inObjets
-//        sprite.isAlwaysActive = true
-        if sprite.type == .OBSERVER {
+    static func addBasicCollisionTo(forNode sprite: RMXNode){//, withActors actors: [Int:RMXNode]){//, inObjets
+//        if sprite.type == .OBSERVER {
             sprite.addBehaviour{ (isOn: Bool)->() in
-                if let closest = sprite.world.closestObjectTo(sprite) {
-                let distTest = closest.body!.radius + sprite.body!.radius
-                    if closest.rmxID != sprite.rmxID {
-                        let dist = sprite.body!.distanceTo(closest)
+                if let children = sprite.world.childNodeArray.getCurrent() {
+                for child in children {
+                   // let child = closest.1
+//                    if sprite.isObserver{ print("\(child.rmxID) ")}
+                    if child.rmxID != sprite.rmxID && child.isAnimated {
+                        let distTest = sprite.radius + child.radius
+                        let dist = sprite.body!.distanceTo(child)
                         if dist <= distTest {
-                            closest.body!.velocity += sprite.body!.velocity
+//                            if sprite.isObserver{ print("HIT: \(child.rmxID)\n") }
+                            child.body!.velocity += sprite.body!.velocity
+                            sprite.world.childNodeArray.remove(child.rmxID)
+                            sprite.world.childNodeArray.makeFirst(child)
+                            return
                         }
                     }
                 }
             }
         }
-        /*
-        
-            if sprite.type != .OBSERVER {
-                sprite.addBehaviour{ (isOn: Bool)->() in
-                    if !isOn {
-                        return
-                    }
-                    for player in actors {
-                        let actor = player.1
-                        if actor.rmxID != sprite.rmxID {
-                            let distTest = actor.body.radius + sprite.body.radius
-                            let dist = sprite.body.distanceTo(actor)
-                            if dist <= distTest {
-                                sprite.body.velocity = GLKVector3Add(sprite.body.velocity, actor.body.velocity)
-                            } else if dist < distTest && actor.type == .OBSERVER{
-                                sprite.actions.prepareToJump()
-                            }
-                        }
-                    }
-                }
-
-      } */
+    
+//            if sprite.type != .OBSERVER {
+//                sprite.addBehaviour{ (isOn: Bool)->() in
+//                    if !isOn {
+//                        return
+//                    }
+//                    for player in actors {
+//                        let actor = player.1
+//                        if actor.rmxID != sprite.rmxID {
+//                            let distTest = actor.body!.radius + sprite.body!.radius
+//                            let dist = sprite.body!.distanceTo(actor)
+//                            if dist <= distTest {
+//                                sprite.body!.velocity = GLKVector3Add(sprite.body!.velocity, actor.body!.velocity)
+//                            }
+//                        }
+//                    }
+//                }
+//
+//      } 
     }
     static func buildScene(world: RMSWorld) -> RMSWorld{
         
-        let poppy = self.makePoppy(world: world)
-        
+//        let poppy = self.makePoppy(world: world)
+//        
         let observer = world.activeSprite
-        let actors = [ 0:observer, 1:poppy ]
+//        let actors = [ 0:observer, 1:poppy ]
         
         autoreleasepool {
+
             for child in world.children {
-                self.addBasicCollisionTo(forNode: child.1, withActors: actors)
-            }
-            for child in world.children {
-                let sprite = child.1
+                let sprite = child
                 if sprite.isUnique {
                     return
                 }
@@ -104,7 +105,7 @@ extension RMX {
                                 timeLimit = 600
                             } else {
                               let rmxID = random() % RMXNode.COUNT
-                                if let target = world.children[rmxID] {
+                                if let target = world.childNodeArray.get(rmxID) {
                                 sprite.actions.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
 //                                        if let target = world.furthestObjectFrom(sprite) {
 //                                            

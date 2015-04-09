@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import UIKit
 
-class GameView : GLKView, RMXView {
+class GameView : RMSView, RMXView {
     
     var world: RMSWorld? {
         return self.interface?.world
@@ -266,7 +266,7 @@ class GameView : GLKView, RMXView {
             
         }
         for child in object.children {
-            self.drawChildren(child.1, matrixStack: matrixStack)
+            self.drawChildren(child, matrixStack: matrixStack)
         }
     }
 

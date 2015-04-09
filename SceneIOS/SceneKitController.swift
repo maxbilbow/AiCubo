@@ -71,48 +71,7 @@ extension RMXDPad {
         scnView.gestureRecognizers = gestureRecognizers
     }
     
-    func grabOrThrow(gestureRecognize: UIGestureRecognizer) {
-        // retrieve the SCNView
-        let scnView = self.view as! SCNView
-        
-        // check what nodes are tapped
-        let p = gestureRecognize.locationInView(scnView)
-        if self.world!.activeSprite.hasItem  {
-            self.world?.activeSprite.actions.throwItem(20)
-        } else if let hitResults = scnView.hitTest(p, options: nil) {
-            // check that we clicked on at least one object
-            if hitResults.count > 0 {
-                // retrieved the first clicked object
-                let result: AnyObject! = hitResults[0]
-                
-                if let node = result.node as? RMXNode {
-                    self.world?.observer.actions.grabItem(item: node)
-                    RMXLog(node.label)
-                }
-                // get its material
-                let material = result.node!.geometry!.firstMaterial!
-                
-                // highlight it
-                SCNTransaction.begin()
-                SCNTransaction.setAnimationDuration(0.5)
-                
-                // on completion - unhighlight
-                SCNTransaction.setCompletionBlock {
-                    SCNTransaction.begin()
-                    SCNTransaction.setAnimationDuration(0.5)
-                    
-                    material.emission.contents = UIColor.blackColor()
-                    
-                    SCNTransaction.commit()
-                }
-                
-                material.emission.contents = UIColor.redColor()
-                
-                SCNTransaction.commit()
-            }
-        }
-    }
-    /*
+       /*
     override func shouldAutorotate() -> Bool {
         return true
     }

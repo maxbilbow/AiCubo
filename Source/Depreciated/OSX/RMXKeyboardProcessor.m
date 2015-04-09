@@ -149,8 +149,8 @@ void keyUpOperations(int key){
         case '9':
             exit(0);//[sun lightSwitch:key];
             break;
-        case 'S':
-           // sun.setAnchor(&observer);
+        case 't':
+            [RMXGLProxy performActionWithSpeed:1 action:@"switchEnvitonment"];
             break;
         case 'R':
             [RMXGLProxy performActionWithSpeed:1 action:@"reset"];

@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-enum RMXWorldType { case DEFAULT, TESTING_ENVIRONMENT, FETCH }
+enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH, DEFAULT }
 class RMSWorld : RMXNode {
     static var TYPE: RMXWorldType = .DEFAULT
     let gravityScaler: RMFloatB = 0.05
@@ -40,7 +40,8 @@ class RMSWorld : RMXNode {
     
     init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloatB = 1000, parent: RMXNode! = nil) {
         super.init()//parentNode: parent, type: .WORLD, name: name)
-        
+        self.worldType = type
+        self.setLabel(name)
     }
     #if SceneKit
     required init(coder aDecoder: NSCoder) {
@@ -64,37 +65,47 @@ class RMSWorld : RMXNode {
         
         self.worldDidInitialize()
     }
+
     
     func worldDidInitialize() {
-        self.insertChildNode(children: self.players)
-        switch (self.worldType){
-        case .TESTING_ENVIRONMENT:
-            RMXArt.initializeTestingEnvironment(self, withCubes: 100)
-            RMX.buildScene(self)
-            break
-        case .FETCH:
-            RMXArt.initializeTestingEnvironment(self,withAxis: false, withCubes: 100)
-            if _firstFetch {
-                for child in children {
-                    self.players[child.0] = child.1
-                }
-                _firstFetch = false
-            }
-            for player in players {
-                RMX.addBasicCollisionTo(forNode: player.1, withActors: self.children)
-            }
-            
-            break
-        default:
-            RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 0)
+        //for player in players {
+            RMX.addBasicCollisionTo(forNode: observer)
+        //}
+        func createEnvironment() {
+            self.insertChildNode(children: self.players)
         }
-//        self.reset()
+        //DEFAULT
+        self.environments.setType(.DEFAULT)
+        RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 0)
+        createEnvironment()
+        
+        //FETCH
+        self.environments.setType(.FETCH)
+        RMXArt.initializeTestingEnvironment(self,withAxis: false, withCubes: 10, radius: 100)
+        createEnvironment()
+        
+        //SMALL_TEST
+        self.environments.setType(.SMALL_TEST)
+        RMXArt.initializeTestingEnvironment(self, withAxis: false, withCubes: 500, radius: 500)
+        RMX.buildScene(self)
+        createEnvironment()
+
+        //TESTING ENVIRONMENT
+        self.environments.setType(.TESTING_ENVIRONMENT)
+        RMXArt.initializeTestingEnvironment(self)
+        RMX.buildScene(self)
+        createEnvironment()
+
+        setWorldType()
+
     }
   
-    func setWorldType(worldType type: RMXWorldType = RMSWorld.TYPE){
+    func setWorldType(worldType type: RMXWorldType = .FETCH){
         self.worldType = type
-        self.children.removeAll(keepCapacity: true)
-        self.worldDidInitialize()
+        self.environments.setType(type)
+        #if SceneKit
+            //replace childNodes in SCNNode
+        #endif
     }
    
             
@@ -161,7 +172,7 @@ class RMSWorld : RMXNode {
         var closest: Int = -1
         var dista: RMFloatB = RMFloatB.infinity// = sender.body.distanceTo(closest)
         for object in children {
-            let child = object.1
+            let child = object
             if child != sender {
                 let distb: RMFloatB = sender.body!.distanceTo(child)
                 if distb < dista {
@@ -170,11 +181,9 @@ class RMSWorld : RMXNode {
                 }
             }
         }
-        if let result = children[closest] {
-            if dista < sender.actions.reach + result.radius  {
+        if let result = self.childNodeArray.get(closest) {
                 return result
             }
-        }
         return nil
     }
     
@@ -182,7 +191,7 @@ class RMSWorld : RMXNode {
         var furthest: Int = -1
         var dista: RMFloatB = 0// = sender.body.distanceTo(closest)
         for object in children {
-            let child = object.1
+            let child = object
             if child != sender {
                 let distb: RMFloatB = sender.body!.distanceTo(child)
                 if distb > dista {
@@ -191,7 +200,7 @@ class RMSWorld : RMXNode {
                 }
             }
         }
-        if let result = children[furthest] {
+        if let result = self.childNodeArray.get(furthest){
                 return result
         }   else { return nil }
     }
@@ -200,7 +209,7 @@ class RMSWorld : RMXNode {
     //private var _hasGravity = false
     override func toggleGravity() {
         for object in children {
-            let child = object.1
+            let child = object
             if (child != self.observer) && !(child.isLight) {
                 child.hasGravity = self.hasGravity
             }

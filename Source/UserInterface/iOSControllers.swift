@@ -8,7 +8,7 @@
 
 import Foundation
 import GLKit
-
+import SceneKit
 //#if OPENGL_ES
 import UIKit
 //#endif
@@ -27,13 +27,7 @@ extension RMXDPad {
             self.action(action: "grab")
             _handleRelease(recognizer.state)
         }
-        
-        func handleTapRight(recognizer: UITapGestureRecognizer) {
-            self.log("Right Tap")
-            self.action(action: "throw", speed: 20)
-            _handleRelease(recognizer.state)
-        }
-        
+    
         func noTouches(recognizer: UIGestureRecognizer) {
             if recognizer.state == UIGestureRecognizerState.Ended {
                 self.action(action: "stop")
@@ -41,11 +35,7 @@ extension RMXDPad {
             }
             _handleRelease(recognizer.state)
         }
-        
-        func handleDoubleTouch(recognizer: UITapGestureRecognizer) {
-            self.log("Double Touch")
-            _handleRelease(recognizer.state)
-        }
+
         
         func toggleGravity(recognizer: UITapGestureRecognizer) {
             self.log()
@@ -79,7 +69,7 @@ extension RMXDPad {
         func handleOrientation(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
                 let point = recognizer.velocityInView(self.view)
-                self.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), -Float(point.y)])
+                self.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), Float(point.y)])
             }
 //            _handleRelease(recognizer.state)
         }
@@ -92,12 +82,8 @@ extension RMXDPad {
         }
         
     
-    func pauseGame(recogniser: UITapGestureRecognizer){
-        if RMSWorld.TYPE == .TESTING_ENVIRONMENT {
-            RMSWorld.TYPE = .FETCH
-        } else {
-            RMSWorld.TYPE = .TESTING_ENVIRONMENT
-        }
+    func switchEnvironment(recogniser: UITapGestureRecognizer){
+            world?.environments.plusOne()
     }
         func longPressLeft(recognizer: UILongPressGestureRecognizer) {
             self.log()
@@ -121,7 +107,60 @@ extension RMXDPad {
             _handleRelease(recognizer.state)
         }
     
-    
+    func grabOrThrow(recognizer: UIGestureRecognizer) {
+        let spriteAction = self.world!.activeSprite.actions
+        if let item = spriteAction.item  {
+            spriteAction.throwItem(20)
+            return
+        }
+        
+        #if SceneKit
+            // retrieve the SCNView
+            let scnView = self.view as! GameView
+            // check what nodes are tapped
+            let p = recognizer.locationInView(scnView)
+
+            if let hitResults = scnView.hitTest(p, options: nil) {
+            // check that we clicked on at least one object
+            if hitResults.count > 0 {
+                // retrieved the first clicked object
+                let result: AnyObject! = hitResults[0]
+                
+                if let node = result.node as? RMXNode {
+                    self.world?.observer.actions.grabItem(item: node)
+                    RMXLog(node.label)
+                    self.log("Right Tap")
+                    self.action(action: "throw", speed: 20)
+                    _handleRelease(recognizer.state)
+                }
+                // get its material
+                let material = result.node!.geometry!.firstMaterial!
+                
+                // highlight it
+                SCNTransaction.begin()
+                SCNTransaction.setAnimationDuration(0.5)
+                
+                // on completion - unhighlight
+                SCNTransaction.setCompletionBlock {
+                    SCNTransaction.begin()
+                    SCNTransaction.setAnimationDuration(0.5)
+                    
+                    material.emission.contents = UIColor.blackColor()
+                    
+                    SCNTransaction.commit()
+                }
+                
+                material.emission.contents = UIColor.redColor()
+                
+                SCNTransaction.commit()
+            }
+        }
+            #else
+            spriteAction.grabItem()
+            
+        #endif
+    }
+
     
     }
 

@@ -120,7 +120,18 @@ class RMXNode : SCNNode, RMXChildNode{
     }]
     
     var behaviours: [(Bool) -> ()] = Array<(Bool) -> ()>()
-    var children: [Int : RMXNode] = Dictionary<Int, RMXNode>()
+    lazy var environments: ChildNodeArray = ChildNodeArray(parent: self)
+//    var children: UnsafeMutablePointer<[Int : RMXNode]> {
+//        return environments.current
+//    }
+    
+    var children: [RMXNode] {
+        return environments.current
+    }
+    
+    var childNodeArray: ChildNodeArray{
+        return self.environments
+    }
     var hasChildren: Bool {
         return self.children.isEmpty
     }
@@ -262,7 +273,7 @@ class RMXNode : SCNNode, RMXChildNode{
             re()
         }
         for child in children {
-            child.1.reset()
+            child.reset()
         }
     }
     
@@ -329,7 +340,7 @@ class RMXNode : SCNNode, RMXChildNode{
             child.parentNode = self
         #endif
         child.world = self.world
-        self.children[child.rmxID] = child
+        self.childNodeArray.set(child)
     }
     
     
@@ -341,10 +352,10 @@ class RMXNode : SCNNode, RMXChildNode{
 
     
     func expellChild(id rmxID: Int){
-        if let child = self.children[rmxID] {
+        if let child = self.childNodeArray.get(rmxID) {
             if child.parentNode! == self {
                 //child.parent! = self.world
-                self.children.removeValueForKey(rmxID)
+                self.childNodeArray.remove(rmxID)
             }
         }
         
@@ -353,7 +364,7 @@ class RMXNode : SCNNode, RMXChildNode{
     func expellChild(child: RMXNode){
         if child.parentNode! == self {
             child.parent!.world = self.world
-            self.children.removeValueForKey(child.rmxID)
+            self.childNodeArray.remove(child.rmxID)
         }
     }
     
@@ -364,7 +375,7 @@ class RMXNode : SCNNode, RMXChildNode{
     func setBehaviours(areOn: Bool){
         self.hasBehaviour = areOn
         for child in children{
-            child.1.hasBehaviour = areOn
+            child.hasBehaviour = areOn
         }
     }
     
@@ -373,7 +384,7 @@ class RMXNode : SCNNode, RMXChildNode{
             behaviour(self.hasBehaviour)
         }
         for child in children {
-            child.1.animate()
+            child.animate()
         }
         if self.isAnimated && self.shouldAnimate {
             self.actions.animate()
@@ -625,7 +636,7 @@ extension RMXNode {
                 
             }
             #else
-            self.shape!.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
+            //self.shape!.color = RMXVector4Make(Float(color.redComponent), Float(color.greenComponent), Float(color.blueComponent), Float(color.brightnessComponent))
         #endif
     }
 
@@ -668,5 +679,73 @@ extension RMXNode {
         self.rAxis = rAxis
        // self._rotation = PI / 4
         return self
+    }
+    
+    class ChildNodeArray {
+        var parent: RMXNode
+        private var type: RMXWorldType = .NULL
+        private var _key: Int = 0
+        
+//        var current: UnsafeMutablePointer<[Int:RMXNode]> {
+//            return nodeArray[type.rawValue]
+//        }
+        private var nodeArray: [ [RMXNode] ] = [ Array<RMXNode>() ]
+        var current:[RMXNode] {
+            return nodeArray[_key]
+        }
+        func get(key: Int) -> RMXNode? {
+            for (index, node) in enumerate(self.nodeArray[_key]) {
+                if node.rmxID == key{
+                    return node
+                }
+            }
+            return nil
+        }
+        
+        func set(node: RMXNode) {
+            self.nodeArray[_key].append(node)
+        }
+        
+        func remove(key: Int) -> RMXNode? {
+           for (index, node) in enumerate(self.nodeArray[_key]) {
+                if node.rmxID == key{
+                    self.nodeArray[_key].removeAtIndex(index)
+                    return node
+                }
+            }
+            return nil
+        }
+        
+        func plusOne(){
+            if self._key + 1 > RMXWorldType.DEFAULT.rawValue {
+                self._key = 0
+            } else {
+                self._key += 1
+            }
+        }
+        
+        func setType(type: RMXWorldType){
+            self.type = type
+            self._key = type.rawValue
+        }
+        
+        func getCurrent() ->[RMXNode]? {
+            return self.current
+        }
+        
+        func makeFirst(node: RMXNode){
+            self.remove(node.rmxID)
+            self.nodeArray[_key].insert(node, atIndex: 0)
+        }
+        init(parent: RMXNode){
+            self.parent = parent
+            if parent is RMSWorld {
+                self.nodeArray.reserveCapacity(RMXWorldType.DEFAULT.rawValue)
+                for (var i = 1; i <= RMXWorldType.DEFAULT.rawValue ; ++i){
+                    let dict = Array<RMXNode>()
+                    self.nodeArray.append(dict)
+                }
+            }
+        }
     }
 }

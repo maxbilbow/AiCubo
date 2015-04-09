@@ -46,7 +46,7 @@ class RMXArt {
     
     #endif
     
-    class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloatB = 1000) -> RMSWorld {
+    class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloatB = 1000, radius: RMFloatB? = nil) -> RMSWorld {
         RMXArt.drawSun(world)
         
         RMXArt.drawPlane(world)
@@ -54,7 +54,7 @@ class RMXArt {
             RMXArt.drawAxis(world)
         }
         if noOfShapes > 0 {
-            RMXArt.randomObjects(world, noOfShapes: noOfShapes)
+            RMXArt.randomObjects(world, noOfShapes: noOfShapes, radius: radius)
         }
         return world
     }
@@ -67,21 +67,17 @@ class RMXArt {
     class func drawPlane(world: RMSWorld) {
         let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
         ZX.body!.setRadius(world.body!.radius)
-//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
         ZX.body!.setPhi(upDownRadians: 90 * PI_OVER_180)
-//        ZX.transform = RMXMatrix4Rotate(ZX.transform,90 * PI_OVER_180,1,0,0)
         #if SceneKit
         ZX.geometry!.firstMaterial!.doubleSided = true
-//        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
-            
         ZX.setColor(color: NSColor.greenColor())
             #else
             ZX.setColor(self.yellowVector)
             #endif
-//        ZX.geometry?.firstMaterial!.doubleSided = true
         ZX.isAnimated = false
-        ZX.startingPoint = ZX.position
-//        ZX.position = RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z)
+        #if OPENGL_ES
+            ZX.initPosition(startingPoint: RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z))
+            #endif
         world.insertChildNode(ZX)
     }
     class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
@@ -127,20 +123,20 @@ class RMXArt {
         drawAxis("z")
     }
     
-    class func randomObjects(world: RMSWorld, noOfShapes: RMFloatB = 100 )    {
+    class func randomObjects(world: RMSWorld, noOfShapes: RMFloatB = 100, radius r: RMFloatB? = nil)    {
     //int max =100, min = -100;
     //BOOL gravity = true;
-        
+        let radius = r ?? world.radius
         for(var i: RMFloatB = -noOfShapes / 2; i < noOfShapes / 2; ++i) {
             var randPos: [RMFloatB]
             var X: RMFloatB = 0; var Y: RMFloatB = 0; var Z: RMFloatB = 0
             func thisRandom(inout x: RMFloatB, inout y: RMFloatB, inout z: RMFloatB) -> [RMFloatB] {
                 do {
-                    let points = RMX.doASum(world.radius, count: i, noOfShapes: noOfShapes )
+                    let points = RMX.doASum(radius, count: i, noOfShapes: noOfShapes )
                     x = points.x
                     y = points.y
                     z = points.z
-                } while RMXVector3Distance(RMXVector3Make(x,y,z), RMXVector3Zero) > world.radius && y > 0
+                } while RMXVector3Distance(RMXVector3Make(x,y,z), RMXVector3Zero) > radius && y > 0
                 return [ x, y, z ]
             }
             randPos = thisRandom(&X,&Y,&Z)

@@ -19,13 +19,13 @@ class ViewController : UIViewController {
 //    @IBOutlet weak var gvc: GameViewController! = GameViewController()
     
     @IBAction func playFetch(sender: AnyObject) {
-        RMSWorld.TYPE = .FETCH
+//        RMSWorld.TYPE = .FETCH
 
     }
     
     @IBAction func testingEnvironment(sender: AnyObject) {
         
-        RMSWorld.TYPE = .TESTING_ENVIRONMENT
+//        RMSWorld.TYPE = .TESTING_ENVIRONMENT
     }
 
 }
@@ -38,45 +38,29 @@ class GameViewController : GLKViewController, RMXViewController {
         return self.interface?.world
     }
     
-    @IBOutlet var gameView: GameView? //= GameView(frame: self.view.bounds)
+    @IBOutlet var gameView: GameView?
     
     
     @IBAction func setWorld(button: UIButton){
         println(__FUNCTION__)
     }
-//    required init(coder aDecoder: NSCoder) {
-//        self.gameView = GameView(coder: aDecoder)
-//        super.init(coder: aDecoder)
-//        self.viewDidLoad()
-//    }
+
     
-    func resetGame() {//type: RMXWorldType = GameViewController.worldType) -> UIView {
+    func resetGame() {
         if self.gameView == nil {
             self.gameView = GameView(frame: self.view.bounds)
         }
-
-        self.gameView!.setWorld(RMSWorld.TYPE)
         self.view = self.gameView
-//        GameView.worldType = .TESTING_ENVIRONMENT
-//        return self.view
     }
-    /*
-    required init(coder aDecoder: NSCoder) {
-        let value = aDecoder.valueForKeyPath("test")
-        print(value)
-        super.init(coder: aDecoder)
-    }
-    */
+
     
     override func viewDidLoad() {
         self.view = self.gameView
         self.gameView!.initialize(self, interface: self.interface!)
         super.viewDidLoad()
-        self.preferredFramesPerSecond = 30
-//        self.view = self.menuView
+//        self.preferredFramesPerSecond = 30
         self.resetGame()
-        //self.setUpTimers()
-//        self.view.hidden = true
+
         
         
     }
@@ -84,9 +68,7 @@ class GameViewController : GLKViewController, RMXViewController {
 //        timer = CADisplayLink(target: self.interface, selector: Selector("update"))
 //        timer!.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
 
-        let stateTimer = CADisplayLink(target: self, selector: Selector("resetGame"))
-//        stateTimer.frameInterval = 100
-        stateTimer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+        
     }
     
     override func glkView(view: GLKView!, drawInRect rect: CGRect) {

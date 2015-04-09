@@ -16,7 +16,7 @@ import Foundation
 
 #if SceneKit
     import SceneKit
-    typealias SceneObject = NSObject
+//    typealias SceneObject = NSObject
     typealias RendererDelegate = SCNSceneRendererDelegate
     #else
     protocol RendererDelegate {}
@@ -33,7 +33,7 @@ import Foundation
     typealias RMSView = NSView
 #endif
 
-class RMXInterface : SceneObject, RendererDelegate {
+class RMXInterface : NSObject, RendererDelegate {
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self.world!)
     private let _isDebugging = false
     var debugData: String = "No Data"
@@ -75,11 +75,7 @@ class RMXInterface : SceneObject, RendererDelegate {
     }
     
     init(gvc: RMXViewController, world: RMSWorld? = nil){
-        self.gvc = gvc
-        self.world = world
-        #if SceneKit
         super.init()
-        #endif
         self.initialize(gvc, gameView: gvc.gameView!, world: world)
         self.viewDidLoad()
         NSLog("\(__FUNCTION__)")

@@ -55,7 +55,7 @@ class RMXDPad : RMXInterface {
             let button: UIButton = UIButton(frame: CGRectMake(0, view.bounds.height - 30, view.bounds.width / 3, 20))
             
             button.setTitle("SWITCH", forState:UIControlState.Normal)
-            button.addTarget(self, action: Selector("pauseGame:"), forControlEvents:UIControlEvents.TouchDown)
+            button.addTarget(self, action: Selector("switchEnvironment:"), forControlEvents:UIControlEvents.TouchDown)
             button.enabled = true
             view.addSubview(button)
             
@@ -103,11 +103,7 @@ class RMXDPad : RMXInterface {
 //            look.minimumPressDuration = 0
             view.addGestureRecognizer(look)
             
-            let tapRight: UITapGestureRecognizer = UITapGestureRecognizer(target: self,  action: "handleTapRight:")
-            view.addGestureRecognizer(tapRight)
-            
-            
-            
+
             view.addGestureRecognizer(UILongPressGestureRecognizer(target: self,  action: "longPressRight:"))
             view.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "handlePinch:"))
             view.userInteractionEnabled = true
@@ -117,22 +113,12 @@ class RMXDPad : RMXInterface {
             twoFingerTap.numberOfTouchesRequired = 2
             twoFingerTap.numberOfTapsRequired = 1
             view.addGestureRecognizer(twoFingerTap)
-            
-            #if SceneKit
+ 
                 
-                // add a tap gesture recognizer
-                let tapGesture = UITapGestureRecognizer(target: self, action: "grabOrThrow:")
-//                var gestureRecognizers = [AnyObject]()
-//                gestureRecognizers.append(tapGesture)
-//                if let existingGestureRecognizers = scnView.gestureRecognizers {
-//                    gestureRecognizers.extend(existingGestureRecognizers)
-//                }
-//                scnView.gestureRecognizers = gestureRecognizers
-                view.addGestureRecognizer(tapGesture)
-                
-                
-            #endif
-            
+            // add a tap gesture recognizer
+            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "grabOrThrow:"))
+           
+
         }
         
         
