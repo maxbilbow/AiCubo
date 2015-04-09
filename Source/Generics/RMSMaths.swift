@@ -141,27 +141,27 @@ func RMXMatrix4Transpose(mat: RMXMatrix4)->RMXMatrix4 {
     #endif
 }
 
-func RMXMatrix4Make(row1: RMXVector3, row2: RMXVector3, row3: RMXVector3) -> RMXMatrix4 {
+func RMXMatrix4Make(row1: RMXVector3, row2: RMXVector3, row3: RMXVector3, row4: RMXVector3 = RMXVector3Zero) -> RMXMatrix4 {
     #if SceneKit
         return SCNMatrix4(
             m11: row1.x, m12: row1.y, m13: row1.z, m14: 0,
             m21: row2.x, m22: row2.y, m23: row2.z, m24: 0,
             m31: row3.x, m32: row3.y, m33: row3.z, m34: 0,
-            m41: 0     , m42: 0     , m43: 0     , m44: 1
+            m41: row4.x, m42: row4.y, m43: row4.z, m44: 1
             )
     #else
-        return GLKMatrix4MakeWithRows(
+        return GLKMatrix4MakeWithColumns(
             GLKVector4MakeWithVector3(row1, 0),
             GLKVector4MakeWithVector3(row2, 0),
             GLKVector4MakeWithVector3(row3, 0),
-            GLKVector4Make(0,0,0,1)
+            GLKVector4MakeWithVector3(row4, 1)
         )
     #endif
 }
 
 func RMXMatrix4MultiplyVector3(mat: RMXMatrix4, v: RMXVector3) -> RMXVector3{
     #if SceneKit
-        return SCNVector3FromGLKVector3(GLKMatrix4MultiplyVector3(SCNMatrix4ToGLKMatrix4(mat),SCNVector3ToGLKVector3(v)))
+        return SCNVector3FromGLKVector3(GLKMatrix4MultiplyVector3(GLKMatrix4Transpose(SCNMatrix4ToGLKMatrix4(mat)),SCNVector3ToGLKVector3(v)))
         #else
         return GLKMatrix4MultiplyVector3(GLKMatrix4Transpose(mat), v)
     #endif
@@ -284,6 +284,14 @@ func RMXMatrix4Rotate(mat: RMXMatrix4, angle: RMFloatB, x: RMFloatB, y: RMFloatB
     #endif
 }
 
+func RMXMatrix4MakeRotation(radians: RMFloatB,v: RMXVector3) -> RMXMatrix4 {
+    #if SceneKit
+        return SCNMatrix4MakeRotation(radians, v.x,v.y,v.z)
+        #else
+        return GLKMatrix4MakeRotation(radians, v.x,v.y,v.z)
+    #endif
+}
+
 func RMXMatrix4RotateWithVector3(mat: RMXMatrix4, angle: RMFloatB, vector: RMXVector3) -> RMXMatrix4{
     #if SceneKit
         return SCNMatrix4Rotate(mat, angle, vector.x, vector.y, vector.z)
@@ -310,6 +318,44 @@ func RMXVector3MakeNormal(x:RMFloatB,y:RMFloatB,z:RMFloatB) -> RMXVector3 {
         v = GLKVector3Normalize(v)
     #endif
     return v
+}
+func RMXMatrix4SetPosition(m4:RMXMatrix4, v3 row: RMXVector3) -> RMXMatrix4{
+    return RMXMatrix4SetPosition(m4, v4: RMXVector4Make(row.x,row.y,row.z,0))
+}
+
+func RMXSetOrientation(m1:RMXMatrix4, orientation m4: RMXMatrix4) -> RMXMatrix4 {
+    #if SceneKit
+        return SCNMatrix4(
+        m11: m4.m11, m12: m4.m12, m13: m4.m13, m14: m4.m14,
+        m21: m4.m21, m22: m4.m22, m23: m4.m23, m24: m4.m24,
+        m31: m4.m31, m32: m4.m32, m33: m4.m33, m34: m4.m34,
+        m41: m1.m41, m42: m1.m42, m43: m1.m43, m44: m1.m44
+        )
+        #else
+        return GLKMatrix4Make(
+            m4.m00, m4.m01, m4.m02, m4.m03,
+            m4.m10, m4.m11, m4.m12, m4.m13,
+            m4.m20, m4.m21, m4.m22, m4.m23,
+            m1.m31, m1.m31, m1.m32, m1.m33
+        )
+    #endif
+}
+func RMXMatrix4SetPosition(m4:RMXMatrix4, v4 row: RMXVector4) -> RMXMatrix4{
+    #if SceneKit
+    return SCNMatrix4(
+        m11: m4.m11, m12: m4.m12, m13: m4.m13, m14: m4.m14,
+        m21: m4.m21, m22: m4.m22, m23: m4.m23, m24: m4.m24,
+        m31: m4.m31, m32: m4.m32, m33: m4.m33, m34: m4.m34,
+        m41: row.x,  m42: row.y,  m43: row.z,  m44: row.w
+        )
+    #else
+    return GLKMatrix4Make(
+        m4.m00, m4.m01, m4.m02, m4.m03,
+        m4.m10, m4.m11, m4.m12, m4.m13,
+        m4.m20, m4.m21, m4.m22, m4.m23,
+        row.x,  row.y,  row.z,  row.w
+        )
+    #endif
 }
 /*
 func RMXGetThetaAndPhi(vectorA A: RMXVector3, vectorB B: RMXVector3) -> (theta:Float, phi:Float){

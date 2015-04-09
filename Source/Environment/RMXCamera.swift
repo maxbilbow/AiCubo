@@ -25,17 +25,29 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     var aspectRatio: Float  {
         return self.viewWidth / self.viewHeight
     }
-    
+//    override func projectionTransform() -> RMXMatrix4 {
+//        let eye = self.eye; let center = self.center; let up = self.up
+//        RMXLog(super.projectionTransform().print)
+//        return SCNMatrix4FromGLKMatrix4(self.modelViewMatrix)
+//            
+//      
+//    }
     var viewWidth: Float = 1280
     var viewHeight: Float = 750
-    
+    var modelViewMatrix: GLKMatrix4 {
+        let eye = self.eye; let center = self.center; let up = self.up
+        return GLKMatrix4MakeLookAt(
+            eye.x,      eye.y,      eye.z,
+            center.x,   center.y,   center.z,
+            up.x,       up.y,       up.z)
+    }
     #if !SceneKit
     var zNear:Float = 1
     var zFar: Float = 10000
     var yFov: Float = 65.0
     var xFov: Float = 65.0
    
-
+    
     var projectionMatrix: GLKMatrix4 {
         return GLKMatrix4MakePerspective(GLKMathDegreesToRadians(self.yFov), self.aspectRatio, self.zNear, self.zFar)
     }
@@ -45,13 +57,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         self.viewHeight = height
         return self.projectionMatrix
     }
-    var modelViewMatrix: GLKMatrix4 {
-        let eye = self.eye; let center = self.center; let up = self.up
-        return GLKMatrix4MakeLookAt(
-            eye.x,      eye.y,      eye.z,
-            center.x,   center.y,   center.z,
-            up.x,       up.y,       up.z)
-    }
+    
     
     func makePerspective(width: Int32, height:Int32, inout effect: GLKBaseEffect?){
         if RMX.usingDepreciated {

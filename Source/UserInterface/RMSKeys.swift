@@ -33,7 +33,7 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
     
     override func viewDidLoad(coder: NSCoder! = nil) {
         super.viewDidLoad(coder: coder)
-        self.lookSpeed *= 0.1
+        self.lookSpeed *= -0.1
 //        self.moveSpeed *= 0.1
     }
     func set(action a: String, characters k: String ) {
@@ -107,7 +107,7 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
     var mouseDelta: NSPoint {
         let newPos = NSEvent.mouseLocation()
         let lastPos = self.lastPos
-        RMXLog("  OLD: \(lastPos.x), \(lastPos.y)\n  New: \(newPos.x), \(newPos.y)")
+//        RMXLog("  OLD: \(lastPos.x), \(lastPos.y)\n  New: \(newPos.x), \(newPos.y)")
         let delta = NSPoint(
             x: newPos.x - lastPos.x,// - self.mousePos.x,
             y: newPos.y - lastPos.y//self.mousePos.y
@@ -134,7 +134,7 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         if self.actionProcessor.isMouseLocked {
             let delta = self.mouseDelta
             self.action(action: "look", speed: self.lookSpeed, point: [RMFloat(delta.x), RMFloat(delta.y)])
-            RMXLog("MOUSE: \(delta.x), \(delta.y)")
+//            RMXLog("MOUSE: \(delta.x), \(delta.y)")
             
         }
 //        RMXLog("\(self.mouseDelta.x), \(self.mouseDelta.y)")
@@ -259,13 +259,7 @@ extension GameView {
         }
     }
     
-    override func rightMouseUp(theEvent: NSEvent) {
-        self.keys.get(forChar: "Mouse 2")?.release()
-    }
     
-    override func rightMouseDown(theEvent: NSEvent) {
-        self.keys.get(forChar: "Mouse 2")?.press()
-    }
     
     /*
     override func mouseMoved(theEvent: NSEvent) {
@@ -288,8 +282,19 @@ extension GameView {
 }
 
 extension GameView {
+    override func rightMouseUp(theEvent: NSEvent) {
+        self.keys.get(forChar: "Mouse 2")?.release()
+        super.rightMouseUp(theEvent)
+    }
+    
+    override func rightMouseDown(theEvent: NSEvent) {
+        self.keys.get(forChar: "Mouse 2")?.press()
+        super.rightMouseDown(theEvent)
+    }
     
     #if SceneKit
+    
+    
     override func mouseDown(theEvent: NSEvent) {
         /* Called when a mouse click occurs */
         
@@ -299,38 +304,34 @@ extension GameView {
             // check that we clicked on at least one object
             if hitResults.count > 0 {
                 // retrieved the first clicked object
-                let result: AnyObject = hitResults[0]
-                
-                // get its material
+                let result: AnyObject! = hitResults[0]
                 
                 if let node = result.node as? RMXNode {
-                    self.world?.observer.grabNode(node)
+                    self.world?.observer.actions.grabItem(item: node)
                     RMXLog(node.label)
-                } else if let material = result.node!.geometry!.firstMaterial {
-                    // highlight it
+                }
+                // get its material
+                let material = result.node!.geometry!.firstMaterial!
+                
+                // highlight it
+                SCNTransaction.begin()
+                SCNTransaction.setAnimationDuration(0.5)
+                
+                // on completion - unhighlight
+                SCNTransaction.setCompletionBlock {
                     SCNTransaction.begin()
                     SCNTransaction.setAnimationDuration(0.5)
                     
-                    // on completion - unhighlight
-                    SCNTransaction.setCompletionBlock() {
-                        SCNTransaction.begin()
-                        SCNTransaction.setAnimationDuration(0.5)
-                        
-                        material.emission.contents = NSColor.blackColor()
-                        
-                        SCNTransaction.commit()
-                    }
-                    
-                    material.emission.contents = NSColor.redColor()
+                    material.emission.contents = NSColor.blackColor()
                     
                     SCNTransaction.commit()
                 }
                 
+                material.emission.contents = NSColor.redColor()
                 
+                SCNTransaction.commit()
             }
         }
-        
-        
         super.mouseDown(theEvent)
     }
     #endif

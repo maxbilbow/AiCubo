@@ -68,8 +68,8 @@ class RMXArt {
         let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
         ZX.body!.setRadius(world.body!.radius)
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
-//        ZX.body!.setPhi(upDownRadians: 180 * PI_OVER_180)
-        ZX.transform = RMXMatrix4Rotate(ZX.transform,90 * PI_OVER_180,1,0,0)
+        ZX.body!.setPhi(upDownRadians: 90 * PI_OVER_180)
+//        ZX.transform = RMXMatrix4Rotate(ZX.transform,90 * PI_OVER_180,1,0,0)
         #if SceneKit
         ZX.geometry!.firstMaterial!.doubleSided = true
 //        ZX.body!.addTheta(leftRightRadians: 90 * RMFloatB(PI_OVER_180))
@@ -115,7 +115,7 @@ class RMXArt {
                 object.setColor(color)
                 
                 object.isAnimated = false
-                object.transform = RMXMatrix4Translate(object.transform, position)
+                object.initPosition(startingPoint: position)
                 object.startingPoint = position
                 world.insertChildNode(object)
             }
@@ -163,7 +163,7 @@ class RMXArt {
         
         object.hasGravity = false //(rand()% 100) == 1
         object.body!.setRadius(RMFloatB(random() % 9 + 2))
-        object.transform = RMXMatrix4Translate(object.transform, RMXVector3Make(randPos[0], randPos[1], randPos[2]))
+        object.initPosition(startingPoint:RMXVector3Make(randPos[0], randPos[1], randPos[2]))
         object.startingPoint = object.position
         object.body!.mass = RMFloat(random()%15+1)/10;
         object.body!.dragC = RMFloatB(random() % 99+1)/100;

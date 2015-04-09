@@ -43,7 +43,7 @@ class RMXSpriteActions : RMSNodeProperty {
             let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
             self.item!.body!.velocity = self.owner.body!.velocity + RMXVector3MultiplyScalar(fwd3,strength)
             self.item!.wasJustThrown = true
-            self.item = nil
+            self.setItem(nil)
             return true
         } else {
             return false
@@ -55,7 +55,7 @@ class RMXSpriteActions : RMSNodeProperty {
             self.item?.wasJustWoken = true
             let fwd4 = self.owner.forwardVector
             let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item!.transform = RMXMatrix4Translate(self.item!.transform, self.owner.viewPoint + RMXVector3MultiplyScalar(fwd3, self.armLength + self.item!.radius + self.owner.radius))
+            self.item!.position = self.owner.viewPoint + RMXVector3MultiplyScalar(fwd3, self.armLength + self.item!.radius + self.owner.radius)
         }
     }
     
@@ -70,6 +70,8 @@ class RMXSpriteActions : RMSNodeProperty {
             self.item!.hasGravity = false
             self.item!.isAnimated = true
             self.armLength = self.reach
+        } else {
+            self.item = item
         }
     }
     

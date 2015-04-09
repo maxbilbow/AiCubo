@@ -34,7 +34,7 @@ class RMXDPad : RMXInterface {
         
         self.moveSpeed *= -0.05
         #if SceneKit
-            self.lookSpeed *= 0.01
+            self.lookSpeed *= -0.01
             #else
         self.lookSpeed *= -0.02
         #endif
@@ -121,7 +121,7 @@ class RMXDPad : RMXInterface {
             #if SceneKit
                 
                 // add a tap gesture recognizer
-                let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+                let tapGesture = UITapGestureRecognizer(target: self, action: "grabOrThrow:")
 //                var gestureRecognizers = [AnyObject]()
 //                gestureRecognizers.append(tapGesture)
 //                if let existingGestureRecognizers = scnView.gestureRecognizers {

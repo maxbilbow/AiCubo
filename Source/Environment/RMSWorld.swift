@@ -69,7 +69,7 @@ class RMSWorld : RMXNode {
         self.insertChildNode(children: self.players)
         switch (self.worldType){
         case .TESTING_ENVIRONMENT:
-            RMXArt.initializeTestingEnvironment(self)
+            RMXArt.initializeTestingEnvironment(self, withCubes: 100)
             RMX.buildScene(self)
             break
         case .FETCH:
@@ -128,10 +128,10 @@ class RMSWorld : RMXNode {
         if p <= g && v < 0 && sender.isInWorld {
             if p < g / sender.body!.coushin {
                 RMXVector3SetY(&sender.body!.velocity, bounceY * sender.body!.coushin)
-                RMXMatrix4SetY(&sender.transform, g)
+                RMXVector3SetY(&sender.position, g)
             } else {
                 RMXVector3SetY(&sender.body!.velocity, sender.hasGravity ? 0 : bounceY * sender.body!.coushin)
-                RMXMatrix4SetY(&sender.transform, g)
+                RMXVector3SetY(&sender.position, g)
             }
             return true
         }

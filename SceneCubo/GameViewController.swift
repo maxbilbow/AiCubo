@@ -45,7 +45,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         let cameraNode = self.gameView!.world!.observer
         cameraNode.hasGravity = true
         cameraNode.camera = self.gameView!.world!.activeCamera
-        
+//        scene.rootNode.addChildNode(cameraNode)
         
 
         self.gameView?.pointOfView = cameraNode

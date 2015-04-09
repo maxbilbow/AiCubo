@@ -58,11 +58,12 @@ class RMXNode : SCNNode, RMXChildNode{
     
     #if !SceneKit
     var parentNode: RMXNode?
-    var position: GLKVector3 {
-        let row = GLKMatrix4GetColumn(self.transform, 3)
-       return GLKVector3Make(row.x, row.y, row.z)
-    }
-    var transform: RMXMatrix4 = RMXMatrix4Identity
+    var position: RMXVector3 = RMXVector3Zero
+//        {
+//        let row = GLKMatrix4GetColumn(self.transform, 3)
+//       return GLKVector3Make(row.x, row.y, row.z)
+//    }
+//    var transform: RMXMatrix4 = RMXMatrix4Identity
     var pivot: RMXMatrix4 = RMXMatrix4Identity
     var scale: GLKVector3 = GLKVector3Zero
     lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self)
@@ -111,7 +112,11 @@ class RMXNode : SCNNode, RMXChildNode{
     lazy var resets: [() -> () ] = [{
         self.body!.velocity = RMXVector3Zero
         self.body!.acceleration = RMXVector3Zero
+        #if SceneKit
         self.transform = RMXMatrix4Identity
+        #else
+        self.position = self.startingPoint ?? RMXVector3Zero
+        #endif
     }]
     
     var behaviours: [(Bool) -> ()] = Array<(Bool) -> ()>()
@@ -206,6 +211,11 @@ class RMXNode : SCNNode, RMXChildNode{
     
     #endif
     
+    func initPosition(startingPoint point: RMXVector3){
+        self.startingPoint = point
+        self.position = point
+    }
+    
     private var _asObserver = false
     private var _asShape = false
 
@@ -223,7 +233,7 @@ class RMXNode : SCNNode, RMXChildNode{
         RMXNode.COUNT++
         self.geometry = RMXShape(self)
         self.physicsBody = RMSPhysicsBody(self)
-        self.transform = RMXMatrix4Identity
+//        self.transform = RMXMatrix4Identity
         self.pivot = RMXMatrix4Identity
         if self.parentNode != nil {
             self.world = self.parent!.world
@@ -379,11 +389,19 @@ class RMXNode : SCNNode, RMXChildNode{
             #if SceneKit
             self.position = RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
             #else
-            self.transform = RMXMatrix4Translate(self.transform, RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0))
+            //self.transform = RMXMatrix4Translate(self.transform, RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0))
+            self.position = RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
             #endif
         }
-//        if self.isObserver { RMXLog("\n\(self.orientationMat.print)\n\(self.transform.print),\n   POS: \(self.viewPoint.print)") }
-//        if self.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print),\n    UP: \(self.upVector.print)\n   FWD: \(self.forwardVector.print)\n\n") }
+        #if SceneKit
+            let transform = self.transform
+            if self.isObserver { RMXLog("\nORIENTATION\n\(self.orientationMat.print)\n\nTRANSFORM:\n\(transform.print),\n   POV: \(self.viewPoint.print)") }
+            #else
+            let transform = self.position
+            if self.isObserver { RMXLog("\n\(self.orientationMat.print)\n   POS: \(transform.print),\n   POV: \(self.viewPoint.print)") }
+            #endif
+        
+        if self.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print),\n    UP: \(self.upVector.print)\n   FWD: \(self.forwardVector.print)\n\n") }
         
     }
     
@@ -422,7 +440,7 @@ class RMXNode : SCNNode, RMXChildNode{
             }
         #endif
         self.resets.append({
-            self.shape!.isVisible = true
+            
         })
         self._asShape = true
         return self
@@ -431,14 +449,17 @@ class RMXNode : SCNNode, RMXChildNode{
     func setAsObserver() -> RMXNode {
         self.type = .OBSERVER
         if _asObserver { return self }
+        if self.startingPoint == nil {
+            self.startingPoint = RMXVector3Make(0,self.radius,-20)
+        }
         self.resets.append({
             self.actions.armLength = self.radius * RMFloatB(2)
             
             self.body!.mass = 9
 
             self.body!.setRadius(20)
-
-            self.transform = RMXMatrix4Translate(self.transform,RMXVector3Make(0,self.radius,-20))
+            
+            
             self.hasGravity = true
             self.isAlwaysActive = true
         })
@@ -486,12 +507,13 @@ extension RMXNode {
         self.body!.velocity = RMXVector3Zero
     }
     
+    /*
     func rotate(radiansTheta theta: RMFloatB,radiansPhi phi: RMFloatB = 0,radiansRoll roll: RMFloatB = 0,  speed: RMFloatB = 1){
         self.body!.addTheta(leftRightRadians: theta * -speed)
         self.body!.addPhi(upDownRadians: phi * speed)
         self.body!.addRoll(sideRollRadians: roll * speed)
     }
-    
+    */
     var isGrounded: Bool {
         return self.position.y <= self.radius
     }
@@ -518,30 +540,37 @@ extension RMXNode {
 
 extension RMXNode {
     var upVector: RMXVector3 {
-        #if SceneKit
-//            return RMXVector3Make(0,1,0)
-        return RMXVector3MakeNormal(self.transform.m21, self.transform.m22, self.transform.m23)
+       let transform = self.body!.orientation
+         #if SceneKit
+            
+            return RMXVector3Make(transform.m21, transform.m22, transform.m23)
         #else
-        let row = GLKMatrix4GetRow(self.transform, 1)
-        return RMXVector3MakeNormal(row.x,row.y,row.z)
+        let row = GLKMatrix4GetRow(transform, 1)
+        return RMXVector3Make(row.x,row.y,row.z)
         #endif
     }
     
     var leftVector: RMXVector3 {
+        
+            let transform = self.body!.orientation
         #if SceneKit
-        return RMXVector3MakeNormal(self.transform.m11, self.transform.m12, self.transform.m13)
+//        return RMXVector3MakeNormal(transform.m11,transform.m12,transform.m13)
+                return RMXVector3Make(transform.m11,transform.m12,transform.m13)
             #else
-            let row = GLKMatrix4GetRow(self.transform, 0)
-            return RMXVector3MakeNormal(row.x,row.y,row.z)
+            let row = GLKMatrix4GetRow(transform, 0)
+            return RMXVector3Make(row.x,row.y,row.z)
         #endif
     }
     
     var forwardVector: RMXVector3 {
-        #if SceneKit
-        return RMXVector3MakeNormal(self.transform.m31, self.transform.m32, self.transform.m33)
+       
+            let transform = self.body!.orientation
+         #if SceneKit
+            return RMXVector3Make(transform.m31, transform.m32, transform.m33)
+//        return RMXVector3MakeNormal(transform.m31, transform.m32, transform.m33)
             #else
-            let row = GLKMatrix4GetRow(self.transform, 2)
-            return RMXVector3MakeNormal(row.x,row.y,row.z)
+            let row = GLKMatrix4GetRow(transform, 2)
+            return RMXVector3Make(row.x,row.y,row.z)
         #endif
     }
     
@@ -549,7 +578,8 @@ extension RMXNode {
         let row1 = self.leftVector
         let row2 = self.upVector
         let row3 = self.forwardVector
-        return RMXMatrix4Make(row1, row2, row3)
+        let row4 = self.position
+        return RMXMatrix4Make(row1, row2, row3, row4: row4)
     }
 }
 

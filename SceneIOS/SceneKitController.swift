@@ -71,18 +71,24 @@ extension RMXDPad {
         scnView.gestureRecognizers = gestureRecognizers
     }
     
-    func handleTap(gestureRecognize: UIGestureRecognizer) {
+    func grabOrThrow(gestureRecognize: UIGestureRecognizer) {
         // retrieve the SCNView
         let scnView = self.view as! SCNView
         
         // check what nodes are tapped
         let p = gestureRecognize.locationInView(scnView)
-        if let hitResults = scnView.hitTest(p, options: nil) {
+        if self.world!.activeSprite.hasItem  {
+            self.world?.activeSprite.actions.throwItem(20)
+        } else if let hitResults = scnView.hitTest(p, options: nil) {
             // check that we clicked on at least one object
             if hitResults.count > 0 {
                 // retrieved the first clicked object
                 let result: AnyObject! = hitResults[0]
                 
+                if let node = result.node as? RMXNode {
+                    self.world?.observer.actions.grabItem(item: node)
+                    RMXLog(node.label)
+                }
                 // get its material
                 let material = result.node!.geometry!.firstMaterial!
                 

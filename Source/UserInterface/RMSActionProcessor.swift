@@ -126,7 +126,7 @@ class RMSActionProcessor {
         if action == "grab" {
             self.activeSprite.actions.grabItem()
         }
-        if action == "throw" && speed > 0 {
+        if action == "throw" && speed != 0 {
             if self.activeSprite.hasItem {
                 RMXLog("Throw: \(self.activeSprite.actions.item?.label) with speed: \(speed)")
                 self.activeSprite.actions.throwItem(speed)

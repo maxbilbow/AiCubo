@@ -135,7 +135,8 @@ extension RMX {
         let poppy: RMXNode = RMXNode.Unique(world).setAsObserver().setAsShape(type: .CYLINDER)
         poppy.type = .POPPY
         poppy.body!.setRadius(8)
-        poppy.transform = RMXMatrix4Translate(poppy.transform, RMXVector3Make(100,poppy.radius,-50))
+        poppy.startingPoint = RMXVector3Make(100,poppy.radius,-50)
+        poppy.position = poppy.startingPoint!
         var itemToWatch: RMXNode! = nil
         poppy.isAlwaysActive = true
         var timePassed = 0
@@ -226,7 +227,8 @@ extension RMX {
         let head = RMXNode().initWithParent(poppy).setAsShape(type: .SPHERE)
         head.body!.setRadius(r)
         head.setColor(RMXVector4Make(0.1,0.1,0.1,0.1))
-        head.transform = RMXMatrix4Translate(head.transform,RMXVector3Make(0,head.scale.y, -head.scale.z))
+        head.startingPoint = RMXVector3Make(0,head.scale.y, -head.scale.z)
+        head.position = head.startingPoint!
         poppy.insertChildNode(head)
         
        
