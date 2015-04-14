@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import QuartzCore
     import GLKit
 #if iOS
     import UIKit
@@ -33,7 +34,7 @@ import Foundation
     typealias RMSView = NSView
 #endif
 
-class RMXInterface : NSObject, RendererDelegate {
+class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self.world!)
     private let _isDebugging = false
     var debugData: String = "No Data"
@@ -47,13 +48,13 @@ class RMXInterface : NSObject, RendererDelegate {
 //    } ) ]
     
    
-    
+    var timer: NSTimer? //CADisplayLink?
     var world: RMSWorld?
 
     var lookSpeed: RMFloatB = PI_OVER_180
     var moveSpeed: RMFloatB = 1
     
-    var activeSprite: RMXNode? {
+    var activeSprite: RMXSprite? {
         return self.world?.activeSprite
     }
     
@@ -77,7 +78,7 @@ class RMXInterface : NSObject, RendererDelegate {
     init(gvc: RMXViewController, world: RMSWorld? = nil){
         super.init()
         self.initialize(gvc, gameView: gvc.gameView!, world: world)
-        self.viewDidLoad()
+        self.viewDidLoad(nil)
         NSLog("\(__FUNCTION__)")
     }
     
@@ -92,7 +93,7 @@ class RMXInterface : NSObject, RendererDelegate {
             self.world = world
         }
         if self.world == nil {
-            self.world = RMSWorld(worldType: .DEFAULT)
+            self.world = RMSWorld(node: RMXNode())
         }
         self.world!.clock = RMXClock(world: self.world!, interface: self)
         #if SceneKit
@@ -102,20 +103,17 @@ class RMXInterface : NSObject, RendererDelegate {
     }
     
     
-    func viewDidLoad(coder: NSCoder! = nil){
-        #if SceneKit
-        if coder != nil {
-            self.world = RMSWorld(coder: coder)
-        }
-        #endif
+    func viewDidLoad(coder: NSCoder!){
         if self.world == nil {
-            self.world = RMSWorld(worldType: .DEFAULT)
+            
+            self.world = RMSWorld(node: RMXNode(coder: coder))
         }
-//        self.controllers["debug"] = ( isActive: _isDebugging, process: self.debug )
         self.setUpGestureRecognisers()
-
     }
-    
+    func setUpTimers(){
+//        self.timer = NSTimer(target: self, selector: Selector("update"))
+//        self.timer!.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+    }
     func setUpGestureRecognisers() {
         
     }

@@ -27,7 +27,7 @@ typealias RMXTimedCallback = (frequency: NSTimeInterval? , call:()->())
 
 
 class RMXClock {
-    var world: RMXNode
+    var world: RMSWorld
 
     var timeSinceLastUpdate: NSTimeInterval = 0
     var interface: RMXInterface

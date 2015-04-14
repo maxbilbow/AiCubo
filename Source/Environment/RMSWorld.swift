@@ -10,8 +10,8 @@ import Foundation
 import GLKit
 
 enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH, DEFAULT }
-class RMSWorld : RMXNode {
-    static var TYPE: RMXWorldType = .DEFAULT
+class RMSWorld : RMXSprite {
+    static var TYPE: RMXWorldType = .SMALL_TEST
     let gravityScaler: RMFloatB = 0.05
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
@@ -19,46 +19,35 @@ class RMSWorld : RMXNode {
 //    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    lazy var sun: RMXNode = RMXNode.Unique(self).makeAsSun(rDist: self.radius)
+    lazy var sun: RMXSprite = RMXSprite.Unique(self).makeAsSun(rDist: self.radius)
     private let GRAVITY: RMFloatB = 9.8
     
     
-    lazy var activeCamera: RMXCamera! = RMXCamera(self.activeSprite)
+    lazy var activeCamera: RMXCamera = RMXCamera(self)
     
-    lazy var activeSprite: RMXNode = RMXNode.Unique(self).setAsObserver()
+    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self).asObserver()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
-    lazy var observer: RMXNode = self.activeSprite
-    lazy var poppy: RMXNode = RMX.makePoppy(world: self)
-    lazy var players: [Int: RMXNode] = [
+    lazy var observer: RMXSprite = self.activeSprite
+    lazy var poppy: RMXSprite = RMX.makePoppy(world: self)
+    lazy var players: [Int: RMXSprite] = [
         self.activeSprite.rmxID: self.activeSprite ,
         self.poppy.rmxID: self.poppy,
         self.sun.rmxID: self.sun
     ]
     
-    var worldType: RMXWorldType = .DEFAULT
+    var worldType: RMXWorldType = .SMALL_TEST
     
-    init(worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius: RMFloatB = 1000, parent: RMXNode! = nil) {
+    init(node: RMXNode,worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius r: RMFloatB = 3000) {
         super.init()//parentNode: parent, type: .WORLD, name: name)
         self.worldType = type
-        self.setLabel(name)
-    }
-    #if SceneKit
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        self.setName(name)
+        self.node.scale = RMXVector3Make(r*2,r*2,r*2)
+        println(self.radius)
     }
     
-    
-    override init(){
-        super.init()
-    }
-    #endif
-    
-    private var _firstFetch = true
-    
-    override func nodeDidInitialize() {
-        super.nodeDidInitialize()
-        self.body!.setRadius(3000)
+    override func spriteDidInitialize() {
+        super.spriteDidInitialize()
         self.world = self
         self.isAnimated = false
         self.isVisible = false
@@ -68,11 +57,13 @@ class RMSWorld : RMXNode {
 
     
     func worldDidInitialize() {
+        self.node.scale = RMXVector3Make(6000,6000,6000)
+
         //for player in players {
-            RMX.addBasicCollisionTo(forNode: observer)
+          //  RMX.addBasicCollisionTo(forNode: observer)
         //}
         func createEnvironment() {
-            self.insertChildNode(children: self.players)
+            self.insertChildren(children: self.players)
         }
         //DEFAULT
         self.environments.setType(.DEFAULT)
@@ -109,7 +100,7 @@ class RMSWorld : RMXNode {
     }
    
             
-    func µAt(someBody: RMXNode) -> RMFloatB {
+    func µAt(someBody: RMXSprite) -> RMFloatB {
         if !someBody.isInWorld && someBody.isObserver {
             return 0.0000001
         } else if (someBody.position.y <= someBody.ground   ) {
@@ -119,7 +110,7 @@ class RMSWorld : RMXNode {
         }
 
     }
-    func massDensityAt(someBody: RMXNode) -> RMFloatB {
+    func massDensityAt(someBody: RMXSprite) -> RMFloatB {
         if !someBody.isInWorld && someBody.isObserver {
             return 0.0000001
         } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
@@ -128,79 +119,72 @@ class RMSWorld : RMXNode {
             return 0.01
         }
     }
-    func collisionTest(sender: RMXNode) -> Bool{
+    func collisionTest(sender: RMXSprite) -> Bool{
     //Have I gone through a barrier?
-        let velocity = sender.body!.velocity
+        let node = sender.node
+        let velocity = node.physicsBody!.velocity
         let v = velocity.y
         let p = sender.position.y
-        let next = sender.body!.velocity + sender.position
+        let next = node.physicsBody!.velocity + sender.position
         let bounceY: RMFloatB = -v
         let g = sender.ground
+        let coushin: RMFloatB = 2
         if p <= g && v < 0 && sender.isInWorld {
-            if p < g / sender.body!.coushin {
-                RMXVector3SetY(&sender.body!.velocity, bounceY * sender.body!.coushin)
-                RMXVector3SetY(&sender.position, g)
+            if p < g / coushin {
+                RMXVector3SetY(&node.physicsBody!.velocity, bounceY * coushin)
+                RMXVector3SetY(&node.position, g)
             } else {
-                RMXVector3SetY(&sender.body!.velocity, sender.hasGravity ? 0 : bounceY * sender.body!.coushin)
-                RMXVector3SetY(&sender.position, g)
+                RMXVector3SetY(&node.physicsBody!.velocity, sender.hasGravity ? 0 : bounceY * coushin)
+                RMXVector3SetY(&node.position, g)
             }
             return true
         }
         if RMXVector3Length(next) >= self.radius && sender.type != .OBSERVER {
-            sender.actions.headTo(self)
-            sender.body!.velocity = velocity.negate()
+            sender.headTo(self)
+            node.physicsBody!.velocity = velocity.negate()
         }
         
         return false
     }
     
-    func gravityAt(sender: RMXNode) -> RMXVector3 {
+    func gravityAt(sender: RMXSprite) -> RMXVector3 {
         return self.physics.gravityFor(sender)
     }
     
     
-   
-    override func animate() {
-        super.animate()
-    }
-    
-    override func reset() {
-        super.reset()
-    }
-    
-    func closestObjectTo(sender: RMXNode)->RMXNode? {
+    func closestObjectTo(sender: RMXSprite)->RMXSprite? {
         var closest: Int = -1
         var dista: RMFloatB = RMFloatB.infinity// = sender.body.distanceTo(closest)
         for object in children {
             let child = object
             if child != sender {
-                let distb: RMFloatB = sender.body!.distanceTo(child)
+                let distb: RMFloatB = sender.distanceTo(child)
                 if distb < dista {
                     closest = child.rmxID
                     dista = distb
                 }
             }
         }
-        if let result = self.childNodeArray.get(closest) {
+        if let result = self.childSpriteArray.get(closest) {
                 return result
             }
         return nil
     }
     
-    func furthestObjectFrom(sender: RMXNode)->RMXNode? {
+    func furthestObjectFrom(sender: RMXSprite)->RMXSprite? {
         var furthest: Int = -1
         var dista: RMFloatB = 0// = sender.body.distanceTo(closest)
         for object in children {
             let child = object
             if child != sender {
-                let distb: RMFloatB = sender.body!.distanceTo(child)
+                let distb: RMFloatB = sender.distanceTo(child)
                 if distb > dista {
                     furthest = child.rmxID
                     dista = distb
                 }
             }
         }
-        if let result = self.childNodeArray.get(furthest){
+        if let result = self.childSpriteArray.get(furthest){
                 return result
         }   else { return nil }
     }
@@ -219,9 +203,6 @@ class RMSWorld : RMXNode {
 
     
    
-    
-    
-    
     
 }
 

@@ -11,7 +11,7 @@ import AppKit
 import ApplicationServices
 import SceneKit
 
-class RMSKeys : RMXInterface, RMXControllerProtocol {
+class RMSKeys : RMXInterface {
     
     lazy var mv: (on:RMFloat,off:RMFloat) = (self.moveSpeed, 0)
     lazy var keys: [ RMKey ] = [
@@ -31,9 +31,9 @@ class RMSKeys : RMXInterface, RMXControllerProtocol {
         RMKey(self, action: "throw", characters: "Mouse 2", isRepeating: false,  speed: (0,20))
     ]
     
-    override func viewDidLoad(coder: NSCoder! = nil) {
-        super.viewDidLoad(coder: coder)
-        self.lookSpeed *= -0.1
+    override func viewDidLoad(coder: NSCoder!) {
+        super.viewDidLoad(coder)
+        self.lookSpeed *= 0.1
 //        self.moveSpeed *= 0.1
     }
     func set(action a: String, characters k: String ) {
@@ -306,9 +306,9 @@ extension GameView {
                 // retrieved the first clicked object
                 let result: AnyObject! = hitResults[0]
                 
-                if let node = result.node as? RMXNode {
-                    self.world?.observer.actions.grabItem(item: node)
-                    RMXLog(node.label)
+                if let node = result.node {
+                    self.world?.observer.grabItem(item: self.world!.getSprite(node: node))
+                    RMXLog(node.name)
                 }
                 // get its material
                 let material = result.node!.geometry!.firstMaterial!

@@ -47,7 +47,6 @@ class RMXArt {
     #endif
     
     class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloatB = 1000, radius: RMFloatB? = nil) -> RMSWorld {
-        RMXArt.drawSun(world)
         
         RMXArt.drawPlane(world)
         if drawAxis {
@@ -59,65 +58,107 @@ class RMXArt {
         return world
     }
     
-    class func drawSun(world: RMSWorld) {
-        world.sun.isRotating = true
-        world.sun.body!.setRadius(100)
-    }
     
     class func drawPlane(world: RMSWorld) {
-        let ZX = RMXNode().initWithParent(world).setAsShape(type: .PLANE)
+        #if SceneKit
+
+        let plane = SCNNode()
+        plane.physicsBody = SCNPhysicsBody.staticBody()
+        plane.geometry = RMXArt.PLANE
+        plane.scale = world.node.scale
+        plane.eulerAngles.x = 90 * PI_OVER_180
+        plane.geometry!.firstMaterial!.doubleSided = true
+        plane.geometry!.firstMaterial!.diffuse.contents =  NSColor.yellowColor()
+        world.node.addChildNode(plane)
+        #else
+        
+        let ZX = RMXSprite().initWithParent(world).setAsShape(type: .PLANE)
         ZX.body!.setRadius(world.body!.radius)
         ZX.body!.setPhi(upDownRadians: 90 * PI_OVER_180)
-        #if SceneKit
-        ZX.geometry!.firstMaterial!.doubleSided = true
-        ZX.setColor(color: NSColor.greenColor())
-            #else
             ZX.setColor(self.yellowVector)
-            #endif
         ZX.isAnimated = false
         #if OPENGL_ES
             ZX.initPosition(startingPoint: RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z))
             #endif
         world.insertChildNode(ZX)
+        #endif
     }
+    
     class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
-        let shapeRadius: RMFloatB = 5
-        let axisLenght = world.radius * 2
-        let shapesPerAxis: RMFloatB = axisLenght / (shapeRadius * 3)
-        let step: RMFloatB = axisLenght / shapesPerAxis
+        
         
         func drawAxis(axis: String) {
             var point =  -world.radius
+            #if !SceneKit
             var color: RMXVector4
+                #else
+                var color: NSColor
+                #endif
+            var scale: RMXVector3 = RMXVector3Make(10,10,10)
             switch axis {
             case "x":
+                #if !SceneKit
                 color = self.redVector
+                    #else
+                scale.x = world.node.scale.x
+                    color = NSColor.redColor()
+                    #endif
                 break
             case "y":
+                #if !SceneKit
                 color = self.greenVector
+                    #else
+                scale.y = world.node.scale.y
+                    color = NSColor.greenColor()
+                    #endif
                 break
             case "z":
+                    #if !SceneKit
                 color = self.blueVector
+                        #else
+                scale.z = world.node.scale.z
+                        color = NSColor.blueColor()
+                        #endif
                 break
             default:
                 fatalError(__FUNCTION__)
             }
-            for (var i: RMFloatB = 0; i < shapesPerAxis; ++i){
-                let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
-                point += step
-                let object:RMXNode = RMXNode().initWithParent(world).setAsShape(type: .CUBE)
-                object.hasGravity = false
-                object.body!.setRadius(shapeRadius)
-                object.setColor(color)
-                
-                object.isAnimated = false
-                object.initPosition(startingPoint: position)
-                object.startingPoint = position
-                world.insertChildNode(object)
-            }
+            #if SceneKit
+                let node:SCNNode = SCNNode()
+                node.geometry = RMXArt.CUBE.copy() as? SCNGeometry
+                node.geometry!.firstMaterial! = (RMXArt.CUBE.firstMaterial!.copy() as? SCNMaterial)!
+                node.geometry!.firstMaterial!.diffuse.contents = color
+                node.geometry!.firstMaterial!.specular.contents = color
+                node.physicsBody = SCNPhysicsBody.staticBody()
+                node.scale = scale
+                world.node.addChildNode(node)
+                println("axis: \(axis), scale: \(scale.print)")
+                #else
+                for (var i: RMFloatB = 0; i < shapesPerAxis; ++i){
+                    let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
+                    point += step
+                    let object:RMXSprite = RMXSprite().initWithParent(world).setAsShape(type: .CUBE)
+                    object.hasGravity = false
+                    object.body!.setRadius(shapeRadius)
+                    object.setColor(color)
+                    
+                    object.isAnimated = false
+                    object.initPosition(startingPoint: position)
+                    object.startingPoint = position
+                    world.insertChildNode(object)
+                }
+            #endif
             
             
         }
+        
+        #if !ScneneKit
+        let shapeRadius: RMFloatB = 5
+        let axisLength = world.radius * 2
+        let shapesPerAxis: RMFloatB = 1//axisLenght / (shapeRadius * 3)
+        let step: RMFloatB = axisLength / shapesPerAxis
+        #endif
+        
         drawAxis("x")
         drawAxis("y")
         drawAxis("z")
@@ -144,28 +185,25 @@ class RMXArt {
         randPos[1] = randPos[1] + 50
         
         //gravity = !gravity;
-            let object: RMXNode = RMXNode().initWithParent(world)
+            let object: RMXSprite = RMXSprite.new(parent: world)
 //            if(false){//(rand() % 10000) == 1) {
 //                object.shape.makeAsSun(rDist: 0, isRotating:false)
 //            }
         
         if(random() % 50 == 1) {
-            object.setAsShape(type: .SPHERE)
+            object.setShape(type: .SPHERE)
         } else if(random() % 5 == 1){
-            object.setAsShape(type: .CYLINDER)
+            object.setShape(type: .CYLINDER)
         } else {
-            object.setAsShape(type: .CUBE)
+            object.setShape(type: .CUBE)
         }
         
         object.hasGravity = false //(rand()% 100) == 1
-        object.body!.setRadius(RMFloatB(random() % 9 + 2))
+        object.setRadius(RMFloatB(random() % 9 + 2))
         object.initPosition(startingPoint:RMXVector3Make(randPos[0], randPos[1], randPos[2]))
-        object.startingPoint = object.position
-        object.body!.mass = RMFloat(random()%15+1)/10;
-        object.body!.dragC = RMFloatB(random() % 99+1)/100;
+        object.node.physicsBody!.mass = RMFloat(random()%15+1)/10;
+//        object.body!.dragC = RMFloatB(random() % 99+1)/100;
         object.setColor(RMXRandomColor())
-        world.insertChildNode(object)
-        
         
         }
     }
@@ -181,7 +219,7 @@ class RMXArt {
 
     return rCol
     }
-
+   
 }
 func RMXVector3Random(max: Int = 100, div: Int = 1, min: Int = 0) -> RMXVector3 {
     return RMXVector3Make(
