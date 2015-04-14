@@ -36,7 +36,7 @@ class RMSWorld : RMXSprite {
         self.sun.rmxID: self.sun
     ]
     
-    var worldType: RMXWorldType = .SMALL_TEST
+    var worldType: RMXWorldType = .DEFAULT
     
     init(node: RMXNode,worldType type: RMXWorldType = .DEFAULT, name: String = "The World", radius r: RMFloatB = 3000) {
         super.init()//parentNode: parent, type: .WORLD, name: name)
@@ -91,7 +91,7 @@ class RMSWorld : RMXSprite {
 
     }
   
-    func setWorldType(worldType type: RMXWorldType = .FETCH){
+    func setWorldType(worldType type: RMXWorldType = RMSWorld.TYPE){
         self.worldType = type
         self.environments.setType(type)
         #if SceneKit
