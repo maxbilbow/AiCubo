@@ -67,15 +67,7 @@ extension RMX {
                 if sprite.isUnique {
                     return
                 }
-                if sprite.isAnimated {
-                    sprite.addBehaviour{ (isOn: Bool)->() in
-                        return
-                        if !sprite.hasGravity && world.observer.hasItem {
-                            if sprite.distanceTo((world.observer.item)!) < 50 {
-                                sprite.hasGravity = true
-                            }
-                        }
-                    }
+                if sprite.type == RMXSpriteType.AI {
                 var timePassed = 0
                 var timeLimit = random() % 600
                 let speed:RMFloatB = RMFloatB(random() % 15)/3
@@ -133,13 +125,12 @@ extension RMX {
         return world
     }
     static func makePoppy(#world: RMSWorld) -> RMXSprite{
-        let poppy: RMXSprite = RMXSprite.Unique(world).asObserver().setShape(type: .CYLINDER)
-        poppy.type = .POPPY
-        poppy.setRadius(8)
+        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asObserver().asShape(shape: .CYLINDER)
+        poppy.setRadius(6)
         poppy.startingPoint = RMXVector3Make(100,poppy.node.scale.y / 2,-50)
         poppy.node.position = poppy.startingPoint!
         var itemToWatch: RMXSprite! = nil
-        poppy.isAlwaysActive = true
+//        poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
         var speed: RMFloatB = 0.01
@@ -225,7 +216,7 @@ extension RMX {
             #else
             let r = poppy.radius / 2
             #endif
-        let head = RMXSprite.new(parent: poppy).setShape(type: .SPHERE)
+        let head = RMXSprite.new(parent: poppy).asShape(shape: .SPHERE)
         head.setRadius(r)
         head.setColor(RMXVector4Make(0.1,0.1,0.1,0.1))
         head.startingPoint = RMXVector3Make(0,head.node.scale.y, -head.node.scale.z)

@@ -126,6 +126,12 @@ extension GLKVector4 {
     }
 }
 
+extension GLKQuaternion {
+    var print: String {
+        return "\(x.toData()) \(y.toData()) \(z.toData()) \(w.toData()) V: \(v.print)"
+    }
+}
+
 
 extension SCNVector4 {
     var print: String {

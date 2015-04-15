@@ -31,7 +31,9 @@ class RMSKeys : RMXInterface {
         RMKey(self, action: "look", characters: "mouseMoved", isRepeating: false,speed: (0.01,0)),
         RMKey(self, action: "lockMouse", characters: "m", isRepeating: false, speed: (0,1)),//,
         RMKey(self, action: "grab", characters: "Mouse 1", isRepeating: false, speed: (0,1)),
-        RMKey(self, action: "throw", characters: "Mouse 2", isRepeating: false,  speed: (0,20))
+        RMKey(self, action: "throw", characters: "Mouse 2", isRepeating: false,  speed: (0,20)),
+        RMKey(self, action: "increase", characters: "=", speed: self.mv),
+        RMKey(self, action: "decrease", characters: "-", speed: self.mv)
     ]
     
     override func viewDidLoad(coder: NSCoder!) {

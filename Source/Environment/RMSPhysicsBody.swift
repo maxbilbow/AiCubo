@@ -10,18 +10,18 @@
 import GLKit
 
 
-#if !SceneKit
-    protocol SCNPhysicsBody {}
-    #else
+#if SceneKit
     import SceneKit
-    #endif
+
+    #else
+
+
 class RMSPhysicsBody {
 
-    #if !SceneKit
+
     var velocity = RMXVector3Zero
     var mass: RMFloatB = 0
-    #else
-    #endif
+   
     var acceleration = RMXVector3Zero
 //    var forces = RMXVector3Zero
 
@@ -31,11 +31,8 @@ class RMSPhysicsBody {
     
     var vMatrix: RMXMatrix4 = RMXMatrix4Zero
 
-    #if SceneKit
-    var accelerationRate:RMFloatB = -1
-    #else
-    var accelerationRate:RMFloatB = 1
-    #endif
+       var accelerationRate:RMFloatB = 1
+
     
     var rotationSpeed:RMFloatB = 1
 
@@ -81,11 +78,9 @@ class RMSPhysicsBody {
     
     init(_ owner: RMXSprite){
             self.owner = owner
-            #if SceneKit
-            
-                #else
+    
                 self.initialize(owner, mass: mass, radius: radius, dragC: dragC, accRate: accRate, rotSpeed: rotSpeed)
-            #endif
+
     }
 
     private var mass: RMFloat = 0
@@ -99,6 +94,9 @@ class RMSPhysicsBody {
     }
     
 }
+    
+    #endif
+
 extension RMXSprite {
     func accelerateForward(v: RMFloatB) {
         RMXVector3SetZ(&self.acceleration, v * self.accelerationRate)
@@ -146,39 +144,49 @@ extension RMXSprite {
         self.upStop()
     }
     
+    func negateRoll(){
+        let q = GLKQuaternionMakeWithMatrix4(SCNMatrix4ToGLKMatrix4(self.orientation))
+        if self.isObserver { RMXLog("\nPIVOT\n\(self.node.pivot.print)\nQaternion:\n Quatern: \(self.node.orientation.print)\n     rot: \(self.node.rotation.print)\n   euler: \(self.node.eulerAngles.print)\n  ThPhRo: \(self.phi.toData()) \(self.theta.toData()) \(self.roll.toData())\n  rmxori: \(q.print)") }
+        if self.hasGravity {
+            //self.node.rotation.z = 0
+        }
+    }
+    
     ///input as radians
     func addTheta(leftRightRadians theta: RMFloatB){
+        if theta == 0 { return }
         self.theta += theta
-        //
-       // self.orientation = RMXMatrix4RotateY(self.orientation,theta)//*= orientation//m * self.orientation
+
         let orientation = RMXMatrix4MakeRotation(theta,RMXVector3Make(0,1,0))
-        self.orientation *= RMXMatrix4Transpose(orientation)
+//        self.orientation *= RMXMatrix4Transpose(orientation)
         #if SceneKit
 //            self.node.eulerAngles.y += theta
             self.node.transform *= orientation
+
         #endif
     }
     
     
     func addPhi(upDownRadians phi: RMFloatB) {
+        if phi == 0 { return }
         self.phi += phi
         let orientation = RMXMatrix4MakeRotation(phi, RMXVector3Make(1,0,0))
-        
-        //self.orientation = RMXMatrix4RotateWithVector3(self.orientation, phi, self.leftVector)
+
         #if SceneKit
-        self.orientation *= RMXMatrix4Transpose(orientation)
+//        self.orientation *= RMXMatrix4Transpose(orientation)
           self.node.transform *= orientation
         
         #endif
     }
     
     func addRoll(rollRadians roll: RMFloatB) {
+        if roll == 0 { return }
         self.roll += roll
         let orientation = RMXMatrix4MakeRotation(roll, RMXVector3Make(0,0,1))
         
         //self.orientation = RMXMatrix4RotateWithVector3(self.orientation, phi, self.leftVector)
         #if SceneKit
-            self.orientation *= RMXMatrix4Transpose(orientation)
+//            self.orientation *= RMXMatrix4Transpose(orientation)
             self.node.transform *= orientation
             
         #endif

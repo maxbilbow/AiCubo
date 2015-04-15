@@ -14,7 +14,6 @@ import SceneKit
     typealias RMXNode = RMSNode
     protocol SCNNode {}
     #endif
-enum RMXSpriteType { case DEFAULT, POPPY, OBSERVER, SHAPE, SIMPLE_PARTICLE, WORLD }
 
 
 protocol RMXChildNode {
@@ -24,6 +23,7 @@ protocol RMXChildNode {
 }
 
 
+#if !SceneKit
 
 class RMSNode {
 
@@ -43,6 +43,7 @@ class RMSNode {
     var geometry: RMXShape?// = RMXShape(self)
     
 }
+#endif
 
 extension RMXSprite {
 
@@ -214,35 +215,44 @@ extension RMXSprite {
     func setShape(shapeType type: ShapeType) {
         self.shapeType = type
         #if SceneKit
+            let options: [NSObject : AnyObject] = [ SCNPhysicsShapeTypeKey: SCNPhysicsShapeTypeBoundingBox, SCNPhysicsShapeKeepAsCompoundKey : false ]
         switch(type){
         case .CUBE:
             self.node.geometry = RMXShape.CUBE
+            self.node.physicsBody!.physicsShape = SCNPhysicsShape(node: self.node,options: options)
             break
         case .SPHERE:
             self.node.geometry = RMXShape.SPHERE
+            self.node.physicsBody!.physicsShape = SCNPhysicsShape(node: self.node,options: options)
             break
         case .CYLINDER:
             self.node.geometry = RMXShape.CYLINDER
+            self.node.physicsBody!.physicsShape = SCNPhysicsShape(node: self.node,options: options)
             break
         case .PLANE:
             self.node.geometry = RMXShape.PLANE
+            self.node.physicsBody!.physicsShape = SCNPhysicsShape(node: self.node,options: options)
             break
         case .FLOOR:
             self.node.geometry = RMXShape.FLOOR
+            self.node.physicsBody!.physicsShape = SCNPhysicsShape(geometry: RMXShape.FLOOR,options: options)
             break
         default:
             self.node.geometry = RMXShape.CUBE
+            self.node.physicsBody!.physicsShape = SCNPhysicsShape(node: self.node,options: options)
         }
         #endif
     }
     
-    func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(1,0,0)) -> RMXSprite {
+    func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXSprite {
+        if self.type == nil {
+            self.type = .PASSIVE
+        }
         self.setShape(shapeType: .SPHERE)
         self.node.scale = RMXVector3Make(100,100,100)
         self.isVisible = true
-        self.rotationCenterDistance = rDist
         self.isRotating = isRotating
-        self.setRotationSpeed(speed: 1)
+        self.setRotationSpeed(speed: 0.005)
         self.hasGravity = false
         self.isLight = true
         #if SceneKit
@@ -251,7 +261,8 @@ extension RMXSprite {
        
         self.rAxis = rAxis
        // self._rotation = PI / 4
-//        self.node.pivot = RMXMatrix4Translate(self.node.pivot, RMXVector3Make(0,0,rDist))
+//        self.node.pivot = RMXMatrix4Translate(self.node.pivot, rAxis * rDist)
+        self.node.pivot.m41 = rDist
         return self
     }
     

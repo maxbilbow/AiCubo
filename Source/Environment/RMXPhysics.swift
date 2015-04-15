@@ -49,7 +49,7 @@ class RMXPhysics {
     
     
     func dragFor(sender: RMXSprite) -> RMXVector3{
-        let dragC: RMFloat = sender.node.physicsBody!.friction
+        let dragC: RMFloat = sender.node.physicsBody!.mass
         let rho = RMFloat(0.005 * sender.world.massDensityAt(sender))
         let u = RMFloat(RMXVector3Length(sender.node.physicsBody!.velocity))
         let area = RMFloat(sender.node.scale.x * sender.node.scale.y)
@@ -58,9 +58,14 @@ class RMXPhysics {
         return RMXVector3Make(drag, drag, drag)
     }
     
+    ///TODO: If colliding, compute. Otherwise return friction at ground level.
     func frictionFor(sender: RMXSprite) -> RMXVector3{
-        let µ = sender.world.µAt(sender)
-        return RMXVector3Make(µ/3, 0, µ/3);//TODO
+        let µ =  RMFloatB(sender.node.physicsBody!.friction)
+        if sender.isGrounded {
+            return RMXVector3Make(µ/3, 0, µ/3)
+        } else {
+            return RMXVector3Zero
+        }
     }
     
    

@@ -68,7 +68,7 @@ class RMSActionProcessor {
             self.activeSprite.addPhi(upDownRadians: point[1] * speed)
         }
         
-        if action == "roll" && self.activeSprite.hasGravity == false {
+        if action == "roll" {//&& self.activeSprite.hasGravity == false {
             //            self.activeSprite.eulerAngles.z += point[1] * speed
             self.activeSprite.addRoll(rollRadians: speed)
         }
@@ -204,6 +204,12 @@ class RMSActionProcessor {
             RMX.toggleFog()
         }
         
+        if action == "increase" {
+            self.activeSprite.node.pivot.m43 += speed
+            
+        } else if action == "decrease" {
+            self.activeSprite.node.pivot.m43 -= speed
+        }
         return true
     }
     
