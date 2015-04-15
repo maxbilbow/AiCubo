@@ -68,6 +68,23 @@ class RMSActionProcessor {
             self.activeSprite.addPhi(upDownRadians: point[1] * speed)
         }
         
+        if action == "roll" && self.activeSprite.hasGravity == false {
+            //            self.activeSprite.eulerAngles.z += point[1] * speed
+            self.activeSprite.addRoll(rollRadians: speed)
+        }
+
+        
+        if action == "rollLeft"  {
+            //            self.activeSprite.eulerAngles.z += point[1] * speed
+            self.activeSprite.addRoll(rollRadians: speed)
+        }
+        
+        if action == "rollRight"  {
+            //            self.activeSprite.eulerAngles.z += point[1] * speed
+            self.activeSprite.addRoll(rollRadians: -speed)
+        }
+        
+        
         if (action == "forward") {
             if speed == 0 {
                 self.activeSprite.forwardStop()

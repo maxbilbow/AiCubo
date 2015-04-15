@@ -16,8 +16,8 @@ import UIKit
 
 class RMXDPad : RMXInterface {
     
-    private let _testing = false
-    private let _hasMotion = false
+     let _testing = false
+     let _hasMotion = true
     
     let motionManager: CMMotionManager = CMMotionManager()
    
@@ -135,6 +135,8 @@ class RMXDPad : RMXInterface {
         self.world!.usesBehaviour = !self.world!.usesBehaviour
         self.world!.setBehaviours(self.world!.usesBehaviour)
     }
+    
+    
     
 }
 

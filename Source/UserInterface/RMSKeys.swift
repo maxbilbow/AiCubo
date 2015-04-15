@@ -14,6 +14,7 @@ import SceneKit
 class RMSKeys : RMXInterface {
     
     lazy var mv: (on:RMFloat,off:RMFloat) = (self.moveSpeed, 0)
+    
     lazy var keys: [ RMKey ] = [
         RMKey(self, action: "forward", characters: "w", speed: self.mv),
         RMKey(self, action: "back", characters: "s", speed: self.mv),
@@ -21,6 +22,8 @@ class RMSKeys : RMXInterface {
         RMKey(self, action: "right", characters: "d", speed: self.mv),
         RMKey(self, action: "up", characters: "e", speed: self.mv),
         RMKey(self, action: "down", characters: "q", speed: self.mv),
+        RMKey(self, action: "rollLeft", characters: "z", speed: (self.lookSpeed*10,0)),
+        RMKey(self, action: "rollRight", characters: "x", speed: (self.lookSpeed*10,0)),
         RMKey(self, action: "jump", characters: " "),
         RMKey(self, action: "toggleGravity", characters: "g", isRepeating: false,speed: (0,1)),
         RMKey(self, action: "toggleAllGravity", characters: "G", isRepeating: false,speed: (0,1)),

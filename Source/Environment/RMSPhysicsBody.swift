@@ -172,6 +172,18 @@ extension RMXSprite {
         #endif
     }
     
+    func addRoll(rollRadians roll: RMFloatB) {
+        self.roll += roll
+        let orientation = RMXMatrix4MakeRotation(roll, RMXVector3Make(0,0,1))
+        
+        //self.orientation = RMXMatrix4RotateWithVector3(self.orientation, phi, self.leftVector)
+        #if SceneKit
+            self.orientation *= RMXMatrix4Transpose(orientation)
+            self.node.transform *= orientation
+            
+        #endif
+    }
+    
     func setTheta(leftRightRadians theta: RMFloatB){
         self.addTheta(leftRightRadians: -self.theta)
         self.addTheta(leftRightRadians: theta)
@@ -182,16 +194,12 @@ extension RMXSprite {
         self.addPhi(upDownRadians: phi)
     }
     
-    
-    
-    func addRoll(sideRollRadians roll: RMFloatB){
-        //TODO
+    func setRoll(rollRadians roll: RMFloatB){
+        self.addRoll(rollRadians: -self.roll)
+        self.addRoll(rollRadians: roll)
     }
     
-    //    func setVelocity(v: [Float], speed: Float = 1){
-    ////        let matrix = GLKMatrix4Transpose(self.orientation)
-    //        self.velocity += GLKMatrix4MultiplyVector3(self.orientation, GLKVector3Make(v[0] * speed,v[1] * speed,v[2] * speed))
-    //    }
+    
 
 }
 

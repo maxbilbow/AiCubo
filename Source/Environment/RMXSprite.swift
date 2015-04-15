@@ -211,6 +211,7 @@ class RMXSprite : RMXChildNode {
     
     var theta: RMFloatB = 0
     var phi: RMFloatB = 0
+    var roll: RMFloatB = 0
     var orientation = RMXMatrix4Identity
     var rotationSpeed: RMFloatB = 1
     #if SceneKit
@@ -219,6 +220,7 @@ class RMXSprite : RMXChildNode {
     var accelerationRate:RMFloatB = 1
     #endif
     var acceleration: RMXVector3 = RMXVector3Zero
+    private let _zNorm = 90 * PI_OVER_180
 }
 
 extension RMXSprite {
@@ -338,8 +340,15 @@ extension RMXSprite {
         }
     }
     
+    func negateRoll(){
+        if self.hasGravity {
+            let roll = RMXGetTheta(vectorA: self.upVector, vectorB: RMXVector3Make(1,0,0))
+            self.setRoll(rollRadians: -roll)
+            self.addRoll(rollRadians: _zNorm)
+        }
+    }
     private func animate_position()    {
-        
+        self.negateRoll()//only runs if hasGravity == true
         let g = self.hasGravity ? self.world.gravityAt(self) : RMXVector3Zero
         let n = self.hasGravity ? self.world.physics.normalFor(self) : RMXVector3Zero
         let f = self.world.physics.frictionFor(self)// : GLKVector3Make(1,1,1);

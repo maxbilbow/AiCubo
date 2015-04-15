@@ -251,7 +251,7 @@ extension RMXSprite {
        
         self.rAxis = rAxis
        // self._rotation = PI / 4
-        self.node.pivot = RMXMatrix4Translate(self.node.pivot, RMXVector3Make(0,0,rDist))
+//        self.node.pivot = RMXMatrix4Translate(self.node.pivot, RMXVector3Make(0,0,rDist))
         return self
     }
     
