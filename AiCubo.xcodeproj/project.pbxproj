@@ -233,7 +233,6 @@
 		6C77A25F1AD18A33006C008F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A25E1AD18A33006C008F /* AppDelegate.swift */; };
 		6C77A2611AD18A33006C008F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2601AD18A33006C008F /* GameView.swift */; };
 		6C77A2631AD18A33006C008F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2621AD18A33006C008F /* GameViewController.swift */; };
-		6C77A2651AD18A33006C008F /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C77A2641AD18A33006C008F /* art.scnassets */; };
 		6C77A2671AD18A33006C008F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C77A2661AD18A33006C008F /* Images.xcassets */; };
 		6C77A26A1AD18A33006C008F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C77A2681AD18A33006C008F /* MainMenu.xib */; };
 		6C77A2761AD18A33006C008F /* SceneCuboTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2751AD18A33006C008F /* SceneCuboTests.swift */; };
@@ -260,6 +259,10 @@
 		6C77A2951AD1ACE1006C008F /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
 		6C77A2961AD1ACF3006C008F /* RMSArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */; };
 		6C77A2971AD1B23E006C008F /* RMXDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5371AC4ACC100AAACF7 /* RMXDebugger.swift */; };
+		6C8AB2BA1AE003C200D63030 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AB2B91AE003C200D63030 /* art.scnassets */; };
+		6C8AB2BB1AE003C200D63030 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C8AB2B91AE003C200D63030 /* art.scnassets */; };
+		6C8AB2BC1AE005E700D63030 /* 3dModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8AB2B51AE0028200D63030 /* 3dModels.swift */; };
+		6C8AB2BD1AE005E800D63030 /* 3dModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8AB2B51AE0028200D63030 /* 3dModels.swift */; };
 		6C94806E1ACEB9F100C71C70 /* RMXGLProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332521AC5DB1300BB4477 /* RMXGLProxy.swift */; };
 		6C94806F1ACEBA2300C71C70 /* cStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC021AC6CEB4004E240C /* cStuff.m */; };
 		6C9480701ACEBA2600C71C70 /* RMOShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC031AC6CEB4004E240C /* RMOShapes.m */; };
@@ -451,12 +454,13 @@
 		6C77A25E1AD18A33006C008F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C77A2601AD18A33006C008F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		6C77A2621AD18A33006C008F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		6C77A2641AD18A33006C008F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		6C77A2661AD18A33006C008F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6C77A2691AD18A33006C008F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		6C77A26F1AD18A33006C008F /* SceneCuboTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SceneCuboTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C77A2741AD18A33006C008F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C77A2751AD18A33006C008F /* SceneCuboTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCuboTests.swift; sourceTree = "<group>"; };
+		6C8AB2B51AE0028200D63030 /* 3dModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3dModels.swift; sourceTree = "<group>"; };
+		6C8AB2B91AE003C200D63030 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = SOURCE_ROOT; };
 		6CA5E2841AD3E2060002F4E0 /* RMXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXScene.swift; sourceTree = "<group>"; };
 		6CD1C6611AD4A1C500C659AD /* SceneIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CD1C6641AD4A1C500C659AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -705,6 +709,7 @@
 		50C2B4EC1AC4AA2100AAACF7 = {
 			isa = PBXGroup;
 			children = (
+				6C8AB2B91AE003C200D63030 /* art.scnassets */,
 				6C77A2001AD18184006C008F /* CORE */,
 				50D5EC2B1AC9364C0028759F /* MyPlayground.playground */,
 				50C2B4F71AC4AA2100AAACF7 /* AiCubo */,
@@ -811,6 +816,7 @@
 				50C2B5391AC4ACC100AAACF7 /* RMOVertex.swift */,
 				6C77A1E01AD13264006C008F /* Geometry METAL */,
 				50C2B5281AC4ACC100AAACF7 /* RMSArt.swift */,
+				6C8AB2B51AE0028200D63030 /* 3dModels.swift */,
 				50C2B52A1AC4ACC100AAACF7 /* RMSPhysicsBody.swift */,
 				50BA27981ACAA3AD007347A9 /* RMSCollisionBody.swift */,
 				50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */,
@@ -911,7 +917,6 @@
 				6C77A2601AD18A33006C008F /* GameView.swift */,
 				6C77A2621AD18A33006C008F /* GameViewController.swift */,
 				6CA5E2841AD3E2060002F4E0 /* RMXScene.swift */,
-				6C77A2641AD18A33006C008F /* art.scnassets */,
 				6C77A2661AD18A33006C008F /* Images.xcassets */,
 				6C77A2681AD18A33006C008F /* MainMenu.xib */,
 				6C77A25C1AD18A33006C008F /* Supporting Files */,
@@ -1402,7 +1407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C77A2651AD18A33006C008F /* art.scnassets in Resources */,
+				6C8AB2BA1AE003C200D63030 /* art.scnassets in Resources */,
 				6C77A2671AD18A33006C008F /* Images.xcassets in Resources */,
 				6C77A26A1AD18A33006C008F /* MainMenu.xib in Resources */,
 			);
@@ -1421,6 +1426,7 @@
 			files = (
 				6CD1C6721AD4A1C600C659AD /* LaunchScreen.xib in Resources */,
 				6CD1C66F1AD4A1C600C659AD /* Images.xcassets in Resources */,
+				6C8AB2BB1AE003C200D63030 /* art.scnassets in Resources */,
 				6CD1C6681AD4A1C600C659AD /* art.scnassets in Resources */,
 				6C68A21A1AD59F47003A4DB3 /* Main.storyboard in Resources */,
 			);
@@ -1690,6 +1696,7 @@
 			files = (
 				6C77A27F1AD18B27006C008F /* RMSPhysicsBody.swift in Sources */,
 				6C77A2851AD18B45006C008F /* RMXShape.swift in Sources */,
+				6C8AB2BC1AE005E700D63030 /* 3dModels.swift in Sources */,
 				6C77A2611AD18A33006C008F /* GameView.swift in Sources */,
 				6C77A2971AD1B23E006C008F /* RMXDebugger.swift in Sources */,
 				6C77A2841AD18B42006C008F /* RMXPhysics.swift in Sources */,
@@ -1731,6 +1738,7 @@
 			files = (
 				6C68A20D1AD58FE9003A4DB3 /* RMSPhysicsBody.swift in Sources */,
 				6C68A1FB1AD58E9B003A4DB3 /* GameViewController.swift in Sources */,
+				6C8AB2BD1AE005E800D63030 /* 3dModels.swift in Sources */,
 				6C68A2141AD58FE9003A4DB3 /* RMXPhysics.swift in Sources */,
 				6C68A20F1AD58FE9003A4DB3 /* RMXNodeProperty.swift in Sources */,
 				6C68A1FF1AD58FAF003A4DB3 /* iOSControllers.swift in Sources */,

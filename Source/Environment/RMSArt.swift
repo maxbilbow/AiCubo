@@ -74,7 +74,9 @@ class RMXArt {
         plane.geometry!.firstMaterial!.diffuse.contents =  NSColor.yellowColor()
             plane.physicsBody = SCNPhysicsBody.staticBody()
             plane.physicsBody!.mass = 0
-        world.node.addChildNode(plane)
+            plane.physicsBody!.restitution = 0.0
+        world.scene!.rootNode.addChildNode(plane)
+            
         #else
         
         let ZX = RMXSprite().initWithParent(world).setAsShape(type: .PLANE)
@@ -135,7 +137,7 @@ class RMXArt {
                 node.geometry!.firstMaterial!.specular.contents = color
                 node.physicsBody = SCNPhysicsBody.staticBody()
                 node.scale = scale
-                world.node.addChildNode(node)
+                world.scene!.rootNode.addChildNode(node)
                 println("axis: \(axis), scale: \(scale.print)")
                 #else
                 for (var i: RMFloatB = 0; i < shapesPerAxis; ++i){
@@ -186,62 +188,37 @@ class RMXArt {
             }
             randPos = thisRandom(&X,&Y,&Z)
             let chance = 1//(rand() % 6 + 1);
-        randPos[1] = randPos[1] + 50
-            let scale = RMXVector3Make(RMFloatB(random() % 5 + 2),RMFloatB(random() % 5 + 2),RMFloatB(random() % 5 + 2))
+            let size = RMFloatB(random() % 5 + 2)
+            var scale = RMXVector3Make(size,size,size)
             var shape: ShapeType
             var geo: SCNGeometry
             var type: RMXSpriteType
-            var node: SCNNode
-        //gravity = !gravity;
-            if(random() % 50 == 1) {
-                shape = .SPHERE
-                type = .AI
-                geo = RMXShape.SPHERE
-                node = SCNNode(geometry: SCNSphere(radius: RMFloat(scale.x)))
-            } else if(random() % 5 == 1){
-                shape = .CYLINDER
-                geo = RMXShape.CYLINDER
-                type = .BACKGROUND
-                node = SCNNode(geometry: SCNCylinder(radius: RMFloat(scale.x), height: RMFloat(scale.y)))
-            } else {
-                shape = .CUBE
-                geo = RMXShape.CUBE
-                type = .PASSIVE
-                node = SCNNode(geometry: SCNBox(
-                    width: RMFloat(scale.x),
-                    height:RMFloat(scale.y),
-                    length:RMFloat(scale.z),
-                    chamferRadius:0.0)
-                )
-            }
-            let color = RMXRandomColor()
-            #if SceneKit
-//                let options: [NSObject : AnyObject] = [ SCNPhysicsShapeTypeKey: SCNPhysicsShapeTypeBoundingBox]
-//                let node = SCNNode(geometry: (geo.copy() as? SCNGeometry)!)
-                
-                node.scale = scale
-                node.position = RMXVector3Make(randPos[0], randPos[1], randPos[2])
-                
-                #if OSX
-                node.geometry!.firstMaterial!.diffuse.contents = NSColor(calibratedRed: color.x, green: color.y, blue: color.z, alpha: color.w)
-                    #elseif iOS
-                     node.geometry!.firstMaterial!.diffuse.contents = UIColor(red:  RMFloat(color.x), green:  RMFloat(color.y), blue:  RMFloat(color.z), alpha:  RMFloat(color.w))
-                    #endif
-                
-                node.physicsBody = SCNPhysicsBody.dynamicBody()//SCNPhysicsBody(type: .Dynamic ,shape: SCNPhysicsShape(node: node, options: options)) //
-                node.physicsBody!.mass = 0.0
 
-                world.node.addChildNode(node)
-//                node.physicsBody!.resetTransform()
-                
-                #else
-            let object: RMXSprite = RMXSprite.new(parent: world, nodeOnly: true)
-            object.hasGravity = false
-            object.setRadius(RMFloatB(random() % 9 + 2))
-            object.initPosition(startingPoint:RMXVector3Make(randPos[0], randPos[1], randPos[2]))
-            object.node.physicsBody!.mass = RMFloat(random()%15+1)/10
-            object.setColor(color)
+            let switcher = random() % ShapeType.LAST.rawValue
+            let colorVector = RMXRandomColor()
+            #if OSX
+                let color = NSColor(calibratedRed: colorVector.x, green: colorVector.y, blue: colorVector.z, alpha: colorVector.w)
+                #elseif iOS
+                let color = UIColor(red: RMFloat(colorVector.x), green: RMFloat(colorVector.y), blue: RMFloat(colorVector.z), alpha: RMFloat(colorVector.w))
             #endif
+        
+            let node = RMXModels.getNode(shapeType: switcher, scale: scale, color: color)
+
+                
+                node.position = RMXVector3Make(randPos[0], randPos[1], randPos[2])
+            
+                    
+             
+
+                world.scene!.rootNode.addChildNode(node)
+//
+//            let object: RMXSprite = RMXSprite.new(parent: world, nodeOnly: true)
+//            object.hasGravity = false
+//            object.setRadius(RMFloatB(random() % 9 + 2))
+//            object.initPosition(startingPoint:RMXVector3Make(randPos[0], randPos[1], randPos[2]))
+//            object.node.physicsBody!.mass = RMFloat(random()%15+1)/10
+//            object.setColor(color)
+//            #endif
         
         }
     }
@@ -276,3 +253,5 @@ func RMXRandomColor() -> RMXVector4 {
         RMFloatB(random() % 800)/500,
         1.0)
 }
+
+

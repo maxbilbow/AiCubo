@@ -232,6 +232,10 @@ func * (lhs: RMXVector3, rhs: RMFloatB) -> RMXVector3 {
     return RMXVector3MultiplyScalar(lhs, rhs)
 }
 
+func *= (inout lhs: RMXVector3, rhs: RMFloatB) {
+    lhs = RMXVector3MultiplyScalar(lhs, rhs)
+}
+
 func * (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
     return GLKVector3Multiply(lhs, rhs)
 }

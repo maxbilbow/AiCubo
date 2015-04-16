@@ -125,8 +125,8 @@ extension RMX {
         return world
     }
     static func makePoppy(#world: RMSWorld) -> RMXSprite{
-        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asObserver().asShape(shape: .CYLINDER)
-        poppy.setRadius(6)
+        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asObserver().asShape(scale: RMXVector3Make(10,10,10), shape: .DOG)
+
         poppy.startingPoint = RMXVector3Make(100,poppy.node.scale.y / 2,-50)
         poppy.node.position = poppy.startingPoint!
         var itemToWatch: RMXSprite! = nil
@@ -210,18 +210,18 @@ extension RMX {
             }
         }
         poppy.setColor(RMXVector4Make(0.1,0.1,0.1,1.0))
-        
+        /*
         #if SceneKit
             let r: RMFloatB = 0.3
             #else
             let r = poppy.radius / 2
             #endif
-        let head = RMXSprite.new(parent: poppy).asShape(shape: .SPHERE)
+        let head = RMXSprite.new(parent: poppy).asShape(scale: RMXVector3Make(r,r,r),shape: .SPHERE)
         head.setRadius(r)
         head.setColor(RMXVector4Make(0.1,0.1,0.1,0.1))
         head.startingPoint = RMXVector3Make(0,head.node.scale.y, -head.node.scale.z)
         head.node.position = head.startingPoint!
-        poppy.insertChild(head)
+        poppy.insertChild(head) */
         
        
         return poppy

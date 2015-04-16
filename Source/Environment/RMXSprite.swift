@@ -20,7 +20,7 @@ class RMXSprite : RMXChildNode {
     #if OSX
     lazy var mouse: RMXMouse = RMSMouse(owner: self)
     #endif
-    
+    var scene: SCNScene?
     var radius: RMFloatB {
         return (self.node.scale.x + self.node.scale.y + self.node.scale.z) / (3 * 2)
     }
@@ -194,7 +194,11 @@ class RMXSprite : RMXChildNode {
         sprite.parentSprite = parent
         sprite.world = parent.world
         if nodeOnly {
-            parent.node.addChildNode(sprite.node)
+            if parent.type == .WORLD {
+                parent.scene!.rootNode.addChildNode(sprite.node)
+            } else {
+                parent.node.addChildNode(sprite.node)
+            }
         } else {
             parent.insertChild(sprite)
         }
@@ -239,17 +243,29 @@ extension RMXSprite {
         self.node.position = point
     }
     
-    func asShape(shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {//, mass: RMFloatB? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXSprite {
-        self.shapeType = shapeType
+    
+    func setShape(shapeType type: ShapeType, scale s: RMXVector3?) {
+        self.shapeType = type
+        #if SceneKit
+            let scale = s ?? self.node.scale
+            self.node = RMXModels.getNode(shapeType: type.rawValue, scale: scale)
+        #endif
+    }
+    
+    func asShape(scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {//, mass: RMFloatB? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXSprite {
+        
         if self.type == nil { self.type = type }
         #if SceneKit
-            
+            self.setShape(shapeType: shapeType, scale: scale)
             switch (type) {
             case .AI:
                 self.node.physicsBody = SCNPhysicsBody.dynamicBody()
                 break
+            case .PLAYER:
+                self.node.physicsBody = SCNPhysicsBody.dynamicBody()
+                break
             case .PASSIVE:
-                self.node.physicsBody = SCNPhysicsBody.staticBody()
+                self.node.physicsBody = SCNPhysicsBody.dynamicBody()
                 break
             case .BACKGROUND:
                 self.node.physicsBody = SCNPhysicsBody.staticBody()
@@ -258,9 +274,9 @@ extension RMXSprite {
                 self.node.physicsBody = SCNPhysicsBody.staticBody()
                 break
             }
-            self.setShape(shapeType: shapeType)
-            self.node.geometry! = (self.node.geometry!.copy() as? SCNGeometry)!
-            self.node.geometry!.firstMaterial = (self.node.geometry!.firstMaterial!.copy() as? SCNMaterial)!
+            
+//            self.node.geometry! = (self.node.geometry!.copy() as? SCNGeometry)!
+//            self.node.geometry!.firstMaterial = (self.node.geometry!.firstMaterial!.copy() as? SCNMaterial)!
             #endif
         return self
     }
@@ -275,12 +291,13 @@ extension RMXSprite {
             #if SceneKit
             self.node.physicsBody = SCNPhysicsBody.dynamicBody()
             #endif
-           self.node.physicsBody!.friction = 0
+           self.node.physicsBody!.friction = 0.2
             self.armLength = self.radius * RMFloatB(2)
-//            self.hasGravity = true
+            self.hasGravity = false
+        
         
         if self.startingPoint == nil {
-            self.startingPoint = self.node.scale
+            self.startingPoint = self.node.scale * 2
         }
         return self
     }
@@ -301,7 +318,11 @@ extension RMXSprite {
         #if SceneKit
 //            child.node.removeFromParentNode()
             if andNode {
-                self.node.addChildNode(child.node)
+                if self.type == .WORLD {
+                    self.scene!.rootNode.addChildNode(child.node)
+                } else {
+                    self.node.addChildNode(child.node)
+                }
             }
         #endif
         self.childSpriteArray.set(child)
@@ -348,8 +369,8 @@ extension RMXSprite {
         self.negateRoll()//only runs if hasGravity == true
         self.orientation = SCNMatrix4Normalize(self.node.transform)
         
-        let g = self.hasGravity ? self.world.gravityAt(self) : RMXVector3Zero
-        let n = self.hasGravity ? self.world.physics.normalFor(self) : RMXVector3Zero
+        //let g = self.hasGravity ? self.world.gravityAt(self) : RMXVector3Zero
+        //let n = self.hasGravity ? self.world.physics.normalFor(self) : RMXVector3Zero
         let f = self.world.physics.frictionFor(self)// : GLKVector3Make(1,1,1);
         let d = self.world.physics.dragFor(self)// : GLKVector3Make(1,1,1);
         
@@ -361,22 +382,22 @@ extension RMXSprite {
         let oldVelocity = self.node.physicsBody!.velocity
         self.node.physicsBody!.velocity = RMXVector3Divide(oldVelocity, frictionAndDrag)
         
-        let forces = RMXVector3Make(
-            (g.x + /* d.x + f.x +*/ n.x),
-            (g.y +/* d.y + f.y +*/ n.y),//+body.acceleration.y,
-            (g.z +/* d.z + f.z +*/ n.z)
-        )
+//        let forces = RMXVector3Make(
+//            (g.x + /* d.x + f.x +*/ n.x),
+//            (g.y +/* d.y + f.y +*/ n.y),//+body.acceleration.y,
+//            (g.z +/* d.z + f.z +*/ n.z)
+//        )
         
 
-        let totalForce = forces + RMXMatrix4MultiplyVector3(self.orientation, self.acceleration)
+        let totalForce =  RMXMatrix4MultiplyVector3(self.orientation, self.acceleration)
         
         
-        self.world.collisionTest(self)
+        
         
         #if SceneKit
             self.node.physicsBody!.resetTransform()
             if false {//self.isObserver { //let body = self.owner.physicsBody {
-                self.node.physicsBody!.applyForce(forces, impulse: true)
+                //self.node.physicsBody!.applyForce(forces, impulse: true)
             } else {
                 self.node.physicsBody!.velocity += totalForce
                 self.node.transform = RMXMatrix4Translate(self.node.transform, self.node.physicsBody!.velocity)
@@ -384,7 +405,7 @@ extension RMXSprite {
             #else
             self.node.position += self.velocity
         #endif
-        
+        self.world.collisionTest(self)
         
         
         
@@ -411,6 +432,9 @@ extension RMXSprite {
             return
         }
         if self.isAnimated {
+            if self.node.physicsBody == nil {
+                fatalError(self.name)
+            }
             self.jumpTest()
             self.animate_position()
             self.manipulate()

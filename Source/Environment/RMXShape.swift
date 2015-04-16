@@ -12,7 +12,7 @@ import GLKit
 import OpenGL
 import GLUT
     #endif
-enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDER = 4, FLOOR}
+
 
 #if SceneKit
     import SceneKit
@@ -124,4 +124,6 @@ class RMXShape : RMXSpriteProperty {
     
     #endif
 
+    
+    
 }

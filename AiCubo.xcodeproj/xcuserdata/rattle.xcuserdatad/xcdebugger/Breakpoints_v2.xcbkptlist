@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMXSprite.swift"
-            timestampString = "450823692.294283"
+            timestampString = "450889408.588046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "496"
-            endingLineNumber = "496"
-            landmarkName = "setItem(item:)"
+            startingLineNumber = "476"
+            endingLineNumber = "476"
+            landmarkName = "rotate()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,12 +202,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMXSprite.swift"
-            timestampString = "450823692.294283"
+            timestampString = "450889408.588046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
-            landmarkName = "throwItem(_:)"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "animate()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMSWorld.swift"
-            timestampString = "450823340.896231"
+            timestampString = "450829064.05339"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "RMSWorld"
             landmarkType = "3">
          </BreakpointContent>
@@ -282,12 +282,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMXNode.swift"
-            timestampString = "450821954.134973"
+            timestampString = "450830446.150029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "setShape(shapeType:)"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "makeAsSun(rDist:isRotating:rAxis:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/Environment/RMSArt.swift"
+            timestampString = "450889875.461922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "drawPlane(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/Environment/RMSArt.swift"
+            timestampString = "450889875.461922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "drawPlane(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

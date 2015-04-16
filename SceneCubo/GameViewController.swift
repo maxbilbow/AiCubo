@@ -8,7 +8,7 @@
 
 import SceneKit
 import QuartzCore
-
+let globalScene = SCNScene(named: "art.scnassets/ship.dae")!//, world: self.gameView.world!)
 #if iOS
     typealias ViewController = UIViewController
 //    typealias NSColor = UIColor
@@ -34,12 +34,13 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
     override func awakeFromNib(){
         // create a new scene
         #if iOS
+        
         self.view = GameView(frame: self.view.bounds)
         RMSWorld.TYPE = .TESTING_ENVIRONMENT
         #endif
         self.gameView!.initialize(self, interface: self.interface!)
         self.world?.setWorldType()
-        let scene = SCNScene(named: "art.scnassets/ship.dae")!//, world: self.gameView.world!)
+        let scene = globalScene
         
         // create and add a camera to the scene
         let cameraNode = self.gameView!.world!.observer
@@ -101,7 +102,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         self.gameView!.showsStatistics = true
         
         // configure the view
-        self.gameView!.backgroundColor = NSColor.blackColor()
+        self.gameView!.backgroundColor = NSColor.lightGrayColor()
 //        self.gameView?.pointOfView
     }
     

@@ -12,6 +12,7 @@ import SceneKit
 
 enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH, DEFAULT }
 class RMSWorld : RMXSprite {
+
     static var TYPE: RMXWorldType = .SMALL_TEST
     let gravityScaler: RMFloatB = 0.05
     ///TODO: Create thos for timekeeping
@@ -26,7 +27,7 @@ class RMSWorld : RMXSprite {
     
     lazy var activeCamera: RMXCamera = RMXCamera(self)
     
-    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asObserver()
+    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asObserver().asShape(shape: .CYLINDER)
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
     lazy var observer: RMXSprite = self.activeSprite
@@ -53,6 +54,7 @@ class RMSWorld : RMXSprite {
     
     override func spriteDidInitialize() {
         super.spriteDidInitialize()
+        self.scene = globalScene
         self.world = self
         self.isAnimated = false
         self.isVisible = false
@@ -63,10 +65,21 @@ class RMSWorld : RMXSprite {
     
     func worldDidInitialize() {
         self.type = .WORLD
-        self.node.scale = RMXVector3Make(6000,6000,6000)
+        self.node.scale = RMXVector3Make(10000,10000,10000)
+        self.node.scale = self.node.scale
         self.node.physicsField = SCNPhysicsField.linearGravityField()
-        self.node.physicsField!.strength = 2.0
-        self.node.physicsField!.scope = .OutsideExtent
+        self.node.physicsField!.strength = 0.001
+//        gravity.physicsField!.scope = .OutsideExtent
+        
+//        let drag = SCNNode()
+//        drag.scale = self.node.scale
+//        drag.physicsField = SCNPhysicsField.dragField()
+//        drag.physicsField!.strength = 1
+//        self.scene!.rootNode.addChildNode(drag)
+
+        
+        self.observer.node.physicsBody!.restitution = 0.0
+        self.observer.node.physicsBody!.damping = 0.5
 //         self.node.physicsField!.categoryBitMask = SCN
 
         //DEFAULT
@@ -117,7 +130,7 @@ class RMSWorld : RMXSprite {
 */
     func massDensityAt(someBody: RMXSprite) -> RMFloatB {
         if !someBody.isInWorld && someBody.isObserver {
-            return 0.0000001
+            return 0.01
         } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
             return 99.1 //water or other
         } else {
@@ -126,16 +139,18 @@ class RMSWorld : RMXSprite {
     }
     func collisionTest(sender: RMXSprite) -> Bool{
     //Have I gone through a barrier?
+//        return true
+//        if !sender.hasGravity { return false }
         let node = sender.node
         let velocity = node.physicsBody!.velocity
         let v = velocity.y
         let p = sender.position.y
-        let next = node.physicsBody!.velocity + sender.position
+        let next = sender.position
         let bounceY: RMFloatB = -v
-        let g = sender.ground
-        let coushin: RMFloatB = 2
-        if p <= g && v < 0 && sender.isInWorld {
-            if p < g / coushin {
+        let g = sender.node.scale.y / 2 //.ground
+        let coushin: RMFloatB = 0
+        if p <= g && v < 0{ //&& sender.isInWorld {
+            if p < g {/// coushin {
                 RMXVector3SetY(&node.physicsBody!.velocity, bounceY * coushin)
                 RMXVector3SetY(&node.position, g)
             } else {
