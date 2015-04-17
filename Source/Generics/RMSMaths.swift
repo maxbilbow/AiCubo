@@ -236,9 +236,18 @@ func *= (inout lhs: RMXVector3, rhs: RMFloatB) {
     lhs = RMXVector3MultiplyScalar(lhs, rhs)
 }
 
+func * (inout lhs: SCNVector3, rhs: SCNVector3) -> SCNVector3 {
+    return SCNVector3FromGLKVector3(GLKVector3Multiply(SCNVector3ToGLKVector3(lhs), SCNVector3ToGLKVector3(rhs)))
+}
+
+func *= (inout lhs: SCNVector3, rhs: SCNVector3) {
+    lhs = lhs * rhs
+}
+
 func * (lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
     return GLKVector3Multiply(lhs, rhs)
 }
+
 ///Dot Product
 func o (lhs: GLKVector3, rhs: GLKVector3) -> Float {
     return GLKVector3DotProduct(lhs, rhs)

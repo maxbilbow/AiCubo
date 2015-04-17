@@ -36,7 +36,6 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         #if iOS
         
         self.view = GameView(frame: self.view.bounds)
-        RMSWorld.TYPE = .TESTING_ENVIRONMENT
         #endif
         self.gameView!.initialize(self, interface: self.interface!)
         self.world?.setWorldType()
@@ -91,7 +90,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 1, z: 0, duration: 10)))
             #endif
         
-        scene.rootNode.addChildNode(self.world!.node)
+//        scene.rootNode.addChildNode(self.world!.node)
         // set the scene to the view
         self.gameView!.scene = scene
         

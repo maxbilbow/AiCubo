@@ -27,7 +27,6 @@ extension RMX {
             return RMXVector4Make(randomFloat(radius*2)-radius,randomFloat(2*radius),randomFloat(radius*2)-radius, randomFloat(radius))
         }
         
-        
     }
 
     static func randomFloat(radius: RMFloatB) -> RMFloatB{

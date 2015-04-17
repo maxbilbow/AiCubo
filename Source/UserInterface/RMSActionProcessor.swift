@@ -31,6 +31,7 @@ extension RMX {
     }
 }
 class RMSActionProcessor {
+    
     //let keys: RMXController = RMXController()
     var activeSprite: RMXSprite {
         return self.world.observer
@@ -46,9 +47,9 @@ class RMSActionProcessor {
     
     private var _movement: (x:RMFloatB, y:RMFloatB, z:RMFloatB) = (x:0, y:0, z:0)
     private var _panThreshold: RMFloatB = 70
+    
     func movement(action: String!, speed: RMFloatB = 0,  point: [RMFloatB]) -> Bool{
         if action == nil { return false }
-        
         if action == "move" && point.count == 3 {
                 self.activeSprite.accelerateForward(point[2] * speed)
                 self.activeSprite.accelerateLeft(point[0] * speed)
@@ -63,31 +64,27 @@ class RMSActionProcessor {
         }
         
         if action == "look" && point.count == 2 {
-//            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addTheta(leftRightRadians: point[0] * -speed)
-            self.activeSprite.addPhi(upDownRadians: point[1] * speed)
+            self.activeSprite.lookAround(theta: point[0] * speed,phi: point[1] * speed)
         }
         
-        if action == "roll" {//&& self.activeSprite.hasGravity == false {
-            //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addRoll(rollRadians: speed)
+        if action == "roll" {
+//            self.activeSprite.addRoll(rollRadians: speed)
+            self.activeSprite.lookAround(roll: speed)
         }
 
         
         if action == "rollLeft"  {
-            //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addRoll(rollRadians: speed)
+            self.activeSprite.lookAround(roll: -speed)
         }
         
         if action == "rollRight"  {
-            //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addRoll(rollRadians: -speed)
+            self.activeSprite.lookAround(roll: speed)
         }
         
         
         if (action == "forward") {
             if speed == 0 {
-                self.activeSprite.forwardStop()
+                self.activeSprite.stop()
             }
             else {
                 self.activeSprite.accelerateForward(speed)
@@ -96,7 +93,7 @@ class RMSActionProcessor {
         
         if (action == "back") {
             if speed == 0 {
-                self.activeSprite.forwardStop()
+                self.activeSprite.stop()
             }
             else {
                 self.activeSprite.accelerateForward(-speed)
@@ -104,7 +101,7 @@ class RMSActionProcessor {
         }
         if (action == "left") {
             if speed == 0 {
-                self.activeSprite.leftStop()
+                self.activeSprite.stop()
             }
             else {
                 self.activeSprite.accelerateLeft(speed)
@@ -112,7 +109,7 @@ class RMSActionProcessor {
         }
         if (action == "right") {
             if speed == 0 {
-                self.activeSprite.leftStop()
+                self.activeSprite.stop()
             }
             else {
                 self.activeSprite.accelerateLeft(-speed)
@@ -121,7 +118,7 @@ class RMSActionProcessor {
         
         if (action == "up") {
             if speed == 0 {
-                self.activeSprite.upStop()
+                self.activeSprite.stop()
             }
             else {
                 self.activeSprite.accelerateUp(-speed)
@@ -129,7 +126,7 @@ class RMSActionProcessor {
         }
         if (action == "down") {
             if speed == 0 {
-                self.activeSprite.upStop()
+                self.activeSprite.stop()
             }
             else {
                 self.activeSprite.accelerateUp(speed)
@@ -143,10 +140,6 @@ class RMSActionProcessor {
             else {
                 self.activeSprite.prepareToJump()
             }
-        }
-        
-        if action == "reset" && speed == 1 {
-            self.world.reset()
         }
         
         if action == "grab" {
@@ -205,18 +198,33 @@ class RMSActionProcessor {
         }
         
         if action == "increase" {
-            self.activeSprite.node.pivot.m43 += speed
+            if fabs(self.activeSprite.velocity.average) < 1 {
+                self.world.node.physicsBody!.mass += 2
+                self.world.node.physicsBody!.mass *= 2
+                self.world.node.physicsField!.strength += 1
+            }
             
         } else if action == "decrease" {
-            self.activeSprite.node.pivot.m43 -= speed
+            self.world.node.physicsBody!.mass *= 0.8
         }
+        
+        if action == "reset" {
+            self.activeSprite.node.position = self.activeSprite.startingPoint
+            self.activeSprite.node.physicsBody!.resetTransform()
+
+        }
+        
         return true
+        
     }
     
     func animate(){
         if self.extendArm != 0 {
             self.activeSprite.extendArmLength(self.extendArm)
         }
+        let node = self.activeSprite.node.presentationNode()
+         RMXLog("\n    vel:\(self.activeSprite.node.physicsBody!.velocity.print)\n    Pos:\(node.position.print)\n transform:\n\(node.transform.print)\n  orientation:\n\(self.activeSprite.orientation.print)")
+        RMXLog(self.world.node.physicsBody!.mass)
     }
         
     var extendArm: RMFloatB = 0

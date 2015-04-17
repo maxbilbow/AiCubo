@@ -41,17 +41,12 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     
     var gvc: RMXViewController?
     var gameView: GameView?
-    
-//    lazy var controllers: [ String : ( isActive: Bool, process: ()->() ) ] = [ "debug" : ( isActive: self._isDebugging,
-//        process: {
-//            
-//    } ) ]
-    
+
    
     var timer: NSTimer? //CADisplayLink?
     var world: RMSWorld?
 
-    var lookSpeed: RMFloatB = PI_OVER_180
+    var lookSpeed: RMFloatB = 1
     var moveSpeed: RMFloatB = 1
     
     var activeSprite: RMXSprite? {

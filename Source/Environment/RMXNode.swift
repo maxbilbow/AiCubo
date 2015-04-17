@@ -23,27 +23,6 @@ protocol RMXChildNode {
 }
 
 
-#if !SceneKit
-
-class RMSNode {
-
-    var velocity = RMXVector3Zero
-    var parentNode: RMXNode?
-    
-
-    
-    
-    var position: RMXVector3 = RMXVector3Zero
-
-    var pivot: RMXMatrix4 = RMXMatrix4Identity
-    var scale: RMXVector3 = RMXVector3Make(1,1,1)
-    var physicsBody: RMSPhysicsBody?// = RMSPhysicsBody(self)
-    
-    
-    var geometry: RMXShape?// = RMXShape(self)
-    
-}
-#endif
 
 extension RMXSprite {
 
@@ -90,9 +69,7 @@ extension RMXSprite {
 
 extension RMXSprite {
     
-    var position: RMXVector3 {
-        return self.node.position
-    }
+
     
     func addBehaviour(behaviour: (isOn: Bool) -> ()) {
         self.behaviours.append(behaviour)
@@ -101,7 +78,7 @@ extension RMXSprite {
     
     
     var viewPoint: RMXVector3{
-        return self.forwardVector + self.node.position
+        return self.forwardVector + self.position
     }
     
     var ground: RMFloatB {
@@ -111,7 +88,7 @@ extension RMXSprite {
     
     
     var isGrounded: Bool {
-        return self.node.position.y <= self.node.scale.y / 2
+        return self.position.y <= self.node.scale.y / 2
     }
     
     var upThrust: RMFloatB {
@@ -121,48 +98,32 @@ extension RMXSprite {
     
 }
 
+
 extension RMXSprite {
+    var transform: RMXMatrix4 {
+        return self.node.presentationNode().transform
+    }
+
+    var position: RMXVector3 {
+        return self.node.presentationNode().position
+    }
+    
     var upVector: RMXVector3 {
-       let transform = self.orientation
-         #if SceneKit
-            
-            return RMXVector3Make(transform.m21, transform.m22, transform.m23)
-        #else
-        let row = GLKMatrix4GetRow(transform, 1)
-        return RMXVector3Make(row.x,row.y,row.z)
-        #endif
+        let transform = self.transform
+        let v = RMXVector3Make(transform.m21, transform.m22, transform.m23)
+        return v
     }
     
     var leftVector: RMXVector3 {
-        
-            let transform = self.orientation
-        #if SceneKit
-//        return RMXVector3MakeNormal(transform.m11,transform.m12,transform.m13)
-                return RMXVector3Make(transform.m11,transform.m12,transform.m13)
-            #else
-            let row = GLKMatrix4GetRow(transform, 0)
-            return RMXVector3Make(row.x,row.y,row.z)
-        #endif
+        let transform = self.transform
+        let v = RMXVector3Make(transform.m11,transform.m12,transform.m13)
+        return v
     }
     
     var forwardVector: RMXVector3 {
-       
-            let transform = self.orientation
-         #if SceneKit
-            return RMXVector3Make(transform.m31, transform.m32, transform.m33)
-//        return RMXVector3MakeNormal(transform.m31, transform.m32, transform.m33)
-            #else
-            let row = GLKMatrix4GetRow(transform, 2)
-            return RMXVector3Make(row.x,row.y,row.z)
-        #endif
-    }
-    
-    var orientationMat: RMXMatrix4 {
-        let row1 = self.leftVector
-        let row2 = self.upVector
-        let row3 = self.forwardVector
-        let row4 = self.position
-        return RMXMatrix4Make(row1, row2, row3, row4: row4)
+        let transform = self.transform
+        let v = RMXVector3Make(transform.m31, transform.m32, transform.m33)
+        return v
     }
 }
 
@@ -215,11 +176,10 @@ extension RMXSprite {
         if self.type == nil {
             self.type = .BACKGROUND
         }
-        self.setShape(shapeType: .SPHERE, scale: RMXVector3Make(100,100,100))
-        self.node.physicsBody = SCNPhysicsBody.staticBody()
+        self.node = RMXModels.getNode(shapeType: ShapeType.SPHERE.rawValue, mode: .BACKGROUND, radius: 100)
         self.isVisible = true
         self.isRotating = isRotating
-        self.setRotationSpeed(speed: 0.005)
+        self.setRotationSpeed(speed: 5000)
         self.hasGravity = false
         self.isLight = true
         #if SceneKit
@@ -229,7 +189,7 @@ extension RMXSprite {
         self.rAxis = rAxis
        // self._rotation = PI / 4
 //        self.node.pivot = RMXMatrix4Translate(self.node.pivot, rAxis * rDist)
-        self.node.pivot.m41 = rDist
+        self.node.pivot.m41 = self.world.radius * 2
         return self
     }
     

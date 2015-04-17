@@ -125,10 +125,9 @@ extension RMX {
         return world
     }
     static func makePoppy(#world: RMSWorld) -> RMXSprite{
-        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asObserver().asShape(scale: RMXVector3Make(10,10,10), shape: .DOG)
+        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asShape(scale: RMXVector3Make(10,10,10), shape: .DOG).asPlayerOrAI()
 
-        poppy.startingPoint = RMXVector3Make(100,poppy.node.scale.y / 2,-50)
-        poppy.node.position = poppy.startingPoint!
+        poppy.initPosition(startingPoint: RMXVector3Make(100,poppy.node.scale.y / 2,-50))
         var itemToWatch: RMXSprite! = nil
 //        poppy.isAlwaysActive = true
         var timePassed = 0
@@ -139,7 +138,7 @@ extension RMX {
         poppy.behaviours.append { (isOn: Bool) -> () in
             
             func idle(sender: RMXSprite, objects: [AnyObject]? = []) -> AnyObject? {
-                sender.addTheta(leftRightRadians: 5 * PI_OVER_180)
+                sender.lookAround(theta: 1)
                 sender.accelerateForward(speed)
                 return nil
             }

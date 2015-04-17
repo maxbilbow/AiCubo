@@ -18,7 +18,7 @@ import GLUT
     import SceneKit
     #else
     protocol SCNGeometry{}
-#endif
+
 
 class RMXShape : RMXSpriteProperty {
     var owner: RMXSprite! = nil
@@ -33,11 +33,7 @@ class RMXShape : RMXSpriteProperty {
     }
         
     var rotationMatrix: GLKMatrix4 {
-        #if SceneKit
-        return SCNMatrix4ToGLKMatrix4(self.owner.orientation)
-        #else
-        return self.owner.body!.orientation
-        #endif
+        return self.owner.orientation
     }
         
     var translationMatrix: GLKMatrix4 {
@@ -127,3 +123,6 @@ class RMXShape : RMXSpriteProperty {
     
     
 }
+
+#endif
+

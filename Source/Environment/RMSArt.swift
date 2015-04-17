@@ -48,9 +48,9 @@ class RMXArt {
     
     class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloatB = 1000, radius: RMFloatB? = nil) -> RMSWorld {
         
-        RMXArt.drawPlane(world)
+        //RMXArt.drawPlane(world)
         if drawAxis {
-            RMXArt.drawAxis(world)
+            RMXArt.drawAxis(world,radius: radius)
         }
         if noOfShapes > 0 {
             RMXArt.randomObjects(world, noOfShapes: noOfShapes, radius: radius)
@@ -91,7 +91,7 @@ class RMXArt {
         #endif
     }
     
-    class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
+    class func drawAxis(world: RMSWorld, radius: RMFloatB?) {//xCol y:(float*)yCol z:(float*)zCol{
         
         
         func drawAxis(axis: String) {
@@ -107,7 +107,7 @@ class RMXArt {
                 #if !SceneKit
                 color = self.redVector
                     #else
-                scale.x = world.node.scale.x
+                scale.x = radius ?? world.node.scale.x
                     color = NSColor.redColor()
                     #endif
                 break
@@ -115,7 +115,7 @@ class RMXArt {
                 #if !SceneKit
                 color = self.greenVector
                     #else
-                scale.y = world.node.scale.y
+                scale.y = radius ?? world.node.scale.y
                     color = NSColor.greenColor()
                     #endif
                 break
@@ -123,7 +123,7 @@ class RMXArt {
                     #if !SceneKit
                 color = self.blueVector
                         #else
-                scale.z = world.node.scale.z
+                scale.z = radius ?? world.node.scale.z
                         color = NSColor.blueColor()
                         #endif
                 break
@@ -135,7 +135,7 @@ class RMXArt {
                 node.geometry!.firstMaterial! = (RMXArt.CUBE.firstMaterial!.copy() as? SCNMaterial)!
                 node.geometry!.firstMaterial!.diffuse.contents = color
                 node.geometry!.firstMaterial!.specular.contents = color
-                node.physicsBody = SCNPhysicsBody.staticBody()
+//                node.physicsBody = SCNPhysicsBody.staticBody()
                 node.scale = scale
                 world.scene!.rootNode.addChildNode(node)
                 println("axis: \(axis), scale: \(scale.print)")
@@ -174,16 +174,28 @@ class RMXArt {
     //int max =100, min = -100;
     //BOOL gravity = true;
         let radius = r ?? world.radius
+        
         for(var i: RMFloatB = -noOfShapes / 2; i < noOfShapes / 2; ++i) {
             var randPos: [RMFloatB]
             var X: RMFloatB = 0; var Y: RMFloatB = 0; var Z: RMFloatB = 0
             func thisRandom(inout x: RMFloatB, inout y: RMFloatB, inout z: RMFloatB) -> [RMFloatB] {
+                func drawCondition(x:RMFloatB, y:RMFloatB, z:RMFloatB) -> Bool{
+                    let position = RMXVector3Make(x,y,z)
+                    let distance = RMXVector3Distance(position, RMXVector3Zero)
+                    var test: Bool
+                    if let geo = world.node.geometry {
+                        test = distance > RMFloatB(world.node.scale.size)
+                    } else {
+                        test = y > 0
+                    }
+                    return distance > radius && test
+                }
                 do {
                     let points = RMX.doASum(radius, count: i, noOfShapes: noOfShapes )
                     x = points.x
                     y = points.y
                     z = points.z
-                } while RMXVector3Distance(RMXVector3Make(x,y,z), RMXVector3Zero) > radius && y > 0
+                } while drawCondition(x,y,z)
                 return [ x, y, z ]
             }
             randPos = thisRandom(&X,&Y,&Z)

@@ -19,9 +19,14 @@ class RMXModels {
     static let dog = SCNScene(named:"art.scnassets/Dog/Dog.dae")
     static let pilot = SCNScene(named:"art.scnassets/ArmyPilot/ArmyPilot.dae")
     
-    class func getNode(shapeType type: Int, scale s: RMXVector3? = nil, color: NSColor! = nil) -> SCNNode {
+    class func getNode(shapeType type: Int, mode: RMXSpriteType = .PASSIVE, radius r: RMFloatB? = nil, scale s: RMXVector3? = nil, color: NSColor! = nil) -> SCNNode {
         var hasColor = false
-        var scale = s ?? RMXVector3Make(1,1,1)
+        var radius = r ?? 1
+        var scale = s ?? SCNVector3Make(radius * 2,radius * 2,radius * 2)
+        if r == nil {
+            radius = RMFloatB(scale.average)
+        }
+        
         var node: SCNNode
         switch(type){
         case ShapeType.CUBE.rawValue:
@@ -65,22 +70,13 @@ class RMXModels {
             
         
         case ShapeType.DOG.rawValue:
-            
             node = dog!.rootNode.clone() as! SCNNode
             node.scale *= 8
-//            node.transform = RMXMatrix4MakeRotation(90 * PI_OVER_180, RMXVector3Make(1,0,0))
             break
             
         case ShapeType.AUSFB.rawValue:
-           
-                node = ausfb!.rootNode.clone() as! SCNNode
-            
+            node = ausfb!.rootNode.clone() as! SCNNode
             node.scale *= 0.1
-//            node.transform = RMXMatrix4MakeRotation(180 * PI_OVER_180, RMXVector3Make(0,0,1))
-//            let url = NSBundle.mainBundle().URLForResource("art.scnassets/AUSFB/ausfb", withExtension: "dae")
-//            let source = SCNSceneSource(URL: url!, options: nil)
-//            let block = source!.entryWithIdentifier("Cylinder_001-mesh", withClass: SCNGeometry.self) as! SCNGeometry
-//            node = SCNNode(geometry: block)
             break
 
         default:
@@ -92,12 +88,26 @@ class RMXModels {
             )
         }
         
+        
         if hasColor && color != nil {
             node.geometry!.firstMaterial!.diffuse.contents = color
+            node.geometry!.firstMaterial!.specular.contents = color
         }
-        node.physicsBody = SCNPhysicsBody.dynamicBody()//SCNPhysicsBody(type: .Dynamic ,shape: SCNPhysicsShape(node: node, options: options)) //
-        node.physicsBody!.mass = 1.0
-
+        
+        switch (mode){
+        case .AI, .PLAYER, .PASSIVE:
+            node.physicsBody = SCNPhysicsBody.dynamicBody()
+            break
+        case .WORLD, .BACKGROUND:
+            node.physicsBody = SCNPhysicsBody.staticBody()
+        default:
+            if node.physicsBody == nil {
+                node.physicsBody = SCNPhysicsBody.staticBody()
+            }
+        }
+        node.scale *= scale
+        node.physicsBody!.mass = CGFloat(radius)
+        node.physicsBody!.restitution = 0.1
         return node
     }
     

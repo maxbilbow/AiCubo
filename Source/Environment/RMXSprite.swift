@@ -15,14 +15,11 @@ import GLKit
 enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
 enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD }
 
-class RMXSprite : RMXChildNode {
+class RMXSprite  {
     
-    #if OSX
-    lazy var mouse: RMXMouse = RMSMouse(owner: self)
-    #endif
     var scene: SCNScene?
     var radius: RMFloatB {
-        return (self.node.scale.x + self.node.scale.y + self.node.scale.z) / (3 * 2)
+        return RMFloatB(self.scale.average)
     }
     static var COUNT: Int = 0
     var rmxID: Int = RMXSprite.COUNT
@@ -78,19 +75,11 @@ class RMXSprite : RMXChildNode {
     private var _jumpState: JumpState = .NOT_JUMPING
     private var _maxSquat: RMFloatB = 0
     
-    var startingPoint: RMXVector3?
+    var startingPoint: RMXVector3 = RMXVector3Zero
+    var x,y,z: RMFloatB?
     
-    lazy var resets: [() -> () ] = [{
-        self.node.physicsBody!.velocity = RMXVector3Zero
-        #if SceneKit
-            if let pos = self.startingPoint {
-                self.node.position = pos
-            }
-            self.node.rotation = RMXVector4Zero
-            #else
-            self.node.position = self.startingPoint ?? RMXVector3Zero
-        #endif
-    }]
+    
+   
     
     var behaviours: [(Bool) -> ()] = Array<(Bool) -> ()>()
     lazy var environments: ChildSpriteArray = ChildSpriteArray(parent: self)
@@ -142,7 +131,7 @@ class RMXSprite : RMXChildNode {
     var isRotating = false
     
     var isInWorld: Bool {
-        return self.distanceTo(self.world) < self.world.radius
+        return self.distanceTo(self.world) < RMFloatB(self.world.radius)
     }
     
     
@@ -174,21 +163,15 @@ class RMXSprite : RMXChildNode {
     }
     
     
-    func reset(){
-        for re in resets {
-            re()
-        }
-        for child in children {
-            child.reset()
-        }
-    }
-    
     var usesBehaviour = true
 
     var hasItem: Bool {
         return self.item != nil
     }
     
+    var scale: RMXVector3 {
+        return self.node.presentationNode().scale
+    }
     class func new(#parent: RMXSprite, nodeOnly: Bool = false) -> RMXSprite {
         let sprite = RMXSprite()
         sprite.parentSprite = parent
@@ -196,8 +179,10 @@ class RMXSprite : RMXChildNode {
         if nodeOnly {
             if parent.type == .WORLD {
                 parent.scene!.rootNode.addChildNode(sprite.node)
+                sprite.y! = parent.scale.y
             } else {
                 parent.node.addChildNode(sprite.node)
+            
             }
         } else {
             parent.insertChild(sprite)
@@ -225,80 +210,131 @@ class RMXSprite : RMXChildNode {
     var theta: RMFloatB = 0
     var phi: RMFloatB = 0//90 * PI_OVER_180
     var roll: RMFloatB = 0//90 * PI_OVER_180
-    var orientation = RMXMatrix4Identity
+//    var orientation = RMXMatrix4Identity
     var rotationSpeed: RMFloatB = 1
-    #if SceneKit
-    var accelerationRate:RMFloatB = -1
-    #else
-    var accelerationRate:RMFloatB = 1
-    #endif
+
+    var speed:RMFloatB = 1
+
+    
     var acceleration: RMXVector3 = RMXVector3Zero
     private let _zNorm = 90 * PI_OVER_180
+    
+    
+    
+    func animate() {
+        if let type = self.type {
+            //            if type == .PASSIVE { return }
+            if type == .AI {
+                for behaviour in self.behaviours {
+                    behaviour(self.usesBehaviour)
+                }
+            }
+        } else {
+            self.type = .PASSIVE
+            return
+        }
+        for child in children {
+            child.animate()
+        }
+        if self.type == .WORLD {
+            return
+        }
+        if self.isAnimated {
+            if self.node.physicsBody == nil {
+                fatalError(self.name)
+            }
+            self.jumpTest()
+
+            self.manipulate()
+        }
+        
+        ///add this as a behaviour (create the variables outside of function before adding)
+        if self.isRotating {
+            let phi = rAxis.x * self.rotationSpeed
+            let theta = rAxis.y * self.rotationSpeed
+            let roll = rAxis.z * self.rotationSpeed
+            
+            self.lookAround(theta: theta, phi: phi, roll: roll)
+            
+            
+            
+        }
+        func debug(){
+                let transform = self.node.transform
+                if self.isObserver { RMXLog("\nTRANSFORM:\n\(transform.print),\n   POV: \(self.viewPoint.print)") }
+               
+            
+            if self.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print),\n    UP: \(self.upVector.print)\n   FWD: \(self.forwardVector.print)\n\n") }
+        }
+    }
+
 }
 
 extension RMXSprite {
 
     func initPosition(startingPoint point: RMXVector3){
-        self.startingPoint = point
-        self.node.position = point
+        func set(inout value: RMFloatB?, new: RMFloatB) -> RMFloatB {
+            if let X = value {
+                return X
+            } else {
+                value = new
+                return new
+            }
+        }
+        self.x = self.x ?? point.x
+        self.y = self.y ?? point.y
+        self.z = self.z ?? point.z
+        self.startingPoint = RMXVector3Make(self.x!,self.y!,self.z!)
+        self.node.position = startingPoint
+        
     }
     
     
-    func setShape(shapeType type: ShapeType, scale s: RMXVector3?) {
-        self.shapeType = type
-        #if SceneKit
+    private func setShape(shapeType type: ShapeType, scale s: RMXVector3?) {
             let scale = s ?? self.node.scale
             self.node = RMXModels.getNode(shapeType: type.rawValue, scale: scale)
-        #endif
     }
     
-    func asShape(scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {//, mass: RMFloatB? = nil, isAnimated: Bool? = true, hasGravity: Bool? = false) -> RMXSprite {
+    func asShape(size: RMFloatB? = nil, scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {
         
-        if self.type == nil { self.type = type }
-        #if SceneKit
-            self.setShape(shapeType: shapeType, scale: scale)
-            switch (type) {
-            case .AI:
-                self.node.physicsBody = SCNPhysicsBody.dynamicBody()
-                break
-            case .PLAYER:
-                self.node.physicsBody = SCNPhysicsBody.dynamicBody()
-                break
-            case .PASSIVE:
-                self.node.physicsBody = SCNPhysicsBody.dynamicBody()
-                break
-            case .BACKGROUND:
-                self.node.physicsBody = SCNPhysicsBody.staticBody()
-                break
-            default:
-                self.node.physicsBody = SCNPhysicsBody.staticBody()
-                break
+        func needsNewBody(n: SCNNode, type: SCNPhysicsBodyType = .Dynamic) -> Bool{
+            if let body = n.physicsBody {
+                if type == body.type {
+                    return false
+                }
             }
-            
-//            self.node.geometry! = (self.node.geometry!.copy() as? SCNGeometry)!
-//            self.node.geometry!.firstMaterial = (self.node.geometry!.firstMaterial!.copy() as? SCNMaterial)!
-            #endif
+            return true
+        }
+        self.node = RMXModels.getNode(shapeType: shapeType.rawValue,mode: type, scale: scale, radius: size)
         return self
     }
 
     
-    func asObserver() -> RMXSprite {
+    func asPlayerOrAI(position: RMXVector3 = RMXVector3Zero) -> RMXSprite {
         if self.type == nil {
             self.type = .PLAYER
         }
-        self.setRadius(10)
-        self.node.physicsBody!.mass = 1
-            #if SceneKit
-            self.node.physicsBody = SCNPhysicsBody.dynamicBody()
-            #endif
-           self.node.physicsBody!.friction = 0.2
+        self.speed = 500
+        self.rotationSpeed = 50
+
+        if let body = self.node.physicsBody {
+            body.angularDamping = 0.90
+            body.friction = 0.1
+//            body.velocityFactor = SCNVector3Make(50,50,50)
+//            body.angularVelocityFactor = SCNVector3Make(50,50,50)
+        } else {
+            if self.node.geometry == nil {
+                self.node.physicsBody = SCNPhysicsBody.dynamicBody()
+            }
+        }
+
             self.armLength = self.radius * RMFloatB(2)
             self.hasGravity = false
         
-        
-        if self.startingPoint == nil {
-            self.startingPoint = self.node.scale * 2
-        }
+    
+//        self.node.physicsBody!.restitution = 0
+        self.y = self.world.radius
+        self.initPosition(startingPoint: position)
         return self
     }
     
@@ -365,116 +401,7 @@ extension RMXSprite {
     }
     
     
-    private func animate_position()    {
-        self.negateRoll()//only runs if hasGravity == true
-        self.orientation = SCNMatrix4Normalize(self.node.transform)
-        
-        //let g = self.hasGravity ? self.world.gravityAt(self) : RMXVector3Zero
-        //let n = self.hasGravity ? self.world.physics.normalFor(self) : RMXVector3Zero
-        let f = self.world.physics.frictionFor(self)// : GLKVector3Make(1,1,1);
-        let d = self.world.physics.dragFor(self)// : GLKVector3Make(1,1,1);
-        
-        let frictionAndDrag = RMXVector3Make(
-            RMFloatB(1 + f.x + d.x),
-            RMFloatB(1 + f.y + d.y),
-            RMFloatB(1 + f.z + d.z)
-        )
-        let oldVelocity = self.node.physicsBody!.velocity
-        self.node.physicsBody!.velocity = RMXVector3Divide(oldVelocity, frictionAndDrag)
-        
-//        let forces = RMXVector3Make(
-//            (g.x + /* d.x + f.x +*/ n.x),
-//            (g.y +/* d.y + f.y +*/ n.y),//+body.acceleration.y,
-//            (g.z +/* d.z + f.z +*/ n.z)
-//        )
-        
-
-        let totalForce =  RMXMatrix4MultiplyVector3(self.orientation, self.acceleration)
-        
-        
-        
-        
-        #if SceneKit
-            self.node.physicsBody!.resetTransform()
-            if false {//self.isObserver { //let body = self.owner.physicsBody {
-                //self.node.physicsBody!.applyForce(forces, impulse: true)
-            } else {
-                self.node.physicsBody!.velocity += totalForce
-                self.node.transform = RMXMatrix4Translate(self.node.transform, self.node.physicsBody!.velocity)
-            }
-            #else
-            self.node.position += self.velocity
-        #endif
-        self.world.collisionTest(self)
-        
-        
-        
-        
-    }
-    
-    
-    func animate() {
-        if let type = self.type {
-//            if type == .PASSIVE { return }
-            if type == .AI {
-                for behaviour in self.behaviours {
-                    behaviour(self.usesBehaviour)
-                }
-            }
-        } else {
-            self.type = .PASSIVE
-            return
-        }
-        for child in children {
-            child.animate()
-        }
-        if self.type == .WORLD {
-            return
-        }
-        if self.isAnimated {
-            if self.node.physicsBody == nil {
-                fatalError(self.name)
-            }
-            self.jumpTest()
-            self.animate_position()
-            self.manipulate()
-        }
-        
-        ///add this as a behaviour (create the variables outside of function before adding)
-        if self.isRotating {
-            let phi = rAxis.x * self.rotationSpeed
-            let theta = rAxis.y * self.rotationSpeed
-            let roll = rAxis.z * self.rotationSpeed
-        
-            self.addPhi(upDownRadians: phi)
-            self.addTheta(leftRightRadians: theta)
-            self.addRoll(rollRadians: roll)
-        
-            
-//            self._rotation += self.rotationSpeed / self.rotationCenterDistance
-//            var temp = RMX.circle(count: self._rotation, radius: self.rotationCenterDistance * 2, limit:  self.rotationCenterDistance)
-//            #if SceneKit
-//                self.node.position = RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
-//                #else
-//                self.position = RMXVector3Make(temp.x - self.rotationCenterDistance,temp.y,0)
-//            #endif
-        }
-        func debug(){
-        #if SceneKit
-            let transform = self.node.transform
-            if self.isObserver { RMXLog("\nORIENTATION\n\(self.orientationMat.print)\n\nTRANSFORM:\n\(transform.print),\n   POV: \(self.viewPoint.print)") }
-            #else
-            let transform = self.position
-            if self.isObserver { RMXLog("\n\(self.orientationMat.print)\n   POS: \(transform.print),\n   POV: \(self.viewPoint.print)") }
-        #endif
-        
-        if self.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print),\n    UP: \(self.upVector.print)\n   FWD: \(self.forwardVector.print)\n\n") }
-        }
-    }
-    
-    private func rotate() {
-        
-    }
+  
     
     func toggleFriction() {
         self.hasFriction = !self.hasFriction
@@ -654,7 +581,7 @@ extension RMXSprite {
                 } else if self.altitude > object.altitude {
                     self.accelerateUp(-climb / 2)
                 } else {
-                    self.upStop()
+                    self.stop()
                     RMXVector3SetY(&self.node.physicsBody!.velocity, 0)
                 }
             }
@@ -673,7 +600,9 @@ extension RMXSprite {
         
         
         let theta = -RMXGetTheta(vectorA: self.position, vectorB: goto)
-        self.setTheta(leftRightRadians: theta)
+        if theta > 0.1 {
+            self.lookAround(theta: self.rotationSpeed)
+        }
         
         if self.hasGravity { //TODO delete and fix below
             RMXVector3SetY(&goto,self.position.y)

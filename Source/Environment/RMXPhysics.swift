@@ -11,7 +11,7 @@ import GLKit
 class RMXPhysics {
     ///metres per second per second
     var worldGravity: RMFloatB {
-        return 9.8 * self.world.gravityScaler
+        return 0.098
     }
     
     var world: RMSWorld

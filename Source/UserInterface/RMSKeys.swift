@@ -38,8 +38,6 @@ class RMSKeys : RMXInterface {
     
     override func viewDidLoad(coder: NSCoder!) {
         super.viewDidLoad(coder)
-        self.lookSpeed *= 0.1
-//        self.moveSpeed *= 0.1
     }
     func set(action a: String, characters k: String ) {
         let newKey = RMKey(self, action: a, characters: k)

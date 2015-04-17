@@ -123,11 +123,14 @@ public class RMXDebugger  {
 }*/
 
 }
+extension RMX {
+    static var isDebugging: Bool { return false }
+}
 
-
-public func RMXLog(_ message: AnyObject? = "", sender: AnyObject? = __FUNCTION__, file: AnyObject? = __FILE__){
+public func RMXLog(_ message: AnyObject? = "", sender: AnyObject = __FUNCTION__, file: AnyObject = __FILE__){
     if RMX.isDebugging{
-        println("\(file?.lastPathComponent)::\(sender): \(message)")
+        let msg: AnyObject? = message ?? ""
+        println("\(file.lastPathComponent)::\(sender): \(msg)")
     }
 }
 /*

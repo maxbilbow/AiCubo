@@ -32,9 +32,9 @@ class RMXDPad : RMXInterface {
             self.motionManager.startMagnetometerUpdates()
         }
         
-        self.moveSpeed *= -0.05
+        self.moveSpeed *= -0.5
         #if SceneKit
-            self.lookSpeed *= 0.01
+            self.lookSpeed *= 0.1
             #else
         self.lookSpeed *= -0.02
         #endif

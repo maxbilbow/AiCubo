@@ -110,6 +110,14 @@ extension SCNVector3 {
         return CGFloat(GLKVector3Distance(A,B))
         //return RMXVector3Distance(self, v)
     }
+    
+    var size: RMFloat {
+        return self.distanceTo(SCNVector3Zero)
+    }
+    
+    var average: RMFloat {
+        return RMFloat((x + y + z) / 3)
+    }
 }
 
 extension GLKVector4 {
