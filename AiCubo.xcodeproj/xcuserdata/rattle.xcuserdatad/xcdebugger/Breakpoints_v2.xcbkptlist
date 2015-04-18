@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMXSprite.swift"
-            timestampString = "450889408.588046"
+            timestampString = "451054028.4264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "476"
-            endingLineNumber = "476"
-            landmarkName = "rotate()"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "setItem(item:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,29 +202,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMXSprite.swift"
-            timestampString = "450889408.588046"
+            timestampString = "451054028.4264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "451"
-            endingLineNumber = "451"
-            landmarkName = "animate()"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
+            landmarkName = "throwItem(_:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Source/Environment/RMSWorld.swift"
-            timestampString = "450829064.05339"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "RMSWorld"
-            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -271,8 +255,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "178"
             endingLineNumber = "178"
-            landmarkName = "addPhi(upDownRadians:)"
-            landmarkType = "5">
+            landmarkName = "RMXSprite"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -282,12 +266,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/Environment/RMXNode.swift"
-            timestampString = "450830446.150029"
+            timestampString = "451059099.761174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "makeAsSun(rDist:isRotating:rAxis:)"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "remove(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

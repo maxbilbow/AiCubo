@@ -26,6 +26,21 @@ protocol RMXChildNode {
 
 extension RMXSprite {
 
+    func getNode() -> SCNNode {
+        return self.node.presentationNode()
+    }
+    var geometry: SCNGeometry? {
+        return self.node.geometry
+    }
+    
+    var physicsBody: SCNPhysicsBody? {
+        return self.node.physicsBody
+    }
+    
+    var physicsField: SCNPhysicsField? {
+        return self.node.physicsField
+    }
+    
     ///Useful for global counters across many files
 
     func getBool(forKey key: String) -> Variable {
@@ -189,8 +204,8 @@ extension RMXSprite {
         self.rAxis = rAxis
        // self._rotation = PI / 4
 //        self.node.pivot = RMXMatrix4Translate(self.node.pivot, rAxis * rDist)
-        self.node.pivot.m41 = (self.world.radius + rDist + self.radius) * 10
-        self.node.position = self.world.position
+        self.node.pivot.m41 = (self.world.radius) * 10
+//        self.node.position = self.world.position
         return self
     }
     

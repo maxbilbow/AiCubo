@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>54BCC94E-5290-40A2-A562-1F5C11EC0051</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>AiCubo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>E353CC38BBFAD6021847B301FA0B38F630D2AB7D</key>
 		<string>https://github.com/maxbilbow/AiCubo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>AiCubo.xcodeproj/project.xcworkspace</string>
+	<string>AiCubo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E353CC38BBFAD6021847B301FA0B38F630D2AB7D</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>E353CC38BBFAD6021847B301FA0B38F630D2AB7D</string>
 			<key>IDESourceControlWCCName</key>
-			<string>AiCubo%200.9.x</string>
+			<string>AiCubo</string>
 		</dict>
 	</array>
 </dict>

@@ -19,10 +19,11 @@ class RMXModels {
     static let dog = SCNScene(named:"art.scnassets/Dog/Dog.dae")
     static let pilot = SCNScene(named:"art.scnassets/ArmyPilot/ArmyPilot.dae")
     
-    class func getNode(shapeType type: Int, mode: RMXSpriteType = .PASSIVE, radius r: RMFloatB? = nil, scale s: RMXVector3? = nil, color: NSColor! = nil) -> SCNNode {
+    class func getNode(shapeType type: Int, mode: RMXSpriteType = .PASSIVE, radius r: RMFloatB? = nil, height h: RMFloatB? = nil, scale s: RMXVector3? = nil, color: NSColor! = nil) -> SCNNode {
         var hasColor = false
         var radius = r ?? 1
-        var scale = s ?? SCNVector3Make(radius * 2,radius * 2,radius * 2)
+        var height = h ?? radius
+        var scale = s ?? SCNVector3Make(radius * 2,height * 2,radius * 2)
         if r == nil {
             radius = RMFloatB(scale.average)
         }
@@ -38,11 +39,11 @@ class RMXModels {
             )
             break
         case ShapeType.SPHERE.rawValue:
-            node = SCNNode(geometry: SCNSphere(radius: RMFloat(scale.y)))
+            node = SCNNode(geometry: SCNSphere(radius: RMFloat(radius)))
             hasColor = true
             break
         case ShapeType.CYLINDER.rawValue:
-            node = SCNNode(geometry: SCNCylinder(radius: RMFloat(scale.x), height: RMFloat(scale.y)))
+            node = SCNNode(geometry: SCNCylinder(radius: RMFloat(radius), height: RMFloat(height)))
             hasColor = true
             break
         case ShapeType.ROCK.rawValue:
@@ -80,12 +81,8 @@ class RMXModels {
             break
 
         default:
-            node = SCNNode(geometry: SCNBox(
-                width: RMFloat(scale.x),
-                height:RMFloat(scale.y),
-                length:RMFloat(scale.z),
-                chamferRadius:0.0)
-            )
+            node = SCNNode()
+            node.scale = scale
         }
         
         
@@ -97,16 +94,27 @@ class RMXModels {
         switch (mode){
         case .AI, .PLAYER, .PASSIVE:
             node.physicsBody = SCNPhysicsBody.dynamicBody()
+            node.physicsBody!.restitution = 0.1
             break
         case .WORLD, .BACKGROUND:
             node.physicsBody = SCNPhysicsBody.staticBody()
+            node.physicsBody!.restitution = 0.0
+        case .KINEMATIC:
+            node.physicsBody = SCNPhysicsBody.kinematicBody()
+            node.physicsBody!.restitution = 0.1
         default:
             if node.physicsBody == nil {
                 node.physicsBody = SCNPhysicsBody()//.staticBody()
+                node.physicsBody!.restitution = 0.0
             }
         }
-        node.physicsBody!.mass = CGFloat(radius)
-        node.physicsBody!.restitution = 0.1
+        
+        if type != ShapeType.NULL.rawValue {
+            node.physicsBody!.mass = 4 *  CGFloat(PI * radius * radius)
+        } else {
+            node.physicsBody!.mass = 0
+        }
+        
         return node
     }
     

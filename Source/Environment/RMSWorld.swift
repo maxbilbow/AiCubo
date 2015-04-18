@@ -13,8 +13,11 @@ import SceneKit
 enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH, DEFAULT }
 class RMSWorld : RMXSprite {
 
+    override var radius: RMFloatB {
+        return 250
+    }
     override init(node: RMXNode) {
-        super.init(node: RMXModels.getNode(shapeType: ShapeType.ROCK.rawValue, mode: .WORLD, radius: 100))
+        super.init(node: RMXModels.getNode(shapeType: ShapeType.NULL.rawValue, mode: .ABSTRACT, radius: 500))
     }
     static var TYPE: RMXWorldType = .SMALL_TEST
     ///TODO: Create thos for timekeeping
@@ -23,14 +26,14 @@ class RMSWorld : RMXSprite {
 //    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
     
     
-    lazy var sun: RMXSprite = RMXSprite.Unique(self, asType: .BACKGROUND).makeAsSun(rDist: self.radius * 2)
+    lazy var sun: RMXSprite = RMXSprite.Unique(self, asType: .BACKGROUND).makeAsSun(rDist: self.radius)
     private let GRAVITY: RMFloatB = 0
     
     
     lazy var activeCamera: RMXCamera = RMXCamera(self)
     
-    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asShape(radius: 5, shape: .SPHERE).asPlayerOrAI()
-    lazy var physics: RMXPhysics = RMXPhysics(world: self)
+    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asShape(radius: 5, height: 15, shape: .CYLINDER, color: NSColor.yellowColor()).asPlayerOrAI()
+
     
     lazy var observer: RMXSprite = self.activeSprite
     lazy var poppy: RMXSprite = RMX.makePoppy(world: self)
@@ -55,16 +58,20 @@ class RMSWorld : RMXSprite {
     
     func worldDidInitialize() {
         self.type = .WORLD
+        
         self.scene!.physicsWorld.gravity = RMXVector3Zero
-
-//        self.setColor(color: NSColor.yellowColor())
-        let node = SCNNode()
-        node.scale = RMXVector3Make(9000,9000,9000)
-        node.physicsField = SCNPhysicsField.radialGravityField()
-//        self.node.physicsField!.falloffExponent = 0
-        node.physicsField!.scope = .InsideExtent
+        let earth = RMXModels.getNode(shapeType: ShapeType.ROCK.rawValue, mode: .BACKGROUND, radius: self.radius)
+        earth.physicsField = SCNPhysicsField.radialGravityField()
+//        earth.physicsField!.scope = .OutsideExtent
+        earth.physicsField!.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
+//        earth.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
+        
+//        self.node.physicsField = SCNPhysicsField.radialGravityField()
+//        self.node.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
+//        self.node.physicsField!.scope = .OutsideExtent
+        
         self.scene!.rootNode.addChildNode(self.node)
-        self.scene!.rootNode.addChildNode(node)
+        self.scene!.rootNode.addChildNode(earth)
         
 //        let drag = SCNNode()
 //        drag.scale = self.node.scale
@@ -78,10 +85,12 @@ class RMSWorld : RMXSprite {
         self.scene!.rootNode.addChildNode(sunCam)
         
         sunCam.camera = RMXCamera()
-        sunCam.position = RMXVector3Make(0,0,self.radius * 1000)
+        sunCam.position = RMXVector3Make(0,0,self.sun.node.pivot.m41)
         self.observer.addCamera(sunCam)
         self.observer.addCamera(poppy.node)
-
+        
+        
+        
         //DEFAULT
         self.environments.setType(.DEFAULT)
         RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 100, radius: 500 + self.radius)
@@ -94,54 +103,6 @@ class RMSWorld : RMXSprite {
     func setWorldType(worldType type: RMXWorldType = .DEFAULT){
         self.worldType = type
         self.environments.setType(type)
-        #if SceneKit
-            //replace childNodes in SCNNode
-        #endif
-    }
- 
-    func massDensityAt(someBody: RMXSprite) -> RMFloatB {
-        if !someBody.isInWorld && someBody.isObserver {
-            return 0.01
-        } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
-            return 99.1 //water or other
-        } else {
-            return 0.01
-        }
-    }
-    
-    func collisionTest(sender: RMXSprite) -> Bool{
-        return false
-    //Have I gone through a barrier?
-//        return true
-//        if !sender.hasGravity { return false }
-        let node = sender.node
-        let velocity = node.physicsBody!.velocity
-        let v = velocity.y
-        let p = sender.position.y
-        let next = sender.position
-        let bounceY: RMFloatB = -v
-        let g = sender.node.scale.y / 2 //.ground
-        let coushin: RMFloatB = 0
-        if p <= g && v < 0{ //&& sender.isInWorld {
-            if p < g {/// coushin {
-                RMXVector3SetY(&node.physicsBody!.velocity, bounceY * coushin)
-                RMXVector3SetY(&node.position, g)
-            } else {
-                RMXVector3SetY(&node.physicsBody!.velocity, sender.hasGravity ? 0 : bounceY * coushin)
-                RMXVector3SetY(&node.position, g)
-            }
-            return true
-        }
-        if RMXVector3Length(next) >= self.radius && sender.type != .PLAYER {
-            sender.headTo(self)
-            node.physicsBody!.velocity = velocity.negate()
-        }
-        
-        return false
-    }
-    
-    func gravityAt(sender: RMXSprite) -> RMXVector3 {
-        return self.physics.gravityFor(sender)
     }
     
     

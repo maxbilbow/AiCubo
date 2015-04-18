@@ -115,8 +115,12 @@ extension SCNVector3 {
         return self.distanceTo(SCNVector3Zero)
     }
     
+    var sum: RMFloat {
+        return RMFloat(x + y + z)
+    }
+    
     var average: RMFloat {
-        return RMFloat((x + y + z) / 3)
+        return self.sum / 3
     }
 }
 

@@ -13,13 +13,13 @@ import SceneKit
 import GLKit
     #endif
 enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
-enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD, ABSTRACT }
+enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD, ABSTRACT, KINEMATIC }
 
 class RMXSprite  {
     
     var scene: SCNScene?
     var radius: RMFloatB {
-        return RMFloatB(self.scale.average)
+        return RMFloatB(self.scale.sum)
     }
     static var COUNT: Int = 0
     var rmxID: Int = RMXSprite.COUNT
@@ -139,7 +139,7 @@ class RMXSprite  {
         let result = RMXSprite.new(parent: parentSprite!)
         result.type = type
         result.isUnique = true
-        result.node.camera = RMXCamera()
+        
         return result
     }
 
@@ -299,7 +299,7 @@ extension RMXSprite {
             self.node = RMXModels.getNode(shapeType: type.rawValue, scale: scale)
     }
     
-    func asShape(radius: RMFloatB? = nil, scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {
+    func asShape(radius: RMFloatB? = nil, height: RMFloatB? = nil, scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE, color: NSColor? = nil) -> RMXSprite {
         
         func needsNewBody(n: SCNNode, type: SCNPhysicsBodyType = .Dynamic) -> Bool{
             if let body = n.physicsBody {
@@ -309,17 +309,24 @@ extension RMXSprite {
             }
             return true
         }
-        self.node = RMXModels.getNode(shapeType: shapeType.rawValue,mode: type, scale: scale, radius: radius)
+        self.node = RMXModels.getNode(shapeType: shapeType.rawValue,mode: type, scale: scale, radius: radius, height: height, color: color)
         return self
     }
 
-    
+    var mass: RMFloatB {
+        var mass = self.node.physicsBody!.mass
+        if mass == 0 {
+            mass = self.node.presentationNode().physicsBody!.mass
+        }
+        return RMFloatB(mass)
+    }
     func asPlayerOrAI(position: RMXVector3 = RMXVector3Zero) -> RMXSprite {
         if self.type == nil {
             self.type = .PLAYER
         }
-        self.speed = 500000
-        self.rotationSpeed = 500
+
+        self.speed = 1000 * self.mass / 10
+        self.rotationSpeed = 150 * self.mass / 10
 
         if let body = self.node.physicsBody {
             body.angularDamping = 0.99
@@ -330,7 +337,7 @@ extension RMXSprite {
                 self.node.physicsBody = SCNPhysicsBody.dynamicBody()
             }
         }
-
+            self.node.camera = RMXCamera()
             self.armLength = self.radius * RMFloatB(2)
             self.hasGravity = false
         
@@ -359,7 +366,7 @@ extension RMXSprite {
         if let p = position {
             pos = p
         } else {
-            pos = SCNVector3Make(0,self.radius, self.scale.z * 50)
+            pos = SCNVector3Make(0,self.radius, self.radius * 50)
         }
         
         let cameraNode = SCNNode()

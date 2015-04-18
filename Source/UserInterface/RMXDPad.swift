@@ -34,7 +34,7 @@ class RMXDPad : RMXInterface {
         
         self.moveSpeed *= -0.2
         #if SceneKit
-            self.lookSpeed *= 0.02
+            self.lookSpeed *= 0.1
             #else
         self.lookSpeed *= -0.02
         #endif

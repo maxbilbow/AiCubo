@@ -211,7 +211,6 @@
 		6C68A2111AD58FE9003A4DB3 /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		6C68A2121AD58FE9003A4DB3 /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
 		6C68A2131AD58FE9003A4DB3 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
-		6C68A2141AD58FE9003A4DB3 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		6C68A2151AD58FE9003A4DB3 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		6C68A2161AD58FE9003A4DB3 /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		6C68A2171AD59316003A4DB3 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
@@ -243,7 +242,6 @@
 		6C77A2811AD18B33006C008F /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		6C77A2821AD18B3A006C008F /* RMXCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52C1AC4ACC100AAACF7 /* RMXCamera.swift */; };
 		6C77A2831AD18B3D006C008F /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
-		6C77A2841AD18B42006C008F /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		6C77A2851AD18B45006C008F /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
 		6C77A2861AD18B47006C008F /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		6C77A2871AD18DEC006C008F /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
@@ -1699,7 +1697,6 @@
 				6C8AB2BC1AE005E700D63030 /* 3dModels.swift in Sources */,
 				6C77A2611AD18A33006C008F /* GameView.swift in Sources */,
 				6C77A2971AD1B23E006C008F /* RMXDebugger.swift in Sources */,
-				6C77A2841AD18B42006C008F /* RMXPhysics.swift in Sources */,
 				6C77A2831AD18B3D006C008F /* RMXClock.swift in Sources */,
 				6C77A2811AD18B33006C008F /* RMXNodeProperty.swift in Sources */,
 				6C77A2951AD1ACE1006C008F /* RMXInitialize.swift in Sources */,
@@ -1739,7 +1736,6 @@
 				6C68A20D1AD58FE9003A4DB3 /* RMSPhysicsBody.swift in Sources */,
 				6C68A1FB1AD58E9B003A4DB3 /* GameViewController.swift in Sources */,
 				6C8AB2BD1AE005E800D63030 /* 3dModels.swift in Sources */,
-				6C68A2141AD58FE9003A4DB3 /* RMXPhysics.swift in Sources */,
 				6C68A20F1AD58FE9003A4DB3 /* RMXNodeProperty.swift in Sources */,
 				6C68A1FF1AD58FAF003A4DB3 /* iOSControllers.swift in Sources */,
 				6C68A2111AD58FE9003A4DB3 /* RMXCamera.swift in Sources */,
