@@ -50,7 +50,7 @@ class RMXModels {
             let source = SCNSceneSource(URL: url!, options: nil)
             let block = source!.entryWithIdentifier("Cube-mesh", withClass: SCNGeometry.self) as! SCNGeometry
             node = SCNNode(geometry: block)
-            node.scale *= 5
+            node.scale *= 1 * radius
             break
         case ShapeType.PLANE.rawValue:
              hasColor = true
@@ -58,25 +58,25 @@ class RMXModels {
             break
         case ShapeType.PONGO.rawValue:
             node = pongo?.rootNode.clone() as! SCNNode
-            node.scale *= 0.01
+            node.scale *= 0.001 * radius
             break
         case ShapeType.OILDRUM.rawValue:
             let url = NSBundle.mainBundle().URLForResource("art.scnassets/oildrum/oildrum", withExtension: "dae")
             let source = SCNSceneSource(URL: url!, options: nil)
             let block = source!.entryWithIdentifier("Cylinder_001-mesh", withClass: SCNGeometry.self) as! SCNGeometry
             node = SCNNode(geometry: block)
-            node.scale *= 10
+            node.scale *= 1 * radius
             break
             
         
         case ShapeType.DOG.rawValue:
             node = dog!.rootNode.clone() as! SCNNode
-            node.scale *= 8
+            node.scale *= 1 * radius
             break
             
         case ShapeType.AUSFB.rawValue:
             node = ausfb!.rootNode.clone() as! SCNNode
-            node.scale *= 0.1
+            node.scale *= 0.01 * radius
             break
 
         default:
@@ -102,10 +102,9 @@ class RMXModels {
             node.physicsBody = SCNPhysicsBody.staticBody()
         default:
             if node.physicsBody == nil {
-                node.physicsBody = SCNPhysicsBody.staticBody()
+                node.physicsBody = SCNPhysicsBody()//.staticBody()
             }
         }
-        node.scale *= scale
         node.physicsBody!.mass = CGFloat(radius)
         node.physicsBody!.restitution = 0.1
         return node

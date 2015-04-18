@@ -86,7 +86,14 @@ extension RMXDPad {
             _handleRelease(recognizer.state)
         }
         
+    func nextCamera(recogniser: UITapGestureRecognizer) {
+       self.gameView.pointOfView = self.activeSprite?.getNextCamera()
+    }
     
+    func previousCamera(recogniser: UITapGestureRecognizer) {
+        self.gameView.pointOfView = self.activeSprite?.getPreviousCamera()
+    }
+
     func switchEnvironment(recogniser: UITapGestureRecognizer){
             world?.environments.plusOne()
     }
@@ -133,10 +140,12 @@ extension RMXDPad {
                 
                 
                 if let node = result.node {
-                    if self.world?.observer.grabItem(item: self.world!.getSprite(node: node)) == false {
-                        self.action(action: "throw", speed: 20)
-                        _handleRelease(recognizer.state)
-                    }
+                    self.world?.observer.node.addChildNode(node)
+                    node
+//                    if self.world?.observer.grabItem(item: self.world!.getSprite(node: node)) == false {
+//                        self.action(action: "throw", speed: 20)
+//                        _handleRelease(recognizer.state)
+//                    }
                 }
                 
                 // get its material

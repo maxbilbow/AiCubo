@@ -125,7 +125,7 @@ extension RMX {
         return world
     }
     static func makePoppy(#world: RMSWorld) -> RMXSprite{
-        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asShape(scale: RMXVector3Make(10,10,10), shape: .DOG).asPlayerOrAI()
+        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asShape(radius: 3, shape: .DOG).asPlayerOrAI()
 
         poppy.initPosition(startingPoint: RMXVector3Make(100,poppy.node.scale.y / 2,-50))
         var itemToWatch: RMXSprite! = nil

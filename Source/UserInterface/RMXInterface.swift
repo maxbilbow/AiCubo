@@ -35,12 +35,12 @@ import QuartzCore
 #endif
 
 class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
-    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self.world!)
+    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self.world!, gameView: self.gameView)
     private let _isDebugging = false
     var debugData: String = "No Data"
     
     var gvc: RMXViewController?
-    var gameView: GameView?
+    var gameView: GameView!
 
    
     var timer: NSTimer? //CADisplayLink?

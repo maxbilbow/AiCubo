@@ -38,12 +38,13 @@ class RMSActionProcessor {
     }
     var world: RMSWorld
     
-    init(world: RMSWorld){
+    init(world: RMSWorld, gameView: GameView){
         self.world = world
+        self.gameView = gameView
         RMXLog()
     }
 
-    var gameView: GameView?
+    var gameView: GameView
     
     private var _movement: (x:RMFloatB, y:RMFloatB, z:RMFloatB) = (x:0, y:0, z:0)
     private var _panThreshold: RMFloatB = 70
@@ -197,15 +198,11 @@ class RMSActionProcessor {
             RMX.toggleFog()
         }
         
-        if action == "increase" {
-            if fabs(self.activeSprite.velocity.average) < 1 {
-                self.world.node.physicsBody!.mass += 2
-                self.world.node.physicsBody!.mass *= 2
-                self.world.node.physicsField!.strength += 1
-            }
+        if action == "increase" && speed == 1 {
+           self.gameView.pointOfView = self.activeSprite.getNextCamera()
             
-        } else if action == "decrease" {
-            self.world.node.physicsBody!.mass *= 0.8
+        } else if action == "decrease" && speed == 1 {
+            self.gameView.pointOfView = self.activeSprite.getPreviousCamera()
         }
         
         if action == "reset" {

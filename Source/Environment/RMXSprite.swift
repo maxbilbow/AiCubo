@@ -13,7 +13,7 @@ import SceneKit
 import GLKit
     #endif
 enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
-enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD }
+enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD, ABSTRACT }
 
 class RMXSprite  {
     
@@ -139,6 +139,7 @@ class RMXSprite  {
         let result = RMXSprite.new(parent: parentSprite!)
         result.type = type
         result.isUnique = true
+        result.node.camera = RMXCamera()
         return result
     }
 
@@ -250,11 +251,12 @@ class RMXSprite  {
         
         ///add this as a behaviour (create the variables outside of function before adding)
         if self.isRotating {
-            let phi = rAxis.x * self.rotationSpeed
-            let theta = rAxis.y * self.rotationSpeed
-            let roll = rAxis.z * self.rotationSpeed
+//            let phi = rAxis.x * self.rotationSpeed
+//            let theta = rAxis.y * self.rotationSpeed
+//            let roll = rAxis.z * self.rotationSpeed
             
-            self.lookAround(theta: theta, phi: phi, roll: roll)
+            self.node.transform *= RMXMatrix4MakeRotation(self.rotationSpeed, self.rAxis)
+//            self.lookAround(theta: theta, phi: phi, roll: roll)
             
             
             
@@ -267,6 +269,8 @@ class RMXSprite  {
             if self.isObserver { RMXLog("\n\n   LFT: \(self.leftVector.print),\n    UP: \(self.upVector.print)\n   FWD: \(self.forwardVector.print)\n\n") }
         }
     }
+    lazy var cameras: Array<SCNNode> = [ self.node ]
+    var cameraNumber: Int = 0
 
 }
 
@@ -295,7 +299,7 @@ extension RMXSprite {
             self.node = RMXModels.getNode(shapeType: type.rawValue, scale: scale)
     }
     
-    func asShape(size: RMFloatB? = nil, scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {
+    func asShape(radius: RMFloatB? = nil, scale: RMXVector3? = nil, shape shapeType: ShapeType = .CUBE, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {
         
         func needsNewBody(n: SCNNode, type: SCNPhysicsBodyType = .Dynamic) -> Bool{
             if let body = n.physicsBody {
@@ -305,7 +309,7 @@ extension RMXSprite {
             }
             return true
         }
-        self.node = RMXModels.getNode(shapeType: shapeType.rawValue,mode: type, scale: scale, radius: size)
+        self.node = RMXModels.getNode(shapeType: shapeType.rawValue,mode: type, scale: scale, radius: radius)
         return self
     }
 
@@ -314,14 +318,13 @@ extension RMXSprite {
         if self.type == nil {
             self.type = .PLAYER
         }
-        self.speed = 500
-        self.rotationSpeed = 50
+        self.speed = 500000
+        self.rotationSpeed = 500
 
         if let body = self.node.physicsBody {
-            body.angularDamping = 0.90
+            body.angularDamping = 0.99
+            body.damping = 0.8
             body.friction = 0.1
-//            body.velocityFactor = SCNVector3Make(50,50,50)
-//            body.angularVelocityFactor = SCNVector3Make(50,50,50)
         } else {
             if self.node.geometry == nil {
                 self.node.physicsBody = SCNPhysicsBody.dynamicBody()
@@ -335,9 +338,37 @@ extension RMXSprite {
 //        self.node.physicsBody!.restitution = 0
         self.y = self.world.radius
         self.initPosition(startingPoint: position)
+        self.addCamera()
         return self
     }
+    func getNextCamera() -> SCNNode {
+        self.cameraNumber = self.cameraNumber + 1 >= self.cameras.count ? 0 : self.cameraNumber + 1
+        return self.cameras[self.cameraNumber]
+    }
     
+    func getPreviousCamera() -> SCNNode {
+        self.cameraNumber = self.cameraNumber - 1 < 0 ? self.cameras.count - 1 : self.cameraNumber - 1
+        return self.cameras[self.cameraNumber]
+    }
+    func addCamera(cameraNode: SCNNode){
+        self.cameras.append(cameraNode)
+    }
+
+    func addCamera(position: SCNVector3? = nil) {
+        var pos: SCNVector3
+        if let p = position {
+            pos = p
+        } else {
+            pos = SCNVector3Make(0,self.radius, self.scale.z * 50)
+        }
+        
+        let cameraNode = SCNNode()
+        
+        self.cameras.append(cameraNode)
+        self.node.addChildNode(cameraNode)
+        cameraNode.position = pos
+        cameraNode.camera = RMXCamera()
+    }
     func resetDrawable(){
         self._isDrawable = nil
     }

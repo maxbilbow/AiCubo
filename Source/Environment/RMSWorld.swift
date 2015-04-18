@@ -14,7 +14,7 @@ enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH,
 class RMSWorld : RMXSprite {
 
     override init(node: RMXNode) {
-        super.init(node: RMXModels.getNode(shapeType: ShapeType.ROCK.rawValue, mode: .WORLD, radius: 50))
+        super.init(node: RMXModels.getNode(shapeType: ShapeType.ROCK.rawValue, mode: .WORLD, radius: 100))
     }
     static var TYPE: RMXWorldType = .SMALL_TEST
     ///TODO: Create thos for timekeeping
@@ -29,7 +29,7 @@ class RMSWorld : RMXSprite {
     
     lazy var activeCamera: RMXCamera = RMXCamera(self)
     
-    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asShape(size: 20, shape: .SPHERE).asPlayerOrAI()
+    lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asShape(radius: 5, shape: .SPHERE).asPlayerOrAI()
     lazy var physics: RMXPhysics = RMXPhysics(world: self)
     
     lazy var observer: RMXSprite = self.activeSprite
@@ -73,7 +73,14 @@ class RMSWorld : RMXSprite {
         
 
 
-
+        //cameras
+        let sunCam: SCNNode = SCNNode()
+        self.scene!.rootNode.addChildNode(sunCam)
+        
+        sunCam.camera = RMXCamera()
+        sunCam.position = RMXVector3Make(0,0,self.radius * 1000)
+        self.observer.addCamera(sunCam)
+        self.observer.addCamera(poppy.node)
 
         //DEFAULT
         self.environments.setType(.DEFAULT)

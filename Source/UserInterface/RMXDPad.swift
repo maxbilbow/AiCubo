@@ -32,9 +32,9 @@ class RMXDPad : RMXInterface {
             self.motionManager.startMagnetometerUpdates()
         }
         
-        self.moveSpeed *= -0.5
+        self.moveSpeed *= -0.2
         #if SceneKit
-            self.lookSpeed *= 0.1
+            self.lookSpeed *= 0.02
             #else
         self.lookSpeed *= -0.02
         #endif
@@ -54,16 +54,16 @@ class RMXDPad : RMXInterface {
         func pauseButton (view: UIView)  {
             let button: UIButton = UIButton(frame: CGRectMake(0, view.bounds.height - 30, view.bounds.width / 3, 20))
             
-            button.setTitle("SWITCH", forState:UIControlState.Normal)
-            button.addTarget(self, action: Selector("switchEnvironment:"), forControlEvents:UIControlEvents.TouchDown)
+            button.setTitle("< CAM ", forState:UIControlState.Normal)
+            button.addTarget(self, action: Selector("previousCamera:"), forControlEvents:UIControlEvents.TouchDown)
             button.enabled = true
             view.addSubview(button)
             
             let behaviours: UIButton = UIButton(frame: CGRectMake(view.bounds.width / 3, view.bounds.height - 30, view.bounds.width / 3, 20))
             
-            behaviours.setTitle("BHAVIOURS", forState:UIControlState.Normal)
+            behaviours.setTitle("CAM >", forState:UIControlState.Normal)
 //            behaviours.setTitle("BHAVIOURS OFF", forState:UIControlState.Selected)
-            behaviours.addTarget(self, action: Selector("toggleBehaviours:"), forControlEvents:UIControlEvents.TouchDown)
+            behaviours.addTarget(self, action: Selector("nextCamera:"), forControlEvents:UIControlEvents.TouchDown)
             behaviours.enabled = true
             view.addSubview(behaviours)
         }

@@ -176,10 +176,10 @@ extension RMXSprite {
         if self.type == nil {
             self.type = .BACKGROUND
         }
-        self.node = RMXModels.getNode(shapeType: ShapeType.SPHERE.rawValue, mode: .BACKGROUND, radius: 100)
+        self.node = RMXModels.getNode(shapeType: ShapeType.SPHERE.rawValue, mode: .ABSTRACT, radius: 100)
         self.isVisible = true
         self.isRotating = isRotating
-        self.setRotationSpeed(speed: 5000)
+        self.setRotationSpeed(speed: 1 * PI_OVER_180 / 10)
         self.hasGravity = false
         self.isLight = true
         #if SceneKit
@@ -189,7 +189,8 @@ extension RMXSprite {
         self.rAxis = rAxis
        // self._rotation = PI / 4
 //        self.node.pivot = RMXMatrix4Translate(self.node.pivot, rAxis * rDist)
-        self.node.pivot.m41 = self.world.radius * 2
+        self.node.pivot.m41 = (self.world.radius + rDist + self.radius) * 10
+        self.node.position = self.world.position
         return self
     }
     
