@@ -87,11 +87,11 @@ extension RMXDPad {
         }
         
     func nextCamera(recogniser: UITapGestureRecognizer) {
-       self.gameView.pointOfView = self.activeSprite?.getNextCamera()
+            self.action(action: "nextCamera", speed: 1)
     }
     
     func previousCamera(recogniser: UITapGestureRecognizer) {
-        self.gameView.pointOfView = self.activeSprite?.getPreviousCamera()
+        self.action(action: "previousCamera", speed: 1)
     }
 
     func switchEnvironment(recogniser: UITapGestureRecognizer){

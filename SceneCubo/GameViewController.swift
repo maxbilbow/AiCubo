@@ -8,7 +8,7 @@
 
 import SceneKit
 import QuartzCore
-let globalScene = SCNScene(named: "art.scnassets/ship.dae")!//, world: self.gameView.world!)
+//, world: self.gameView.world!)
 #if iOS
     typealias ViewController = UIViewController
 //    typealias NSColor = UIColor
@@ -25,7 +25,8 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
     @IBOutlet weak var gameView: GameView?
     #endif
     
-    lazy var interface: RMXInterface? = RMX.Controller(self)
+    
+    lazy var interface: RMXInterface? = RMX.Controller(self,  scene: SCNScene(named: "art.scnassets/ship.dae")!)
     
     var world: RMSWorld? {
         return self.interface!.world
@@ -39,19 +40,12 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         #endif
         self.gameView!.initialize(self, interface: self.interface!)
         self.world?.setWorldType()
-        let scene = globalScene
+        let scene = self.world!.scene
         
         // create and add a camera to the scene
-        let cameraNode = self.gameView!.world!.observer
-        cameraNode.hasGravity = true
-        cameraNode.node.camera = self.gameView!.world!.activeCamera
-//        scene.rootNode.addChildNode(cameraNode)
-        
+        let cameraNode = self.gameView!.world!.activeCamera
 
-        self.gameView?.pointOfView = cameraNode.node
-        // place the camera
-
-        cameraNode.startingPoint = cameraNode.position
+        self.gameView?.pointOfView = cameraNode
         
         // create and add a light to the scene
         let lightNode = self.gameView!.world!.sun.node
@@ -60,7 +54,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
 
         
         // create and add an ambient light to the scene
-        let ambientLightNode = RMXNode()
+        let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = SCNLightTypeAmbient
         ambientLightNode.light!.color = NSColor.darkGrayColor()

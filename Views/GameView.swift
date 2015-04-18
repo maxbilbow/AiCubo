@@ -9,6 +9,7 @@
 import Foundation
 import GLKit
 import UIKit
+import SceneKit
 
 class GameView : RMSView, RMXView {
     
@@ -46,18 +47,14 @@ class GameView : RMSView, RMXView {
 
     var lightPosition: GLKVector4 {
         if let sun =  self.world?.sun {
-            return GLKVector4MakeWithVector3(sun.position,1)
+            return GLKVector4MakeWithVector3(SCNVector3ToGLKVector3(sun.position),1)
         } else {
             return GLKVector4Make(0, 0,-10,1.0)
         }
     }
 
     var lightColor: GLKVector4 {
-        if let sun =  self.world?.sun {
-            return sun.shape!.color
-        } else {
-            return GLKVector4Make(1, 1, 1, 1.0)
-        }
+        return GLKVector4Make(1, 1, 1, 1.0)
     }
 
     func setWorld(type: RMXWorldType){
@@ -146,7 +143,7 @@ class GameView : RMSView, RMXView {
             
             
             //        for shape in self.shapes {
-            let shape = shapes[0].type.rawValue
+            let shape = shapes[0].rawType
             
             // All of the following configuration for per vertex data is stored into the VAO
             
@@ -244,12 +241,14 @@ class GameView : RMSView, RMXView {
         
     }
 
-    func drawChildren(object: RMXNode, var matrixStack: GLKMatrixStackRef) {
+    func drawChildren(object: RMXSprite, var matrixStack: GLKMatrixStackRef) {
         if object.isDrawable {
-            let sprite = object.shape
-            let scaleMatrix = sprite!.scaleMatrix
-            let translateMatrix = sprite!.translationMatrix
-            let rotationMatrix = sprite!.rotationMatrix
+            let r = object.radius; let pos = object.position
+            let o = object.orientation; let q = GLKQuaternionMake(o.x, o.y, o.z, o.w)
+            let scaleMatrix = GLKMatrix4MakeScale(r,r,r)
+            let translateMatrix = GLKMatrix4MakeTranslation(pos.x,pos.y,pos.z)
+            let rotationMatrix = GLKMatrix4MakeWithQuaternion(q)
+                
             matrixStack = GLKMatrixStackCreate(kCFAllocatorDefault).takeRetainedValue()
             GLKMatrixStackMultiplyMatrix4(matrixStack, translateMatrix)
             GLKMatrixStackMultiplyMatrix4(matrixStack, rotationMatrix)
@@ -261,7 +260,7 @@ class GameView : RMSView, RMXView {
             glBindVertexArrayOES(self.vertexArray.memory)
             
             self.prepareEffectWithModelMatrix(self.modelMatrix, viewMatrix:self.viewMatrix, projectionMatrix: self.projectionMatrix)
-            let shape = RMSGeometry.get(sprite!.type)
+            let shape = RMSGeometry.get(object.shapeType)
             glDrawElements(GLenum(GL_TRIANGLES), GLsizei(shape.sizeOfIndices) / GLsizei(shape.sizeOfIZero), GLenum(GL_UNSIGNED_BYTE), UnsafePointer<Void>())//nil or 0?
             
         }

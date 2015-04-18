@@ -50,7 +50,7 @@ class RMXPhysics {
     
     func dragFor(sender: RMXSprite) -> RMXVector3{
         let dragC: RMFloat = sender.node.physicsBody!.mass
-        let rho = RMFloat(0.005 * sender.world.massDensityAt(sender))
+        let rho = RMFloat(0.005 * 0.02)
         let u = RMFloat(RMXVector3Length(sender.node.physicsBody!.velocity))
         let area = RMFloat(sender.node.scale.x * sender.node.scale.y)
         var v: RMXVector3 = RMXVector3Zero

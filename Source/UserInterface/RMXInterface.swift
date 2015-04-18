@@ -67,30 +67,24 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     
     
     var activeCamera: RMXCamera? {
-        return self.world?.activeCamera
+        return self.world?.activeCamera.camera as? RMXCamera
     }
     
-    init(gvc: RMXViewController, world: RMSWorld? = nil){
+    init(gvc: GameViewController, scene: SCNScene? = nil){
         super.init()
-        self.initialize(gvc, gameView: gvc.gameView!, world: world)
+        self.initialize(gvc)
         self.viewDidLoad(nil)
         NSLog("\(__FUNCTION__)")
     }
     
-    func initialize(gvc: RMXViewController?, gameView: GameView?, world: RMSWorld? = nil) -> RMXInterface {
-        if gvc != nil {
-            self.gvc = gvc
-        }
-        if gameView != nil {
-            self.gameView = gameView
-        }
-        if world != nil {
-            self.world = world
-        }
+    func initialize(gvc: GameViewController, scene: SCNScene? = nil) -> RMXInterface {
+        self.gvc = gvc
+        self.gameView = gvc.gameView
+        
         if self.world == nil {
-            self.world = RMSWorld(node: RMXNode())
+            self.world = RMSWorld(scene: scene)
         }
-        self.world!.clock = RMXClock(world: self.world!, interface: self)
+//        self.world!.clock = RMXClock(world: self.world!, interface: self)
         #if SceneKit
         self.gameView!.delegate = self
         #endif
@@ -100,8 +94,7 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     
     func viewDidLoad(coder: NSCoder!){
         if self.world == nil {
-            
-            self.world = RMSWorld(node: RMXNode(coder: coder))
+            self.world = RMSWorld(scene: SCNScene(coder: coder))
         }
         self.setUpGestureRecognisers()
     }

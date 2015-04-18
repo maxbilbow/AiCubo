@@ -32,8 +32,11 @@ class RMSKeys : RMXInterface {
         RMKey(self, action: "lockMouse", characters: "m", isRepeating: false, speed: (0,1)),//,
         RMKey(self, action: "grab", characters: "Mouse 1", isRepeating: false, speed: (0,1)),
         RMKey(self, action: "throw", characters: "Mouse 2", isRepeating: false,  speed: (0,20)),
+        
         RMKey(self, action: "increase", characters: "=", isRepeating: false, speed: (0,1)),
-        RMKey(self, action: "decrease", characters: "-", isRepeating: false, speed: (0,1))
+        RMKey(self, action: "decrease", characters: "-", isRepeating: false, speed: (0,1)), //generically used for testing
+        RMKey(self, action: "nextCamera", characters: ".", isRepeating: false, speed: (0,1)),
+        RMKey(self, action: "previousCamera", characters: ",", isRepeating: false, speed: (0,1))
     ]
     
     override func viewDidLoad(coder: NSCoder!) {

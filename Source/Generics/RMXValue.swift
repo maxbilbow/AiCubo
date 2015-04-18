@@ -112,7 +112,7 @@ extension SCNVector3 {
     }
     
     var size: RMFloat {
-        return self.distanceTo(SCNVector3Zero)
+        return RMFloat(self.distanceTo(SCNVector3Zero))
     }
     
     var sum: RMFloat {

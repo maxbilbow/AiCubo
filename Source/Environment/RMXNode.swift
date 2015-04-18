@@ -7,18 +7,15 @@
 //
 import GLKit
 import Foundation
-#if SceneKit
-import SceneKit
-    typealias RMXNode = SCNNode
-    #else
-    typealias RMXNode = RMSNode
-    protocol SCNNode {}
-    #endif
 
+import SceneKit
+
+
+typealias RMXNode = SCNNode
 
 protocol RMXChildNode {
-    var node: RMXNode { get }
-    var parentNode: RMXNode? { get }
+    var node: SCNNode { get set }
+    var parentNode: SCNNode? { get }
     var parentSprite: RMXSprite? { get set }
 }
 
@@ -156,14 +153,18 @@ extension RMXSprite {
 }
 
 extension RMXSprite {
-    func setColor(col: RMXVector4){
-        #if SceneKit
+    func setColor(col: GLKVector4){
+//        #if SceneKit
             let color = NSColor(red: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
             self.setColor(color: color)
-            #else
-            self.shape!.color = col
-        #endif
+        self.color = col
+        
+//            #else
+//            self.shape!.color = col
+//        #endif
     }
+    
+    
     
     func setColor(#color: NSColor){
         #if SceneKit
@@ -204,78 +205,12 @@ extension RMXSprite {
         self.rAxis = rAxis
        // self._rotation = PI / 4
 //        self.node.pivot = RMXMatrix4Translate(self.node.pivot, rAxis * rDist)
-        self.node.pivot.m41 = (self.world.radius) * 10
+        self.node.pivot.m41 = (self.world!.radius) * 10
 //        self.node.position = self.world.position
         return self
     }
     
-    class ChildSpriteArray {
-        var parent: RMXSprite
-        private var type: RMXWorldType = .NULL
-        private var _key: Int = 0
-        
-//        var current: UnsafeMutablePointer<[Int:RMXSprite]> {
-//            return nodeArray[type.rawValue]
-//        }
-        private var nodeArray: [ [RMXSprite] ] = [ Array<RMXSprite>() ]
-        var current:[RMXSprite] {
-            return nodeArray[_key]
-        }
-        func get(key: Int) -> RMXSprite? {
-            for (index, node) in enumerate(self.nodeArray[_key]) {
-                if node.rmxID == key{
-                    return node
-                }
-            }
-            return nil
-        }
-        
-        func set(node: RMXSprite) {
-            self.nodeArray[_key].append(node)
-        }
-        
-        func remove(key: Int) -> RMXSprite? {
-           for (index, node) in enumerate(self.nodeArray[_key]) {
-                if node.rmxID == key{
-                    self.nodeArray[_key].removeAtIndex(index)
-                    return node
-                }
-            }
-            return nil
-        }
-        
-        func plusOne(){
-            if self._key + 1 > RMXWorldType.DEFAULT.rawValue {
-                self._key = 0
-            } else {
-                self._key += 1
-            }
-        }
-        
-        func setType(type: RMXWorldType){
-            self.type = type
-            self._key = type.rawValue
-        }
-        
-        func getCurrent() ->[RMXSprite]? {
-            return self.current
-        }
-        
-        func makeFirst(node: RMXSprite){
-            self.remove(node.rmxID)
-            self.nodeArray[_key].insert(node, atIndex: 0)
-        }
-        init(parent: RMXSprite){
-            self.parent = parent
-            if parent is RMSWorld {
-                self.nodeArray.reserveCapacity(RMXWorldType.DEFAULT.rawValue)
-                for (var i = 1; i <= RMXWorldType.DEFAULT.rawValue ; ++i){
-                    let dict = Array<RMXSprite>()
-                    self.nodeArray.append(dict)
-                }
-            }
-        }
-    }
+   
 }
 
 

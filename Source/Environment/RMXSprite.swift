@@ -7,17 +7,41 @@
 //
 
 import Foundation
-#if SceneKit
+
 import SceneKit
-    #else
 import GLKit
-    #endif
+    
 enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
 enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD, ABSTRACT, KINEMATIC }
 
-class RMXSprite  {
+protocol RMXSpriteManager {
+//    
+}
+class RMXSprite : RMXSpriteManager {
     
-    var scene: SCNScene?
+    lazy var environments: ChildSpriteArray = ChildSpriteArray(parent: self)
+
+    
+    var children: [RMXSprite] {
+        return environments.current
+    }
+    
+    var childSpriteArray: ChildSpriteArray{
+        return self.environments
+    }
+    var hasChildren: Bool {
+        return self.children.isEmpty
+    }
+    
+    
+    var cameraNode: SCNNode {
+        return self.cameras[self.cameraNumber]
+    }
+    
+    var color: GLKVector4 = GLKVector4Make(0.5,0.5,0.5,1)
+    var scene: SCNScene? {
+        return world!.scene
+    }
     var radius: RMFloatB {
         return RMFloatB(self.scale.sum)
     }
@@ -31,7 +55,7 @@ class RMXSprite  {
     var isLight: Bool = false
     var shapeType: ShapeType = .NULL
     
-    lazy var world: RMSWorld! = self as? RMSWorld ?? nil
+    var world: RMSWorld?
     
     var type: RMXSpriteType!
     var wasJustThrown:Bool = false
@@ -47,7 +71,7 @@ class RMXSprite  {
     
     var paretn: RMXSprite?
     
-    var node: RMXNode = RMXNode()
+    var node: SCNNode
     
     var name: String {
         return "\(_name): \(self.rmxID)"
@@ -82,32 +106,21 @@ class RMXSprite  {
    
     
     var behaviours: [(Bool) -> ()] = Array<(Bool) -> ()>()
-    lazy var environments: ChildSpriteArray = ChildSpriteArray(parent: self)
+
     //    var children: UnsafeMutablePointer<[Int : RMXNode]> {
     //        return environments.current
     //    }
     
-    var children: [RMXSprite] {
-        return environments.current
-    }
-    
-    var childSpriteArray: ChildSpriteArray{
-        return self.environments
-    }
-    var hasChildren: Bool {
-        return self.children.isEmpty
-    }
-
     var variables: [ String: Variable] = [ "isBouncing" : Variable(i: 1) ]
     
     
     
     var isObserver: Bool {
-        return self == self.world.observer
+        return self == self.world!.observer
     }
     
     var isActiveSprite: Bool {
-        return self == self.world.activeSprite
+        return self == self.world!.activeSprite
     }
     
     
@@ -131,12 +144,12 @@ class RMXSprite  {
     var isRotating = false
     
     var isInWorld: Bool {
-        return self.distanceTo(self.world) < RMFloatB(self.world.radius)
+        return self.distanceTo() < RMFloatB(self.world!.radius)
     }
     
     
-    class func Unique(parentSprite:RMXSprite?, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {
-        let result = RMXSprite.new(parent: parentSprite!)
+    class func Unique(parent:AnyObject?, asType type: RMXSpriteType = .PASSIVE) -> RMXSprite {
+        let result = RMXSprite.new(parent: parent!)
         result.type = type
         result.isUnique = true
         
@@ -157,7 +170,7 @@ class RMXSprite  {
     var itemPosition: RMXVector3 = RMXVector3Zero
     
 
-    init(node: RMXNode = RMXNode()){
+    init(node: SCNNode = RMXNode()){
         self.node = node
         
         self.spriteDidInitialize()
@@ -173,21 +186,23 @@ class RMXSprite  {
     var scale: RMXVector3 {
         return self.node.presentationNode().scale
     }
-    class func new(#parent: RMXSprite, nodeOnly: Bool = false) -> RMXSprite {
+    class func new(parent p: AnyObject) -> RMXSprite {
         let sprite = RMXSprite()
-        sprite.parentSprite = parent
-        sprite.world = parent.world
-        if nodeOnly {
-            if parent.type == .WORLD {
-                parent.scene!.rootNode.addChildNode(sprite.node)
-                sprite.y! = parent.scale.y
-            } else {
-                parent.node.addChildNode(sprite.node)
+
+//        if nodeOnly {
+            if let parent = p as? RMSWorld {
+                
+                let minHeight = parent.ground + sprite.height / 3
+                if sprite.y < minHeight {
+                    sprite.y = minHeight
+                }
+                parent.insertChild(sprite)
+            } else if let parent = p as? RMXSprite {
+                parent.insertChild(sprite)
             
+            } else {
+                fatalError("Not yet compatable")
             }
-        } else {
-            parent.insertChild(sprite)
-        }
         return sprite
     }
     
@@ -330,7 +345,7 @@ extension RMXSprite {
 
         if let body = self.node.physicsBody {
             body.angularDamping = 0.99
-            body.damping = 0.8
+            body.damping = 0.5
             body.friction = 0.1
         } else {
             if self.node.geometry == nil {
@@ -343,7 +358,7 @@ extension RMXSprite {
         
     
 //        self.node.physicsBody!.restitution = 0
-        self.y = self.world.radius
+        self.y = self.world!.radius
         self.initPosition(startingPoint: position)
         self.addCamera()
         return self
@@ -390,16 +405,11 @@ extension RMXSprite {
         child.parentSprite = self
         child.world = self.world
         #if SceneKit
-//            child.node.removeFromParentNode()
             if andNode {
-                if self.type == .WORLD {
-                    self.scene!.rootNode.addChildNode(child.node)
-                } else {
                     self.node.addChildNode(child.node)
-                }
             }
+            
         #endif
-        self.childSpriteArray.set(child)
     }
     
     
@@ -503,7 +513,7 @@ extension RMXSprite {
                 self.setItem(item: item)
                 return true
             }
-        } else if let item = self.world.closestObjectTo(self) {
+        } else if let item = self.world!.closestObjectTo(self) {
             if self.item == nil && self.isWithinReachOf(item) {
                 self.setItem(item: item)
                 return true
@@ -660,24 +670,4 @@ extension RMXSprite {
 }
 
 
-extension RMXSprite {
-    
-    func getSprite(#node: RMXNode) -> RMXSprite? {
-        if node.physicsBody == nil || node.physicsBody!.type == .Static {
-            return nil
-        } else if node.name == nil || node.name!.isEmpty {
-            let sprite = RMXSprite.new(parent: self)
-            sprite.node = node
-            return sprite
-        } else {
-            for sprite in self.children {
-                if sprite.name == node.name {
-                    return sprite
-                }
-            }
-        }
-        let sprite = RMXSprite.new(parent: self)
-        sprite.node = node
-        return sprite
-    }
-}
+

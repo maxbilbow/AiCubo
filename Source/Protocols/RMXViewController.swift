@@ -8,7 +8,7 @@
 
 import Foundation
 import GLKit
-
+import SceneKit
     
 extension RMX {
 #if iOS
@@ -19,8 +19,8 @@ extension RMX {
         return RMXDPad(gvc: gvc)//.initialize(gvc, gameView: gvc.gameView) as! RMXDPad
     }
     #elseif OSX
-    static func Controller(gvc: RMXViewController) -> RMSKeys {
-        return RMSKeys(gvc: gvc)//.initialize(gvc, gameView: gvc.gameView) as! RMSKeys
+    static func Controller(gvc: GameViewController, scene: SCNScene? = nil) -> RMSKeys {
+        return RMSKeys(gvc: gvc, scene: scene)//.initialize(gvc, gameView: gvc.gameView) as! RMSKeys
     }
 #endif
 }

@@ -8,14 +8,11 @@
 
 import Foundation
 import GLKit
-#if SceneKit
+
 import SceneKit
-    #else
-    protocol SCNCamera {}
-    #endif
 class RMXCamera : SCNCamera {
     
-    var pov: RMXNode? { return self.observer.node }
+    var pov: SCNNode? { return self.observer.node }
     var observer: RMXSprite! {
         return self.world.observer
     }
@@ -42,17 +39,12 @@ class RMXCamera : SCNCamera {
             center.x,   center.y,   center.z,
             up.x,       up.y,       up.z)
     }
-    #if !SceneKit
-    var zNear:Float = 1
-    var zFar: Float = 100000
-    var yFov: Float = 65.0
-    var xFov: Float = 65.0
+
+    
    
-    class func new(#world: RMSWorld) -> RMXCamera {
-        return RMXCamera(world)
-    }
+    
     var projectionMatrix: GLKMatrix4 {
-        return GLKMatrix4MakePerspective(GLKMathDegreesToRadians(self.yFov), self.aspectRatio, self.zNear, self.zFar)
+        return GLKMatrix4MakePerspective(GLKMathDegreesToRadians(Float(self.yFov)), self.aspectRatio, Float(self.zNear), Float(self.zFar))
     }
     
     func getProjectionMatrix(width: Float, height: Float) -> GLKMatrix4 {
@@ -67,23 +59,19 @@ class RMXCamera : SCNCamera {
             #if OPENGL_OSX
             RMXGLMakePerspective(self.yFov, Float(width) / Float(height), self.zNear, self.zFar)
             #endif
-        } else {
-            effect?.transform.projectionMatrix = GLKMatrix4MakePerspective(self.yFov, Float(width) / Float(height), self.zNear, self.zFar)
         }
     }
     
-    #endif
+
     
     init(_ world: RMSWorld, viewSize: (Float,Float) = (1280, 750)){
         self.viewHeight = viewSize.1
         self.viewWidth = viewSize.0
         self.world = world
-        #if SceneKit
         super.init()
-        #endif
         self.initCam()
     }
-    #if SceneKit
+
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initCam()
@@ -92,36 +80,25 @@ class RMXCamera : SCNCamera {
         super.init()
         self.initCam()
     }
-    #endif
+
     
     private func initCam(){
         self.zNear = 0.1
         self.zFar = 10000
         self.yFov = 65
         self.xFov = 65
-        #if SceneKit
         self.focalBlurRadius = 0.05
         self.aperture = 0.005
         self.focalDistance = 0.001
-        #endif
     }
     var eye: GLKVector3 {
-        #if SceneKit
-            let v = SCNVector3ToGLKVector3(self.pov!.position)
-            #else
-            let v = self.pov!.position
-        #endif
+        let v = SCNVector3ToGLKVector3(self.pov!.position)
         return v
-    
     }
     
     var center: GLKVector3{
         let r = self.observer.forwardVector + self.pov!.position
-        #if SceneKit
-            let v = SCNVector3ToGLKVector3(r)
-            #else
-            let v = r
-        #endif
+        let v = SCNVector3ToGLKVector3(r)
         return v
     }
     
@@ -131,11 +108,7 @@ class RMXCamera : SCNCamera {
             return GLKVector3Make(0,1,0)
         } else {
             let r = self.observer.upVector
-            #if SceneKit
-                let v = SCNVector3ToGLKVector3(r)
-                #else
-                let v = r
-            #endif
+            let v = SCNVector3ToGLKVector3(r)
             return v
         }
     }

@@ -26,6 +26,9 @@ class RMSGeometry  {
     
     var type: ShapeType
 
+    var rawType: Int32 {
+        return Int32(self.type.rawValue)
+    }
     var vertices: UnsafePointer<Void>
     var indices: UnsafePointer<Void>
     var sizeOfVertex: GLsizeiptr// {
@@ -43,12 +46,13 @@ class RMSGeometry  {
         self.type = type
 //        switch(type) {
 //        case .CUBE:
-            self.sizeOfVertex = RMSizeOfVertex(type.rawValue)
-            self.sizeOfIndices = RMSizeOfIndices(type.rawValue)
-            self.sizeOfIZero = RMSizeOfIZero(type.rawValue)
+        let typeInt = Int32(type.rawValue)
+            self.sizeOfVertex = RMSizeOfVertex(typeInt)
+            self.sizeOfIndices = RMSizeOfIndices(typeInt)
+            self.sizeOfIZero = RMSizeOfIZero(typeInt)
             //        geometry.verts = RMVertexWrapper.CUBE()
-            self.vertices = RMVerticesPtr(type.rawValue)
-            self.indices = RMIndicesPtr(type.rawValue)
+            self.vertices = RMVerticesPtr(typeInt)
+            self.indices = RMIndicesPtr(typeInt)
 //        }
         
     }

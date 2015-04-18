@@ -14,16 +14,14 @@ import GLUT
     #endif
 
 
-#if SceneKit
+
     import SceneKit
-    #else
-    protocol SCNGeometry{}
 
 
 class RMXShape : RMXSpriteProperty {
     var owner: RMXSprite! = nil
     var world: RMSWorld {
-        return self.owner.world
+        return self.owner.world!
     }
     var type: ShapeType = .NULL
     
@@ -33,7 +31,7 @@ class RMXShape : RMXSpriteProperty {
     }
         
     var rotationMatrix: GLKMatrix4 {
-        return self.owner.orientation
+        return SCNMatrix4ToGLKMatrix4(self.owner.transform)
     }
         
     var translationMatrix: GLKMatrix4 {
@@ -124,5 +122,4 @@ class RMXShape : RMXSpriteProperty {
     
 }
 
-#endif
 

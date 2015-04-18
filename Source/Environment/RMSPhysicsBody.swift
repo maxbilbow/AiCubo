@@ -82,7 +82,7 @@ extension RMXSprite {
         return RMFloatB(self.node.physicsBody!.mass)// * self.world.gravity
     }
    
-    func distanceTo(#point: RMXVector3) -> RMFloatB{
+    func distanceTo(point: RMXVector3 = RMXVector3Zero) -> RMFloatB{
         return RMXVector3Distance(self.position, point)
     }
     

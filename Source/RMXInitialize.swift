@@ -15,7 +15,7 @@ extension RMX {
     static func addBasicCollisionTo(forNode sprite: RMXSprite){//, withActors actors: [Int:RMXSprite]){//, inObjets
 //        if sprite.type == .OBSERVER {
             sprite.addBehaviour{ (isOn: Bool)->() in
-                if let children = sprite.world.childSpriteArray.getCurrent() {
+                if let children = sprite.world!.childSpriteArray.getCurrent() {
                 for child in children {
                    // let child = closest.1
 //                    if sprite.isObserver{ print("\(child.rmxID) ")}
@@ -25,8 +25,8 @@ extension RMX {
                         if dist <= distTest {
 //                            if sprite.isObserver{ print("HIT: \(child.rmxID)\n") }
                             child.node.physicsBody!.velocity += sprite.node.physicsBody!.velocity
-                            sprite.world.childSpriteArray.remove(child.rmxID)
-                            sprite.world.childSpriteArray.makeFirst(child)
+                            sprite.world!.childSpriteArray.remove(child.rmxID)
+                            sprite.world!.childSpriteArray.makeFirst(child)
                             return
                         }
                     }
@@ -92,7 +92,7 @@ extension RMX {
                             timePassed = 0
                             timeLimit = random() % 1600 + 10
                             
-                            if sprite.distanceTo(world) > world.node.scale.z - 50 {
+                            if sprite.distanceTo(point: RMXVector3Zero) > world.radius - 50 {
                                 accelerating = false
                                 timeLimit = 600
                             } else {
@@ -208,7 +208,7 @@ extension RMX {
                 }
             }
         }
-        poppy.setColor(RMXVector4Make(0.1,0.1,0.1,1.0))
+        poppy.setColor(GLKVector4Make(0.1,0.1,0.1,1.0))
         /*
         #if SceneKit
             let r: RMFloatB = 0.3

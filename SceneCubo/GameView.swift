@@ -40,15 +40,12 @@ class GameView: RMSView ,RMXView {
         
       
     func setWorld(type: RMXWorldType){
-        if self.world!.worldType != type {
+        if self.world!.type != type {
             self.world!.setWorldType(worldType: type)
         }
     }
     
-    var camera: RMXCamera {
-        return self.world!.activeCamera
-    }
-    
+       
 
     
 }

@@ -11,26 +11,46 @@ import GLKit
 import SceneKit
 
 enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH, DEFAULT }
-class RMSWorld : RMXSprite {
+class RMSWorld  {
+    
+    lazy var environments: ChildSpriteArray = ChildSpriteArray(parent: self)
 
-    override var radius: RMFloatB {
-        return 250
+    var children: [RMXSprite] {
+        return environments.current
     }
-    override init(node: RMXNode) {
-        super.init(node: RMXModels.getNode(shapeType: ShapeType.NULL.rawValue, mode: .ABSTRACT, radius: 500))
+    
+    var childSpriteArray: ChildSpriteArray{
+        return self.environments
     }
-    static var TYPE: RMXWorldType = .SMALL_TEST
-    ///TODO: Create thos for timekeeping
-    var clock: RMXClock?
-
-//    lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self)
+    var hasChildren: Bool {
+        return self.children.isEmpty
+    }
     
     
-    lazy var sun: RMXSprite = RMXSprite.Unique(self, asType: .BACKGROUND).makeAsSun(rDist: self.radius)
+    var ground: RMFloatB = RMSWorld.RADIUS
+    
+    init(scene: SCNScene? = nil){
+        self.scene = scene ?? SCNScene(named: "art.scnassets/ship.dae")!
+        self.worldDidInitialize()
+        
+    }
+    
+    var radius: RMFloatB {
+        return RMSWorld.RADIUS
+    }
+    
+    static var RADIUS: RMFloatB = 250
+    
+    static var TYPE: RMXWorldType = .DEFAULT
+
+    var scene: SCNScene
+    lazy var sun: RMXSprite = RMXSprite.Unique(self, asType: .BACKGROUND).makeAsSun(rDist: RMSWorld.RADIUS)
     private let GRAVITY: RMFloatB = 0
     
     
-    lazy var activeCamera: RMXCamera = RMXCamera(self)
+    var activeCamera: SCNNode {
+        return self.activeSprite.cameraNode
+    }
     
     lazy var activeSprite: RMXSprite = RMXSprite.Unique(self, asType: .PLAYER).asShape(radius: 5, height: 15, shape: .CYLINDER, color: NSColor.yellowColor()).asPlayerOrAI()
 
@@ -43,57 +63,33 @@ class RMSWorld : RMXSprite {
         self.sun.rmxID: self.sun
     ]
     
-    var worldType: RMXWorldType = .DEFAULT
-    
-    override func spriteDidInitialize() {
-        super.spriteDidInitialize()
-        self.scene = globalScene
-        self.world = self
-        self.isAnimated = false
-        self.isVisible = false
-        
-        self.worldDidInitialize()
-    }
+    var type: RMXWorldType = .DEFAULT
 
     
     func worldDidInitialize() {
-        self.type = .WORLD
-        
-        self.scene!.physicsWorld.gravity = RMXVector3Zero
-        let earth = RMXModels.getNode(shapeType: ShapeType.ROCK.rawValue, mode: .BACKGROUND, radius: self.radius)
-        earth.physicsField = SCNPhysicsField.radialGravityField()
-//        earth.physicsField!.scope = .OutsideExtent
-        earth.physicsField!.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
-//        earth.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
-        
-//        self.node.physicsField = SCNPhysicsField.radialGravityField()
-//        self.node.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
-//        self.node.physicsField!.scope = .OutsideExtent
-        
-        self.scene!.rootNode.addChildNode(self.node)
-        self.scene!.rootNode.addChildNode(earth)
-        
-//        let drag = SCNNode()
-//        drag.scale = self.node.scale
-//        drag.physicsField = SCNPhysicsField.dragField()
-//        drag.physicsField!.strength = 1
-        
+        let radius = RMSWorld.RADIUS
+            self.scene.physicsWorld.gravity = RMXVector3Zero
+            let earth = RMXModels.getNode(shapeType: ShapeType.ROCK.rawValue, mode: .BACKGROUND, radius: radius)
+            earth.physicsField = SCNPhysicsField.radialGravityField()
+    //        earth.physicsField!.scope = .OutsideExtent
+            earth.physicsField!.categoryBitMask = Int(SCNPhysicsCollisionCategory.Default.rawValue)
+    
+            self.scene.rootNode.addChildNode(earth)
 
-
-        //cameras
-        let sunCam: SCNNode = SCNNode()
-        self.scene!.rootNode.addChildNode(sunCam)
-        
-        sunCam.camera = RMXCamera()
-        sunCam.position = RMXVector3Make(0,0,self.sun.node.pivot.m41)
-        self.observer.addCamera(sunCam)
-        self.observer.addCamera(poppy.node)
-        
-        
+            //cameras
+            let sunCam: SCNNode = SCNNode()
+            self.scene.rootNode.addChildNode(sunCam)
+            
+            sunCam.camera = RMXCamera()
+            sunCam.position = RMXVector3Make(0,0,self.sun.node.pivot.m41)
+            self.observer.addCamera(sunCam)
+            self.observer.addCamera(poppy.node)
+            
+    
         
         //DEFAULT
         self.environments.setType(.DEFAULT)
-        RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 100, radius: 500 + self.radius)
+        RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 100, radius: 500 + radius)
         self.insertChildren(children: self.players)
 
         setWorldType()
@@ -101,7 +97,7 @@ class RMSWorld : RMXSprite {
     }
   
     func setWorldType(worldType type: RMXWorldType = .DEFAULT){
-        self.worldType = type
+        self.type = type
         self.environments.setType(type)
     }
     
@@ -143,22 +139,76 @@ class RMSWorld : RMXSprite {
         }   else { return nil }
     }
     
+    func insertChild(child: RMXSprite, insertNode:Bool = true){
+        child.parentSprite = nil
+        child.world = self
+            if insertNode {
+                self.scene.rootNode.addChildNode(child.node)
+            }
+        self.childSpriteArray.set(child)
+    }
+    
+    func insertChildren(children: [RMXSprite], insertNodes:Bool = true){
+        for child in children {
+            self.insertChild(child, insertNode: insertNodes)
+        }
+    }
+
+    func insertChildren(#children: [Int:RMXSprite], insertNodes:Bool = true){
+        for child in children {
+            self.insertChild(child.1, insertNode: insertNodes)
+        }
+    }
   
-    //private var _hasGravity = false
-    override func toggleGravity() {
+    private var _hasGravity = false
+    func toggleGravity() {
+        #if SceneKit
+            if _hasGravity {
+                self.scene.physicsWorld.gravity = SCNVector3Zero
+                _hasGravity = false
+            } else {
+                self.scene.physicsWorld.gravity = SCNVector3Make(0,-1,0)
+                _hasGravity = true
+            }
+            #else
         for object in children {
             let child = object
             if (child != self.observer) && !(child.isLight) {
-                child.hasGravity = self.hasGravity
+                child.hasGravity = !child.hasGravity
             }
         }
-        super.toggleGravity()
+        #endif
     }
 
     
-    override func animate() {
-        self.sun.animate()
+    func getSprite(#node: RMXNode) -> RMXSprite? {
+        if node.physicsBody == nil || node.physicsBody!.type == .Static {
+            return nil
+        } else if node.name == nil || node.name!.isEmpty {
+            let sprite = RMXSprite.new(parent: self)
+            sprite.node = node
+            return sprite
+        } else {
+            for sprite in self.children {
+                if sprite.name == node.name {
+                    return sprite
+                }
+            }
+        }
+        let sprite = RMXSprite.new(parent: self)
+        sprite.node = node
+        return sprite
     }
     
+    func animate() {
+    #if SceneKit
+        self.sun.animate()
+            #else
+        for child in children {
+            child.animate()
+        }
+        #endif
+    }
+
 }
 

@@ -14,9 +14,8 @@ import AppKit
     
     #endif
 
-#if SceneKit
+
     import SceneKit
-    #endif
 
 enum RMXMoveType { case PUSH, DRAG }
 
@@ -198,11 +197,21 @@ class RMSActionProcessor {
             RMX.toggleFog()
         }
         
-        if action == "increase" && speed == 1 {
-           self.gameView.pointOfView = self.activeSprite.getNextCamera()
+        if action == "nextCamera" && speed == 1 {
+            let cameraNode = self.activeSprite.getNextCamera()
+            #if SceneKit
+                self.gameView.pointOfView = cameraNode
+                #else
+                self.world.activeCamera = cameraNode.camera as! RMXCamera
+            #endif
             
-        } else if action == "decrease" && speed == 1 {
-            self.gameView.pointOfView = self.activeSprite.getPreviousCamera()
+        } else if action == "previousCamera" && speed == 1 {
+            let cameraNode = self.activeSprite.getPreviousCamera()
+            #if SceneKit
+                self.gameView.pointOfView = cameraNode
+                #else
+                self.world.activeCamera = cameraNode.camera as! RMXCamera
+            #endif
         }
         
         if action == "reset" {
@@ -221,8 +230,7 @@ class RMSActionProcessor {
         }
         let node = self.activeSprite.node.presentationNode()
          RMXLog("\n    vel:\(self.activeSprite.node.physicsBody!.velocity.print)\n    Pos:\(node.position.print)\n transform:\n\(node.transform.print)\n  orientation:\n\(self.activeSprite.orientation.print)")
-        RMXLog(self.world.node.physicsBody!.mass)
-    }
+         }
         
     var extendArm: RMFloatB = 0
 //    var mousePos: NSPoint = NSPoint(x: 0,y: 0)
