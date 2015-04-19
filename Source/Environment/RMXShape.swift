@@ -20,7 +20,7 @@ enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDE
     protocol SCNGeometry{}
 #endif
 
-class RMXShape : RMXSpriteProperty, SCNGeometry {
+class RMXShape : RMXSpriteProperty {
     var owner: RMXSprite! = nil
     var world: RMSWorld {
         return self.owner.world

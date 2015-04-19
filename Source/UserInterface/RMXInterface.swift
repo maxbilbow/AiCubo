@@ -93,7 +93,11 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
             self.world = world
         }
         if self.world == nil {
+            #if SceneKit
             self.world = RMSWorld(node: RMXNode())
+            #else
+                self.world = RMSWorld()
+            #endif
         }
         self.world!.clock = RMXClock(world: self.world!, interface: self)
         #if SceneKit
@@ -105,8 +109,11 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     
     func viewDidLoad(coder: NSCoder!){
         if self.world == nil {
-            
+            #if SceneKit
             self.world = RMSWorld(node: RMXNode(coder: coder))
+                #else
+                self.world = RMSWorld()
+            #endif
         }
         self.setUpGestureRecognisers()
     }

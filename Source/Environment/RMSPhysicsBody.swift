@@ -86,7 +86,7 @@ class RMSPhysicsBody {
 
     private func initialize(owner: RMXSprite, mass: RMFloat = 1, radius: RMFloatB = 1, dragC: RMFloatB = 0.1,
         accRate: RMFloatB = 1, rotSpeed:RMFloatB = 1){
-            self.node?.physicsBody!.mass = mass
+            self.mass = mass
             self.dragC = dragC
             self.accelerationRate = accRate
             self.rotationSpeed = rotSpeed

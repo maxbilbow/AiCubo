@@ -244,9 +244,9 @@ class GameView : RMSView, RMXView {
         
     }
 
-    func drawChildren(object: RMXNode, var matrixStack: GLKMatrixStackRef) {
+    func drawChildren(object: RMXSprite, var matrixStack: GLKMatrixStackRef) {
         if object.isDrawable {
-            let sprite = object.shape
+            let sprite = object.node.geometry
             let scaleMatrix = sprite!.scaleMatrix
             let translateMatrix = sprite!.translationMatrix
             let rotationMatrix = sprite!.rotationMatrix

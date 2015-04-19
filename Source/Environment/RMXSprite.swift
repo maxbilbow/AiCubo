@@ -15,7 +15,7 @@ import GLKit
 enum JumpState { case PREPARING_TO_JUMP, JUMPING, GOING_UP, COMING_DOWN, NOT_JUMPING }
 enum RMXSpriteType { case  AI, PLAYER, BACKGROUND, PASSIVE, WORLD }
 
-class RMXSprite : RMXChildNode {
+class RMXSprite  {
     
     #if OSX
     lazy var mouse: RMXMouse = RMSMouse(owner: self)
@@ -44,13 +44,13 @@ class RMXSprite : RMXChildNode {
     
 //    lazy var body: RMSPhysicsBody? = RMSPhysicsBody(self)
     
-    var parentNode: SCNNode? {
+    var parentNode: RMXNode? {
         return self.node.parentNode
     }
     
     var paretn: RMXSprite?
     
-    var node: RMXNode = RMXNode()
+    lazy var node: RMXNode = RMXNode(sprite: self)
     
     var name: String {
         return "\(_name): \(self.rmxID)"
@@ -166,13 +166,17 @@ class RMXSprite : RMXChildNode {
     var item: RMXSprite?
     var itemPosition: RMXVector3 = RMXVector3Zero
     
-
+    #if SceneKit
     init(node: RMXNode = RMXNode()){
         self.node = node
         
         self.spriteDidInitialize()
     }
-    
+    #else
+    init(){
+        self.spriteDidInitialize()
+    }
+    #endif
     
     func reset(){
         for re in resets {
@@ -193,8 +197,12 @@ class RMXSprite : RMXChildNode {
         let sprite = RMXSprite()
         sprite.parentSprite = parent
         sprite.world = parent.world
+        
         if nodeOnly {
-            parent.node.addChildNode(sprite.node)
+            #if SceneKit
+            parent.node.addChildNode
+(sprite.node)
+            #endif
         } else {
             parent.insertChild(sprite)
         }
@@ -274,8 +282,9 @@ extension RMXSprite {
         self.node.physicsBody!.mass = 1
             #if SceneKit
             self.node.physicsBody = SCNPhysicsBody.dynamicBody()
+                self.node.physicsBody!.friction = 0
             #endif
-           self.node.physicsBody!.friction = 0
+        
             self.armLength = self.radius * RMFloatB(2)
 //            self.hasGravity = true
         
@@ -346,7 +355,7 @@ extension RMXSprite {
     
     private func animate_position()    {
         self.negateRoll()//only runs if hasGravity == true
-        self.orientation = SCNMatrix4Normalize(self.node.transform)
+        self.orientation = self.node.transform
         
         let g = self.hasGravity ? self.world.gravityAt(self) : RMXVector3Zero
         let n = self.hasGravity ? self.world.physics.normalFor(self) : RMXVector3Zero
@@ -382,7 +391,7 @@ extension RMXSprite {
                 self.node.transform = RMXMatrix4Translate(self.node.transform, self.node.physicsBody!.velocity)
             }
             #else
-            self.node.position += self.velocity
+            self.node.position += self.node.velocity
         #endif
         
         
@@ -668,6 +677,7 @@ extension RMXSprite {
     
 }
 
+#if SceneKit
 
 extension RMXSprite {
     
@@ -690,3 +700,5 @@ extension RMXSprite {
         return sprite
     }
 }
+
+#endif

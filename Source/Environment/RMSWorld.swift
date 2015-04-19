@@ -68,7 +68,7 @@ class RMSWorld : RMXSprite {
 
         //DEFAULT
         self.environments.setType(.DEFAULT)
-        RMXArt.initializeTestingEnvironment(self,withAxis: true, withCubes: 0)
+        RMXArt.initializeTestingEnvironment(self,withAxis: false, withCubes: 0)
         self.insertChildren(children: self.players)
         
         //FETCH
@@ -84,7 +84,7 @@ class RMSWorld : RMXSprite {
 
         //TESTING ENVIRONMENT
         self.environments.setType(.TESTING_ENVIRONMENT)
-        RMXArt.initializeTestingEnvironment(self)
+        RMXArt.initializeTestingEnvironment(self, withAxis: false)
         RMX.buildScene(self)
         self.insertChildren(children: self.players, andNodes: false)
 
