@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import QuartzCore
     import GLKit
 #if iOS
     import UIKit
@@ -34,7 +33,7 @@ import QuartzCore
     typealias RMSView = NSView
 #endif
 
-class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
+class RMXInterface : NSObject, RendererDelegate {
     lazy var actionProcessor: RMSActionProcessor = RMSActionProcessor(world: self.world!)
     private let _isDebugging = false
     var debugData: String = "No Data"
@@ -48,13 +47,13 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
 //    } ) ]
     
    
-    var timer: NSTimer? //CADisplayLink?
+    
     var world: RMSWorld?
 
     var lookSpeed: RMFloatB = PI_OVER_180
     var moveSpeed: RMFloatB = 1
     
-    var activeSprite: RMXSprite? {
+    var activeSprite: RMXNode? {
         return self.world?.activeSprite
     }
     
@@ -78,7 +77,7 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     init(gvc: RMXViewController, world: RMSWorld? = nil){
         super.init()
         self.initialize(gvc, gameView: gvc.gameView!, world: world)
-        self.viewDidLoad(nil)
+        self.viewDidLoad()
         NSLog("\(__FUNCTION__)")
     }
     
@@ -93,11 +92,7 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
             self.world = world
         }
         if self.world == nil {
-            #if SceneKit
-            self.world = RMSWorld(node: RMXNode())
-            #else
-                self.world = RMSWorld()
-            #endif
+            self.world = RMSWorld(worldType: .DEFAULT)
         }
         self.world!.clock = RMXClock(world: self.world!, interface: self)
         #if SceneKit
@@ -107,20 +102,20 @@ class RMXInterface : NSObject, RendererDelegate, RMXControllerProtocol {
     }
     
     
-    func viewDidLoad(coder: NSCoder!){
-        if self.world == nil {
-            #if SceneKit
-            self.world = RMSWorld(node: RMXNode(coder: coder))
-                #else
-                self.world = RMSWorld()
-            #endif
+    func viewDidLoad(coder: NSCoder! = nil){
+        #if SceneKit
+        if coder != nil {
+            self.world = RMSWorld(coder: coder)
         }
+        #endif
+        if self.world == nil {
+            self.world = RMSWorld(worldType: .DEFAULT)
+        }
+//        self.controllers["debug"] = ( isActive: _isDebugging, process: self.debug )
         self.setUpGestureRecognisers()
+
     }
-    func setUpTimers(){
-//        self.timer = NSTimer(target: self, selector: Selector("update"))
-//        self.timer!.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
-    }
+    
     func setUpGestureRecognisers() {
         
     }

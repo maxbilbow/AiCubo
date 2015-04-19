@@ -12,21 +12,21 @@ import GLKit
 extension RMX {
     static let RANDOM_MOVEMENT = true
     
-    static func addBasicCollisionTo(forNode sprite: RMXSprite){//, withActors actors: [Int:RMXSprite]){//, inObjets
+    static func addBasicCollisionTo(forNode sprite: RMXNode){//, withActors actors: [Int:RMXNode]){//, inObjets
 //        if sprite.type == .OBSERVER {
             sprite.addBehaviour{ (isOn: Bool)->() in
-                if let children = sprite.world.childSpriteArray.getCurrent() {
+                if let children = sprite.world.childNodeArray.getCurrent() {
                 for child in children {
                    // let child = closest.1
 //                    if sprite.isObserver{ print("\(child.rmxID) ")}
                     if child.rmxID != sprite.rmxID && child.isAnimated {
-                        let distTest = sprite.node.scale.z + child.node.scale.z
-                        let dist = sprite.distanceTo(child)
+                        let distTest = sprite.radius + child.radius
+                        let dist = sprite.body!.distanceTo(child)
                         if dist <= distTest {
 //                            if sprite.isObserver{ print("HIT: \(child.rmxID)\n") }
-                            child.node.physicsBody!.velocity += sprite.node.physicsBody!.velocity
-                            sprite.world.childSpriteArray.remove(child.rmxID)
-                            sprite.world.childSpriteArray.makeFirst(child)
+                            child.body!.velocity += sprite.body!.velocity
+                            sprite.world.childNodeArray.remove(child.rmxID)
+                            sprite.world.childNodeArray.makeFirst(child)
                             return
                         }
                     }
@@ -67,7 +67,15 @@ extension RMX {
                 if sprite.isUnique {
                     return
                 }
-                if sprite.type == RMXSpriteType.AI {
+                if sprite.isAnimated {
+                    sprite.addBehaviour{ (isOn: Bool)->() in
+                        return
+                        if !sprite.hasGravity && world.observer.actions.item != nil {
+                            if sprite.body!.distanceTo((world.observer.actions.item)!) < 50 {
+                                sprite.hasGravity = true
+                            }
+                        }
+                    }
                 var timePassed = 0
                 var timeLimit = random() % 600
                 let speed:RMFloatB = RMFloatB(random() % 15)/3
@@ -86,23 +94,23 @@ extension RMX {
                     if randomMovement && !sprite.hasGravity {
                         if timePassed >= timeLimit {
                             if sprite.hasItem {
-                                sprite.turnToFace(observer)
-                                sprite.throwItem(500)
+                                sprite.actions.turnToFace(observer)
+                                sprite.actions.throwItem(500)
                             }
                             timePassed = 0
                             timeLimit = random() % 1600 + 10
                             
-                            if sprite.distanceTo(world) > world.node.scale.z - 50 {
+                            if sprite.body!.distanceTo(world) > world.radius - 50 {
                                 accelerating = false
                                 timeLimit = 600
                             } else {
-                              let rmxID = random() % RMXSprite.COUNT
-                                if let target = world.childSpriteArray.get(rmxID) {
-                                sprite.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
+                              let rmxID = random() % RMXNode.COUNT
+                                if let target = world.childNodeArray.get(rmxID) {
+                                sprite.actions.headTo(target, speed: speed, doOnArrival: { (sender, objects) -> AnyObject? in
 //                                        if let target = world.furthestObjectFrom(sprite) {
 //                                            
 //                                        }
-                                    sprite.grabItem(item: target)
+                                    sprite.actions.grabItem(item: target)
                                     return nil
                                 })
                                 
@@ -111,7 +119,7 @@ extension RMX {
                             }
                         } else {
                             if accelerating {
-                                sprite.accelerateForward(speed)
+                                sprite.body!.accelerateForward(speed)
                             }
                             timePassed++
                         }
@@ -124,13 +132,14 @@ extension RMX {
 
         return world
     }
-    static func makePoppy(#world: RMSWorld) -> RMXSprite{
-        let poppy: RMXSprite = RMXSprite.Unique(world, asType: .AI).asObserver().asShape(shape: .CYLINDER)
-        poppy.setRadius(6)
-        poppy.startingPoint = RMXVector3Make(100,poppy.node.scale.y / 2,-50)
-        poppy.node.position = poppy.startingPoint!
-        var itemToWatch: RMXSprite! = nil
-//        poppy.isAlwaysActive = true
+    static func makePoppy(#world: RMSWorld) -> RMXNode{
+        let poppy: RMXNode = RMXNode.Unique(world).setAsObserver().setAsShape(type: .CYLINDER)
+        poppy.type = .POPPY
+        poppy.body!.setRadius(8)
+        poppy.startingPoint = RMXVector3Make(100,poppy.radius,-50)
+        poppy.position = poppy.startingPoint!
+        var itemToWatch: RMXNode! = nil
+        poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
         var speed: RMFloatB = 0.01
@@ -138,24 +147,24 @@ extension RMX {
         
         poppy.behaviours.append { (isOn: Bool) -> () in
             
-            func idle(sender: RMXSprite, objects: [AnyObject]? = []) -> AnyObject? {
-                sender.addTheta(leftRightRadians: 5 * PI_OVER_180)
-                sender.accelerateForward(speed)
+            func idle(sender: RMXNode, objects: [AnyObject]? = []) -> AnyObject? {
+                sender.body!.addTheta(leftRightRadians: 5 * PI_OVER_180)
+                sender.body!.accelerateForward(speed)
                 return nil
             }
             
-            func fetch(sender: RMXSprite, objects: [AnyObject]?) -> AnyObject? {
-                //                sender.body.hasGravity = (objects?[0] as! RMXSprite).hasGravity
-                return sender.grabItem(item: itemToWatch)
+            func fetch(sender: RMXNode, objects: [AnyObject]?) -> AnyObject? {
+                //                sender.body.hasGravity = (objects?[0] as! RMXNode).hasGravity
+                return sender.actions.grabItem(item: itemToWatch)
             }
             
-            func drop(sender: RMXSprite, objects: [AnyObject]?) -> AnyObject?  {
-                sender.releaseItem()
+            func drop(sender: RMXNode, objects: [AnyObject]?) -> AnyObject?  {
+                sender.actions.releaseItem()
                 return nil
             }
             
-            func getReady(sender: RMXSprite, objects: [AnyObject]?)  -> AnyObject? {
-                sender.completeStop()
+            func getReady(sender: RMXNode, objects: [AnyObject]?)  -> AnyObject? {
+                sender.body!.completeStop()
                 return nil
             }
             
@@ -163,7 +172,7 @@ extension RMX {
             switch (state) {
             case .IDLE:
                 if observer.hasItem {
-                    itemToWatch = observer.item
+                    itemToWatch = observer.actions.item
                     state = .READY_TO_CHASE
                     poppy.hasGravity = observer.hasGravity
                 } else {
@@ -175,12 +184,12 @@ extension RMX {
                     state = .CHASING
                     poppy.hasGravity = itemToWatch.hasGravity
                 } else {
-                    poppy.headTo(itemToWatch, speed: speed * 10, doOnArrival: getReady)
+                    poppy.actions.headTo(itemToWatch, speed: speed * 10, doOnArrival: getReady)
                 }
                 break
             case .CHASING:
                 if  observer.hasItem {
-                    itemToWatch = observer.item
+                    itemToWatch = observer.actions.item
                     poppy.hasGravity = observer.hasGravity
                     state = .READY_TO_CHASE
                 } else if poppy.hasItem {
@@ -188,7 +197,7 @@ extension RMX {
                     state = .FETCHING
                     poppy.hasGravity = observer.hasGravity
                 } else {
-                    poppy.headTo(itemToWatch, speed: speed * 10, doOnArrival: fetch, objects: observer)
+                    poppy.actions.headTo(itemToWatch, speed: speed * 10, doOnArrival: fetch, objects: observer)
                 }
                 break
             case .FETCHING:
@@ -196,7 +205,7 @@ extension RMX {
                     state = .IDLE
                     poppy.hasGravity = observer.hasGravity
                 } else {
-                    poppy.headTo(observer, speed: speed * 10, doOnArrival: drop)
+                    poppy.actions.headTo(observer, speed: speed * 10, doOnArrival: drop)
                 }
                 break
             default:
@@ -216,12 +225,12 @@ extension RMX {
             #else
             let r = poppy.radius / 2
             #endif
-        let head = RMXSprite.new(parent: poppy).asShape(shape: .SPHERE)
-        head.setRadius(r)
+        let head = RMXNode().initWithParent(poppy).setAsShape(type: .SPHERE)
+        head.body!.setRadius(r)
         head.setColor(RMXVector4Make(0.1,0.1,0.1,0.1))
-        head.startingPoint = RMXVector3Make(0,head.node.scale.y, -head.node.scale.z)
-        head.node.position = head.startingPoint!
-        poppy.insertChild(head)
+        head.startingPoint = RMXVector3Make(0,head.scale.y, -head.scale.z)
+        head.position = head.startingPoint!
+        poppy.insertChildNode(head)
         
        
         return poppy

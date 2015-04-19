@@ -44,17 +44,17 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         // create and add a camera to the scene
         let cameraNode = self.gameView!.world!.observer
         cameraNode.hasGravity = true
-        cameraNode.node.camera = self.gameView!.world!.activeCamera
+        cameraNode.camera = self.gameView!.world!.activeCamera
 //        scene.rootNode.addChildNode(cameraNode)
         
 
-        self.gameView?.pointOfView = cameraNode.node
+        self.gameView?.pointOfView = cameraNode
         // place the camera
 
         cameraNode.startingPoint = cameraNode.position
         
         // create and add a light to the scene
-        let lightNode = self.gameView!.world!.sun.node
+        let lightNode = self.gameView!.world!.sun
         lightNode.light = SCNLight()
         lightNode.light!.type = SCNLightTypeOmni
 
@@ -90,7 +90,7 @@ class GameViewController: ViewController, RMXViewController, SCNSceneRendererDel
         ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 1, z: 0, duration: 10)))
             #endif
         
-        scene.rootNode.addChildNode(self.world!.node)
+        scene.rootNode.addChildNode(self.world!)
         // set the scene to the view
         self.gameView!.scene = scene
         

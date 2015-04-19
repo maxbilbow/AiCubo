@@ -11,11 +11,6 @@ import Foundation
 import AppKit
     #elseif iOS
     import UIKit
-    
-    #endif
-
-#if SceneKit
-    import SceneKit
     #endif
 
 enum RMXMoveType { case PUSH, DRAG }
@@ -32,7 +27,7 @@ extension RMX {
 }
 class RMSActionProcessor {
     //let keys: RMXController = RMXController()
-    var activeSprite: RMXSprite {
+    var activeSprite: RMXNode {
         return self.world.observer
     }
     var world: RMSWorld
@@ -50,98 +45,77 @@ class RMSActionProcessor {
         if action == nil { return false }
         
         if action == "move" && point.count == 3 {
-                self.activeSprite.accelerateForward(point[2] * speed)
-                self.activeSprite.accelerateLeft(point[0] * speed)
-                self.activeSprite.accelerateUp(point[1] * speed)
-            
-            let sprite = self.activeSprite.node
-            sprite
+                self.activeSprite.body!.accelerateForward(point[2] * speed)
+                self.activeSprite.body!.accelerateLeft(point[0] * speed)
+                self.activeSprite.body!.accelerateUp(point[1] * speed)
         }
         if action == "stop" {
-            self.activeSprite.stop()
+            self.activeSprite.body!.stop()
             _movement = (0,0,0)
         }
         
         if action == "look" && point.count == 2 {
 //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addTheta(leftRightRadians: point[0] * -speed)
-            self.activeSprite.addPhi(upDownRadians: point[1] * speed)
+            self.activeSprite.body!.addTheta(leftRightRadians: point[0] * -speed)
+            self.activeSprite.body!.addPhi(upDownRadians: point[1] * speed)
         }
-        
-        if action == "roll" {//&& self.activeSprite.hasGravity == false {
-            //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addRoll(rollRadians: speed)
-        }
-
-        
-        if action == "rollLeft"  {
-            //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addRoll(rollRadians: speed)
-        }
-        
-        if action == "rollRight"  {
-            //            self.activeSprite.eulerAngles.z += point[1] * speed
-            self.activeSprite.addRoll(rollRadians: -speed)
-        }
-        
         
         if (action == "forward") {
             if speed == 0 {
-                self.activeSprite.forwardStop()
+                self.activeSprite.body!.forwardStop()
             }
             else {
-                self.activeSprite.accelerateForward(speed)
+                self.activeSprite.body!.accelerateForward(speed)
             }
         }
         
         if (action == "back") {
             if speed == 0 {
-                self.activeSprite.forwardStop()
+                self.activeSprite.body!.forwardStop()
             }
             else {
-                self.activeSprite.accelerateForward(-speed)
+                self.activeSprite.body!.accelerateForward(-speed)
             }
         }
         if (action == "left") {
             if speed == 0 {
-                self.activeSprite.leftStop()
+                self.activeSprite.body!.leftStop()
             }
             else {
-                self.activeSprite.accelerateLeft(speed)
+                self.activeSprite.body!.accelerateLeft(speed)
             }
         }
         if (action == "right") {
             if speed == 0 {
-                self.activeSprite.leftStop()
+                self.activeSprite.body!.leftStop()
             }
             else {
-                self.activeSprite.accelerateLeft(-speed)
+                self.activeSprite.body!.accelerateLeft(-speed)
             }
         }
         
         if (action == "up") {
             if speed == 0 {
-                self.activeSprite.upStop()
+                self.activeSprite.body!.upStop()
             }
             else {
-                self.activeSprite.accelerateUp(-speed)
+                self.activeSprite.body!.accelerateUp(-speed)
             }
         }
         if (action == "down") {
             if speed == 0 {
-                self.activeSprite.upStop()
+                self.activeSprite.body!.upStop()
             }
             else {
-                self.activeSprite.accelerateUp(speed)
+                self.activeSprite.body!.accelerateUp(speed)
             }
         }
-        
         if (action == "jump") {
             if speed == 0 {
-                self.activeSprite.jump()
+                self.activeSprite.actions.jump()
             }
             else {
-                self.activeSprite.prepareToJump()
+                self.activeSprite.actions.prepareToJump()
             }
         }
         
@@ -150,20 +124,20 @@ class RMSActionProcessor {
         }
         
         if action == "grab" {
-            self.activeSprite.grabItem()
+            self.activeSprite.actions.grabItem()
         }
         if action == "throw" && speed != 0 {
             if self.activeSprite.hasItem {
-                RMXLog("Throw: \(self.activeSprite.item?.name) with speed: \(speed)")
-                self.activeSprite.throwItem(speed)
+                RMXLog("Throw: \(self.activeSprite.actions.item?.label) with speed: \(speed)")
+                self.activeSprite.actions.throwItem(speed)
             }
         }
         if self.activeSprite.hasItem {
             if action == "enlargeItem"   {
-                let size = (self.activeSprite.item?.radius)! * speed
+                let size = (self.activeSprite.actions.item?.radius)! * speed
                 if size > 0.5 && size < 15 {
-                    self.activeSprite.item?.setRadius(size)
-                    self.activeSprite.item?.node.physicsBody!.mass *= RMFloat(size)
+                    self.activeSprite.actions.item?.body!.setRadius(size)
+                    self.activeSprite.actions.item?.body!.mass *= RMFloat(size)
                 }
 
             }
@@ -193,7 +167,8 @@ class RMSActionProcessor {
         
         if action == "lockMouse" && speed == 1 {
             self.isMouseLocked = !self.isMouseLocked
-
+//            self.mousePos = NSEvent.mouseLocation()
+//            self.gameView?.cursorUpdate(<#event: NSEvent#>)
         }
         
         if action == "switchEnvitonment" {
@@ -203,19 +178,15 @@ class RMSActionProcessor {
         if action == "toggleFog" {
             RMX.toggleFog()
         }
-        
-        if action == "increase" {
-            self.world.environments.plusOne()
-            
-        } else if action == "decrease" {
-            
-        }
+
+//        RMXLog("\(self.world.activeCamera.viewDescription)\n\(action!) \(speed), \(self.world.activeSprite.position.z)\n")
+//        println(self.activeSprite.position.print)
         return true
     }
     
     func animate(){
         if self.extendArm != 0 {
-            self.activeSprite.extendArmLength(self.extendArm)
+            self.activeSprite.actions.extendArmLength(self.extendArm)
         }
     }
         

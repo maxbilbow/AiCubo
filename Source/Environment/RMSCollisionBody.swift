@@ -9,8 +9,6 @@
 import Foundation
 
 enum RMXCollisionBodyType { case DEFAULT, SPHERE, CUBE }
-
-/*
 class RMSCollisionBody : RMSNodeProperty {
     
     var type: RMXCollisionBodyType
@@ -19,6 +17,4 @@ class RMSCollisionBody : RMSNodeProperty {
         self.type = type
         super.init(parent)
     }
-} 
-\
-*/
+}

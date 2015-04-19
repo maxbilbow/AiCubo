@@ -20,8 +20,8 @@ enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDE
     protocol SCNGeometry{}
 #endif
 
-class RMXShape : RMXSpriteProperty {
-    var owner: RMXSprite! = nil
+class RMXShape : SCNGeometry, RMXNodeProperty {
+    var owner: RMXNode! = nil
     var world: RMSWorld {
         return self.owner.world
     }
@@ -34,16 +34,16 @@ class RMXShape : RMXSpriteProperty {
         
     var rotationMatrix: GLKMatrix4 {
         #if SceneKit
-        return SCNMatrix4ToGLKMatrix4(self.owner.orientation)
+        return SCNMatrix4ToGLKMatrix4(self.owner.body!.orientation)
         #else
-        return self.owner.orientation
+        return self.owner.body!.orientation
         #endif
     }
         
     var translationMatrix: GLKMatrix4 {
         var p = self.owner.position
-        if let parent = self.owner.parentSprite {
-            p += parent.node.position
+        if self.owner.parent != nil {
+            p += self.owner.parent!.position
         }
         
         return GLKMatrix4MakeTranslation(Float(p.x), Float(p.y), Float(p.z))
@@ -63,12 +63,14 @@ class RMXShape : RMXSpriteProperty {
     var isVisible: Bool = true
     var brigtness: RMFloatB = 1
     
-    init(_ owner: RMXSprite? = nil, type: ShapeType = .NULL ) {
+    init(_ owner: RMXNode? = nil, type: ShapeType = .NULL ) {
         self.gl_light_type = GL_POSITION
         self.gl_light = GL_LIGHT0
         self.type = type
         self.owner = owner
-        
+        #if SceneKit
+        super.init()
+        #endif
     }
     #if SceneKit
     required init(coder aDecoder: NSCoder) {
@@ -82,7 +84,7 @@ class RMXShape : RMXSpriteProperty {
     
     /*
     private var _rotation: RMFloatB = 0
-    func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXSprite {
+    func makeAsSun(rDist: RMFloatB = 1000, isRotating: Bool = true, rAxis: RMXVector3 = RMXVector3Make(0,0,1)) -> RMXNode {
         self.type = .SPHERE
         #if SceneKit
         self.owner.geometry = RMXArt.SPHERE

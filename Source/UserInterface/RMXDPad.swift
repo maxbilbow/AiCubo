@@ -16,15 +16,15 @@ import UIKit
 
 class RMXDPad : RMXInterface {
     
-     let _testing = false
-     let _hasMotion = true
+    private let _testing = false
+    private let _hasMotion = false
     
     let motionManager: CMMotionManager = CMMotionManager()
    
     
     
-    override func viewDidLoad(coder: NSCoder!){
-        super.viewDidLoad(coder)
+    override func viewDidLoad(coder: NSCoder! = nil){
+        super.viewDidLoad(coder: coder)
         if _hasMotion {
             self.motionManager.startAccelerometerUpdates()
             self.motionManager.startDeviceMotionUpdates()
@@ -34,7 +34,7 @@ class RMXDPad : RMXInterface {
         
         self.moveSpeed *= -0.05
         #if SceneKit
-            self.lookSpeed *= 0.01
+            self.lookSpeed *= -0.01
             #else
         self.lookSpeed *= -0.02
         #endif
@@ -132,11 +132,9 @@ class RMXDPad : RMXInterface {
     var moveOrigin: CGPoint = CGPoint(x: 0,y: 0)
     var lookOrigin: CGPoint = CGPoint(x: 0,y: 0)
     func toggleBehaviours(recogniser: UITapGestureRecognizer){
-        self.world!.usesBehaviour = !self.world!.usesBehaviour
-        self.world!.setBehaviours(self.world!.usesBehaviour)
+        self.world!.hasBehaviour = !self.world!.hasBehaviour
+        self.world!.setBehaviours(self.world!.hasBehaviour)
     }
-    
-    
     
 }
 

@@ -69,12 +69,7 @@ extension RMXDPad {
         func handleOrientation(recognizer: UIPanGestureRecognizer) {
             if recognizer.numberOfTouches() == 1 {
                 let point = recognizer.velocityInView(self.view)
-                    #if SceneKit
-                        let yDir:Float = -1
-                        #else
-                        let yDir:Float = 1
-                        #endif
-                self.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), yDir * Float(point.y)])
+                self.action(action: "look", speed: self.lookSpeed, point: [Float(point.x), Float(point.y)])
             }
 //            _handleRelease(recognizer.state)
         }
@@ -113,7 +108,7 @@ extension RMXDPad {
         }
     
     func grabOrThrow(recognizer: UIGestureRecognizer) {
-        let spriteAction = self.world!.activeSprite
+        let spriteAction = self.world!.activeSprite.actions
         if let item = spriteAction.item  {
             spriteAction.throwItem(20)
             return
@@ -131,14 +126,13 @@ extension RMXDPad {
                 // retrieved the first clicked object
                 let result: AnyObject! = hitResults[0]
                 
-                
-                if let node = result.node {
-                    if self.world?.observer.grabItem(item: self.world!.getSprite(node: node)) == false {
-                        self.action(action: "throw", speed: 20)
-                        _handleRelease(recognizer.state)
-                    }
+                if let node = result.node as? RMXNode {
+                    self.world?.observer.actions.grabItem(item: node)
+                    RMXLog(node.label)
+                    self.log("Right Tap")
+                    self.action(action: "throw", speed: 20)
+                    _handleRelease(recognizer.state)
                 }
-                
                 // get its material
                 let material = result.node!.geometry!.firstMaterial!
                 

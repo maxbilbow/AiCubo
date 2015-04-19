@@ -11,28 +11,16 @@ import GLKit
 
 extension RMXDPad {
     func accelerometer() {
-//        if true { return }
-//        else {
-//            let g = self.motionManager.deviceMotion.gravity
-//            self.world!.physics.directionOfGravity = RMXVector3Make(RMFloatB(g.x), RMFloatB(g.y), RMFloatB(g.z))
-//        }
+        if true { return }
+        else {
+            let g = self.motionManager.deviceMotion.gravity
+            self.world!.physics.directionOfGravity = RMXVector3Make(RMFloatB(g.x), RMFloatB(g.y), RMFloatB(g.z))
+        }
         
         let key = "accelerometerCounter"
-//        let i = self.world!.clock?.getCounter(forKey:key)
-//        if i == 1 { self.world!.clock?.setCounter(forKey: key) } else { return }
+        //let i = self.world.clock?.getCounter(forKey:key)
+        if i == 1 { self.world!.clock?.setCounter(forKey: key) } else { return }
         if self.motionManager.deviceMotion != nil {
-            let tilt = RMFloatB(self.motionManager.deviceMotion.gravity.y)
-            let tiltSpeed = RMFloatB(-fabs(self.moveSpeed)*0.1)
-            let tiltThreshold: RMFloatB = 0.1
-            if tilt > tiltThreshold {
-                let speed = (1.0 + tilt) * tiltSpeed
-                self.action(action: "roll", speed: speed)
-            } else if tilt < -tiltThreshold {
-                let speed = (-1.0 + tilt) * tiltSpeed
-                self.action(action: "roll", speed: speed)
-            }
-            
-            if !_testing { return }
             var x,y,z, q, r, s, t, u, v,a,b,c,e,f,g,h,i,j,k,l,m:Double
             x = self.motionManager.deviceMotion.gravity.x
             y = self.motionManager.deviceMotion.gravity.y
@@ -76,7 +64,7 @@ extension RMXDPad {
             }
         }
         else {
-            NSLog("No motion?!")
+            //log("No motion?!")
         }
         // println()
     }

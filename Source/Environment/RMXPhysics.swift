@@ -37,38 +37,31 @@ class RMXPhysics {
     
     
     
-    func normalFor(sender: RMXSprite) -> RMXVector3 {
+    func normalFor(sender: RMXNode) -> RMXVector3 {
         let g = sender.position.y > 0 ? 0 : self.gravity.y
-        return RMXVector3MultiplyScalar(RMXVector3Make(0, 0, 0),-RMFloatB(sender.node.physicsBody!.mass))
+        return RMXVector3MultiplyScalar(RMXVector3Make(0, 0, 0),-RMFloatB(sender.body!.mass))
     }
     
-    func gravityFor(sender: RMXSprite) -> RMXVector3{
-        return RMXVector3MultiplyScalar(self.gravity, RMFloatB(sender.node.physicsBody!.mass))
+    func gravityFor(sender: RMXNode) -> RMXVector3{
+        return RMXVector3MultiplyScalar(self.gravity, RMFloatB(sender.body!.mass))
     }
     
     
     
-    func dragFor(sender: RMXSprite) -> RMXVector3{
-        let dragC: RMFloat = sender.node.physicsBody!.mass
-        let rho = RMFloat(0.005 * sender.world.massDensityAt(sender))
-        let u = RMFloat(RMXVector3Length(sender.node.physicsBody!.velocity))
-        let area = RMFloat(sender.node.scale.x * sender.node.scale.y)
+    func dragFor(sender: RMXNode) -> RMXVector3{
+        let dragC: RMFloatB = sender.body!.dragC
+        let rho: RMFloatB = 0.005 * sender.world.massDensityAt(sender)
+        let u: RMFloatB = RMXVector3Length(sender.body!.velocity)
+        let area: RMFloatB = sender.body!.dragArea
         var v: RMXVector3 = RMXVector3Zero
-        let drag = RMFloatB((0.5 * rho * u * u * dragC * area)/3)
+        let drag = (0.5 * rho * u * u * dragC * area)/3
         return RMXVector3Make(drag, drag, drag)
     }
     
-    ///TODO: If colliding, compute. Otherwise return friction at ground level.
-    func frictionFor(sender: RMXSprite) -> RMXVector3{
-        #if SceneKit
-        let µ =  RMFloatB(sender.node.physicsBody!.friction)
-            #else
-            let µ = self.world.µAt(sender)
-            #endif
-        if sender.isGrounded {
-            return RMXVector3Make(µ/3, 0, µ/3)
-        } else {
-            return RMXVector3Zero
-        }
+    func frictionFor(sender: RMXNode) -> RMXVector3{
+        let µ = sender.world.µAt(sender)
+        return RMXVector3Make(µ/3, 0, µ/3);//TODO
     }
+    
+   
 }

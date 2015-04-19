@@ -54,7 +54,7 @@ class GameView : RMSView, RMXView {
 
     var lightColor: GLKVector4 {
         if let sun =  self.world?.sun {
-            return sun.node.geometry!.color
+            return sun.shape!.color
         } else {
             return GLKVector4Make(1, 1, 1, 1.0)
         }
@@ -244,9 +244,9 @@ class GameView : RMSView, RMXView {
         
     }
 
-    func drawChildren(object: RMXSprite, var matrixStack: GLKMatrixStackRef) {
+    func drawChildren(object: RMXNode, var matrixStack: GLKMatrixStackRef) {
         if object.isDrawable {
-            let sprite = object.node.geometry
+            let sprite = object.shape
             let scaleMatrix = sprite!.scaleMatrix
             let translateMatrix = sprite!.translationMatrix
             let rotationMatrix = sprite!.rotationMatrix

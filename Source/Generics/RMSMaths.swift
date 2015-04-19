@@ -306,15 +306,8 @@ func RMXMatrix4Translate(mat: RMXMatrix4, v: RMXVector3)-> RMXMatrix4 {
         return GLKMatrix4Translate(mat, v.x, v.y, v.z)
     #endif
 }
-func SCNMatrix4Normalize(mat: SCNMatrix4) -> SCNMatrix4{
-    let mat = GLKMatrix4MakeWithRows(
-        GLKVector4Normalize(GLKVector4Make(Float(mat.m11),Float(mat.m12),Float(mat.m13),Float(mat.m14))),
-        GLKVector4Normalize(GLKVector4Make(Float(mat.m21),Float(mat.m22),Float(mat.m23),Float(mat.m24))),
-        GLKVector4Normalize(GLKVector4Make(Float(mat.m31),Float(mat.m32),Float(mat.m33),Float(mat.m34))),
-        GLKVector4Zero
-    )
-    
-    return SCNMatrix4FromGLKMatrix4(mat)
+func RMXMatrix4Normalize(mat: RMXMatrix4){
+//    GLKMatrix4
 }
 
 func RMXVector3MakeNormal(x:RMFloatB,y:RMFloatB,z:RMFloatB) -> RMXVector3 {
