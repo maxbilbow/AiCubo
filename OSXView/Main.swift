@@ -8,6 +8,9 @@
 
 
 //@NSApplicationMain
+import Foundation
+import AppKit
+
 class Main: NSObject, NSApplicationDelegate {
     
     

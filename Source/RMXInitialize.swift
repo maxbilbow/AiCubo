@@ -82,14 +82,13 @@ extension RMX {
 //                    let theta = Float(random() % 100)/100
 //                    let phi = Float(random() % 100)/100
 //                    var target = world.furthestObjectFrom(sprite)
-                var randomMovement = false
+                var randomMovement = true
                 var accelerating = false
                     sprite.addBehaviour{ (isOn:Bool) -> () in
-                        if !isOn { return }
+                        if !isOn {  return }
+                        sprite.isAlwaysActive = true
                     if !self.RANDOM_MOVEMENT { return }
-                    if sprite.hasGravity { //Dont start until gravity has been toggled once
-                        randomMovement = true
-                    }
+                   
                 
                     if randomMovement && !sprite.hasGravity {
                         if timePassed >= timeLimit {
@@ -142,7 +141,11 @@ extension RMX {
         poppy.isAlwaysActive = true
         var timePassed = 0
         var state: PoppyState = .IDLE
-        var speed: RMFloatB = 0.01
+        #if iOS
+        var speed: RMFloatB = 0.05
+            #elseif OSX
+            var speed: RMFloatB = 0.01
+            #endif
         let updateInterval = 1
         
         poppy.behaviours.append { (isOn: Bool) -> () in
@@ -228,7 +231,7 @@ extension RMX {
         let head = RMXNode().initWithParent(poppy).setAsShape(type: .SPHERE)
         head.body!.setRadius(r)
         head.setColor(RMXVector4Make(0.1,0.1,0.1,0.1))
-        head.startingPoint = RMXVector3Make(0,head.scale.y, -head.scale.z)
+        head.startingPoint = RMXVector3Make(0,head.radius * 2, -head.radius * 2)
         head.position = head.startingPoint!
         poppy.insertChildNode(head)
         

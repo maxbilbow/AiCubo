@@ -163,6 +163,11 @@ class RMSActionProcessor {
             self.activeSprite.mouse.toggleFocus()
             #endif
         }
+        
+        if action == "toggleAI" {
+            self.world.hasBehaviour = !self.world.hasBehaviour
+            self.world.setBehaviours(self.world.hasBehaviour)
+        }
 
         
         if action == "lockMouse" && speed == 1 {

@@ -41,7 +41,7 @@ class RMXSpriteActions : RMSNodeProperty {
             self.item!.hasGravity = _itemHadGravity
             let fwd4 = self.owner.forwardVector
             let fwd3 = RMXVector3Make(fwd4.x, fwd4.y, fwd4.z)
-            self.item!.body!.velocity = self.owner.body!.velocity + RMXVector3MultiplyScalar(fwd3,strength)
+            self.item!.body!.velocity = self.owner.body!.velocity + RMXVector3MultiplyScalar(fwd3,strength * (1 + self.item!.body!.mass))
             self.item!.wasJustThrown = true
             self.setItem(item: nil)
             return true

@@ -65,7 +65,7 @@ class RMXNode : SCNNode, RMXChildNode{
 //    }
 //    var transform: RMXMatrix4 = RMXMatrix4Identity
     var pivot: RMXMatrix4 = RMXMatrix4Identity
-    var scale: GLKVector3 = GLKVector3Zero
+    var scale: GLKVector3?
     lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self)
     
     
@@ -329,7 +329,7 @@ class RMXNode : SCNNode, RMXChildNode{
         }
     }
             
-    var hasBehaviour = true
+    var hasBehaviour = false
     
     
     func insertChildNode(child: RMXNode){

@@ -11,9 +11,9 @@
 
 @import GLUT;
 #import "RMOpenGL.h"
-#ifdef OPENGL_OSX
+//#ifdef OPENGL_OSX
 #import <OSXView-Swift.h>
-#endif
+//#endif
 @class RMXGLProxy, RMX;
 void InitGraphics(void)
 {

@@ -46,7 +46,7 @@ class RMXArt {
     
     #endif
     
-    class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = true, withCubes noOfShapes: RMFloatB = 1000, radius: RMFloatB? = nil) -> RMSWorld {
+    class func initializeTestingEnvironment(world: RMSWorld, withAxis drawAxis: Bool = false, withCubes noOfShapes: RMFloatB = 500, radius: RMFloatB? = nil, gravity: Bool = false) -> RMSWorld {
         RMXArt.drawSun(world)
         
         RMXArt.drawPlane(world)
@@ -54,7 +54,7 @@ class RMXArt {
             RMXArt.drawAxis(world)
         }
         if noOfShapes > 0 {
-            RMXArt.randomObjects(world, noOfShapes: noOfShapes, radius: radius)
+            RMXArt.randomObjects(world, noOfShapes: noOfShapes, radius: radius, gravity: gravity)
         }
         return world
     }
@@ -83,11 +83,11 @@ class RMXArt {
     class func drawAxis(world: RMSWorld) {//xCol y:(float*)yCol z:(float*)zCol{
         let shapeRadius: RMFloatB = 5
         let axisLenght = world.radius * 2
-        let shapesPerAxis: RMFloatB = axisLenght / (shapeRadius * 3)
-        let step: RMFloatB = axisLenght / shapesPerAxis
+        let shapesPerAxis: RMFloatB = 1//axisLenght / (shapeRadius * 3)
+//        let step: RMFloatB = axisLenght / shapesPerAxis
         
         func drawAxis(axis: String) {
-            var point =  -world.radius
+//            var point =  -world.radius
             var color: RMXVector4
             switch axis {
             case "x":
@@ -102,19 +102,20 @@ class RMXArt {
             default:
                 fatalError(__FUNCTION__)
             }
-            for (var i: RMFloatB = 0; i < shapesPerAxis; ++i){
-                let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
-                point += step
+
+                let position = RMXVector3Zero
+//                point += step
                 let object:RMXNode = RMXNode().initWithParent(world).setAsShape(type: .CUBE)
                 object.hasGravity = false
                 object.body!.setRadius(shapeRadius)
+                object.scale = RMXVector3Make(axis == "x" ? axisLenght : shapeRadius, axis == "y" ? axisLenght : shapeRadius, axis == "z" ? axisLenght : shapeRadius)
                 object.setColor(color)
                 
                 object.isAnimated = false
                 object.initPosition(startingPoint: position)
                 object.startingPoint = position
                 world.insertChildNode(object)
-            }
+
             
             
         }
@@ -123,7 +124,7 @@ class RMXArt {
         drawAxis("z")
     }
     
-    class func randomObjects(world: RMSWorld, noOfShapes: RMFloatB = 100, radius r: RMFloatB? = nil)    {
+    class func randomObjects(world: RMSWorld, noOfShapes: RMFloatB = 100, radius r: RMFloatB? = nil, gravity: Bool = false)    {
     //int max =100, min = -100;
     //BOOL gravity = true;
         let radius = r ?? world.radius
@@ -157,7 +158,7 @@ class RMXArt {
             object.setAsShape(type: .CUBE)
         }
         
-        object.hasGravity = false //(rand()% 100) == 1
+        object.hasGravity = gravity //(rand()% 100) == 1
         object.body!.setRadius(RMFloatB(random() % 9 + 2))
         object.initPosition(startingPoint:RMXVector3Make(randPos[0], randPos[1], randPos[2]))
         object.startingPoint = object.position

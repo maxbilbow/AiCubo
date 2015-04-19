@@ -43,7 +43,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     }
     #if !SceneKit
     var zNear:Float = 1
-    var zFar: Float = 10000
+    var zFar: Float = 100000
     var yFov: Float = 65.0
     var xFov: Float = 65.0
    

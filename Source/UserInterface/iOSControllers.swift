@@ -110,7 +110,7 @@ extension RMXDPad {
     func grabOrThrow(recognizer: UIGestureRecognizer) {
         let spriteAction = self.world!.activeSprite.actions
         if let item = spriteAction.item  {
-            spriteAction.throwItem(20)
+            spriteAction.throwItem(50)
             return
         }
         

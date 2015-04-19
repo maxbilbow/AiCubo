@@ -152,6 +152,9 @@ void keyUpOperations(int key){
         case 't':
             [RMXGLProxy performActionWithSpeed:1 action:@"switchEnvitonment"];
             break;
+        case 'i':
+            [RMXGLProxy performActionWithSpeed:1 action:@"toggleAI"];
+            break;
         case 'R':
             [RMXGLProxy performActionWithSpeed:1 action:@"reset"];
             break;

@@ -107,7 +107,7 @@ class RMSPhysicsBody: SCNPhysicsBody, RMXNodeProperty {
     func setRadius(radius: RMFloatB){
         _radius = radius
         let s = radius * 2
-        self.owner.scale = RMXVector3Make(s,s,s)
+//        self.owner.scale = RMXVector3Make(s,s,s)
     }
     
     var weight: RMFloatB{

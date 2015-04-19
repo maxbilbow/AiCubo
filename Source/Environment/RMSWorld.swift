@@ -12,7 +12,7 @@ import GLKit
 enum RMXWorldType: Int { case NULL = -1, TESTING_ENVIRONMENT, SMALL_TEST, FETCH, DEFAULT }
 class RMSWorld : RMXNode {
     static var TYPE: RMXWorldType = .DEFAULT
-    let gravityScaler: RMFloatB = 0.05
+    let gravityScaler: RMFloatB = 0.01
     ///TODO: Create thos for timekeeping
     var clock: RMXClock?
 
@@ -81,7 +81,8 @@ class RMSWorld : RMXNode {
         
         //FETCH
         self.environments.setType(.FETCH)
-        RMXArt.initializeTestingEnvironment(self,withAxis: false, withCubes: 10, radius: 100)
+        RMXArt.initializeTestingEnvironment(self,withAxis: false, withCubes: 100, radius: 500, gravity: true)
+        RMX.buildScene(self)
         createEnvironment()
         
         //SMALL_TEST
@@ -121,7 +122,7 @@ class RMSWorld : RMXNode {
     }
     func massDensityAt(someBody: RMXNode) -> RMFloatB {
         if !someBody.isInWorld && someBody.isObserver {
-            return 0.0000001
+            return 0.01
         } else if someBody.position.y < someBody.ground   {// 8 / 10 ) {// someBody.ground )
             return 99.1 //water or other
         } else {

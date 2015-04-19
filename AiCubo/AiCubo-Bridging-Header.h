@@ -37,6 +37,7 @@ int RMSizeOfIZero(int type);
 const void * RMVerticesPtr(int type);
 const void * RMIndicesPtr(int type);
 
+#define OPENGL_OSX 0
 #if OPENGL_OSX
 #define RMX_DEPRECATED(from, to, msg) __OSX_AVAILABLE_BUT_DEPRECATED_MSG(__MAC_##from, __MAC_##to, __IPHONE_NA, __IPHONE_NA, "" #msg "")
 

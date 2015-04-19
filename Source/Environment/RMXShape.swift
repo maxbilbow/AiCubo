@@ -12,7 +12,7 @@ import GLKit
 import OpenGL
 import GLUT
     #endif
-enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDER = 4, FLOOR}
+enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDER = 4, FLOOR, AXIS}
 
 #if SceneKit
     import SceneKit
@@ -28,8 +28,12 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
     var type: ShapeType = .NULL
     
     var scaleMatrix: GLKMatrix4 {
-        let radius = Float(self.owner.radius)
-        return GLKMatrix4MakeScale(radius,radius,radius)
+        if let scale = self.owner.scale {
+            return GLKMatrix4MakeScale(scale.x, scale.y, scale.z)
+        } else {
+            let radius = Float(self.owner.radius)
+            return GLKMatrix4MakeScale(radius,radius,radius)
+        }
     }
         
     var rotationMatrix: GLKMatrix4 {
