@@ -205,10 +205,10 @@ class RMSActionProcessor {
         }
         
         if action == "increase" {
-            self.activeSprite.node.pivot.m43 += speed
+            self.world.environments.plusOne()
             
         } else if action == "decrease" {
-            self.activeSprite.node.pivot.m43 -= speed
+            
         }
         return true
     }

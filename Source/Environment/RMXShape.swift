@@ -20,7 +20,7 @@ enum ShapeType: Int32 { case NULL = 0, CUBE = 1 , PLANE = 2, SPHERE = 3, CYLINDE
     protocol SCNGeometry{}
 #endif
 
-class RMXShape : RMXSpriteProperty {
+class RMXShape : RMXSpriteProperty, SCNGeometry {
     var owner: RMXSprite! = nil
     var world: RMSWorld {
         return self.owner.world
@@ -36,7 +36,7 @@ class RMXShape : RMXSpriteProperty {
         #if SceneKit
         return SCNMatrix4ToGLKMatrix4(self.owner.orientation)
         #else
-        return self.owner.body!.orientation
+        return self.owner.orientation
         #endif
     }
         

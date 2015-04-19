@@ -54,7 +54,7 @@ class GameView : RMSView, RMXView {
 
     var lightColor: GLKVector4 {
         if let sun =  self.world?.sun {
-            return sun.shape!.color
+            return sun.node.geometry!.color
         } else {
             return GLKVector4Make(1, 1, 1, 1.0)
         }
