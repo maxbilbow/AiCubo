@@ -11,9 +11,9 @@
 
 @import GLUT;
 #import "RMOpenGL.h"
-//#if OPENGL_OSX
+#ifdef OPENGL_OSX
 #import <OSXView-Swift.h>
-//#endif
+#endif
 
 @class Main, RMX, RMXGLProxy, RMXSpriteActions, RMXParticle;
 //static BOOL g_bLightingEnabled = TRUE;
@@ -33,7 +33,7 @@ void RMGLMouseCenter(){
 //
     bool center = true;//observer->hasFocus();
     int x = center ? (glutGet(GLUT_WINDOW_WIDTH) + glutGet(GLUT_WINDOW_X))/2 : RMXGLProxy.mouseX;
-    int y = center ? (glutGet(GLUT_WINDOW_HEIGHT) + glutGet(GLUT_WINDOW_Y))/2 : RMXGLProxy.mouseY;
+    int y = center ? (glutGet(GLUT_WINDOW_HEIGHT) + glutGet(GLUT_WINDOW_Y))/2 :RMXGLProxy.mouseY;
 
     CGWarpMouseCursorPosition(CGPointMake(x , y ));
   //  pos.x = glutGet(GLUT_WINDOW_X)/2;

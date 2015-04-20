@@ -13,13 +13,14 @@ import SceneKit
     #else
     protocol SCNCamera {}
     #endif
-class RMXCamera : SCNCamera, RMXNodeProperty {
+class RMXCamera : SCNCamera {
     
-    lazy var pov: RMXNode? = self.owner
-    var owner: RMXNode! = nil
-    var world: RMSWorld {
-        return self.pov!.world
+    var pov: RMXNode? { return self.observer.node }
+    var observer: RMXSprite! {
+        return self.world.observer
     }
+    var world: RMSWorld! = nil
+    
     var facingVector: GLKVector3 = GLKVector3Zero
 
     var aspectRatio: Float  {
@@ -43,11 +44,13 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     }
     #if !SceneKit
     var zNear:Float = 1
-    var zFar: Float = 100000
+    var zFar: Float = 10000
     var yFov: Float = 65.0
     var xFov: Float = 65.0
    
-    
+    class func new(#world: RMSWorld) -> RMXCamera {
+        return RMXCamera(world)
+    }
     var projectionMatrix: GLKMatrix4 {
         return GLKMatrix4MakePerspective(GLKMathDegreesToRadians(self.yFov), self.aspectRatio, self.zNear, self.zFar)
     }
@@ -71,10 +74,10 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     
     #endif
     
-    init(_ owner: RMXNode, viewSize: (Float,Float) = (1280, 750)){
+    init(_ world: RMSWorld, viewSize: (Float,Float) = (1280, 750)){
         self.viewHeight = viewSize.1
         self.viewWidth = viewSize.0
-        self.owner = owner
+        self.world = world
         #if SceneKit
         super.init()
         #endif
@@ -101,9 +104,6 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         self.aperture = 0.005
         self.focalDistance = 0.001
         #endif
-//        self.position = RMXVector3Zero
-        
-        
     }
     var eye: GLKVector3 {
         #if SceneKit
@@ -116,7 +116,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
     }
     
     var center: GLKVector3{
-        let r = self.pov!.forwardVector + self.pov!.position
+        let r = self.observer.forwardVector + self.pov!.position
         #if SceneKit
             let v = SCNVector3ToGLKVector3(r)
             #else
@@ -130,7 +130,7 @@ class RMXCamera : SCNCamera, RMXNodeProperty {
         if simple {
             return GLKVector3Make(0,1,0)
         } else {
-            let r = self.pov!.upVector
+            let r = self.observer.upVector
             #if SceneKit
                 let v = SCNVector3ToGLKVector3(r)
                 #else

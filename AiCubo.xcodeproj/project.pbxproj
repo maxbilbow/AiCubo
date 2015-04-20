@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		500205CF1ACEA2980085283C /* RFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 500205CE1ACEA2980085283C /* RFOpenGLView.m */; };
+		500205D11ACEA37E0085283C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D01ACEA37E0085283C /* GameView.swift */; };
 		500205D41ACEA53C0085283C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500205D31ACEA53C0085283C /* Storyboard.storyboard */; };
 		500205D61ACEA5860085283C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D51ACEA5860085283C /* GameViewController.swift */; };
 		500205E01ACEA7610085283C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205DF1ACEA7610085283C /* AppDelegate.swift */; };
@@ -35,7 +36,7 @@
 		500206161ACEA88A0085283C /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		500206171ACEA88A0085283C /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		500206181ACEA88A0085283C /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
-		500206191ACEA88A0085283C /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		500206191ACEA88A0085283C /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		5002061A1ACEA8B20085283C /* RFOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 500205CE1ACEA2980085283C /* RFOpenGLView.m */; };
 		5002061D1ACEA8C90085283C /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
 		5002061E1ACEA8C90085283C /* RMXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5003E7131ACCA3FF00F40E46 /* RMXView.swift */; };
@@ -55,7 +56,7 @@
 		5039274D1AC71C1F00A59744 /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
 		5039274E1AC71C2400A59744 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
 		5039274F1AC71C2D00A59744 /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
-		503927501AC71C3700A59744 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		503927501AC71C3700A59744 /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		503927511AC71C4700A59744 /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
 		503927521AC71C4700A59744 /* RMSGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */; };
 		503927531AC71C4700A59744 /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
@@ -89,7 +90,7 @@
 		5063323A1AC5D60900BB4477 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
-		5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		5063323D1AC5D60900BB4477 /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		5063323E1AC5D60D00BB4477 /* CWrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5251AC4ACC100AAACF7 /* CWrappers.c */; };
 		5063323F1AC5D61B00BB4477 /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
 		506332401AC5D61B00BB4477 /* RMSGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */; };
@@ -101,6 +102,8 @@
 		5063324A1AC5D6E600BB4477 /* RMOpenGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 506332491AC5D6E600BB4477 /* RMOpenGL.m */; };
 		5063324C1AC5D98500BB4477 /* RMXMouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5441AC4ACC100AAACF7 /* RMXMouse.swift */; };
 		5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5401AC4ACC100AAACF7 /* RMSActionProcessor.swift */; };
+		5063324E1AC5D9B100BB4477 /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
+		506332501AC5D9D100BB4477 /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
 		506332511AC5D9D400BB4477 /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
 		506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506332521AC5DB1300BB4477 /* RMXGLProxy.swift */; };
 		5071AC071AC6CEB4004E240C /* cStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 5071AC021AC6CEB4004E240C /* cStuff.m */; };
@@ -128,7 +131,7 @@
 		50982D5F1ACE97450035EB56 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		50982D601ACE97450035EB56 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		50982D611ACE97450035EB56 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
-		50982D621ACE97450035EB56 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		50982D621ACE97450035EB56 /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		50982D661ACE9B2F0035EB56 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50982D651ACE9B2F0035EB56 /* GameView.swift */; };
 		50982D671ACE9B890035EB56 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9D62F1ACD4DC900F209E5 /* GameViewController.swift */; };
 		50982D681ACE9C030035EB56 /* RMX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5361AC4ACC100AAACF7 /* RMX.swift */; };
@@ -165,7 +168,7 @@
 		50C2B54D1AC4ACC100AAACF7 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		50C2B54E1AC4ACC100AAACF7 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		50C2B54F1AC4ACC100AAACF7 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
-		50C2B5501AC4ACC100AAACF7 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		50C2B5501AC4ACC100AAACF7 /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		50C2B5511AC4ACC100AAACF7 /* RMSEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */; };
 		50C2B5521AC4ACC100AAACF7 /* RMSGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */; };
 		50C2B5531AC4ACC100AAACF7 /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
@@ -184,10 +187,7 @@
 		50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
 		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
-		6C48F4521AE4579200C363FB /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
-		6C48F4531AE4579700C363FB /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
-		6C48F4541AE4579D00C363FB /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
-		6C48F4551AE457A500C363FB /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500205D01ACEA37E0085283C /* GameView.swift */; };
+		6C329D701AD5EC2F00027EB9 /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
 		6C68A1FB1AD58E9B003A4DB3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2621AD18A33006C008F /* GameViewController.swift */; };
 		6C68A1FC1AD58EB7003A4DB3 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77A2601AD18A33006C008F /* GameView.swift */; };
 		6C68A1FD1AD58FAF003A4DB3 /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
@@ -213,7 +213,7 @@
 		6C68A2131AD58FE9003A4DB3 /* RMXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */; };
 		6C68A2141AD58FE9003A4DB3 /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		6C68A2151AD58FE9003A4DB3 /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
-		6C68A2161AD58FE9003A4DB3 /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		6C68A2161AD58FE9003A4DB3 /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		6C68A2171AD59316003A4DB3 /* RMXInitialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53D1AC4ACC100AAACF7 /* RMXInitialize.swift */; };
 		6C68A2181AD597D8003A4DB3 /* SceneKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1C6691AD4A1C600C659AD /* SceneKitController.swift */; };
 		6C68A21A1AD59F47003A4DB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1C66B1AD4A1C600C659AD /* Main.storyboard */; };
@@ -246,7 +246,7 @@
 		6C77A2831AD18B3D006C008F /* RMXClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52D1AC4ACC100AAACF7 /* RMXClock.swift */; };
 		6C77A2841AD18B42006C008F /* RMXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */; };
 		6C77A2851AD18B45006C008F /* RMXShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */; };
-		6C77A2861AD18B47006C008F /* RMXSpriteActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */; };
+		6C77A2861AD18B47006C008F /* RMXSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */; };
 		6C77A2871AD18DEC006C008F /* RMSMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */; };
 		6C77A2881AD19033006C008F /* RMXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53B1AC4ACC100AAACF7 /* RMXController.swift */; };
 		6C77A2891AD19038006C008F /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
@@ -410,7 +410,7 @@
 		50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXNode.swift; sourceTree = "<group>"; };
 		50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXPhysics.swift; sourceTree = "<group>"; };
 		50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXShape.swift; sourceTree = "<group>"; };
-		50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXSpriteActions.swift; sourceTree = "<group>"; };
+		50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXSprite.swift; sourceTree = "<group>"; };
 		50C2B5331AC4ACC100AAACF7 /* RMSEquations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSEquations.swift; sourceTree = "<group>"; };
 		50C2B5341AC4ACC100AAACF7 /* RMSGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSGeometry.swift; sourceTree = "<group>"; };
 		50C2B5351AC4ACC100AAACF7 /* RMSMaths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMSMaths.swift; sourceTree = "<group>"; };
@@ -820,7 +820,7 @@
 				50C2B52E1AC4ACC100AAACF7 /* RMXNode.swift */,
 				50C2B52F1AC4ACC100AAACF7 /* RMXPhysics.swift */,
 				50C2B5301AC4ACC100AAACF7 /* RMXShape.swift */,
-				50C2B5311AC4ACC100AAACF7 /* RMXSpriteActions.swift */,
+				50C2B5311AC4ACC100AAACF7 /* RMXSprite.swift */,
 			);
 			name = Environment;
 			path = Source/Environment;
@@ -1463,7 +1463,7 @@
 				5002061E1ACEA8C90085283C /* RMXView.swift in Sources */,
 				6C77A1FC1AD173C1006C008F /* GameView.swift in Sources */,
 				500206031ACEA8760085283C /* RMXInitialize.swift in Sources */,
-				500206191ACEA88A0085283C /* RMXSpriteActions.swift in Sources */,
+				500206191ACEA88A0085283C /* RMXSprite.swift in Sources */,
 				500206221ACEA8C90085283C /* RMXMouse.swift in Sources */,
 				500206021ACEA86D0085283C /* RMXViewController.swift in Sources */,
 				500205E01ACEA7610085283C /* AppDelegate.swift in Sources */,
@@ -1514,7 +1514,7 @@
 				503927531AC71C4700A59744 /* RMSMaths.swift in Sources */,
 				503927521AC71C4700A59744 /* RMSGeometry.swift in Sources */,
 				503927581AC71C7100A59744 /* RMXShape.swift in Sources */,
-				503927501AC71C3700A59744 /* RMXSpriteActions.swift in Sources */,
+				503927501AC71C3700A59744 /* RMXSprite.swift in Sources */,
 				503927561AC71C4700A59744 /* RMXValue.swift in Sources */,
 				5039274D1AC71C1F00A59744 /* RMXMouse.swift in Sources */,
 				503927591AC71C7A00A59744 /* RMSArt.swift in Sources */,
@@ -1539,35 +1539,35 @@
 				5063323C1AC5D60900BB4477 /* RMXShape.swift in Sources */,
 				6C77A1FE1AD1744E006C008F /* RMXMesh.swift in Sources */,
 				506332371AC5D60900BB4477 /* RMSWorld.swift in Sources */,
-				6C48F4541AE4579D00C363FB /* RMSKeys.swift in Sources */,
 				506332531AC5DB1300BB4477 /* RMXGLProxy.swift in Sources */,
 				5063324D1AC5D9A100BB4477 /* RMSActionProcessor.swift in Sources */,
 				506332411AC5D61B00BB4477 /* RMSMaths.swift in Sources */,
 				500205D61ACEA5860085283C /* GameViewController.swift in Sources */,
 				50BA279A1ACAA45C007347A9 /* RMSCollisionBody.swift in Sources */,
-				6C48F4521AE4579200C363FB /* RMXInterface.swift in Sources */,
 				5063323B1AC5D60900BB4477 /* RMXPhysics.swift in Sources */,
-				6C48F4531AE4579700C363FB /* RMXViewController.swift in Sources */,
 				5063324A1AC5D6E600BB4477 /* RMOpenGL.m in Sources */,
 				5063323F1AC5D61B00BB4477 /* RMSEquations.swift in Sources */,
 				5071AC0A1AC6CEB4004E240C /* RMXMouseProcessor.m in Sources */,
 				506332381AC5D60900BB4477 /* RMXCamera.swift in Sources */,
 				506332341AC5D60900BB4477 /* RMSArt.swift in Sources */,
 				506332391AC5D60900BB4477 /* RMXClock.swift in Sources */,
+				6C329D701AD5EC2F00027EB9 /* RMSKeys.swift in Sources */,
 				506332461AC5D62800BB4477 /* RMXInitialize.swift in Sources */,
 				506332401AC5D61B00BB4477 /* RMSGeometry.swift in Sources */,
 				5063324C1AC5D98500BB4477 /* RMXMouse.swift in Sources */,
 				5071AC0B1AC6CEB4004E240C /* run.m in Sources */,
+				506332501AC5D9D100BB4477 /* RMXViewController.swift in Sources */,
 				50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */,
-				5063323D1AC5D60900BB4477 /* RMXSpriteActions.swift in Sources */,
+				5063323D1AC5D60900BB4477 /* RMXSprite.swift in Sources */,
 				5063323E1AC5D60D00BB4477 /* CWrappers.c in Sources */,
 				5071AC081AC6CEB4004E240C /* RMOShapes.m in Sources */,
 				5063323A1AC5D60900BB4477 /* RMXNode.swift in Sources */,
 				506332441AC5D61B00BB4477 /* RMXValue.swift in Sources */,
 				5071AC091AC6CEB4004E240C /* RMXKeyboardProcessor.m in Sources */,
+				5063324E1AC5D9B100BB4477 /* RMXInterface.swift in Sources */,
 				506332511AC5D9D400BB4477 /* RMXController.swift in Sources */,
 				506332431AC5D61B00BB4477 /* RMXDebugger.swift in Sources */,
-				6C48F4551AE457A500C363FB /* GameView.swift in Sources */,
+				500205D11ACEA37E0085283C /* GameView.swift in Sources */,
 				5071AC071AC6CEB4004E240C /* cStuff.m in Sources */,
 				506332421AC5D61B00BB4477 /* RMX.swift in Sources */,
 			);
@@ -1624,7 +1624,7 @@
 				50982D6C1ACE9C220035EB56 /* RMSGeometry.swift in Sources */,
 				50982D581ACE97450035EB56 /* RMSPhysicsBody.swift in Sources */,
 				50982D4C1ACE97240035EB56 /* Accelorometer.swift in Sources */,
-				50982D621ACE97450035EB56 /* RMXSpriteActions.swift in Sources */,
+				50982D621ACE97450035EB56 /* RMXSprite.swift in Sources */,
 				50982D681ACE9C030035EB56 /* RMX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1666,7 +1666,7 @@
 				50C2B55F1AC4ACC100AAACF7 /* RMXInterface.swift in Sources */,
 				50C2B5461AC4ACC100AAACF7 /* CWrappers.c in Sources */,
 				50C2B5511AC4ACC100AAACF7 /* RMSEquations.swift in Sources */,
-				50C2B5501AC4ACC100AAACF7 /* RMXSpriteActions.swift in Sources */,
+				50C2B5501AC4ACC100AAACF7 /* RMXSprite.swift in Sources */,
 				50C2B54D1AC4ACC100AAACF7 /* RMXNode.swift in Sources */,
 				50C2B5581AC4ACC100AAACF7 /* RMXController.swift in Sources */,
 				50C2B55E1AC4ACC100AAACF7 /* RMXDPad.swift in Sources */,
@@ -1708,7 +1708,7 @@
 				6C77A27D1AD18AC0006C008F /* RMXNode.swift in Sources */,
 				6C77A2901AD1AC58006C008F /* RMX.swift in Sources */,
 				6C77A2871AD18DEC006C008F /* RMSMaths.swift in Sources */,
-				6C77A2861AD18B47006C008F /* RMXSpriteActions.swift in Sources */,
+				6C77A2861AD18B47006C008F /* RMXSprite.swift in Sources */,
 				6C77A28E1AD19053006C008F /* RMXInterface.swift in Sources */,
 				6C77A2631AD18A33006C008F /* GameViewController.swift in Sources */,
 				6C77A2931AD1AC60006C008F /* RMXValue.swift in Sources */,
@@ -1756,7 +1756,7 @@
 				6C68A2171AD59316003A4DB3 /* RMXInitialize.swift in Sources */,
 				6CD1C6661AD4A1C500C659AD /* AppDelegate.swift in Sources */,
 				6C68A20C1AD58FE9003A4DB3 /* RMSArt.swift in Sources */,
-				6C68A2161AD58FE9003A4DB3 /* RMXSpriteActions.swift in Sources */,
+				6C68A2161AD58FE9003A4DB3 /* RMXSprite.swift in Sources */,
 				6C68A2081AD58FDD003A4DB3 /* RMXDebugger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

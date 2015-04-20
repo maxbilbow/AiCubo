@@ -28,7 +28,7 @@ protocol RMXMouse {
 
 class RMSMouse : RMXMouse{
     
-    var parent: RMXNode
+    var owner: RMXSprite
     var hasFocus = false
     var dx: Int32 = 0
     var dy: Int32 = 0
@@ -43,8 +43,8 @@ class RMSMouse : RMXMouse{
         return self.pos.y
     }
     
-    init(parentNode parent: RMXNode){
-        self.parent = parent
+    init(owner: RMXSprite){
+        self.owner = owner
     }
     func toggleFocus()    {
         self.hasFocus = !self.hasFocus
@@ -95,8 +95,8 @@ class RMSMouse : RMXMouse{
         var theta: RMFloat = RMFloat(DeltaX) * dir
         var phi: RMFloat =   RMFloat(DeltaY) * dir// / 20.0f;
         
-        self.parent.body!.addTheta(leftRightRadians: theta * speed)
-        self.parent.body!.addPhi(upDownRadians:phi * -speed)
+        self.owner.addTheta(leftRightRadians: theta * speed)
+        self.owner.addPhi(upDownRadians:phi * -speed)
     
     }
     

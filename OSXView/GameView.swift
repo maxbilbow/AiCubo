@@ -8,7 +8,6 @@
 
 import Foundation
 import GLUT
-import AppKit
 
 class GameView : RFOpenGLView, RMXView {
     

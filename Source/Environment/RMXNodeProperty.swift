@@ -12,8 +12,8 @@ import GLKit
     import SceneKit
     #endif
 
-protocol RMXNodeProperty {
-    var owner: RMXNode! { get set }
+protocol RMXSpriteProperty {
+    var owner: RMXSprite! { get }
     var world: RMSWorld { get }
 //    var actions: RMXSpriteActions { get }
 //    #if SceneKit
@@ -24,46 +24,6 @@ protocol RMXNodeProperty {
 //    var collisionBody: RMSCollisionBody { get }
 //    var physics: RMXPhysics { get }
 //    var position: GLKVector3 { get }
-    func animate()
+//    func animate()
 }
 
-
-class RMSNodeProperty: RMXNodeProperty {
-    var owner: RMXNode!
-    var world: RMSWorld {
-        return self.owner.world
-    }
-    #if SceneKit
-    var body: SCNPhysicsBody {
-        return self.owner.body!
-    }
-    #else
-    var body: RMSPhysicsBody {
-        return self.owner.body!
-    }
-    #endif
-    
-    var actions: RMXSpriteActions {
-        return self.owner.actions
-    }
-    
-    var collisionBody: RMSCollisionBody {
-        return self.owner.collisionBody
-    }
-    
-    var physics: RMXPhysics {
-        return self.world.physics
-    }
-    
-    var position: RMXVector3 {
-        return self.owner.position
-    }
-    
-    func animate(){
-        
-    }
-    
-    init(_ owner: RMXNode){
-        self.owner = owner
-    }
-}
