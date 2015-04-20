@@ -77,16 +77,16 @@ class RMSPhysicsBody {
     }
     
     init(_ owner: RMXSprite){
-            self.owner = owner
+        
     
-                self.initialize(owner, mass: mass, radius: radius, dragC: dragC, accRate: accRate, rotSpeed: rotSpeed)
+                self.initialize(owner)
 
     }
 
-    private var mass: RMFloat = 0
+
     private func initialize(owner: RMXSprite, mass: RMFloat = 1, radius: RMFloatB = 1, dragC: RMFloatB = 0.1,
         accRate: RMFloatB = 1, rotSpeed:RMFloatB = 1){
-            self.node?.physicsBody!.mass = mass
+            self.mass = mass
             self.dragC = dragC
             self.accelerationRate = accRate
             self.rotationSpeed = rotSpeed
@@ -145,11 +145,7 @@ extension RMXSprite {
     }
     
     func negateRoll(){
-        let q = GLKQuaternionMakeWithMatrix4(SCNMatrix4ToGLKMatrix4(self.orientation))
-        if self.isObserver { RMXLog("\nPIVOT\n\(self.node.pivot.print)\nQaternion:\n Quatern: \(self.node.orientation.print)\n     rot: \(self.node.rotation.print)\n   euler: \(self.node.eulerAngles.print)\n  ThPhRo: \(self.phi.toData()) \(self.theta.toData()) \(self.roll.toData())\n  rmxori: \(q.print)") }
-        if self.hasGravity {
-            //self.node.rotation.z = 0
-        }
+       
     }
     
     ///input as radians

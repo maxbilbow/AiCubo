@@ -36,7 +36,7 @@ class RMXShape : RMXSpriteProperty {
         #if SceneKit
         return SCNMatrix4ToGLKMatrix4(self.owner.orientation)
         #else
-        return self.owner.body!.orientation
+        return self.owner.orientation
         #endif
     }
         

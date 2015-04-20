@@ -7,8 +7,9 @@
 //
 import GLKit
 import Foundation
-#if SceneKit
 import SceneKit
+#if SceneKit
+
     typealias RMXNode = SCNNode
     #else
     typealias RMXNode = RMSNode
@@ -26,21 +27,28 @@ protocol RMXChildNode {
 #if !SceneKit
 
 class RMSNode {
-
+    var name: String = ""
     var velocity = RMXVector3Zero
     var parentNode: RMXNode?
+    var sprite: RMXSprite
+    init(sprite: RMXSprite){
+        self.sprite = sprite
+        self.nodeDidInitialize()
+    }
     
-
+    func nodeDidInitialize(){
+        
+    }
     
     
     var position: RMXVector3 = RMXVector3Zero
 
-    var pivot: RMXMatrix4 = RMXMatrix4Identity
+    var pivot: SCNMatrix4 = SCNMatrix4Identity
     var scale: RMXVector3 = RMXVector3Make(1,1,1)
-    var physicsBody: RMSPhysicsBody?// = RMSPhysicsBody(self)
+    lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self.sprite)
+    var transform: RMXMatrix4 = RMXMatrix4Identity
     
-    
-    var geometry: RMXShape?// = RMXShape(self)
+    lazy var geometry: RMXShape? = RMXShape(self.sprite)
     
 }
 #endif
@@ -185,7 +193,7 @@ extension RMXSprite {
             let color = NSColor(red: CGFloat(col.x), green:  CGFloat(col.y), blue:  CGFloat(col.z), alpha:  CGFloat(col.w))
             self.setColor(color: color)
             #else
-            self.shape!.color = col
+            self.node.geometry!.color = col
         #endif
     }
     

@@ -77,15 +77,15 @@ class RMXArt {
         world.node.addChildNode(plane)
         #else
         
-        let ZX = RMXSprite().initWithParent(world).setAsShape(type: .PLANE)
-        ZX.body!.setRadius(world.body!.radius)
-        ZX.body!.setPhi(upDownRadians: 90 * PI_OVER_180)
+        let ZX = RMXSprite.new(parent: world).asShape(shape: .PLANE)
+        ZX.setRadius(world.radius)
+        ZX.setPhi(upDownRadians: 90 * PI_OVER_180)
             ZX.setColor(self.yellowVector)
         ZX.isAnimated = false
         #if OPENGL_ES
             ZX.initPosition(startingPoint: RMXVector3Make(ZX.position.x, -ZX.radius, ZX.position.z))
             #endif
-        world.insertChildNode(ZX)
+        world.insertChild(ZX)
         #endif
     }
     
@@ -137,20 +137,20 @@ class RMXArt {
                 node.scale = scale
                 world.node.addChildNode(node)
                 println("axis: \(axis), scale: \(scale.print)")
-                #else
+              /*  #else
                 for (var i: RMFloatB = 0; i < shapesPerAxis; ++i){
                     let position = RMXVector3Make(axis == "x" ? point : 0, axis == "y" ? point : shapeRadius, axis == "z" ? point : 0)
                     point += step
-                    let object:RMXSprite = RMXSprite().initWithParent(world).setAsShape(type: .CUBE)
+                    let object:RMXSprite = RMXSprite.new(parent: world).asShape(shape: .CUBE)
                     object.hasGravity = false
-                    object.body!.setRadius(shapeRadius)
+                    object.setRadius(shapeRadius)
                     object.setColor(color)
                     
                     object.isAnimated = false
                     object.initPosition(startingPoint: position)
                     object.startingPoint = position
-                    world.insertChildNode(object)
-                }
+                    world.insertChild(object)
+                } */
             #endif
             
             
@@ -196,15 +196,21 @@ class RMXArt {
             if(random() % 50 == 1) {
                 shape = .SPHERE
                 type = .AI
+                #if SceneKit
                 geo = RMXShape.SPHERE
+                    
                 node = SCNNode(geometry: SCNSphere(radius: RMFloat(scale.x)))
+                #endif
             } else if(random() % 5 == 1){
                 shape = .CYLINDER
+                #if SceneKit
                 geo = RMXShape.CYLINDER
                 type = .BACKGROUND
                 node = SCNNode(geometry: SCNCylinder(radius: RMFloat(scale.x), height: RMFloat(scale.y)))
+                #endif
             } else {
                 shape = .CUBE
+                #if SceneKit
                 geo = RMXShape.CUBE
                 type = .PASSIVE
                 node = SCNNode(geometry: SCNBox(
@@ -213,6 +219,7 @@ class RMXArt {
                     length:RMFloat(scale.z),
                     chamferRadius:0.0)
                 )
+                #endif
             }
             let color = RMXRandomColor()
             #if SceneKit

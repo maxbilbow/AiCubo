@@ -60,13 +60,15 @@ class RMXPhysics {
     
     ///TODO: If colliding, compute. Otherwise return friction at ground level.
     func frictionFor(sender: RMXSprite) -> RMXVector3{
+        #if SceneKit
         let µ =  RMFloatB(sender.node.physicsBody!.friction)
+            #else
+            let µ = self.world.µAt(sender)
+            #endif
         if sender.isGrounded {
             return RMXVector3Make(µ/3, 0, µ/3)
         } else {
             return RMXVector3Zero
         }
     }
-    
-   
 }
