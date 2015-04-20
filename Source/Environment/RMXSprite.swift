@@ -49,9 +49,11 @@ class RMXSprite  {
     }
     
     var paretn: RMXSprite?
-    
+    #if SceneKit
+    var node: RMXNode
+    #else
     lazy var node: RMXNode = RMXNode(sprite: self)
-    
+    #endif
     var name: String {
         return "\(_name): \(self.rmxID)"
     }
@@ -200,8 +202,7 @@ class RMXSprite  {
         
         if nodeOnly {
             #if SceneKit
-            parent.node.addChildNode
-(sprite.node)
+            parent.node.addChildNode(sprite.node)
             #endif
         } else {
             parent.insertChild(sprite)
