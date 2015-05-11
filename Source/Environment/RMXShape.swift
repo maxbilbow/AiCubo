@@ -28,8 +28,12 @@ class RMXShape : SCNGeometry, RMXNodeProperty {
     var type: ShapeType = .NULL
     
     var scaleMatrix: GLKMatrix4 {
-        if let scale = self.owner.scale {
-            return GLKMatrix4MakeScale(scale.x, scale.y, scale.z)
+        if let owner = self.owner {
+            let radius = owner.radius
+            let x = owner.scale.x > 0 ? owner.scale.x : radius
+            let y = owner.scale.y > 0 ? owner.scale.y : radius
+            let z = owner.scale.z > 0 ? owner.scale.z : radius
+            return GLKMatrix4MakeScale(Float(x), Float(y), Float(z))
         } else {
             let radius = Float(self.owner.radius)
             return GLKMatrix4MakeScale(radius,radius,radius)

@@ -90,7 +90,7 @@ extension RMX {
                     if !self.RANDOM_MOVEMENT { return }
                    
                 
-                    if randomMovement && !sprite.hasGravity {
+                    if randomMovement {
                         if timePassed >= timeLimit {
                             if sprite.hasItem {
                                 sprite.actions.turnToFace(observer)

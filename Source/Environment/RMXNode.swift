@@ -65,7 +65,7 @@ class RMXNode : SCNNode, RMXChildNode{
 //    }
 //    var transform: RMXMatrix4 = RMXMatrix4Identity
     var pivot: RMXMatrix4 = RMXMatrix4Identity
-    var scale: GLKVector3?
+    var scale: GLKVector3 = RMXVector3Zero
     lazy var physicsBody: RMSPhysicsBody? = RMSPhysicsBody(self)
     
     
