@@ -152,7 +152,7 @@
 		50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */; };
 		50C2B5011AC4AA2100AAACF7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5001AC4AA2100AAACF7 /* GameViewController.swift */; };
 		50C2B5041AC4AA2100AAACF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5021AC4AA2100AAACF7 /* Main.storyboard */; };
-		50C2B5061AC4AA2100AAACF7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5051AC4AA2100AAACF7 /* Images.xcassets */; };
+		50C2B5061AC4AA2100AAACF7 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5051AC4AA2100AAACF7 /* icons.xcassets */; };
 		50C2B5091AC4AA2100AAACF7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5071AC4AA2100AAACF7 /* LaunchScreen.xib */; };
 		50C2B5151AC4AA2100AAACF7 /* AiCuboTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5141AC4AA2100AAACF7 /* AiCuboTests.swift */; };
 		50C2B5451AC4ACC100AAACF7 /* texture_numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5231AC4ACC100AAACF7 /* texture_numbers.png */; };
@@ -184,6 +184,15 @@
 		50D0AF8E1ACADAA40008A2B8 /* RMXNodeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D0AF8C1ACAD9DF0008A2B8 /* RMXNodeProperty.swift */; };
 		50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F215961AC751BA00ED6FA6 /* MainMenu.xib */; };
 		50F215991AC758CF00ED6FA6 /* Accelorometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F215981AC758CF00ED6FA6 /* Accelorometer.swift */; };
+		6C1508621B03922D00C925F3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1508611B03922D00C925F3 /* Icon.png */; };
+		6C1508631B03923000C925F3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1508611B03922D00C925F3 /* Icon.png */; };
+		6C1508641B03926800C925F3 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5051AC4AA2100AAACF7 /* icons.xcassets */; };
+		6C1508651B03927800C925F3 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5051AC4AA2100AAACF7 /* icons.xcassets */; };
+		6C1508661B03927A00C925F3 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5051AC4AA2100AAACF7 /* icons.xcassets */; };
+		6C1508671B03927B00C925F3 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C2B5051AC4AA2100AAACF7 /* icons.xcassets */; };
+		6C1966A81B03975A00B8F214 /* pop1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C1966A61B03975A00B8F214 /* pop1.jpg */; };
+		6C1966A91B03975A00B8F214 /* pop1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1966A71B03975A00B8F214 /* pop1.png */; };
+		6C1966AD1B039AE100B8F214 /* IMG_0014.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1966AC1B039AE100B8F214 /* IMG_0014.png */; };
 		6C48F4521AE4579200C363FB /* RMXInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5431AC4ACC100AAACF7 /* RMXInterface.swift */; };
 		6C48F4531AE4579700C363FB /* RMXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B53C1AC4ACC100AAACF7 /* RMXViewController.swift */; };
 		6C48F4541AE4579D00C363FB /* RMSKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2B5411AC4ACC100AAACF7 /* RMSKeys.swift */; };
@@ -393,7 +402,7 @@
 		50C2B4FE1AC4AA2100AAACF7 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		50C2B5001AC4AA2100AAACF7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		50C2B5031AC4AA2100AAACF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		50C2B5051AC4AA2100AAACF7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		50C2B5051AC4AA2100AAACF7 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = icons.xcassets; path = AiCubo/icons.xcassets; sourceTree = SOURCE_ROOT; };
 		50C2B5081AC4AA2100AAACF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		50C2B50E1AC4AA2100AAACF7 /* AiCuboTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AiCuboTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C2B5131AC4AA2100AAACF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -431,6 +440,10 @@
 		50D5EC2B1AC9364C0028759F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		50F215961AC751BA00ED6FA6 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		50F215981AC758CF00ED6FA6 /* Accelorometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accelorometer.swift; sourceTree = "<group>"; };
+		6C1508611B03922D00C925F3 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		6C1966A61B03975A00B8F214 /* pop1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pop1.jpg; sourceTree = "<group>"; };
+		6C1966A71B03975A00B8F214 /* pop1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pop1.png; sourceTree = "<group>"; };
+		6C1966AC1B039AE100B8F214 /* IMG_0014.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0014.png; sourceTree = "<group>"; };
 		6C77A1DA1AD12F5B006C008F /* RMXMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMXMesh.swift; sourceTree = "<group>"; };
 		6C77A1DC1AD1308E006C008F /* RMXTerrainMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RMXTerrainMesh.swift; path = Source/Geometry/RMXTerrainMesh.swift; sourceTree = SOURCE_ROOT; };
 		6C77A1E31AD136FD006C008F /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -752,7 +765,6 @@
 				50C2B5001AC4AA2100AAACF7 /* GameViewController.swift */,
 				500C186C1ACBE1A000FE85D7 /* GameView.swift */,
 				50C2B5021AC4AA2100AAACF7 /* Main.storyboard */,
-				50C2B5051AC4AA2100AAACF7 /* Images.xcassets */,
 				50C2B5071AC4AA2100AAACF7 /* LaunchScreen.xib */,
 				50C2B4F81AC4AA2100AAACF7 /* Supporting Files */,
 			);
@@ -787,6 +799,11 @@
 		50C2B5221AC4ACC100AAACF7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				50C2B5051AC4AA2100AAACF7 /* icons.xcassets */,
+				6C1966AC1B039AE100B8F214 /* IMG_0014.png */,
+				6C1966A61B03975A00B8F214 /* pop1.jpg */,
+				6C1966A71B03975A00B8F214 /* pop1.png */,
+				6C1508611B03922D00C925F3 /* Icon.png */,
 				50A9D64D1ACD9C9700F209E5 /* popNose.png */,
 				501A93961AC77EC800924AAF /* texture_poppy.png */,
 				50C2B5231AC4ACC100AAACF7 /* texture_numbers.png */,
@@ -1344,7 +1361,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C1508631B03923000C925F3 /* Icon.png in Resources */,
 				501A93981AC77EC800924AAF /* texture_poppy.png in Resources */,
+				6C1508641B03926800C925F3 /* icons.xcassets in Resources */,
 				5063321B1AC5D59600BB4477 /* art.scnassets in Resources */,
 				5063321D1AC5D59600BB4477 /* Images.xcassets in Resources */,
 				50F215971AC751BA00ED6FA6 /* MainMenu.xib in Resources */,
@@ -1365,6 +1384,7 @@
 			files = (
 				50A9D6351ACD4DC900F209E5 /* Main.storyboard in Resources */,
 				50A9D63A1ACD4DC900F209E5 /* LaunchScreen.xib in Resources */,
+				6C1508651B03927800C925F3 /* icons.xcassets in Resources */,
 				50A9D6371ACD4DC900F209E5 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1380,10 +1400,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C1508621B03922D00C925F3 /* Icon.png in Resources */,
+				6C1966A81B03975A00B8F214 /* pop1.jpg in Resources */,
 				50C2B5451AC4ACC100AAACF7 /* texture_numbers.png in Resources */,
 				50C2B5091AC4AA2100AAACF7 /* LaunchScreen.xib in Resources */,
+				6C1966AD1B039AE100B8F214 /* IMG_0014.png in Resources */,
 				50C2B5041AC4AA2100AAACF7 /* Main.storyboard in Resources */,
-				50C2B5061AC4AA2100AAACF7 /* Images.xcassets in Resources */,
+				50C2B5061AC4AA2100AAACF7 /* icons.xcassets in Resources */,
+				6C1966A91B03975A00B8F214 /* pop1.png in Resources */,
 				50C2B4FF1AC4AA2100AAACF7 /* Shader.vsh in Resources */,
 				50C2B4FD1AC4AA2100AAACF7 /* Shader.fsh in Resources */,
 				501A93971AC77EC800924AAF /* texture_poppy.png in Resources */,
@@ -1404,6 +1428,7 @@
 			files = (
 				6C77A2651AD18A33006C008F /* art.scnassets in Resources */,
 				6C77A2671AD18A33006C008F /* Images.xcassets in Resources */,
+				6C1508661B03927A00C925F3 /* icons.xcassets in Resources */,
 				6C77A26A1AD18A33006C008F /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1423,6 +1448,7 @@
 				6CD1C66F1AD4A1C600C659AD /* Images.xcassets in Resources */,
 				6CD1C6681AD4A1C600C659AD /* art.scnassets in Resources */,
 				6C68A21A1AD59F47003A4DB3 /* Main.storyboard in Resources */,
+				6C1508671B03927B00C925F3 /* icons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2224,7 +2250,8 @@
 		50C2B5191AC4AA2100AAACF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = AiCubo/Info.plist;
@@ -2240,7 +2267,8 @@
 		50C2B51A1AC4AA2100AAACF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = AiCubo/Info.plist;
